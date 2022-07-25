@@ -19,29 +19,29 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-//    @Inject
-//    lateinit var feedRepository: FeedRepository
+    @Inject
+    lateinit var feedRepository: FeedRepository
 
-//    @Inject
-//    lateinit var userRepository: LoginRepository
+    @Inject
+    lateinit var userRepository: LoginRepository
 
-//    @Inject
-//    lateinit var myReviewsRepository: MyReviewsRepository
+    @Inject
+    lateinit var myReviewsRepository: MyReviewsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         lifecycleScope.launch {
-            /*repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 userRepository.isLoginFlow().collect {
                     Logger.d("" + it)
                 }
-            }*/
+            }
         }
 
         runBlocking {
-            /*findViewById<TextView>(R.id.tv).text =
-                myReviewsRepository.getMyReviews3(4).toString()*/
+//            findViewById<TextView>(R.id.tv).text =
+//                myReviewsRepository.getMyReviews3(4).toString()
         }
     }
 }
