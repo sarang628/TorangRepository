@@ -49,10 +49,3 @@ class FeedRepositoryImpl @Inject constructor(
 
 
 }
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FeedRepositoryModule {
-    @Binds
-    abstract fun provideFeedRepository(feedRepositoryImpl: FeedRepositoryImpl): FeedRepository
-}
