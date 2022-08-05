@@ -1,7 +1,9 @@
 package com.example.torangrepositorytestapp.di
 
+import com.example.torang_core.repository.FeedRepository
 import com.example.torang_core.repository.LoginRepository
 import com.example.torang_core.repository.MyReviewsRepository
+import com.example.torangrepository.FeedRepositoryImpl
 import com.example.torangrepository.LoginRepositoryImpl
 import com.example.torangrepository.MyReviewsRepositoryImpl
 import dagger.Binds
@@ -20,4 +22,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun provideLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
+
+    @Binds
+    abstract fun provideFeedRepository(feedRepositoryImpl: FeedRepositoryImpl): FeedRepository
 }
