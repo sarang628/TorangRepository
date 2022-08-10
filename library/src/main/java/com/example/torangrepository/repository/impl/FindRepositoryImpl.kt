@@ -184,47 +184,47 @@ class FindRepositoryImpl @Inject constructor(
     }
 
     override suspend fun clickMap() {
-        TODO("Not yet implemented")
+
     }
 
     override fun getCurrentPosition(): StateFlow<Int> {
-        TODO("Not yet implemented")
+        return MutableStateFlow(0)
     }
 
     override fun getIsFirstRequestLocation(): StateFlow<Boolean> {
-        TODO("Not yet implemented")
+        return MutableStateFlow(false)
     }
 
-    override fun getSearchedRestaurant(): Flow<List<Restaurant>> {
-        TODO("Not yet implemented")
+    override fun getSearchedRestaurant(): StateFlow<List<Restaurant>> {
+        return MutableStateFlow<List<Restaurant>>(ArrayList())
     }
 
     override fun hasGrantPermission(): MutableStateFlow<Int> {
-        TODO("Not yet implemented")
+        return MutableStateFlow(0)
     }
 
     override fun isRequestingLocation(): StateFlow<Boolean> {
-        TODO("Not yet implemented")
+        return MutableStateFlow(false)
     }
 
     override suspend fun notifyReceiveLocation() {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun notifyRequestLocation(): RequestLocationResult {
-        TODO("Not yet implemented")
+        return RequestLocationResult.SUCCESS
     }
 
     override suspend fun permissionGranated() {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun requestLocationPermission(b: Boolean) {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun searchIfRestaurantEmpty() {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun searchRestaurant(
@@ -240,14 +240,14 @@ class FindRepositoryImpl @Inject constructor(
         southWestLongitude: Double,
         searchType: SearchType
     ) {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun setCurrentPosition(position: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun showRestaurantCardAndFilter(): StateFlow<Boolean> {
-        TODO("Not yet implemented")
+        return MutableStateFlow(false)
     }
 }
