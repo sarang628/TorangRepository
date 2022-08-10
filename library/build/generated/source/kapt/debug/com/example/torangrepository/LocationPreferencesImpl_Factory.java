@@ -2,6 +2,9 @@
 package com.example.torangrepository;
 
 import android.content.Context;
+
+import com.example.torangrepository.repository.impl.LocationPreferencesImpl;
+
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.inject.Provider;

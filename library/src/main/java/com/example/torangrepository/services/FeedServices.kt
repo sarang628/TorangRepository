@@ -4,8 +4,8 @@ import com.example.torang_core.data.model.Favorite
 import com.example.torang_core.data.model.FeedResponse
 import com.example.torang_core.data.model.Like
 import com.example.torang_core.data.model.Review
-import com.example.torangrepository.modules.RetrofitModule
-import com.example.torangrepository.modules.TorangOkhttpClient
+import com.example.torangrepository.di.modules.RetrofitModule
+import com.example.torangrepository.di.modules.TorangOkhttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

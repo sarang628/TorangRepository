@@ -4,6 +4,7 @@ package com.example.torangrepository;
 import android.content.Context;
 import com.example.torang_core.data.dao.LoggedInUserDao;
 import com.example.torang_core.data.dao.UserDao;
+import com.example.torangrepository.repository.impl.FeedRepositoryImpl;
 import com.example.torangrepository.services.FeedServices;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;

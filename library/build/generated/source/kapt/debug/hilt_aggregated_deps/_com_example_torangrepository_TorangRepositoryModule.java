@@ -7,7 +7,7 @@ import dagger.hilt.processor.internal.aggregateddeps.AggregatedDeps;
  */
 @AggregatedDeps(
     components = "dagger.hilt.components.SingletonComponent",
-    modules = "com.example.torangrepository.TorangRepositoryModule"
+    modules = "com.example.torangrepository.repository.impl.TorangRepositoryModule"
 )
 public class _com_example_torangrepository_TorangRepositoryModule {
 }

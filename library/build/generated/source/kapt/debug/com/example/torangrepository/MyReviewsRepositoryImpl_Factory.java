@@ -7,6 +7,9 @@ import com.example.torang_core.data.dao.MyReviewDao;
 import com.example.torang_core.data.dao.UserDao;
 import com.example.torang_core.datasource.local.MyReviewsLocalDataSource;
 import com.example.torang_core.datasource.local.MyReviewsRemoteDataSource;
+import com.example.torangrepository.repository.impl.MyReviewsRepositoryImpl;
+import com.example.torangrepository.services.RestaurantService;
+
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.inject.Provider;
