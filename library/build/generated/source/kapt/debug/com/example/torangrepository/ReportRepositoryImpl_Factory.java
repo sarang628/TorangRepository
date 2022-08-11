@@ -3,7 +3,6 @@ package com.example.torangrepository;
 
 import com.example.torang_core.data.dao.FeedDao;
 import com.example.torangrepository.services.ReportService;
-
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.inject.Provider;

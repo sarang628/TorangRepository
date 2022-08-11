@@ -5,7 +5,6 @@ import android.content.Context;
 import com.example.torang_core.data.dao.LoggedInUserDao;
 import com.example.torang_core.data.dao.UserDao;
 import com.example.torangrepository.services.RestaurantService;
-
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.inject.Provider;
