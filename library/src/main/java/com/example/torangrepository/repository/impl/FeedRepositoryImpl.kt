@@ -37,7 +37,7 @@ class FeedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadFeed(): ArrayList<RemoteFeed> {
-        val feeds = feedServices.getFeeds(HashMap())
+        //val feeds = feedServices.getFeeds(HashMap())
         return ArrayList()
     }
 }
