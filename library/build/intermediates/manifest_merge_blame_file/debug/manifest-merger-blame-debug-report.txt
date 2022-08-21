@@ -4,19 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="23"
-6-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml
+6-->C:\Users\YANGSARANG\StudioProjects\TorangRepository\library\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="30" />
-7-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml
+7-->C:\Users\YANGSARANG\StudioProjects\TorangRepository\library\src\main\AndroidManifest.xml
 8
-9    <uses-permission android:name="android.permission.INTERNET" />
-9-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml:5:5-67
-9-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml:5:22-64
-10
-11    <application
-11-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml:6:5-8:47
-12        android:networkSecurityConfig="@xml/network_security_config"
-12-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml:7:9-69
-13        android:usesCleartextTraffic="true" />
-13-->/Users/sarangyang/AndroidStudioProjects/TorangRepository/library/src/main/AndroidManifest.xml:8:9-44
-14
-15</manifest>
+9</manifest>

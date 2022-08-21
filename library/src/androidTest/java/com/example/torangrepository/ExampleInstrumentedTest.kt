@@ -22,7 +22,7 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.torangrepository.test", appContext.packageName)
+        assertEquals("com.example.torangrepository.repository.test.test", appContext.packageName)
     }
 
     @Test
