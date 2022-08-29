@@ -48,13 +48,13 @@ buildscript {
     ext.kotlinVersion = '1.6.10'
     ext.navigationVersion = '2.5.0-alpha03'
     ext.ktlintVersion = '0.33.0'
-    ext.hiltVersion = '2.38.1'
+    ext.hiltVersion = '2.40.1'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
