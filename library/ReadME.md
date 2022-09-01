@@ -65,7 +65,7 @@ class CustomTestRunner : AndroidJUnitRunner() {
     fun login() {
         runBlocking {
             loggedInUserDao.insert(
-                LoggedInUserData(
+                LoggedInUserEntity(
                     userId = 4
                 )
             )
