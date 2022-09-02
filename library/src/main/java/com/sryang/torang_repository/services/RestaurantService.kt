@@ -2,18 +2,10 @@ package com.sryang.torang_repository.services
 
 import com.sryang.torang_core.data.data.*
 import com.sryang.torang_repository.data.remote.response.Response
-import com.sryang.torang_repository.di.modules.RetrofitModule
-import com.sryang.torang_repository.di.modules.TorangOkhttpClient
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
 interface RestaurantService {
     @FormUrlEncoded
@@ -145,31 +137,4 @@ interface RestaurantService {
 
     @POST("addFavorite")
     suspend fun addFavorite(@Body favorite: Favorite): Favorite
-}
-
-/**
- * 토랑 서비스
- */
-@Singleton
-class ProductRestaurantService @Inject constructor(
-    private val torangOkHttpClientImpl: TorangOkhttpClient,
-    private val retrofitModule: RetrofitModule
-) {
-    private var url = "https://www.vrscoo.com:8080/"
-    fun create(): RestaurantService {
-        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
-            RestaurantService::class.java
-        )
-    }
-}
-
-@InstallIn(SingletonComponent::class)
-@Module
-class RestaurantServiceModule {
-
-    @Singleton
-    @Provides
-    fun provideRestaurantService(productRestaurantService: ProductRestaurantService): RestaurantService {
-        return productRestaurantService.create()
-    }
 }

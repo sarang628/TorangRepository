@@ -1,6 +1,7 @@
 package com.sryang.torang_repository
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -24,9 +25,10 @@ class FeedRepositoryTestActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLoad.setOnClickListener {
+            binding.pb.visibility = View.VISIBLE
             lifecycleScope.launch {
                 val response = feedRepository.loadFeed()
-
+                binding.pb.visibility = View.INVISIBLE
                 if (response.status != 200) {
                     binding.tvResult.text = "status = ${response.status}\n" +
                             "data =  ${response.data}"

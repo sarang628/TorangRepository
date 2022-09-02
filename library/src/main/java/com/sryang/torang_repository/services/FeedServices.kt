@@ -1,22 +1,13 @@
 package com.sryang.torang_repository.services
 
-import com.sryang.torang_repository.di.modules.RetrofitModule
 import com.sryang.torang_core.data.data.Favorite
 import com.sryang.torang_core.data.data.FeedResponse
 import com.sryang.torang_core.data.data.Like
 import com.sryang.torang_core.data.data.Review
-import com.sryang.torang_repository.di.modules.TorangOkhttpClient
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import retrofit2.http.Body
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import java.util.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
 interface FeedServices {
     @FormUrlEncoded
@@ -37,51 +28,4 @@ interface FeedServices {
 
     @POST("addFavorite")
     suspend fun addFavorite(@Body favorite: Favorite): Favorite
-}
-
-/**
- * 실서버 신고 서비스
- */
-@Singleton
-class ProductFeedService @Inject constructor(
-    private val torangOkHttpClientImpl: TorangOkhttpClient,
-    private val retrofitModule: RetrofitModule
-) {
-    private var url = "https://www.vrscoo.com:8080/"
-    fun create(): FeedServices {
-        return retrofitModule
-            .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
-            .create(FeedServices::class.java)
-    }
-}
-
-
-/**
- * 로컬 서버 신고 서비스
- */
-@Singleton
-class LocalFeedService @Inject constructor(
-    private val torangOkHttpClientImpl: TorangOkhttpClient,
-    private val retrofitModule: RetrofitModule
-) {
-    private var url = "http://10.0.2.2:8080/"
-    fun create(): FeedServices {
-        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
-            FeedServices::class.java
-        )
-    }
-}
-
-@InstallIn(SingletonComponent::class)
-@Module
-class FeedServiceModule {
-
-    @Singleton
-    @Provides
-    fun provideFeedService(
-        feedProductFeedService: ProductFeedService,
-        localFeedService: LocalFeedService
-    ): FeedServices {
-        return feedProductFeedService.create()
-    }
 }
