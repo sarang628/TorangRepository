@@ -2,18 +2,14 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.torang_core.data.model.*
-import com.sryang.torang_core.data.data.HoursOfOperation
-import com.sryang.torang_core.data.data.Location
-import com.sryang.torang_core.data.data.Menu
-import com.sryang.torang_core.data.data.Review
-import com.sryang.torang_core.repository.InfoRepository
-import com.sryang.torang_core.repository.MapRepository
+import com.sryang.torang_core.data.data.*
+import com.sryang.torang_repository.repository.InfoRepository
 import com.sryang.torang_core.repository.MenuRepository
 import com.sryang.torang_core.repository.ReviewRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity
+import com.sryang.torang_repository.repository.MapRepository
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.Binds
 import dagger.Module

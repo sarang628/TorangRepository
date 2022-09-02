@@ -1,13 +1,13 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.torang_core.data.dao.LoggedInUserDao
-import com.example.torang_core.data.model.LoggedInUserEntity
-import com.example.torang_core.data.model.User
-import com.example.torang_core.repository.LoginRepository
-import com.sryang.torang_repository.services.RestaurantService
 import com.example.torangrepository.repository.preference.TorangPreference
+import com.sryang.torang_core.data.data.User
+import com.sryang.torang_core.repository.LoginRepository
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

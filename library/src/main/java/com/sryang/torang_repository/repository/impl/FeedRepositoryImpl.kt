@@ -1,14 +1,14 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import com.example.torang_core.data.dao.LoggedInUserDao
-import com.example.torang_core.data.dao.UserDao
-import com.example.torang_core.data.model.*
-import com.example.torang_core.data.remote.RemoteFeed
-import com.example.torang_core.repository.FeedRepository
-import com.example.torang_core.util.Logger
 import com.example.torangrepository.repository.preference.TorangPreference
-import com.example.torangrepository.services.FeedServices
+import com.sryang.torang_repository.services.FeedServices
+import com.sryang.torang_core.data.data.Review
+import com.sryang.torang_core.data.remote.RemoteFeed
+import com.sryang.torang_core.repository.FeedRepository
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.UserDao
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -1,21 +1,20 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-
-import com.example.torang_core.data.dao.LoggedInUserDao
-import com.example.torang_core.data.dao.MyReviewDao
-import com.example.torang_core.data.dao.UserDao
-import com.example.torang_core.data.data.MyReview
-import com.example.torang_core.data.data.ReviewAndImage
-import com.example.torang_core.data.model.FeedData
-import com.example.torang_core.data.model.ReviewImage
-import com.example.torang_core.datasource.local.MyReviewsLocalDataSource
-import com.example.torang_core.datasource.local.MyReviewsRemoteDataSource
-import com.example.torang_core.repository.MyReviewsRepository
-import com.example.torang_core.util.Logger
-import com.sryang.torang_repository.services.RestaurantService
 import com.example.torangrepository.repository.preference.TorangPreference
+import com.sryang.torang_core.data.data.MyReview
+import com.sryang.torang_core.repository.MyReviewsRepository
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.MyReviewsLocalDataSource
+import com.sryang.torang_repository.data.MyReviewsRemoteDataSource
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.MyReviewDao
+import com.sryang.torang_repository.data.dao.UserDao
+import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,22 +31,22 @@ class MyReviewsRepositoryImpl @Inject constructor(
 ) :
     MyReviewsRepository {
 
-    override suspend fun getMyReviews(restaurantId: Int): List<ReviewAndImage> {
+    override suspend fun getMyReviews(restaurantId: Int): List<ReviewAndImageEntity> {
         val list = restaurantService.getMyReviews(HashMap<String, String>().apply {
             put("restaurant_id", restaurantId.toString())
             put("user_id", TorangPreference().getUserId(context).toString())
         })
 
-        val list1 = ArrayList<ReviewAndImage>()
+        val list1 = ArrayList<ReviewAndImageEntity>()
         for (review in list) {
-            list1.add(ReviewAndImage.parse(review))
+            //list1.add(ReviewAndImageEntity.parse(review))
         }
 
         //피드 추가하기
-        val feeds = ArrayList<FeedData>()
-        val images = ArrayList<ReviewImage>()
+        val feeds = ArrayList<FeedEntity>()
+        val images = ArrayList<ReviewImageEntity>()
         for (reviewAndInage in list1) {
-            FeedData.parse(reviewAndInage)?.let {
+            FeedEntity.parse(reviewAndInage)?.let {
                 feeds.add(it)
             }
 
@@ -69,7 +68,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
         return loggedInUserDao.getLoggedInUserEntity1()?.userId
     }
 
-    override fun getMyReviews1(restaurantId: Int): LiveData<List<ReviewAndImage>> {
+    override fun getMyReviews1(restaurantId: Int): LiveData<List<FeedEntity>> {
         Logger.d("${userId()}, $restaurantId")
         return myReviewDao.getMyReviews(userId(), restaurantId)
     }

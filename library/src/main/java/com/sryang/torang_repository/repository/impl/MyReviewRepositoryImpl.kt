@@ -1,22 +1,22 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.torang_core.data.dao.LoggedInUserDao
-import com.example.torang_core.data.dao.RestaurantDao
-import com.example.torang_core.data.dao.ReviewDao
-import com.example.torang_core.data.dao.UserDao
-import com.example.torang_core.data.data.ReviewAndImage
-import com.example.torang_core.data.model.FeedData
-import com.example.torang_core.data.model.ModifyFeedData
-import com.example.torang_core.data.model.RestaurantEntity
-import com.example.torang_core.data.model.ReviewImage
-import com.example.torang_core.repository.MyReviewRepository
-import com.example.torang_core.util.Logger
-import com.example.torangrepository.util.CountingFileRequestBody
-import com.sryang.torang_repository.services.RestaurantService
 import com.example.torangrepository.repository.preference.TorangPreference
+import com.example.torangrepository.util.CountingFileRequestBody
+import com.sryang.torang_core.data.data.ModifyFeedData
+import com.sryang.torang_core.repository.MyReviewRepository
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.RestaurantDao
+import com.sryang.torang_repository.data.dao.ReviewDao
+import com.sryang.torang_repository.data.dao.UserDao
+import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.RestaurantEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.MultipartBody
 import java.io.File
@@ -33,16 +33,16 @@ class MyReviewRepositoryImpl @Inject constructor(
     private val loggedInUserDao: LoggedInUserDao
 ) :
     MyReviewRepository {
-    override fun getMyReview(reviewId: Int): LiveData<ReviewAndImage?> {
+    override fun getMyReview(reviewId: Int): LiveData<FeedEntity?> {
         return reviewDao.getFeedbyReviewId(reviewId)
     }
 
-    override fun getUploadedPicture(reviewId: Int): LiveData<List<ReviewImage>> {
-        return MutableLiveData<List<ReviewImage>>()
+    override fun getUploadedPicture(reviewId: Int): LiveData<List<ReviewImageEntity>> {
+        return MutableLiveData<List<ReviewImageEntity>>()
     }
 
 
-    override suspend fun uploadReview(review: ReviewAndImage) {
+    override suspend fun uploadReview(review: ReviewAndImageEntity) {
 
         if (review.review == null)
             throw IllegalArgumentException("리뷰 데이터가 없습니다.")
@@ -76,14 +76,14 @@ class MyReviewRepositoryImpl @Inject constructor(
             val result = restaurantService.fileUpload(review.toMap(), pictureList)
 
             //피드 추가하기
-            val list1 = ArrayList<ReviewAndImage>()
-            list1.add(ReviewAndImage.parse(result))
+            val list1 = ArrayList<ReviewAndImageEntity>()
+            //list1.add(ReviewAndImageEntity.parse(result))
 
             //피드 추가하기
-            val feeds = ArrayList<FeedData>()
-            val images = ArrayList<ReviewImage>()
+            val feeds = ArrayList<FeedEntity>()
+            val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                FeedData.parse(reviewAndInage)?.let {
+                FeedEntity.parse(reviewAndInage)?.let {
                     feeds.add(it)
                 }
                 reviewAndInage.images?.let {
@@ -98,7 +98,7 @@ class MyReviewRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun modifyReview(review: ReviewAndImage) {
+    override suspend fun modifyReview(review: ReviewAndImageEntity) {
 
         if (review.review == null)
             throw IllegalArgumentException("리뷰 데이터가 없습니다.")
@@ -132,14 +132,14 @@ class MyReviewRepositoryImpl @Inject constructor(
             val result = restaurantService.updateReview(review.toMap(), pictureList)
 
             //피드 추가기
-            val list1 = ArrayList<ReviewAndImage>()
-            list1.add(ReviewAndImage.parse(result))
+            val list1 = ArrayList<ReviewAndImageEntity>()
+            //list1.add(ReviewAndImageEntity.parse(result))
 
             //피드 추가하기
-            val feeds = ArrayList<FeedData>()
-            val images = ArrayList<ReviewImage>()
+            val feeds = ArrayList<FeedEntity>()
+            val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                FeedData.parse(reviewAndInage)?.let {
+                FeedEntity.parse(reviewAndInage)?.let {
                     feeds.add(it)
                 }
                 reviewAndInage.images?.let {
@@ -156,19 +156,19 @@ class MyReviewRepositoryImpl @Inject constructor(
 
     override suspend fun modifyReview(review: ModifyFeedData) {
 
-        if (review.reviewAndImage.review == null)
-            throw IllegalArgumentException("리뷰 데이터가 없습니다.")
+        /*if (review.reviewAndImage.review == null)
+            throw IllegalArgumentException("리뷰 데이터가 없습니다.")*/
 
-        if (review.reviewAndImage.user == null || review.reviewAndImage.user?.userId == -1)
-            throw IllegalArgumentException("사용자 정보가 없습니다.")
+        /*if (review.reviewAndImage.user == null || review.reviewAndImage.user?.userId == -1)
+            throw IllegalArgumentException("사용자 정보가 없습니다.")*/
 
         val fileList = ArrayList<File>()
 
-        review.reviewAndImage.images?.let {
+        /*review.reviewAndImage.images?.let {
             for (image in it) {
                 fileList.add(File(image.picture_url))
             }
-        }
+        }*/
 
         val pictureList = ArrayList<MultipartBody.Part>()
 
@@ -188,23 +188,23 @@ class MyReviewRepositoryImpl @Inject constructor(
             val result = restaurantService.updateReview(review.toMap(), pictureList)
 
             //피드 추가기
-            val list1 = ArrayList<ReviewAndImage>()
-            list1.add(ReviewAndImage.parse(result))
+            val list1 = ArrayList<ReviewAndImageEntity>()
+            //list1.add(ReviewAndImageEntity.parse(result))
 
             //피드 추가하기
-            val feeds = ArrayList<FeedData>()
-            val images = ArrayList<ReviewImage>()
+            val feeds = ArrayList<FeedEntity>()
+            val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                FeedData.parse(reviewAndInage)?.let {
+                FeedEntity.parse(reviewAndInage)?.let {
                     feeds.add(it)
                 }
                 reviewAndInage.images?.let {
-                    images.addAll(it)
+                    //images.addAll(it)
                 }
 
             }
             userDao.insertFeed(feedData = feeds)
-            userDao.deletePicturesByReviewId(review.reviewAndImage.review!!.review_id)
+            //userDao.deletePicturesByReviewId(review.reviewAndImage.review!!.review_id)
             userDao.insertPictures(images)
         } catch (e: Exception) {
             Logger.e(e.toString())

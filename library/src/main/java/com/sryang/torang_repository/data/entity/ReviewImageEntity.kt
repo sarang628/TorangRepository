@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.torang_core.data.model.Picture
+import com.sryang.torang_core.data.data.Picture
 
 @Entity
 data class ReviewImageEntity(

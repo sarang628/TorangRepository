@@ -6,8 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.torang_core.utilities.DATABASE_NAME
-import com.sryang.torang_core.data.dao.*
+import com.sryang.torang_core.utilities.DATABASE_NAME
 import com.sryang.torang_repository.data.dao.*
 import com.sryang.torang_repository.data.entity.*
 

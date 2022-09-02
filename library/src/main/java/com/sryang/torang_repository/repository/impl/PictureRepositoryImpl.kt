@@ -6,6 +6,7 @@ import com.sryang.torang_core.data.data.ReviewImage
 import com.sryang.torang_repository.repository.PicturesRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.PictureDao
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.Binds
 import dagger.Module
@@ -26,7 +27,7 @@ class PicturesRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun getFeedPicture(reviewId: Int): LiveData<List<ReviewImage>> {
+    override fun getFeedPicture(reviewId: Int): LiveData<List<ReviewImageEntity>> {
         Logger.d(reviewId)
         return pictureDao.getFeedImage(reviewId)
     }

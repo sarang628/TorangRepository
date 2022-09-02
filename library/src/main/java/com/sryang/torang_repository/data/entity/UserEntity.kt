@@ -3,8 +3,8 @@ package com.sryang.torang_repository.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.torang_core.data.model.User
 import com.google.gson.GsonBuilder
+import com.sryang.torang_core.data.data.User
 
 @Entity
 data class UserEntity(

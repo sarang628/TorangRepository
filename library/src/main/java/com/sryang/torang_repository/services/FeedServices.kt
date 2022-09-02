@@ -1,11 +1,11 @@
-package com.example.torangrepository.services
+package com.sryang.torang_repository.services
 
-import com.example.torang_core.data.model.Favorite
-import com.example.torang_core.data.model.FeedResponse
-import com.example.torang_core.data.model.Like
-import com.example.torang_core.data.model.Review
 import com.example.torangrepository.di.modules.RetrofitModule
-import com.example.torangrepository.di.modules.TorangOkhttpClient
+import com.sryang.torang_core.data.data.Favorite
+import com.sryang.torang_core.data.data.FeedResponse
+import com.sryang.torang_core.data.data.Like
+import com.sryang.torang_core.data.data.Review
+import com.sryang.torang_repository.di.modules.TorangOkhttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,7 +49,8 @@ class ProductFeedService @Inject constructor(
 ) {
     private var url = "https://www.vrscoo.com:8080/"
     fun create(): FeedServices {
-        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(FeedServices::class.java)
+        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
+            FeedServices::class.java)
     }
 }
 
@@ -64,7 +65,8 @@ class LocalFeedService @Inject constructor(
 ) {
     private var url = "http://10.0.2.2:8080/"
     fun create(): FeedServices {
-        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(FeedServices::class.java)
+        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
+            FeedServices::class.java)
     }
 }
 

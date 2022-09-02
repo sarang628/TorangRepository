@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.services
 
 import com.example.torangrepository.di.modules.RetrofitModule
-import com.example.torangrepository.di.modules.TorangOkhttpClient
+import com.sryang.torang_repository.di.modules.TorangOkhttpClient
 import com.sryang.torang_core.data.data.*
 import dagger.Module
 import dagger.Provides

@@ -3,7 +3,7 @@ package com.example.torangrepository.services
 import android.content.Context
 import com.example.torangrepository.repository.preference.TorangPreference
 import com.example.torangrepository.di.modules.RetrofitModule
-import com.example.torangrepository.di.modules.TorangOkhttpClient
+import com.sryang.torang_repository.di.modules.TorangOkhttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

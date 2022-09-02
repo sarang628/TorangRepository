@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.example.torangrepository.repository.preference.TorangPreference
-import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_core.data.data.Comment
 import com.sryang.torang_core.data.data.Restaurant
 import com.sryang.torang_core.data.data.User
@@ -15,7 +14,9 @@ import com.sryang.torang_repository.data.dao.CommentDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
+import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.repository.TimeLineDetailRepository
+import com.sryang.torang_repository.services.RestaurantService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -36,13 +37,13 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
 
     override suspend fun getComments(reviewId: String): ArrayList<Comment> {
         val list = restaurantService.getComments(reviewId)
-        //commentDao.insertComments(CommentEntity.parse(list))
+        commentDao.insertComments(CommentEntity.parse(list))
         return list
     }
 
-    override fun getComments(reviewId: Int): LiveData<List<Comment>> {
+    override fun getComments(reviewId: Int): LiveData<List<CommentEntity>> {
         Logger.d("getComments $reviewId")
-        //return commentDao.getComments(reviewId)
+        return commentDao.getComments(reviewId)
     }
 
     override fun getReview(): LiveData<Feed> {
@@ -97,7 +98,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
         return restaurantService.getComments(reviewId)
     }
 
-    override fun getComments(reviewId: Int): LiveData<List<Comment>> {
+    override fun getComments(reviewId: Int): LiveData<List<CommentEntity>> {
         TODO("Not yet implemented")
     }
 

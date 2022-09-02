@@ -3,6 +3,7 @@ package com.sryang.torang_repository.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sryang.torang_core.data.data.User
 
 @Entity
 data class LoggedInUserEntity(
@@ -28,7 +29,7 @@ data class LoggedInUserEntity(
 
     companion object {
         fun parse(user:
-                  UserEntity?): LoggedInUserEntity? {
+                  User?): LoggedInUserEntity? {
             if (user == null)
                 return null
 
@@ -36,7 +37,7 @@ data class LoggedInUserEntity(
                 userId = user.userId,
                 email = user.email,
                 userName = user.userName,
-                loginPlatform = user.loginPlatform,
+                //loginPlatform = user.loginPlatform,
                 create_date = user.create_date,
                 access_token = user.access_token,
                 profile_pic_url = user.profile_pic_url,

@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.torang_core.data.model.Comment
+import com.sryang.torang_core.data.data.Comment
 
 @Entity
 data class CommentEntity(

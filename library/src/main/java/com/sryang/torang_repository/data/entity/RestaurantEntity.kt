@@ -2,9 +2,9 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.torang_core.data.model.PriceObject
-import com.example.torang_core.data.model.Restaurant
-import com.example.torang_core.data.model.RestaurantTypeObject
+import com.sryang.torang_core.data.data.PriceObject
+import com.sryang.torang_core.data.data.Restaurant
+import com.sryang.torang_core.data.data.RestaurantTypeObject
 
 /**
  *     "address": "",

@@ -3,7 +3,7 @@ package com.sryang.torang_repository.repository.impl
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-import com.sryang.torang_core.repository.ProfileRepository
+import com.sryang.torang_repository.repository.ProfileRepository
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao

@@ -1,15 +1,16 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import com.example.torang_core.data.LocationPreferences
-import com.example.torang_core.data.dao.RestaurantDao
-import com.example.torang_core.data.model.*
-import com.example.torang_core.repository.FindRepository
-import com.example.torang_core.repository.RequestLocationResult
-import com.example.torang_core.util.Logger
+import com.sryang.torang_core.data.LocationPreferences
+import com.sryang.torang_core.data.data.*
+import com.sryang.torang_core.repository.FindRepository
+import com.sryang.torang_core.repository.RequestLocationResult
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.dao.RestaurantDao
+import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow

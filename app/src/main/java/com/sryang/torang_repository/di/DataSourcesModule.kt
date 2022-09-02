@@ -1,8 +1,9 @@
 package com.sryang.torang_repository.di
 
-import com.example.torang_core.data.model.ReviewImage
-import com.example.torang_core.datasource.local.MyReviewsLocalDataSource
-import com.example.torang_core.datasource.local.MyReviewsRemoteDataSource
+import com.sryang.torang_core.data.data.ReviewImage
+import com.sryang.torang_repository.data.MyReviewsLocalDataSource
+import com.sryang.torang_repository.data.MyReviewsRemoteDataSource
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,14 +20,14 @@ abstract class DataSourcesModule {
     abstract fun provideRemoteDataSource(myReviewsRemoteDataSourceImpl: MyReviewsRemoteDataSourceImpl): MyReviewsRemoteDataSource
 }
 
-class MyReviewsLocalDataSourceImpl @Inject constructor() : MyReviewsLocalDataSource{
+class MyReviewsLocalDataSourceImpl @Inject constructor() : MyReviewsLocalDataSource {
     override suspend fun getMyReviews(): List<ReviewImage> {
         return ArrayList()
     }
 }
 
-class MyReviewsRemoteDataSourceImpl @Inject constructor() : MyReviewsRemoteDataSource{
-    override suspend fun getMyReviews(): List<ReviewImage> {
+class MyReviewsRemoteDataSourceImpl @Inject constructor() : MyReviewsRemoteDataSource {
+    override suspend fun getMyReviews(): List<ReviewImageEntity> {
         return ArrayList()
     }
 }

@@ -2,8 +2,6 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.torang_core.data.dao.SearchDao
-import com.example.torang_core.data.model.Search
 import com.sryang.torang_core.repository.SearchRepository
 import com.sryang.torang_repository.data.dao.SearchDao
 import com.sryang.torang_repository.data.entity.SearchEntity
@@ -26,7 +24,7 @@ class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveHistory(keyword: String) {
-        val search = Search(keyword = keyword)
+        val search = SearchEntity(keyword = keyword)
         searchDao.insertAll(search)
     }
 

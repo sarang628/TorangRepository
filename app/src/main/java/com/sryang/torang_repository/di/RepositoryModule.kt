@@ -1,11 +1,11 @@
 package com.sryang.torang_repository.di
 
-import com.example.torang_core.repository.FeedRepository
-import com.example.torang_core.repository.LoginRepository
-import com.example.torang_core.repository.MyReviewsRepository
-import com.example.torangrepository.repository.impl.FeedRepositoryImpl
-import com.example.torangrepository.repository.impl.LoginRepositoryImpl
-import com.example.torangrepository.repository.impl.MyReviewsRepositoryImpl
+import com.sryang.torang_core.repository.FeedRepository
+import com.sryang.torang_core.repository.LoginRepository
+import com.sryang.torang_core.repository.MyReviewsRepository
+import com.sryang.torang_repository.repository.impl.FeedRepositoryImpl
+import com.sryang.torang_repository.repository.impl.LoginRepositoryImpl
+import com.sryang.torang_repository.repository.impl.MyReviewsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

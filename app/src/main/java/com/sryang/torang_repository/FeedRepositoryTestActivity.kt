@@ -3,7 +3,7 @@ package com.sryang.torang_repository
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.torang_core.repository.FeedRepository
+import com.sryang.torang_core.repository.FeedRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

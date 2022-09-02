@@ -1,10 +1,10 @@
-package com.sryang.torang_core.repository
+package com.sryang.torang_repository.repository
 
 import androidx.lifecycle.LiveData
-import com.example.torang_core.data.model.RestaurantEntity
-import com.sryang.torang_core.data.data.Location
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import com.sryang.torang_repository.data.entity.RestaurantEntity
+import com.sryang.torang_core.data.data.Location
 
 interface MapRepository {
     @Deprecated("findRepository로 이동")

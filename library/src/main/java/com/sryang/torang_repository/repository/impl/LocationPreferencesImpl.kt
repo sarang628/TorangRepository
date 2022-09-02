@@ -1,11 +1,10 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.torang_core.data.LocationPreferences
-import com.example.torang_core.util.Logger
+import com.sryang.torang_core.data.LocationPreferences
+import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.prefs.Preferences
 import javax.inject.Inject
 import javax.inject.Singleton
 

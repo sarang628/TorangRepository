@@ -1,7 +1,7 @@
-package com.sryang.torang_core.repository
+package com.sryang.torang_repository.repository
 
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.data.model.*
+import com.sryang.torang_core.repository.FeedListRepository
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.entity.UserEntity

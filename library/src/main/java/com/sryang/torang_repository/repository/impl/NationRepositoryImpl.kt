@@ -1,10 +1,9 @@
-package com.example.torangrepository.repository.impl
+package com.sryang.torang_repository.repository.impl
 
-import com.example.torang_core.data.NationItem
-import com.example.torang_core.data.dao.RestaurantDao
-import com.example.torang_core.data.model.Restaurant
-import com.example.torang_core.repository.NationRepository
-import com.sryang.torang_repository.repository.impl.MapSharedRepositoryImpl
+import com.sryang.torang_core.data.NationItem
+import com.sryang.torang_core.data.data.Restaurant
+import com.sryang.torang_core.repository.NationRepository
+import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.services.RestaurantService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
