@@ -1,9 +1,9 @@
 package com.sryang.torang_repository.repository.impl
 
-import com.example.torangrepository.services.ReportService
-import com.sryang.torang_core.repository.ReportAfterSupport
-import com.sryang.torang_core.repository.ReportReason
-import com.sryang.torang_core.repository.ReportRepository
+import com.sryang.torang_repository.services.ReportService
+import com.sryang.torang_repository.repository.ReportAfterSupport
+import com.sryang.torang_repository.repository.ReportReason
+import com.sryang.torang_repository.repository.ReportRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.FeedDao
 import dagger.Binds

@@ -1,4 +1,4 @@
-package com.sryang.torang_core.repository
+package com.sryang.torang_repository.repository
 
 /** 신고 저장소 */
 interface ReportRepository {

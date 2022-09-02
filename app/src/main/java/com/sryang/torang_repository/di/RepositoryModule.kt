@@ -1,8 +1,8 @@
 package com.sryang.torang_repository.di
 
-import com.sryang.torang_core.repository.FeedRepository
-import com.sryang.torang_core.repository.LoginRepository
-import com.sryang.torang_core.repository.MyReviewsRepository
+import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.LoginRepository
+import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_repository.repository.impl.FeedRepositoryImpl
 import com.sryang.torang_repository.repository.impl.LoginRepositoryImpl
 import com.sryang.torang_repository.repository.impl.MyReviewsRepositoryImpl

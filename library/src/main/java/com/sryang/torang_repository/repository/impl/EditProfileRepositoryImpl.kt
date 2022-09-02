@@ -2,11 +2,11 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.torangrepository.repository.preference.TorangPreference
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
-import com.example.torangrepository.util.CountingFileRequestBody
-import com.sryang.torang_core.repository.EditProfileRepository
-import com.sryang.torang_core.repository.EditProfileResponse
+import com.sryang.torang_repository.util.CountingFileRequestBody
+import com.sryang.torang_repository.repository.EditProfileRepository
+import com.sryang.torang_repository.repository.EditProfileResponse
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao

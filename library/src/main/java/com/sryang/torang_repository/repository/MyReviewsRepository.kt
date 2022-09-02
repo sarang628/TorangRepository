@@ -1,4 +1,4 @@
-package com.sryang.torang_core.repository
+package com.sryang.torang_repository.repository
 
 import androidx.lifecycle.LiveData
 import com.sryang.torang_core.data.data.MyReview

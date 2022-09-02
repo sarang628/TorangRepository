@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.sryang.torang_core.data.data.Comment
 import com.sryang.torang_core.data.data.Restaurant
 import com.sryang.torang_core.data.entity.Feed
-import com.sryang.torang_core.repository.LoginCheckableRepository
 import com.sryang.torang_repository.data.entity.CommentEntity
 
 interface TimeLineDetailRepository : LoginCheckableRepository {

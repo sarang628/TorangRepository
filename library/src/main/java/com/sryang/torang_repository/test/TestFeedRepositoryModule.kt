@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.test
 
 import com.sryang.torang_core.data.remote.RemoteFeed
-import com.sryang.torang_core.repository.FeedRepository
+import com.sryang.torang_repository.repository.FeedRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

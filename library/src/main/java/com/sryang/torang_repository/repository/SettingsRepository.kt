@@ -1,4 +1,4 @@
-package com.sryang.torang_core.repository
+package com.sryang.torang_repository.repository
 
 interface SettingsRepository {
     suspend fun logout()

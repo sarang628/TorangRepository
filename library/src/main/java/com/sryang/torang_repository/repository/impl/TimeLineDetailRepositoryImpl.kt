@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-import com.example.torangrepository.repository.preference.TorangPreference
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_core.data.data.Comment
 import com.sryang.torang_core.data.data.Restaurant
 import com.sryang.torang_core.data.data.User

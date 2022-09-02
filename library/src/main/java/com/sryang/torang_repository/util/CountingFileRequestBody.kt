@@ -1,4 +1,4 @@
-package com.example.torangrepository.util
+package com.sryang.torang_repository.util
 
 import okio.source
 import okhttp3.internal.closeQuietly

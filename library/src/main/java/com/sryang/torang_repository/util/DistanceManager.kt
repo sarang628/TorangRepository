@@ -1,4 +1,4 @@
-package com.example.torangrepository.util
+package com.sryang.torang_repository.util
 
 import java.lang.Math.*
 import kotlin.math.pow

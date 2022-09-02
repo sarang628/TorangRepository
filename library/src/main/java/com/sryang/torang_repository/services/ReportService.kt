@@ -1,8 +1,8 @@
-package com.example.torangrepository.services
+package com.sryang.torang_repository.services
 
 import android.content.Context
-import com.example.torangrepository.repository.preference.TorangPreference
-import com.example.torangrepository.di.modules.RetrofitModule
+import com.sryang.torang_repository.repository.preference.TorangPreference
+import com.sryang.torang_repository.di.modules.RetrofitModule
 import com.sryang.torang_repository.di.modules.TorangOkhttpClient
 import dagger.Module
 import dagger.Provides

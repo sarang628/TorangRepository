@@ -1,11 +1,11 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import com.example.torangrepository.repository.preference.TorangPreference
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.FeedServices
 import com.sryang.torang_core.data.data.Review
 import com.sryang.torang_core.data.remote.RemoteFeed
-import com.sryang.torang_core.repository.FeedRepository
+import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao

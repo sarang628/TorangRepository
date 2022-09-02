@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.services
 
-import com.example.torangrepository.di.modules.RetrofitModule
+import com.sryang.torang_repository.di.modules.RetrofitModule
 import com.sryang.torang_core.data.data.Favorite
 import com.sryang.torang_core.data.data.FeedResponse
 import com.sryang.torang_core.data.data.Like

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.sryang.torang_core.data.data.*
 import com.sryang.torang_repository.repository.InfoRepository
-import com.sryang.torang_core.repository.MenuRepository
-import com.sryang.torang_core.repository.ReviewRepository
+import com.sryang.torang_repository.repository.MenuRepository
+import com.sryang.torang_repository.repository.ReviewRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity

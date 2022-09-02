@@ -2,7 +2,7 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.repository.SearchRepository
+import com.sryang.torang_repository.repository.SearchRepository
 import com.sryang.torang_repository.data.dao.SearchDao
 import com.sryang.torang_repository.data.entity.SearchEntity
 import dagger.Binds

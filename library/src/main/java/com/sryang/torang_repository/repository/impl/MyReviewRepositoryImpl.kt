@@ -3,10 +3,10 @@ package com.sryang.torang_repository.repository.impl
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.torangrepository.repository.preference.TorangPreference
-import com.example.torangrepository.util.CountingFileRequestBody
+import com.sryang.torang_repository.repository.preference.TorangPreference
+import com.sryang.torang_repository.util.CountingFileRequestBody
 import com.sryang.torang_core.data.data.ModifyFeedData
-import com.sryang.torang_core.repository.MyReviewRepository
+import com.sryang.torang_repository.repository.MyReviewRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao

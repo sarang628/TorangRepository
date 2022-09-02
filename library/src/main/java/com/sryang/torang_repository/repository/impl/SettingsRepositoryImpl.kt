@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository.impl
 
-import com.sryang.torang_core.repository.SettingsRepository
+import com.sryang.torang_repository.repository.SettingsRepository
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import dagger.Binds
 import dagger.Module

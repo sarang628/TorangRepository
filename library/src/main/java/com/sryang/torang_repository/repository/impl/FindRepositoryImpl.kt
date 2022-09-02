@@ -6,8 +6,8 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import com.sryang.torang_core.data.LocationPreferences
 import com.sryang.torang_core.data.data.*
-import com.sryang.torang_core.repository.FindRepository
-import com.sryang.torang_core.repository.RequestLocationResult
+import com.sryang.torang_repository.repository.FindRepository
+import com.sryang.torang_repository.repository.RequestLocationResult
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity

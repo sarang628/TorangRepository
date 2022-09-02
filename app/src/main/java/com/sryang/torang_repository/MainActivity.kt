@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.sryang.torang_core.repository.FeedRepository
-import com.sryang.torang_core.repository.LoginRepository
-import com.sryang.torang_core.repository.MyReviewsRepository
+import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.LoginRepository
+import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_core.util.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
