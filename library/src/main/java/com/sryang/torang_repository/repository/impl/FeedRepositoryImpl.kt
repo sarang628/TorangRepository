@@ -1,17 +1,23 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_repository.services.FeedServices
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.sryang.torang_core.data.data.Review
-import com.sryang.torang_core.data.remote.RemoteFeed
-import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_core.data.entity.Feed
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
+import com.sryang.torang_repository.data.remote.response.Response
+import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.preference.TorangPreference
+import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.io.IOException
+import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.streams.toList
 
 @Singleton
 class FeedRepositoryImpl @Inject constructor(
@@ -36,8 +42,21 @@ class FeedRepositoryImpl @Inject constructor(
         userDao.deleteFeed(reviewId)
     }
 
-    override suspend fun loadFeed(): ArrayList<RemoteFeed> {
-        //val feeds = feedServices.getFeeds(HashMap())
-        return ArrayList()
+    @RequiresApi(Build.VERSION_CODES.N)
+    override suspend fun loadFeed(): Response<List<Feed>> {
+
+        try {
+            val feedList = feedServices.getFeeds(HashMap())
+            return Response(
+                status = 200,
+                data = feedList.stream().map { Feed(userId = 0) }.toList()
+            )
+        } catch (e: UnknownHostException) {
+            Logger.e(e.toString())
+            return Response(status = 400)
+        } catch (e: IOException) {
+            Logger.e(e.toString())
+            return Response(status = 400)
+        }
     }
 }

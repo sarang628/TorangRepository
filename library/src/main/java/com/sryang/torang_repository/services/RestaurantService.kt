@@ -1,8 +1,9 @@
 package com.sryang.torang_repository.services
 
+import com.sryang.torang_core.data.data.*
+import com.sryang.torang_repository.data.remote.response.Response
 import com.sryang.torang_repository.di.modules.RetrofitModule
 import com.sryang.torang_repository.di.modules.TorangOkhttpClient
-import com.sryang.torang_core.data.data.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

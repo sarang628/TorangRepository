@@ -1,11 +1,15 @@
 package com.sryang.torang_repository
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.databinding.ActivityFeedRepositoryTestBinding
 import com.sryang.torang_repository.repository.FeedRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.concurrent.Callable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -16,10 +20,20 @@ class FeedRepositoryTestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed_repository_test)
+        val binding = ActivityFeedRepositoryTestBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        lifecycleScope.launch {
-            feedRepository.loadFeed()
+        binding.btnLoad.setOnClickListener {
+            lifecycleScope.launch {
+                val response = feedRepository.loadFeed()
+
+                if (response.status != 200) {
+                    binding.tvResult.text = "status = ${response.status}\n" +
+                            "data =  ${response.data}"
+                } else {
+                    binding.tvResult.text = response.data.toString()
+                }
+            }
         }
     }
 }

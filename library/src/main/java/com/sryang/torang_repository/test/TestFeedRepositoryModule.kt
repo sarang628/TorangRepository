@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.test
 
-import com.sryang.torang_core.data.remote.RemoteFeed
+import com.sryang.torang_core.data.entity.Feed
+import com.sryang.torang_repository.data.remote.response.Response
 import com.sryang.torang_repository.repository.FeedRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,8 +12,9 @@ class TestFeedRepositoryImpl @Inject constructor() : FeedRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun loadFeed(): ArrayList<RemoteFeed> {
-        return ArrayList<RemoteFeed>().apply {
+    override suspend fun loadFeed(): Response<List<Feed>> {
+        return Response(400)
+        /*return ArrayList<RemoteFeed>().apply {
             add(
                 RemoteFeed(
                     name = "sryang",
@@ -83,6 +85,6 @@ class TestFeedRepositoryImpl @Inject constructor() : FeedRepository {
                     )
                 )
             )
-        }
+        }*/
     }
 }

@@ -49,8 +49,9 @@ class ProductFeedService @Inject constructor(
 ) {
     private var url = "https://www.vrscoo.com:8080/"
     fun create(): FeedServices {
-        return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
-            FeedServices::class.java)
+        return retrofitModule
+            .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
+            .create(FeedServices::class.java)
     }
 }
 
@@ -66,7 +67,8 @@ class LocalFeedService @Inject constructor(
     private var url = "http://10.0.2.2:8080/"
     fun create(): FeedServices {
         return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
-            FeedServices::class.java)
+            FeedServices::class.java
+        )
     }
 }
 
@@ -76,7 +78,10 @@ class FeedServiceModule {
 
     @Singleton
     @Provides
-    fun provideFeedService(feedProductFeedService: ProductFeedService, localFeedService: LocalFeedService): FeedServices {
+    fun provideFeedService(
+        feedProductFeedService: ProductFeedService,
+        localFeedService: LocalFeedService
+    ): FeedServices {
         return feedProductFeedService.create()
     }
 }
