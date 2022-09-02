@@ -35,3 +35,10 @@ data class ReviewAndImageEntity(
     }
 }
 
+
+fun ReviewAndImageEntity.toFeedEntity(): FeedEntity {
+    return FeedEntity(
+        userId = user!!.userId,
+        review_id = review!!.review_id
+    )
+}

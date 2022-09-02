@@ -12,10 +12,7 @@ import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
 import com.sryang.torang_repository.data.dao.UserDao
-import com.sryang.torang_repository.data.entity.FeedEntity
-import com.sryang.torang_repository.data.entity.RestaurantEntity
-import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
-import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import com.sryang.torang_repository.data.entity.*
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.MultipartBody
@@ -83,7 +80,7 @@ class MyReviewRepositoryImpl @Inject constructor(
             val feeds = ArrayList<FeedEntity>()
             val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                FeedEntity.parse(reviewAndInage)?.let {
+                reviewAndInage.toFeedEntity()?.let {
                     feeds.add(it)
                 }
                 reviewAndInage.images?.let {
@@ -139,7 +136,7 @@ class MyReviewRepositoryImpl @Inject constructor(
             val feeds = ArrayList<FeedEntity>()
             val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                FeedEntity.parse(reviewAndInage)?.let {
+                reviewAndInage.toFeedEntity()?.let {
                     feeds.add(it)
                 }
                 reviewAndInage.images?.let {
@@ -195,7 +192,7 @@ class MyReviewRepositoryImpl @Inject constructor(
             val feeds = ArrayList<FeedEntity>()
             val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                FeedEntity.parse(reviewAndInage)?.let {
+                reviewAndInage.toFeedEntity()?.let {
                     feeds.add(it)
                 }
                 reviewAndInage.images?.let {

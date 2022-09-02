@@ -14,6 +14,7 @@ import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import com.sryang.torang_repository.data.entity.toFeedEntity
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -46,7 +47,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
         val feeds = ArrayList<FeedEntity>()
         val images = ArrayList<ReviewImageEntity>()
         for (reviewAndInage in list1) {
-            FeedEntity.parse(reviewAndInage)?.let {
+            reviewAndInage.toFeedEntity()?.let {
                 feeds.add(it)
             }
 

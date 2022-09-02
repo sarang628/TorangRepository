@@ -10,30 +10,21 @@ data class FeedEntity(
     @PrimaryKey
     val review_id: Int = -1,
     @ColumnInfo(name = "user_id") val userId: Int,
-    val is_favority: Boolean? = false,
-    val contents: String? = null,
-    val create_date: String? = null,
-    val rating: Float? = 0f,
-    val userName: String? = "",
-    val profile_pic_url: String? = "",
-    val like_amount: Int? = 0,
-    val comment_amount: Int? = 0,
+    @ColumnInfo(name = "is_favority") val is_favority: Boolean? = false,
+    @ColumnInfo(name = "contents") val contents: String? = null,
+    @ColumnInfo(name = "create_date") val create_date: String? = null,
+    @ColumnInfo(name = "rating") val rating: Float? = 0f,
+    @ColumnInfo(name = "userName") val userName: String? = "",
+    @ColumnInfo(name = "profile_pic_url") val profile_pic_url: String? = "",
+    @ColumnInfo(name = "like_amount") val like_amount: Int? = 0,
+    @ColumnInfo(name = "comment_amount") val comment_amount: Int? = 0,
     @ColumnInfo(name = "restaurant_name") val restaurantName: String? = "",
     @ColumnInfo(name = "restaurant_id") val restaurantId: Int? = 0
-) {
-    fun toReview(): Review {
-        return Review().apply {
-            this.review_id = this@FeedEntity.review_id
-        }
-    }
+)
 
-    companion object {
-        fun parse(reviewAndImage: ReviewAndImageEntity): FeedEntity {
-            return FeedEntity(
-                userId = reviewAndImage.user!!.userId,
-                review_id = reviewAndImage.review!!.review_id
-            )
-        }
+fun FeedEntity.toReview(): Review {
+    return Review().apply {
+        this.review_id = this@toReview.review_id
     }
 }
 
