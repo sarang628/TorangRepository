@@ -1,6 +1,9 @@
 # 안드로이드 저장소 테스트 환경 설정하기
+
 [TOC]
+
 ## 환경설정하기
+
 ### 의존성 추가하기
 
 ```
@@ -48,6 +51,7 @@ class CustomTestRunner : AndroidJUnitRunner() {
 ```
 
 ## 로그인 상태 만들기
+
 ```
 @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -73,5 +77,36 @@ class CustomTestRunner : AndroidJUnitRunner() {
     }
 ```
 
+# Feed 테스트하기
 
-#Feed 테스트하기
+피드 서비스 모듈
+
+root build.gradle 서비스 모드 선택 정의하기
+
+```
+feedService = "\"real\"" // real, local, test
+```
+
+
+```
+@InstallIn(SingletonComponent::class)
+@Module
+class FeedServiceModule {
+
+    @Singleton
+    @Provides
+    fun provideFeedService(
+        feedProductFeedService: ProductFeedService,
+        localFeedService: LocalFeedService,
+        testFeedServices: TestFeedService
+    ): FeedServices {
+        return when (BuildConfig.feedService) {
+            "test" -> testFeedServices
+            "local" -> localFeedService.create()
+            "real" -> feedProductFeedService.create()
+            else
+            -> feedProductFeedService.create()
+        }
+    }
+} 
+```
