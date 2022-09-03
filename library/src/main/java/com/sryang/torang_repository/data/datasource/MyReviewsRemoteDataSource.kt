@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.data
+package com.sryang.torang_repository.data.datasource
 
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 

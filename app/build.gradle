@@ -93,4 +93,5 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
     // ...with Java.
     //androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.38.1")
+    kapt "org.xerial:sqlite-jdbc:3.34.0"
 }

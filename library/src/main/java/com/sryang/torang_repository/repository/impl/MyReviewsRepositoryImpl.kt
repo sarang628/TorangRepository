@@ -6,8 +6,8 @@ import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_core.data.data.MyReview
 import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_core.util.Logger
-import com.sryang.torang_repository.data.MyReviewsLocalDataSource
-import com.sryang.torang_repository.data.MyReviewsRemoteDataSource
+import com.sryang.torang_repository.data.datasource.MyReviewsLocalDataSource
+import com.sryang.torang_repository.data.datasource.MyReviewsRemoteDataSource
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.MyReviewDao
 import com.sryang.torang_repository.data.dao.UserDao

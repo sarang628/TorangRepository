@@ -2,6 +2,7 @@ package com.sryang.torang_repository.di.modules
 
 import com.sryang.torang_repository.services.FeedServices
 import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.test.TestFeedService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,9 +51,11 @@ class FeedServiceModule {
     @Provides
     fun provideFeedService(
         feedProductFeedService: ProductFeedService,
-        localFeedService: LocalFeedService
+        localFeedService: LocalFeedService,
+        testFeedServices: TestFeedService
     ): FeedServices {
-        return feedProductFeedService.create()
+        //return feedProductFeedService.create()
+        return testFeedServices
     }
 }
 
