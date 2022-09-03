@@ -72,3 +72,6 @@ class CustomTestRunner : AndroidJUnitRunner() {
         }
     }
 ```
+
+
+#Feed 테스트하기

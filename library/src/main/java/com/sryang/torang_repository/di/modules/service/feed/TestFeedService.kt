@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.test
+package com.sryang.torang_repository.di.modules.service.feed
 
 import android.content.Context
 import com.example.torangrepository.R

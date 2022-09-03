@@ -42,6 +42,8 @@ ext {
 
     torangRepositoryVersion = '5dd8950a5a'
     coreVersion = 'b5609b3586'
+
+    feedService = "\"real\"" // real, local, test
 }
 
 buildscript {
