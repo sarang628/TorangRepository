@@ -1,23 +1,23 @@
-package com.sryang.torang_repository.di.modules.service
+package com.sryang.torang_repository.services.feed
 
 import com.sryang.torang_repository.di.modules.RetrofitModule
 import com.sryang.torang_repository.di.modules.TorangOkhttpClient
-import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.services.FeedServices
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 토랑 서비스
+ * 로컬 서버 피드 서비스
  */
 @Singleton
-class ProductRestaurantService @Inject constructor(
+class LocalFeedServiceImpl @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "https://www.vrscoo.com:8080/"
-    fun create(): RestaurantService {
+    private var url = "http://10.0.2.2:8080/"
+    fun create(): FeedServices {
         return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
-            RestaurantService::class.java
+            FeedServices::class.java
         )
     }
 }

@@ -7,7 +7,7 @@ import com.sryang.torang_core.data.entity.Feed
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
-import com.sryang.torang_repository.data.datasource.FeedRemoteDataSource
+import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.data.remote.response.Response
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference

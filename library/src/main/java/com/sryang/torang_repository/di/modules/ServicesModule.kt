@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.di.modules
 
-import com.sryang.torang_repository.di.modules.service.ProductRestaurantService
+import com.sryang.torang_repository.services.ProductRestaurantService
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.Module
 import dagger.Provides

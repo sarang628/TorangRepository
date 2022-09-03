@@ -12,7 +12,7 @@ import retrofit2.http.POST
 interface FeedServices {
     @FormUrlEncoded
     @POST("getFeeds")
-    suspend fun getFeeds(@FieldMap params: Map<String, String>): ArrayList<FeedResponse>
+    suspend fun getFeeds(@FieldMap params: Map<String, String>): List<FeedResponse>
 
     @POST("deleteReview")
     suspend fun deleteReview(@Body review: Review): Review

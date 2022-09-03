@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.modules.service.feed
+package com.sryang.torang_repository.services.feed
 
 import android.content.Context
 import com.example.torangrepository.R
@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken
 import com.sryang.torang_core.data.data.Favorite
 import com.sryang.torang_core.data.data.Like
 import com.sryang.torang_core.data.data.Review
-import com.sryang.torang_repository.data.remote.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -16,31 +15,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestFeedService @Inject constructor(
+class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : FeedServices {
-    override suspend fun getFeeds(params: Map<String, String>): ArrayList<FeedResponse> {
-        val inputStrem: InputStream = context.resources.openRawResource(R.raw.feed)
-        val writer: Writer = StringWriter()
-        val buffer = CharArray(1024)
-        try {
-            val reader: Reader = BufferedReader(InputStreamReader(inputStrem, "UTF-8"))
-            var n: Int
-            while (reader.read(buffer).also { n = it } != -1) {
-                writer.write(buffer, 0, n)
-            }
-        } finally {
-            inputStrem.close()
-        }
-
-        val jsonString = writer.toString()
-
-        val gson = Gson()
-        val list = gson.fromJson<List<RemoteFeed>>(
-            jsonString,
-            object : TypeToken<List<RemoteFeed>>() {}.type
-        )
-        return ArrayList()
+    override suspend fun getFeeds(params: Map<String, String>): List<FeedResponse> {
+        return JsonDataLoader<List<FeedResponse>>(context).load(R.raw.feed_response1)
     }
 
     override suspend fun deleteReview(review: Review): Review {
@@ -61,5 +40,31 @@ class TestFeedService @Inject constructor(
 
     override suspend fun addFavorite(favorite: Favorite): Favorite {
         TODO("Not yet implemented")
+    }
+}
+
+class JsonDataLoader<T> constructor(val context: Context) {
+    fun load(raw: Int): List<FeedResponse> {
+        val inputStrem: InputStream = context.resources.openRawResource(raw)
+        val writer: Writer = StringWriter()
+        val buffer = CharArray(1024)
+        try {
+            val reader: Reader = BufferedReader(InputStreamReader(inputStrem, "UTF-8"))
+            var n: Int
+            while (reader.read(buffer).also { n = it } != -1) {
+                writer.write(buffer, 0, n)
+            }
+        } finally {
+            inputStrem.close()
+        }
+
+        val jsonString = writer.toString()
+
+        val gson = Gson()
+        val list = gson.fromJson<List<FeedResponse>>(
+            jsonString,
+            object : TypeToken<List<FeedResponse>>() {}.type
+        )
+        return list
     }
 }

@@ -1,6 +1,6 @@
-package com.sryang.torang_repository.data.datasource.impl
+package com.sryang.torang_repository.datasource.impl
 
-import com.sryang.torang_repository.data.datasource.FeedRemoteDataSource
+import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.services.FeedServices
 import javax.inject.Inject

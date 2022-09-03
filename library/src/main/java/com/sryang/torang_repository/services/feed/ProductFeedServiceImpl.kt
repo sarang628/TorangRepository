@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.modules.service.feed
+package com.sryang.torang_repository.services.feed
 
 import com.sryang.torang_repository.di.modules.RetrofitModule
 import com.sryang.torang_repository.di.modules.TorangOkhttpClient
@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * 실서버 피드 서비스
  */
 @Singleton
-class ProductFeedService @Inject constructor(
+class ProductFeedServiceImpl @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {

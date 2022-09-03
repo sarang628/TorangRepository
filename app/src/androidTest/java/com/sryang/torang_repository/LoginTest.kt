@@ -1,7 +1,7 @@
 package com.example.torang_repository
 
-import com.example.torang_core.data.dao.LoggedInUserDao
 import com.example.torang_core.data.model.LoggedInUserEntity
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking

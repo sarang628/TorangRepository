@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.gson.GsonBuilder
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.databinding.ActivityFeedRepositoryTestBinding
 import com.sryang.torang_repository.repository.FeedRepository
@@ -33,7 +34,8 @@ class FeedRepositoryTestActivity : AppCompatActivity() {
                     binding.tvResult.text = "status = ${response.status}\n" +
                             "data =  ${response.data}"
                 } else {
-                    binding.tvResult.text = response.data.toString()
+                    binding.tvResult.text =
+                        GsonBuilder().setPrettyPrinting().create().toJson(response.data)
                 }
             }
         }

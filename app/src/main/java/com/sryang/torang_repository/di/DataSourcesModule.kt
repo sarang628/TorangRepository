@@ -1,10 +1,10 @@
 package com.sryang.torang_repository.di
 
 import com.sryang.torang_core.data.data.ReviewImage
-import com.sryang.torang_repository.data.datasource.FeedRemoteDataSource
-import com.sryang.torang_repository.data.datasource.MyReviewsLocalDataSource
-import com.sryang.torang_repository.data.datasource.MyReviewsRemoteDataSource
-import com.sryang.torang_repository.data.datasource.impl.FeedRemoteDataSourceImpl
+import com.sryang.torang_repository.datasource.FeedRemoteDataSource
+import com.sryang.torang_repository.datasource.MyReviewsLocalDataSource
+import com.sryang.torang_repository.datasource.MyReviewsRemoteDataSource
+import com.sryang.torang_repository.datasource.impl.FeedRemoteDataSourceImpl
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import dagger.Binds
 import dagger.Module
