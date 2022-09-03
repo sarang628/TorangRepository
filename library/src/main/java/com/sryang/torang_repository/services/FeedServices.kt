@@ -1,9 +1,9 @@
 package com.sryang.torang_repository.services
 
 import com.sryang.torang_core.data.data.Favorite
-import com.sryang.torang_core.data.data.FeedResponse
 import com.sryang.torang_core.data.data.Like
 import com.sryang.torang_core.data.data.Review
+import com.sryang.torang_repository.data.remote.response.FeedResponse
 import retrofit2.http.Body
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded

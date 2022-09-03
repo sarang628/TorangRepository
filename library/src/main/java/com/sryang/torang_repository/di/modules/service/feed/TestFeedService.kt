@@ -5,10 +5,10 @@ import com.example.torangrepository.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sryang.torang_core.data.data.Favorite
-import com.sryang.torang_core.data.data.FeedResponse
 import com.sryang.torang_core.data.data.Like
 import com.sryang.torang_core.data.data.Review
 import com.sryang.torang_repository.data.remote.RemoteFeed
+import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.*
@@ -40,7 +40,6 @@ class TestFeedService @Inject constructor(
             jsonString,
             object : TypeToken<List<RemoteFeed>>() {}.type
         )
-
         return ArrayList()
     }
 
