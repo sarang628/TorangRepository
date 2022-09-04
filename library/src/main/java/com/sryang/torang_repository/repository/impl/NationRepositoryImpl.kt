@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository.impl
 
 import com.sryang.torang_core.data.NationItem
-import com.sryang.torang_core.data.data.Restaurant
+import com.sryang.torang_core.data.entity.Restaurant
 import com.sryang.torang_repository.repository.NationRepository
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.services.RestaurantService

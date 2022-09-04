@@ -3,7 +3,6 @@ package com.sryang.torang_repository.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_core.data.data.Review
 
 @Entity
 data class FeedEntity(
@@ -22,11 +21,6 @@ data class FeedEntity(
     @ColumnInfo(name = "restaurant_id") val restaurantId: Int? = 0
 )
 
-fun FeedEntity.toReview(): Review {
-    return Review().apply {
-        this.review_id = this@toReview.review_id
-    }
-}
 
 fun FeedEntity.profilePicUrl(): String {
     var url = ""

@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.services
 
-import com.sryang.torang_core.data.data.*
+import com.sryang.torang_core.data.entity.*
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.data.remote.response.Response
 import okhttp3.MultipartBody

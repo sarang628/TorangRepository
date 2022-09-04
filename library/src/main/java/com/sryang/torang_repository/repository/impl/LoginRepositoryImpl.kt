@@ -3,7 +3,7 @@ package com.sryang.torang_repository.repository.impl
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.data.data.User
+import com.sryang.torang_core.data.entity.User
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity

@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_core.data.data.Comment
+import com.sryang.torang_core.data.entity.Comment
 
 @Entity
 data class CommentEntity(
@@ -26,12 +26,12 @@ data class CommentEntity(
         fun parse(comment: Comment): CommentEntity {
             return CommentEntity(
                 commentId = comment.comment_id,
-                userId = if (comment.user == null) 0 else comment.user!!.userId,
-                userName = if (comment.user == null || comment.user!!.userName == null) "" else comment.user!!.userName!!,
-                comment = if (comment.comment == null) "" else comment.comment!!,
+                userId = comment.user.userId,
+                userName = comment.user.userName,
+                comment = comment.comment,
                 reviewId = comment.review_id,
-                createDate = if (comment.createDate == null) "" else comment.createDate!!,
-                profilePicUrl = if (comment.user == null || comment.user!!.profile_pic_url == null) "" else comment.user!!.profile_pic_url!!
+                createDate = comment.createDate,
+                profilePicUrl = comment.user.profilePicUrl
             )
         }
     }

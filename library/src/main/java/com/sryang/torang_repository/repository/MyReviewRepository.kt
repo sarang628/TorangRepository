@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository
 
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.data.data.ModifyFeedData
+import com.sryang.torang_core.data.entity.ModifyFeedData
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity

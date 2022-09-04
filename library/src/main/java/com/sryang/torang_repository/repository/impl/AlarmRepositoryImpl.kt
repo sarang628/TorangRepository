@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_core.data.data.Alarm
+import com.sryang.torang_core.data.entity.Alarm
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity

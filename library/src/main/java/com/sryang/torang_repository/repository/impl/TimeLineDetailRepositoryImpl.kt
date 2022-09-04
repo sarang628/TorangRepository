@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.data.data.Comment
-import com.sryang.torang_core.data.data.Restaurant
-import com.sryang.torang_core.data.data.User
+import com.sryang.torang_core.data.entity.Comment
+import com.sryang.torang_core.data.entity.Restaurant
+import com.sryang.torang_core.data.entity.User
 import com.sryang.torang_core.data.entity.Feed
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.CommentDao
@@ -123,11 +123,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     }
 
     override suspend fun addComment(reviewId: Int, value: String): Comment {
-        return restaurantService.addComment(Comment().apply {
-            user = User().apply { userId = userId() }
-            comment = value
-            review_id = reviewId
-        })
+        TODO("not yet implemented")
     }
 
     /** 로그인 여부 */

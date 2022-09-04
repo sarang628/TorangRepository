@@ -21,8 +21,19 @@ fun List<RemoteFeed>.toFeedList(): List<Feed> {
 
 
 fun RemoteFeed.toFeed(): Feed {
-    return Feed(
-        review_id = this.reviewId,
-        userId = 0
-    )
+    TODO()
+    /*return Feed(
+        reviewId = this.reviewId,
+        userId = 0,
+        restaurantId = 0,
+        userName = this.name,
+        profilePicUrl = this.profilePictureUrl,
+        restaurantName = this.restaurantName,
+        rating = this.rating,
+        contents = "",
+        isFavority = false,
+        likeAmount = 0,
+        commentAmount = 0,
+        createDate = "0"
+    )*/
 }

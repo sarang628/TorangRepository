@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import com.sryang.torang_core.data.LocationPreferences
-import com.sryang.torang_core.data.data.*
+import com.sryang.torang_core.data.entity.*
 import com.sryang.torang_repository.repository.FindRepository
 import com.sryang.torang_repository.repository.RequestLocationResult
 import com.sryang.torang_core.util.Logger
@@ -161,7 +161,8 @@ class FindRepositoryImpl @Inject constructor(
             southWestLongitude: Double,
             searchType: SearchType
         ) {
-            val filter = Filter().apply {
+            TODO()
+            /*val filter = Filter().apply {
                 distances?.let { this.distances = it }
                 restaurantType?.let { this.restaurantTypes = restaurantType }
                 prices?.let { this.prices = prices }
@@ -173,14 +174,14 @@ class FindRepositoryImpl @Inject constructor(
                 this.northEastLatitude = northEastLatitude
                 this.southWestLongitude = southWestLongitude
                 this.southWestLatitude = southWestLatitude
-            }
-            val result = restaurantService.getFilterRestaurant(filter)
+            }*/
+            /*val result = restaurantService.getFilterRestaurant(filter)
             val list = ArrayList<RestaurantEntity>()
             for (restaurant in result) {
                 list.add(RestaurantEntity.parse(restaurant))
             }
             restaurantDao.insertAllRestaurant(list)
-            restaurants.emit(result)
+            restaurants.emit(result)*/
         }
     }
 

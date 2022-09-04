@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.data.User
+import com.sryang.torang_core.data.entity.User
 import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository : SessionRepository {

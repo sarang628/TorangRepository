@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.data.Menu
+import com.sryang.torang_core.data.entity.Menu
 
 /**
  * 메뉴 저장소 인터페이스

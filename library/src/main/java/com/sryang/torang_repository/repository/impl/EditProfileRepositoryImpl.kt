@@ -2,15 +2,15 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_repository.services.RestaurantService
-import com.sryang.torang_repository.util.CountingFileRequestBody
-import com.sryang.torang_repository.repository.EditProfileRepository
-import com.sryang.torang_repository.repository.EditProfileResponse
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.repository.EditProfileRepository
+import com.sryang.torang_repository.repository.EditProfileResponse
+import com.sryang.torang_repository.repository.preference.TorangPreference
+import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -57,12 +57,12 @@ class EditProfileRepositoryImpl @Inject constructor(
             restaurantService.updateProfile(params, pictureList).let {
                 it.data?.let { user ->
                     // 통신 결과값을 Room을 이용하여 DB update : 로그인한 사용자 정보
-                    loggedInUserDao.update(user.userName!!, user.profile_pic_url!!)
+                    loggedInUserDao.update(user.userName, user.profilePicUrl)
                     // 통신 결과값을 Room을 이용하여 DB update : 일반 사용자 정보
                     userDao.update(
                         TorangPreference().getUserId(context),
-                        user.userName!!,
-                        user.profile_pic_url!!
+                        user.userName,
+                        user.profilePicUrl
                     )
                     response = EditProfileResponse.SUCCESS
                 }

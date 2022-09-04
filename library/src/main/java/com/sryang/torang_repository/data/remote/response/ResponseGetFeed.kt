@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.data.remote.response
 
-import com.sryang.torang_core.data.data.*
+import com.sryang.torang_core.data.entity.*
 
 data class ResponseGetFeed(
     val isFavority: Boolean = false,

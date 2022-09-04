@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.datasource
 
-import com.sryang.torang_core.data.data.ReviewImage
+import com.sryang.torang_core.data.entity.ReviewImage
 
 /**
  * 내 리뷰화면에서 필요한 로컬데이터

@@ -2,9 +2,8 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_core.data.data.PriceObject
-import com.sryang.torang_core.data.data.Restaurant
-import com.sryang.torang_core.data.data.RestaurantTypeObject
+import com.sryang.torang_core.data.entity.Restaurant
+import com.sryang.torang_core.data.entity.RestaurantTypeObject
 
 /**
  *     "address": "",
@@ -50,19 +49,19 @@ data class RestaurantEntity(
     companion object {
         fun parse(restaurant: Restaurant): RestaurantEntity {
             return RestaurantEntity(
-                restaurant_id = restaurant.restaurant_id,
-                restaurant_name = restaurant.restaurant_name,
+                restaurant_id = restaurant.restaurantId,
+                restaurant_name = restaurant.restaurantName,
                 lat = restaurant.lat,
                 lon = restaurant.lon,
                 rating = restaurant.rating,
                 tel = restaurant.tel,
-                prices = PriceObject.toName(restaurant.prices),
-                restaurant_type = RestaurantTypeObject.toName(restaurant.restaurant_type),
-                region_code = restaurant.region_code.toString(),
-                review_count = restaurant.review_count.toString(),
+                prices = restaurant.prices.toName,
+                restaurant_type = RestaurantTypeObject.toName(restaurant.restaurantType),
+                region_code = restaurant.regionCode.toString(),
+                review_count = restaurant.reviewCount.toString(),
                 site = restaurant.site,
                 website = restaurant.website,
-                img_url1 = restaurant.img_url1
+                img_url1 = restaurant.imgUrl1
             )
         }
     }

@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.data.*
+import com.sryang.torang_core.data.entity.*
 import kotlinx.coroutines.flow.StateFlow
 
 interface FilterRepository {

@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_core.data.data.Picture
+import com.sryang.torang_core.data.entity.Picture
 
 @Entity
 data class ReviewImageEntity(
@@ -21,27 +21,27 @@ data class ReviewImageEntity(
     companion object {
         fun Picture.toReviewImage(): ReviewImageEntity {
             return ReviewImageEntity(
-                picture_id = this.picture_id,
-                restaurant_id = this.restaurant_id,
-                user_id = this.user_id,
-                review_id = this.review_id,
-                picture_url = this.picture_url,
-                create_date = this.create_date,
-                menu_id = this.menu_id,
+                picture_id = this.pictureId,
+                restaurant_id = this.restaurantId,
+                user_id = this.userId,
+                review_id = this.reviewId,
+                picture_url = this.pictureUrl,
+                create_date = this.createDate,
+                menu_id = this.menuId,
                 menu = 1
             )
         }
 
         fun parse(picture: Picture): ReviewImageEntity {
             return ReviewImageEntity(
-                picture_id = picture.picture_id,
-                restaurant_id = picture.restaurant_id,
-                review_id = picture.review_id,
-                picture_url = picture.picture_url,
-                create_date = picture.create_date,
-                menu_id = picture.menu_id,
+                picture_id = picture.pictureId,
+                restaurant_id = picture.restaurantId,
+                review_id = picture.reviewId,
+                picture_url = picture.pictureUrl,
+                create_date = picture.createDate,
+                menu_id = picture.menuId,
                 menu = 0,
-                user_id = picture.user_id
+                user_id = picture.userId
             )
         }
 

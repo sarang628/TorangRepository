@@ -7,8 +7,8 @@ import com.sryang.torang_core.data.entity.Feed
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
+import com.sryang.torang_repository.data.remote.response.*
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
-import com.sryang.torang_repository.data.remote.response.Response
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -50,18 +50,13 @@ class FeedRepositoryImpl @Inject constructor(
                 status = 200,
                 data = feedList.stream().map {
                     Feed(
-                        review_id = it.review_id ?: 0,
-                        userId = 0,
-                        is_favority = it.isFavority,
-                        contents = it.contents,
-                        create_date = it.create_date,
-                        rating = it.rating,
-                        userName = "",
-                        profile_pic_url = "",
-                        like_amount = it.like_amount,
-                        comment_amount = it.comment_amount,
-                        restaurantName = "",
-                        restaurantId = 0
+                        user = it.toUser(),
+                        review = it.toReview(),
+                        like = it.toLike(),
+                        favorite = it.toFavorite(),
+                        comment = it.toComment(),
+                        likeAmount = it.like_amount,
+                        commentAmount = it.comment_amount,
                     )
                 }.toList()
             )
@@ -72,5 +67,7 @@ class FeedRepositoryImpl @Inject constructor(
             Logger.e(e.toString())
             return Response(status = 400)
         }
+        return Response(status = 400)
     }
+
 }

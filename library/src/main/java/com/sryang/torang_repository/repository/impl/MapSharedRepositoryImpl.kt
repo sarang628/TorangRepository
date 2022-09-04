@@ -2,7 +2,7 @@ package com.sryang.torang_repository.repository.impl
 
 import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.util.DistanceManager.getDistance
-import com.sryang.torang_core.data.data.Filter
+import com.sryang.torang_core.data.entity.Filter
 import com.sryang.torang_repository.repository.MapSharedRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.RestaurantDao
@@ -39,14 +39,15 @@ open class MapSharedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchRestaurant(keyword: String): List<RestaurantEntity> {
-        val filter = Filter()
+        TODO()
+        /*val filter = Filter()
         filter.keyword = keyword
         val list = ArrayList<RestaurantEntity>()
         val restaurants = restaurantService.getFilterRestaurant(filter)
         for (restaurant in restaurants) {
             list.add(RestaurantEntity.parse(restaurant))
         }
-        return list
+        return list*/
     }
 
     override suspend fun getFilterRestaurant(filter: Filter): List<RestaurantEntity> {

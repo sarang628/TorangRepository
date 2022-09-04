@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.GsonBuilder
-import com.sryang.torang_core.data.data.User
+import com.sryang.torang_core.data.entity.User
 
 @Entity
 data class UserEntity(
@@ -15,7 +15,7 @@ data class UserEntity(
     @ColumnInfo(name = "create_date") val create_date: String? = null,
     @ColumnInfo(name = "access_token") val access_token: String? = null,
     @ColumnInfo(name = "profile_pic_url") val profile_pic_url: String? = null,
-    @ColumnInfo(name = "point") val point: String? = null,
+    @ColumnInfo(name = "point") val point: Int? = null,
     @ColumnInfo(name = "review_count") val review_count: String? = null,
     @ColumnInfo(name = "followers") val followers: String? = null,
     @ColumnInfo(name = "following") val following: String? = null
@@ -36,12 +36,12 @@ data class UserEntity(
                 userId = user.userId,
                 email = user.email,
                 userName = user.userName,
-                loginPlatform = user.login_platform,
-                create_date = user.create_date,
-                access_token = user.access_token,
-                profile_pic_url = user.profile_pic_url,
+                loginPlatform = user.loginPlatform,
+                create_date = user.createDate,
+                access_token = user.accessToken,
+                profile_pic_url = user.profilePicUrl,
                 point = user.point,
-                review_count = user.review_count.toString(),
+                review_count = user.reviewCount.toString(),
                 followers = user.followers.toString(),
                 following = user.following.toString()
             )

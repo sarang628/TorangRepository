@@ -2,7 +2,7 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.data.data.*
+import com.sryang.torang_core.data.entity.*
 import com.sryang.torang_repository.repository.InfoRepository
 import com.sryang.torang_repository.repository.MenuRepository
 import com.sryang.torang_repository.repository.ReviewRepository

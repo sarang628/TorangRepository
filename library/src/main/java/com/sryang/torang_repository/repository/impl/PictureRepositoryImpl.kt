@@ -1,8 +1,8 @@
 package com.sryang.torang_repository.repository.impl
 
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.data.data.Picture
-import com.sryang.torang_core.data.data.ReviewImage
+import com.sryang.torang_core.data.entity.Picture
+import com.sryang.torang_core.data.entity.ReviewImage
 import com.sryang.torang_repository.repository.PicturesRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.PictureDao

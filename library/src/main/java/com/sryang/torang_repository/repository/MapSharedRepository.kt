@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.data.Filter
+import com.sryang.torang_core.data.entity.Filter
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 
 interface MapSharedRepository {

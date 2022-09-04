@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.di
 
-import com.sryang.torang_core.data.data.ReviewImage
+import com.sryang.torang_core.data.entity.ReviewImage
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.datasource.MyReviewsLocalDataSource
 import com.sryang.torang_repository.datasource.MyReviewsRemoteDataSource

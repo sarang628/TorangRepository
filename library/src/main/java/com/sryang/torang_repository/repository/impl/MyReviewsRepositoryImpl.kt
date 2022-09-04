@@ -3,7 +3,7 @@ package com.sryang.torang_repository.repository.impl
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.data.data.MyReview
+import com.sryang.torang_core.data.entity.MyReview
 import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.datasource.MyReviewsLocalDataSource
@@ -81,7 +81,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
         })
         val list1 = ArrayList<MyReview>()
         for (review in list) {
-            list1.add(review.toMyReview())
+            TODO()
         }
         return list1
     }

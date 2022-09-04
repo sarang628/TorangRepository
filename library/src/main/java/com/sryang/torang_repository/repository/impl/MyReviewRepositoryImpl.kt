@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.util.CountingFileRequestBody
-import com.sryang.torang_core.data.data.ModifyFeedData
+import com.sryang.torang_core.data.entity.ModifyFeedData
 import com.sryang.torang_repository.repository.MyReviewRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao

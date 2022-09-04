@@ -2,7 +2,7 @@ package com.sryang.torang_repository.repository.test
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sryang.torang_core.data.data.Alarm
+import com.sryang.torang_core.data.entity.Alarm
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
