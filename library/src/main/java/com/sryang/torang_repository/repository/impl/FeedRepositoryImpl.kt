@@ -14,6 +14,7 @@ import com.sryang.torang_repository.repository.preference.TorangPreference
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
 import java.net.UnknownHostException
+import java.text.ParseException
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.streams.toList
@@ -49,23 +50,17 @@ class FeedRepositoryImpl @Inject constructor(
             return Response(
                 status = 200,
                 data = feedList.stream().map {
-                    Feed(
-                        user = it.toUser(),
-                        review = it.toReview(),
-                        like = it.toLike(),
-                        favorite = it.toFavorite(),
-                        comment = it.toComment(),
-                        likeAmount = it.like_amount,
-                        commentAmount = it.comment_amount,
-                    )
+                    it.toFeed()
                 }.toList()
             )
+        } catch (e: ParseException) {
+            return Response(status = 400, errorMessage = "ParseException")
         } catch (e: UnknownHostException) {
             Logger.e(e.toString())
-            return Response(status = 400)
+            return Response(status = 400, errorMessage = "UnknownHostException")
         } catch (e: IOException) {
             Logger.e(e.toString())
-            return Response(status = 400)
+            return Response(status = 400, errorMessage = "IOException")
         }
         return Response(status = 400)
     }

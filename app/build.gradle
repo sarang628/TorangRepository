@@ -22,12 +22,12 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "feedService", "\"real\""
+            buildConfigField "String", "feedService", "${feedService}"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "feedService", "\"real\""
+            buildConfigField "String", "feedService", "${feedService}"
         }
         /*feedServiceTest {
             buildConfigField "String", "feedService", "\"test\""

@@ -1,9 +1,13 @@
 package com.sryang.torang_repository.data.remote.response
 
+import com.google.gson.annotations.SerializedName
 import com.sryang.torang_core.data.entity.*
+import java.lang.Exception
+import java.text.ParseException
 
 data class FeedResponse(
-    val review_id: Int,
+    @SerializedName("review_id")
+    val reviewId: Int,
     var user: User,
     var restaurant: Restaurant,
     var pictures: ArrayList<Picture>,
@@ -20,30 +24,50 @@ data class FeedResponse(
     fun hasMedia(): Boolean {
         return false
     }
+
+    fun validate() {
+
+    }
 }
 
 fun FeedResponse.toUser(): User {
     return User(
-        userName = "",
-        userId = 0,
-        email = "",
-        loginPlatform = "",
-        createDate = "",
-        accessToken = "",
-        profilePicUrl = "",
-        point = 0,
-        reviewCount = 0,
-        followers = 0,
-        following = 0,
+        userName = user.userName,
+        userId = user.userId,
+        email = user.email,
+        loginPlatform = user.loginPlatform,
+        createDate = user.loginPlatform,
+        accessToken = user.accessToken,
+        profilePicUrl = user.profilePicUrl,
+        point = user.point,
+        reviewCount = user.reviewCount,
+        followers = user.followers,
+        following = user.following,
         isFollow = false
     )
 }
 
+fun FeedResponse.toFeed(): Feed {
+    try {
+        return Feed(
+            author = toUser(),
+            review = toReview(),
+            like = toLike(),
+            favorite = toFavorite(),
+            comment = toComment(),
+            likeAmount = like_amount,
+            commentAmount = comment_amount,
+        )
+    } catch (e: Exception) {
+        throw ParseException("", 0)
+    }
+}
+
 fun FeedResponse.toReview(): Review {
     return Review(
-        userId = 0,
-        restaurantId = 0,
-        reviewId = 0,
+        userId = user.userId,
+        restaurantId = restaurant.restaurantId,
+        reviewId = reviewId,
         selectedImagePath = ArrayList(),
         pictures = ArrayList(),
         restaurant = toRestaurant(),
@@ -51,7 +75,8 @@ fun FeedResponse.toReview(): Review {
         contents = contents,
         createDate = create_date,
         likeAmount = like_amount,
-        like = toLike()
+        like = toLike(),
+        ratings = this.rating
     )
 }
 

@@ -2,8 +2,6 @@ package com.sryang.torang_repository
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.sryang.torang_repository.data.remote.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import org.junit.Assert
 import org.junit.Test
@@ -16,7 +14,7 @@ class FeedDataTest {
         System.out.println("FeedDataTest")
 
         val feedResponse = FeedResponse(
-            review_id = 1,
+            reviewId = 1,
             contents = "abc"
         )
 

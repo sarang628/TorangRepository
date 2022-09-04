@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.sryang.torang_core.data.entity.Favorite
 import com.sryang.torang_core.data.entity.Like
 import com.sryang.torang_core.data.entity.Review
+import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -19,7 +20,9 @@ class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : FeedServices {
     override suspend fun getFeeds(params: Map<String, String>): List<FeedResponse> {
-        return JsonDataLoader<List<FeedResponse>>(context).load(R.raw.feed_response1)
+        val list = JsonDataLoader<List<FeedResponse>>(context).load(R.raw.feed_response1)
+        Logger.v("test data parsing R.raw.feed_response1 : ${list}")
+        return list
     }
 
     override suspend fun deleteReview(review: Review): Review {

@@ -32,7 +32,8 @@ class FeedRepositoryTestActivity : AppCompatActivity() {
                 binding.pb.visibility = View.INVISIBLE
                 if (response.status != 200) {
                     binding.tvResult.text = "status = ${response.status}\n" +
-                            "data =  ${response.data}"
+                            "data =  ${response.data}\n" +
+                            "error = ${response.errorMessage}"
                 } else {
                     binding.tvResult.text =
                         GsonBuilder().setPrettyPrinting().create().toJson(response.data)
