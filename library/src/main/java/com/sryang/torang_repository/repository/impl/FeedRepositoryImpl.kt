@@ -48,7 +48,22 @@ class FeedRepositoryImpl @Inject constructor(
             val feedList = remoteDataSource.getFeeds(HashMap())
             return Response(
                 status = 200,
-                data = feedList.stream().map { Feed(userId = 0) }.toList()
+                data = feedList.stream().map {
+                    Feed(
+                        review_id = it.review_id ?: 0,
+                        userId = 0,
+                        is_favority = it.isFavority,
+                        contents = it.contents,
+                        create_date = it.create_date,
+                        rating = it.rating,
+                        userName = "",
+                        profile_pic_url = "",
+                        like_amount = it.like_amount,
+                        comment_amount = it.comment_amount,
+                        restaurantName = "",
+                        restaurantId = 0
+                    )
+                }.toList()
             )
         } catch (e: UnknownHostException) {
             Logger.e(e.toString())
