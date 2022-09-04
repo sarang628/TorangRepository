@@ -17,6 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "com.example.torangrepositorytestapp.CustomTestRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -27,6 +28,14 @@ android {
         }
         debug {
             buildConfigField "String", "feedService", "$feedService"
+        }
+        feedServiceTest {
+            buildConfigField "String", "feedService", "\"test\""
+            debuggable true
+        }
+        feedServiceReal {
+            buildConfigField "String", "feedService", "\"real\""
+            debuggable true
         }
     }
     compileOptions {
