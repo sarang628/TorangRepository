@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.sryang.torang_core.data.entity.Feed
+import com.sryang.torang_core.data.util.FeedUtil
 import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
-import com.sryang.torang_repository.data.remote.response.*
+import com.sryang.torang_repository.data.remote.response.Response
+import com.sryang.torang_repository.data.remote.response.toFeed
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
@@ -50,7 +52,12 @@ class FeedRepositoryImpl @Inject constructor(
             return Response(
                 status = 200,
                 data = feedList.stream().map {
-                    it.toFeed()
+                    try {
+                        it.toFeed()
+                    } catch (e: Exception) {
+                        Logger.e("parse error ${e.toString()}, ${it}")
+                        FeedUtil.createEmptyValue()
+                    }
                 }.toList()
             )
         } catch (e: ParseException) {
@@ -62,7 +69,6 @@ class FeedRepositoryImpl @Inject constructor(
             Logger.e(e.toString())
             return Response(status = 400, errorMessage = "IOException")
         }
-        return Response(status = 400)
     }
 
 }

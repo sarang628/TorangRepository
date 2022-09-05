@@ -3,6 +3,7 @@ package com.sryang.torang_repository.services.feed
 import android.content.Context
 import com.example.torangrepository.R
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.sryang.torang_core.data.entity.Favorite
 import com.sryang.torang_core.data.entity.Like
@@ -12,6 +13,7 @@ import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.*
+import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,9 +22,17 @@ class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : FeedServices {
     override suspend fun getFeeds(params: Map<String, String>): List<FeedResponse> {
-        val list = JsonDataLoader<List<FeedResponse>>(context).load(R.raw.feed_response1)
+        val feeds = ArrayList<FeedResponse>()
+        val list = JsonDataLoader<List<JsonObject>>(context).load(R.raw.feed_response1)
         Logger.v("test data parsing R.raw.feed_response1 : ${list}")
-        return list
+        for (jsonObject in list) {
+            try {
+                feeds.add(jsonObject.toFeedResponse())
+            } catch (e: Exception) {
+                Logger.e(e.toString())
+            }
+        }
+        return feeds
     }
 
     override suspend fun deleteReview(review: Review): Review {
@@ -44,10 +54,14 @@ class TestFeedServiceImpl @Inject constructor(
     override suspend fun addFavorite(favorite: Favorite): Favorite {
         TODO("Not yet implemented")
     }
+
+    private fun JsonObject.toFeedResponse(): FeedResponse {
+        return Gson().fromJson(this, FeedResponse::class.java)
+    }
 }
 
 class JsonDataLoader<T> constructor(val context: Context) {
-    fun load(raw: Int): List<FeedResponse> {
+    fun load(raw: Int): List<JsonObject> {
         val inputStrem: InputStream = context.resources.openRawResource(raw)
         val writer: Writer = StringWriter()
         val buffer = CharArray(1024)
@@ -64,9 +78,9 @@ class JsonDataLoader<T> constructor(val context: Context) {
         val jsonString = writer.toString()
 
         val gson = Gson()
-        val list = gson.fromJson<List<FeedResponse>>(
+        val list = gson.fromJson<List<JsonObject>>(
             jsonString,
-            object : TypeToken<List<FeedResponse>>() {}.type
+            object : TypeToken<List<JsonObject>>() {}.type
         )
         return list
     }

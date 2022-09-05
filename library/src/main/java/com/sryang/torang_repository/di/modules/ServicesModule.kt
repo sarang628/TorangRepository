@@ -15,7 +15,9 @@ class RestaurantServiceModule {
 
     @Singleton
     @Provides
-    fun provideRestaurantService(productRestaurantService: ProductRestaurantService): RestaurantService {
+    fun provideRestaurantService(
+        productRestaurantService: ProductRestaurantService
+    ): RestaurantService {
         return productRestaurantService.create()
     }
 }

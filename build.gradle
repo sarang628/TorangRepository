@@ -41,7 +41,7 @@ ext {
     facebookLibraryVersion = '8.1.0'
 
     torangRepositoryVersion = '5aed244008'
-    coreVersion = '5be102688d'
+    coreVersion = '080136d125'
 
     feedService = "\"test\"" // real, local, test
 }
