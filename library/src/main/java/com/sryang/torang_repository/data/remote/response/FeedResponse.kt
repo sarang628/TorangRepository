@@ -14,6 +14,8 @@ data class FeedResponse(
     val userId: Int,
     @SerializedName("user_name")
     val userName: String,
+    @SerializedName("profile_pic_url")
+    val profilePictureUrl: String,
     var restaurant: RestaurantResponse?,
     var pictures: ArrayList<PictureResponse>,
     var medias: ArrayList<AdMediaResponse>?,
@@ -84,7 +86,7 @@ fun FeedResponse.toUser(): User {
         loginPlatform = "",
         createDate = "",
         accessToken = "",
-        profilePicUrl = "",
+        profilePicUrl = profilePictureUrl,
         point = 0,
         reviewCount = 0,
         followers = 0,
