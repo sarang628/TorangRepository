@@ -1,15 +1,21 @@
 package com.sryang.torang_repository.data.remote.response
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.gson.annotations.SerializedName
 import com.sryang.torang_core.data.entity.*
 import java.text.ParseException
+import kotlin.streams.toList
 
 data class FeedResponse(
     @SerializedName("review_id")
     val reviewId: Int,
-    var user: UserResponse?,
+    @SerializedName("user_id")
+    val userId: Int,
+    @SerializedName("user_name")
+    val userName: String,
     var restaurant: RestaurantResponse?,
-    var pictures: ArrayList<PictureResponse>?,
+    var pictures: ArrayList<PictureResponse>,
     var medias: ArrayList<AdMediaResponse>?,
     var contents: String?,
     var rating: Float?,
@@ -29,23 +35,7 @@ data class FeedResponse(
     }
 }
 
-fun FeedResponse.toUser(): User {
-    return User(
-        userName = user?.userName ?: "",
-        userId = user?.userId ?: 0,
-        email = user?.email ?: "",
-        loginPlatform = user?.loginPlatform ?: "",
-        createDate = user?.createDate ?: "",
-        accessToken = "",
-        profilePicUrl = user?.profilePicUrl ?: "",
-        point = 0,
-        reviewCount = user?.reviewCount ?: 0,
-        followers = user?.followers ?: 0,
-        following = user?.following ?: 0,
-        isFollow = false
-    )
-}
-
+@RequiresApi(Build.VERSION_CODES.N)
 fun FeedResponse.toFeed(): Feed {
     try {
         return Feed(
@@ -56,15 +46,56 @@ fun FeedResponse.toFeed(): Feed {
             comment = toComment(),
             likeAmount = like_amount ?: 0,
             commentAmount = comment_amount ?: 0,
+            pictures = toPictures()
         )
     } catch (e: Exception) {
         throw ParseException(e.toString(), 0)
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.N)
+fun FeedResponse.toPictures(): List<Picture> {
+    return pictures.stream().map {
+        Picture(
+            pictureId = 0,
+            pictureUrl = it.picture_url,
+            restaurantId = 0,
+            userId = 0,
+            createDate = "",
+            reviewId = 0,
+            menuId = 0,
+            menu = Menu(
+                menu_id = 0,
+                restaurant_id = "0",
+                menu_name = "",
+                menu_price = "",
+                menu_pic_url = "",
+                rating = 0f,
+            )
+        )
+    }.toList()
+}
+
+fun FeedResponse.toUser(): User {
+    return User(
+        userName = userName,
+        userId = userId,
+        email = "",
+        loginPlatform = "",
+        createDate = "",
+        accessToken = "",
+        profilePicUrl = "",
+        point = 0,
+        reviewCount = 0,
+        followers = 0,
+        following = 0,
+        isFollow = false
+    )
+}
+
 fun FeedResponse.toReview(): Review {
     return Review(
-        userId = user?.userId ?: 0,
+        userId = userId,
         restaurantId = restaurant?.restaurantId ?: 0,
         reviewId = reviewId,
         selectedImagePath = ArrayList(),
