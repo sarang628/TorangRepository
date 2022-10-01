@@ -30,12 +30,8 @@ class FeedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteFeed(reviewId: Int) {
-        try {
-            //원격 저장소 요청
-            //feedServices.deleteReview(Review().apply { this.review_id = reviewId })
-        } catch (e: java.lang.Exception) {
-            Logger.e(e.toString())
-        }
+        //원격 저장소 요청
+        remoteDataSource.deleteFeed(reviewId)
         //로컬 저장소에서 삭제
         userDao.deleteFeed(reviewId)
     }
