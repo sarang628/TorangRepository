@@ -35,6 +35,7 @@ android {
 
         }*/
     }
+    namespace 'com.example.torangrepository'
 }
 
 dependencies {

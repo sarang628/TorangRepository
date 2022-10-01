@@ -3,6 +3,7 @@ package com.sryang.torang_repository.services
 import com.sryang.torang_core.data.entity.Favorite
 import com.sryang.torang_core.data.entity.Like
 import com.sryang.torang_core.data.entity.Review
+import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import retrofit2.http.Body
 import retrofit2.http.FieldMap
@@ -15,7 +16,7 @@ interface FeedServices {
     suspend fun getFeeds(@FieldMap params: Map<String, String>): List<FeedResponse>
 
     @POST("deleteReview")
-    suspend fun deleteReview(@Body review: Review): Review
+    suspend fun deleteReview(@Body review: ReviewDeleteRequestVO): Review
 
     @POST("addLike")
     suspend fun addLike(@Body like: Like): Like

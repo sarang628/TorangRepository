@@ -35,15 +35,14 @@ class FeedRepositoryTestActivity : AppCompatActivity() {
         binding.btnLoad.setOnClickListener {
             binding.pb.visibility = View.VISIBLE
             lifecycleScope.launch {
-                val response = feedRepository.loadFeed()
-                binding.pb.visibility = View.INVISIBLE
-                if (response.status != 200) {
-                    binding.tvResult.text = "status = ${response.status}\n" +
-                            "data =  ${response.data}\n" +
-                            "error = ${response.errorMessage}"
-                } else {
+                try {
+                    val response = feedRepository.loadFeed()
                     binding.tvResult.text =
-                        GsonBuilder().setPrettyPrinting().create().toJson(response.data)
+                        GsonBuilder().setPrettyPrinting().create().toJson(response)
+                } catch (e: Exception) {
+                    binding.tvResult.text = e.toString()
+                } finally {
+                    binding.pb.visibility = View.INVISIBLE
                 }
             }
         }

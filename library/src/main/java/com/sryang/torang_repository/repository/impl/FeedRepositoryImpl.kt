@@ -45,30 +45,16 @@ class FeedRepositoryImpl @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    override suspend fun loadFeed(): Response<List<Feed>> {
-
-        try {
-            val feedList = remoteDataSource.getFeeds(HashMap())
-            return Response(
-                status = 200,
-                data = feedList.stream().map {
-                    try {
-                        it.toFeed()
-                    } catch (e: Exception) {
-                        Logger.e("parse error ${e.toString()}, ${it}")
-                        FeedUtil.createEmptyValue()
-                    }
-                }.toList()
-            )
-        } catch (e: ParseException) {
-            return Response(status = 400, errorMessage = "ParseException")
-        } catch (e: UnknownHostException) {
-            Logger.e(e.toString())
-            return Response(status = 400, errorMessage = "UnknownHostException")
-        } catch (e: IOException) {
-            Logger.e(e.toString())
-            return Response(status = 400, errorMessage = "IOException")
-        }
+    override suspend fun loadFeed(): List<Feed> {
+        val feedList = remoteDataSource.getFeeds(HashMap())
+        return feedList.stream().map {
+            try {
+                it.toFeed()
+            } catch (e: Exception) {
+                Logger.e("parse error ${e.toString()}, ${it}")
+                FeedUtil.createEmptyValue()
+            }
+        }.toList()
     }
 
 }

@@ -26,11 +26,5 @@ class MainActivity : AppCompatActivity() {
                 Logger.d("" + it)
             }
         }
-
-        //runBlocking
-        //{
-//            findViewById<TextView>(R.id.tv).text =
-//                myReviewsRepository.getMyReviews3(4).toString()
-        //}
     }
 }

@@ -50,6 +50,7 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    namespace 'com.sryang.torang_repository'
 }
 
 dependencies {
