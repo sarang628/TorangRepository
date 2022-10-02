@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class FeedEntity(
     @PrimaryKey
     val review_id: Int = -1,
-    @ColumnInfo(name = "user_id") val userId: Int,
+    val userId: Int,
     @ColumnInfo(name = "is_favority") val is_favority: Boolean? = false,
     @ColumnInfo(name = "contents") val contents: String? = null,
     @ColumnInfo(name = "create_date") val create_date: String? = null,

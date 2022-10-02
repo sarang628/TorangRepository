@@ -8,12 +8,12 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(indices = arrayOf(Index(value = ["like_id"],
         unique = true)))
-data class LikeEntity (
+data class LikeEntity constructor(
         @PrimaryKey
         @ColumnInfo(name = "review_id")
         @SerializedName("review_id")
-        var reviewId: Int = 0,
-        var like_id: Int = 0,
-        var user_id: Int = 0,
-        var create_date: String? = null
+        var reviewId: Int,
+        var like_id: Int,
+        var user_id: Int,
+        var create_date: String
 )

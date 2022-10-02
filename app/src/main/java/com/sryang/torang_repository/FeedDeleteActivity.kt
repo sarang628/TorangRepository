@@ -70,11 +70,11 @@ class FeedDeleteActivity : AppCompatActivity() {
                     }
                 }
             }
-            .setNegativeButton("아니오") { _, _ ->
+            /*.setNegativeButton("아니오") { _, _ ->
                 {
-
+                    Log.d("test", "test")
                 }
-            }
+            }*/
             .show()
     }
 }

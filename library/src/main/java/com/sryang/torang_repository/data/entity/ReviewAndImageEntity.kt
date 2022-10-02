@@ -6,7 +6,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 
 data class ReviewAndImageEntity(
-    @Embedded val review: FeedEntity? = null,
+    @Embedded val review: FeedEntity,
     @Relation(
         parentColumn = "review_id",
         entityColumn = "review_id"
@@ -14,7 +14,7 @@ data class ReviewAndImageEntity(
     val images: List<ReviewImageEntity>? = null,
 
     @Relation(
-        parentColumn = "user_id",
+        parentColumn = "userId",
         entityColumn = "userId"
     )
     val user: UserEntity? = null
