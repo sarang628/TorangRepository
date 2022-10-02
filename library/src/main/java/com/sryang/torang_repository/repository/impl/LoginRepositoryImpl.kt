@@ -52,7 +52,7 @@ class LoginRepositoryImpl @Inject constructor(
         LoggedInUserEntity.access_token?.let {
             TorangPreference().saveAccessToken(context, it)
         }
-        TorangPreference().saveUserId(context, LoggedInUserEntity.userId!!)
+        TorangPreference().saveUserId(context, LoggedInUserEntity.userId)
         loggedInUserDao.insert(LoggedInUserEntity)
     }
 }

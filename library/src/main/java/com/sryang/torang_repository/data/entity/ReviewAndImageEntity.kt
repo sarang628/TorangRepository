@@ -22,15 +22,15 @@ data class ReviewAndImageEntity(
     fun toMap(): HashMap<String, RequestBody> {
         val params: HashMap<String, RequestBody> = HashMap()
         params["review_id"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review?.review_id)
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.review_id)
         params["torang_id"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review?.restaurantId)
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.restaurantId)
         user?.userId?.let {
             params["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + it)
         }
         params["contents"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review?.contents)
-        params["rating"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review?.rating)
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.contents)
+        params["rating"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.rating)
         return params
     }
 }
@@ -39,6 +39,6 @@ data class ReviewAndImageEntity(
 fun ReviewAndImageEntity.toFeedEntity(): FeedEntity {
     return FeedEntity(
         userId = user!!.userId,
-        review_id = review!!.review_id
+        review_id = review.review_id
     )
 }
