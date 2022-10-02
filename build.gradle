@@ -38,7 +38,7 @@ ext {
     recyclerViewVersion = '1.2.1'
     facebookLibraryVersion = '8.1.0'
 
-    coreVersion = '00558d1524'
+    coreVersion = 'db6525cf4d'
 
 //    feedService = "\"test\""
 //    feedService = "\"local\""
