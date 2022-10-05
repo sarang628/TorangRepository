@@ -56,6 +56,7 @@ fun FeedResponse.toFeed(): Feed {
             comment = toComment(),
             likeAmount = like_amount ?: 0,
             commentAmount = comment_amount ?: 0,
+            pictures = ArrayList()
         )
     } catch (e: Exception) {
         throw ParseException(e.toString(), 0)
