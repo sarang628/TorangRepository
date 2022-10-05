@@ -2,8 +2,8 @@ package com.sryang.torang_repository.repository.impl
 
 
 import com.sryang.torang_core.data.entity.*
-import com.sryang.torang_repository.repository.FilterRepository
 import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.repository.FilterRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class FilterRepositoryImpl @Inject constructor() : FilterRepository {
 
-    lateinit var filter: MutableStateFlow<Filter>
+    lateinit var filter: MutableStateFlow<Filter> = MutableStateFlow(Filter.createEmptyValue())
 
     override fun getCurrentFilter(): StateFlow<Filter> {
         return filter
