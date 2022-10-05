@@ -10,11 +10,16 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 @Dao
 interface FeedDao {
     @Query("""
-        SELECT FeedEntity.*, UserEntity.profile_pic_url, UserEntity.userName, UserEntity.userId, RestaurantEntity.restaurant_name, RestaurantEntity.restaurant_id
+        SELECT FeedEntity.*, 
+               UserEntity.profile_pic_url,
+               UserEntity.userName, 
+               UserEntity.userId, 
+               RestaurantEntity.restaurant_name, 
+               RestaurantEntity.restaurant_id
         FROM FeedEntity 
-        JOIN UserEntity ON FeedEntity.user_id =  UserEntity.userId
+        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
         LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
-        WHERE user_id = (:userId)
+        WHERE FeedEntity.userId = (:userId)
         ORDER BY create_date DESC
         """
     )
@@ -23,7 +28,7 @@ interface FeedDao {
     @Query("""
         SELECT FeedEntity.*, UserEntity.profile_pic_url, UserEntity.userName, UserEntity.userId, RestaurantEntity.restaurant_name, RestaurantEntity.restaurant_id
         FROM FeedEntity 
-        JOIN UserEntity ON FeedEntity.user_id =  UserEntity.userId
+        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
         LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
         WHERE review_id IN (Select review_id from FavoriteEntity where user_id = (:userId) )
         ORDER BY create_date DESC
@@ -31,7 +36,7 @@ interface FeedDao {
     fun getMyFavorite(userId: Int): LiveData<List<FeedEntity>>
 
     @Query("DELETE FROM FeedEntity where review_id = (:reviewId)")
-    suspend fun deleteFeed(reviewId: Int)
+    suspend fun deleteFeed(reviewId: Int) : Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(plantList: List<FeedEntity>)

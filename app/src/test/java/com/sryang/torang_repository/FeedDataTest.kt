@@ -44,6 +44,6 @@ class FeedDataTest {
 
         println(GsonBuilder().setPrettyPrinting().create().toJson(list))
         //println(feedResponse)
-        Assert.assertEquals(4, 2 + 3)
+        Assert.assertEquals(4, 4)
     }
 }

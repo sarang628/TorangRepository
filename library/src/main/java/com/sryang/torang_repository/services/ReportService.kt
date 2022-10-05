@@ -73,7 +73,7 @@ class LocalReportService {
                 .header("User-Agent", "android")
                 .header(
                     "accessToken",
-                    if (context == null) "" else TorangPreference().getAccessToken(context!!)!!
+                    TorangPreference().getAccessToken(context)!!
                 )
                 .method(original.method, original.body)
                 .build()

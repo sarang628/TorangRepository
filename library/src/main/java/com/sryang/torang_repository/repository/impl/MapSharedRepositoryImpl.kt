@@ -31,8 +31,8 @@ open class MapSharedRepositoryImpl @Inject constructor(
             when {
                 getDistance(latitude, longitude, o1.lat!!, o1.lon!!) <
                         getDistance(latitude, longitude, o2.lat!!, o2.lon!!) -> -1
-                getDistance(latitude, longitude, o1.lat!!, o1.lon!!) ==
-                        getDistance(latitude, longitude, o2.lat!!, o2.lon!!) -> 0
+                getDistance(latitude, longitude, o1.lat, o1.lon) ==
+                        getDistance(latitude, longitude, o2.lat, o2.lon) -> 0
                 else -> 1
             }
         }

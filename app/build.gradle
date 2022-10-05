@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.sryang.torang_repository"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -29,14 +29,6 @@ android {
         debug {
             buildConfigField "String", "feedService", "${feedService}"
         }
-        /*feedServiceTest {
-            buildConfigField "String", "feedService", "\"test\""
-            debuggable true
-        }
-        feedServiceReal {
-            buildConfigField "String", "feedService", "\"real\""
-            debuggable true
-        }*/
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,10 +38,15 @@ android {
         jvmTarget = '1.8'
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     buildFeatures {
         viewBinding = true
         dataBinding = true
     }
+    namespace 'com.sryang.torang_repository'
 }
 
 dependencies {
@@ -72,12 +69,12 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
     /** Retrofit */
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 
     /** Room */
     implementation "androidx.room:room-runtime:$roomVersion"
@@ -89,10 +86,9 @@ dependencies {
     /** HILT */
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
     annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
-    kapt "org.xerial:sqlite-jdbc:3.34.0"
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.42")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.42")
+    kapt "org.xerial:sqlite-jdbc:3.36.0"
 }

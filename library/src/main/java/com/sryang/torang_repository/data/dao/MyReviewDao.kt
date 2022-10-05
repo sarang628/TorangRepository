@@ -12,7 +12,7 @@ interface MyReviewDao {
     fun getUploadedImage(reviewId: Int): LiveData<List<ReviewImageEntity>>
 
 
-    @Query("select * from FeedEntity where user_id = (:userId) and restaurant_id = (:restaurantId) order by FeedEntity.create_date desc")
+    @Query("select * from FeedEntity where userId = (:userId) and restaurant_id = (:restaurantId) order by FeedEntity.create_date desc")
     fun getMyReviews(userId: Int, restaurantId: Int): LiveData<List<FeedEntity>>
 
 

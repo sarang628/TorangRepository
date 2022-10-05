@@ -9,6 +9,7 @@ import com.sryang.torang_core.data.entity.Favorite
 import com.sryang.torang_core.data.entity.Like
 import com.sryang.torang_core.data.entity.Review
 import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -35,7 +36,7 @@ class TestFeedServiceImpl @Inject constructor(
         return feeds
     }
 
-    override suspend fun deleteReview(review: Review): Review {
+    override suspend fun deleteReview(review: ReviewDeleteRequestVO): Review {
         TODO("Not yet implemented")
     }
 
