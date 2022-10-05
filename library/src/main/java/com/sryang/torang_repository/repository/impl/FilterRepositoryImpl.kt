@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class FilterRepositoryImpl @Inject constructor() : FilterRepository {
 
-    lateinit var filter: MutableStateFlow<Filter> = MutableStateFlow(Filter.createEmptyValue())
+    var filter: MutableStateFlow<Filter> = MutableStateFlow(Filter.createEmptyValue())
 
     override fun getCurrentFilter(): StateFlow<Filter> {
         return filter
