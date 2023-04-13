@@ -50,18 +50,3 @@ class AlarmRepositoryImpl @Inject constructor(
         }
     }
 }
-
-/**
- * 로그인 테스트용 TestAlarmRepositoryImpl
- * 실제 사용 AlarmRepositoryImpl
- */
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class AlarmRepositoryModule {
-
-    @Binds
-    //실제 사용
-    abstract fun provideAlarmRepository(alarmRepository: AlarmRepositoryImpl): AlarmRepository
-    //로그인 테스트
-//    abstract fun provideAlarmRepository(alarmRepository: TestAlarmRepositoryImpl): AlarmRepository
-}
