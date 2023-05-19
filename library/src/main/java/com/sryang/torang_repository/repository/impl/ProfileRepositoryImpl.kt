@@ -2,12 +2,11 @@ package com.sryang.torang_repository.repository.impl
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.switchMap
-import com.sryang.torang_repository.repository.ProfileRepository
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.*
+import com.sryang.torang_repository.repository.ProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,7 +18,7 @@ import javax.inject.Singleton
 class ProfileRepositoryImpl @Inject constructor(
     private val loggedUserDao: LoggedInUserDao,
     private val userDao: UserDao,
-    private val feedDao: FeedDao
+    private val feedDao: FeedDao, override val isLogin: LiveData<Boolean>
 ) : ProfileRepository {
 
     override fun getMyProfile(): LiveData<LoggedInUserEntity?> {
@@ -66,13 +65,13 @@ class ProfileRepositoryImpl @Inject constructor(
         return loggedUserDao.getLoggedInUserEntity1()
     }
 
-    override val isLogin: LiveData<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
-        if (it != null) {
-            MutableLiveData(it.userId != 0)
-        } else {
-            MutableLiveData(false)
-        }
-    }
+//    override val isLogin: LiveData<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
+//        if (it != null) {
+//            MutableLiveData(it.userId != 0)
+//        } else {
+//            MutableLiveData(false)
+//        }
+//    }
 
 
     override suspend fun isLogin(): Boolean {

@@ -1,12 +1,11 @@
 package com.sryang.torang_repository.repository.impl
 
-import com.sryang.torang_repository.services.RestaurantService
-import com.sryang.torang_repository.util.DistanceManager.getDistance
-import com.sryang.torang_core.data.entity.Filter
-import com.sryang.torang_repository.repository.MapSharedRepository
-import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity
+import com.sryang.torang_repository.repository.MapSharedRepository
+import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.util.DistanceManager.getDistance
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,7 +24,6 @@ open class MapSharedRepositoryImpl @Inject constructor(
         latitude: Double,
         longitude: Double
     ): List<RestaurantEntity> {
-        Logger.d("$latitude, $longitude")
         val list = restaurantDao.getRestaurantDistance()
         return list.sortedWith { o1, o2 ->
             when {
@@ -54,7 +52,7 @@ open class MapSharedRepositoryImpl @Inject constructor(
         val list = ArrayList<RestaurantEntity>()
         val restaurants = restaurantService.getFilterRestaurant(filter)
         for (restaurant in restaurants) {
-            list.add(RestaurantEntity.parse(restaurant))
+//            list.add(RestaurantEntity.parse(restaurant))
         }
         restaurantDao.insertAllRestaurant(list)
         return list

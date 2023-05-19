@@ -1,8 +1,8 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.entity.HoursOfOperation
-import com.sryang.torang_core.data.entity.Menu
-import com.sryang.torang_core.data.entity.Restaurant
+import android.view.Menu
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.HoursOfOperation
 
 interface InfoRepository {
     suspend fun loadRestaurant(restaurantId: Int): Restaurant

@@ -3,19 +3,16 @@ package com.sryang.torang_repository.repository.impl
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.switchMap
-import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.data.entity.Comment
-import com.sryang.torang_core.data.entity.Restaurant
-import com.sryang.torang_core.data.entity.User
-import com.sryang.torang_core.data.entity.Feed
-import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Comment
+import com.sryang.torang_repository.data.Feed
 import com.sryang.torang_repository.data.dao.CommentDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
 import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.repository.TimeLineDetailRepository
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.Binds
 import dagger.Module
@@ -31,7 +28,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
     private val commentDao: CommentDao,
     private val restaurantDao: RestaurantDao,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: LiveData<Boolean>
 ) :
     TimeLineDetailRepository {
 
@@ -42,7 +39,6 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
     }
 
     override fun getComments(reviewId: Int): LiveData<List<CommentEntity>> {
-        Logger.d("getComments $reviewId")
         return commentDao.getComments(reviewId)
     }
 
@@ -73,15 +69,6 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
         return comment*/
         TODO()
     }
-
-    /** 로그인 여부 */
-    override val isLogin: LiveData<Boolean> = loggedInUserDao.getLoggedInUserEntity().switchMap {
-        if (it != null) {
-            MutableLiveData(it.userId != 0)
-        } else {
-            MutableLiveData(false)
-        }
-    }
 }
 
 @Singleton
@@ -90,7 +77,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     private val restaurantDao: RestaurantDao,
     private val restaurantService: RestaurantService,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: LiveData<Boolean>
 ) :
     TimeLineDetailRepository {
 
@@ -124,15 +111,6 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
 
     override suspend fun addComment(reviewId: Int, value: String): Comment {
         TODO("not yet implemented")
-    }
-
-    /** 로그인 여부 */
-    override val isLogin: LiveData<Boolean> = loggedInUserDao.getLoggedInUserEntity().switchMap {
-        if (it != null) {
-            MutableLiveData(it.userId != 0)
-        } else {
-            MutableLiveData(false)
-        }
     }
 }
 

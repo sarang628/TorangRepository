@@ -1,8 +1,8 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.NationItem
-import com.sryang.torang_core.data.entity.Restaurant
-import com.sryang.torang_repository.repository.MapSharedRepository
+
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.NationItem
 import kotlinx.coroutines.flow.StateFlow
 
 interface NationRepository : MapSharedRepository {

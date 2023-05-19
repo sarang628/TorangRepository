@@ -2,8 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_core.data.entity.Restaurant
-import com.sryang.torang_core.data.entity.RestaurantTypeObject
+import com.sryang.torang_repository.Restaurant
 
 /**
  *     "address": "",
@@ -46,7 +45,7 @@ data class RestaurantEntity(
     val img_url6: String? = null
 
 ) {
-    companion object {
+/*    companion object {
         fun parse(restaurant: Restaurant): RestaurantEntity {
             return RestaurantEntity(
                 restaurant_id = restaurant.restaurantId,
@@ -64,5 +63,5 @@ data class RestaurantEntity(
                 img_url1 = restaurant.imgUrl1
             )
         }
-    }
+    }*/
 }

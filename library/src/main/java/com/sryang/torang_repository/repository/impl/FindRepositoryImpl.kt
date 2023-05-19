@@ -4,13 +4,15 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import com.sryang.torang_core.data.LocationPreferences
-import com.sryang.torang_core.data.entity.*
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Distances
+import com.sryang.torang_repository.data.Prices
+import com.sryang.torang_repository.data.Ratings
+import com.sryang.torang_repository.data.RestaurantType
+import com.sryang.torang_repository.data.SearchType
+import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.repository.FindRepository
 import com.sryang.torang_repository.repository.RequestLocationResult
-import com.sryang.torang_core.util.Logger
-import com.sryang.torang_repository.data.dao.RestaurantDao
-import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +36,7 @@ class FindRepositoryImpl @Inject constructor(
     class FindRepositoryImpl @Inject constructor(
         private val restaurantDao: RestaurantDao,
         private val restaurantService: RestaurantService,
-        private val locationPreferences: LocationPreferences,
+        //private val locationPreferences: LocationPreferences,
         @ApplicationContext private val context: Context
     ) : FindRepository {
         // 최초 위치요쳥을 false로 설정 시 화면단에서 요청해야함
@@ -73,10 +75,10 @@ class FindRepositoryImpl @Inject constructor(
          */
         override suspend fun notifyRequestLocation(): RequestLocationResult {
             // 위치 요청이 처음이라면 권한 필요 팝업 요청
-            if (!locationPreferences.isFirstRequestLocationPermission()) {
-                locationPreferences.requestLocationPermission()
-                return RequestLocationResult.NEED_LOCATION_PERMISSION
-            }
+//            if (!locationPreferences.isFirstRequestLocationPermission()) {
+//                locationPreferences.requestLocationPermission()
+//                return RequestLocationResult.NEED_LOCATION_PERMISSION
+//            }
 
             // 첫 권한 필요 팝업을 거부했거나 권한이 없을경우 다른 권한 필요 팝업 요청
             if (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED) {
@@ -123,8 +125,8 @@ class FindRepositoryImpl @Inject constructor(
         }
 
         override suspend fun requestLocationPermission(b: Boolean) {
-            locationPreferences.requestLocationPermission()
-            isFirstRequestLocationPermission.emit(locationPreferences.isFirstRequestLocationPermission())
+//            locationPreferences.requestLocationPermission()
+//            isFirstRequestLocationPermission.emit(locationPreferences.isFirstRequestLocationPermission())
         }
 
         override fun hasGrantPermission(): MutableStateFlow<Int> {
@@ -132,8 +134,8 @@ class FindRepositoryImpl @Inject constructor(
         }
 
         override suspend fun permissionGranated() {
-            Logger.d("check emit hasGrantPermission = ${hasGrantPermission.value}, PackageManager.PERMISSION_GRANTED = ${PackageManager.PERMISSION_GRANTED}")
-            hasGrantPermission.emit(PackageManager.PERMISSION_GRANTED)
+//            Logger.d("check emit hasGrantPermission = ${hasGrantPermission.value}, PackageManager.PERMISSION_GRANTED = ${PackageManager.PERMISSION_GRANTED}")
+//            hasGrantPermission.emit(PackageManager.PERMISSION_GRANTED)
         }
 
         override fun showRestaurantCardAndFilter(): StateFlow<Boolean> {

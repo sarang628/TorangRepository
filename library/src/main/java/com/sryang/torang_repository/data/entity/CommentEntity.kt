@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_core.data.entity.Comment
+import com.sryang.torang_repository.data.Comment
 
 @Entity
 data class CommentEntity(
@@ -18,12 +18,12 @@ data class CommentEntity(
         fun parse(list: ArrayList<Comment>): ArrayList<CommentEntity> {
             val commentList = ArrayList<CommentEntity>()
             for (comment in list) {
-                commentList.add(parse(comment))
+//                commentList.add(parse(comment))
             }
             return commentList
         }
 
-        fun parse(comment: Comment): CommentEntity {
+        /*fun parse(comment: Comment): CommentEntity {
             return CommentEntity(
                 commentId = comment.comment_id,
                 userId = comment.user.userId,
@@ -33,6 +33,6 @@ data class CommentEntity(
                 createDate = comment.createDate,
                 profilePicUrl = comment.user.profilePicUrl
             )
-        }
+        }*/
     }
 }

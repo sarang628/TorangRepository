@@ -1,94 +1,82 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
 
 android {
-    compileSdk 33
+    compileSdk rootProject.compileSdk
 
     defaultConfig {
         applicationId "com.sryang.torang_repository"
-        minSdk 23
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
-
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner "com.example.torangrepositorytestapp.CustomTestRunner"
-        signingConfig signingConfigs.debug
+    }
+    buildFeatures {
+        compose true
     }
 
-    buildTypes {
-        release {
-            buildConfigField "String", "feedService", "${feedService}"
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            buildConfigField "String", "feedService", "${feedService}"
-        }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.6"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    lintOptions {
-        abortOnError false
-    }
-
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
-    namespace 'com.sryang.torang_repository'
+    namespace 'com.posco.feedscreentestapp'
 }
 
 dependencies {
+    /** HILT */
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    implementation project(path: ':library')
-    implementation "com.github.sarang628:TorangCore:$coreVersion"
-
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
-
-    /** common */
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "androidx.core:core-ktx:$ktxVersion"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
-
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    /** compose */
+    def composeBom = platform('androidx.compose:compose-bom:2023.05.01')
+    implementation composeBom
+    androidTestImplementation composeBom
+    //없으면 @Composable import 안됨
+    implementation 'androidx.compose.ui:ui'
+    //없으면 Text("Hello") 안됨
+    implementation 'androidx.compose.material:material'
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    implementation 'androidx.compose.material3:material3'
+    implementation "androidx.compose.material3:material3-window-size-class"
+    // collectAsState
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1"
+    // Optional - Integration with activities
+    implementation 'androidx.activity:activity-compose:1.7.1'
 
     /** Retrofit */
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     /** Room */
-    implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-    testImplementation "androidx.room:room-testing:$roomVersion"
-    implementation "androidx.work:work-runtime-ktx:$workVersion"
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
+    // optional - RxJava2 support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    // optional - Paging 3 Integration
+    implementation "androidx.room:room-paging:$room_version"
 
     /** HILT */
     implementation "com.google.dagger:hilt-android:$hiltVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-    annotationProcessor "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.42")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.42")
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
     kapt "org.xerial:sqlite-jdbc:3.36.0"
+    implementation project(path: ':library')
 }

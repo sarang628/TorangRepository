@@ -1,15 +1,18 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
+import android.location.Location
+import android.view.Menu
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.data.entity.*
-import com.sryang.torang_repository.repository.InfoRepository
-import com.sryang.torang_repository.repository.MenuRepository
-import com.sryang.torang_repository.repository.ReviewRepository
-import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.HoursOfOperation
+import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity
+import com.sryang.torang_repository.repository.InfoRepository
 import com.sryang.torang_repository.repository.MapRepository
+import com.sryang.torang_repository.repository.MenuRepository
+import com.sryang.torang_repository.repository.ReviewRepository
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.Binds
 import dagger.Module
@@ -33,7 +36,7 @@ class TorangRepository @Inject constructor(
     MapRepository {
 
     private val mapClick = MutableStateFlow<Boolean>(false)
-    private val location = MutableStateFlow(Location(0.0, 0.0))
+//    private val location = MutableStateFlow(Location(0.0, 0.0))
 
     override suspend fun loadRestaurant(restaurantId: Int): Restaurant {
         return restaurantService.getRestaurant(HashMap<String, String>().apply {
@@ -73,7 +76,7 @@ class TorangRepository @Inject constructor(
         val list = restaurantService.getAllRestaurant(HashMap())
         val data = ArrayList<RestaurantEntity>()
         for (restaurant in list) {
-            data.add(RestaurantEntity.parse(restaurant))
+//            data.add(RestaurantEntity.parse(restaurant))
         }
         restaurantDao.insertAllRestaurant(data)
     }
@@ -128,14 +131,21 @@ class TorangRepository @Inject constructor(
     }
 
     override suspend fun setCurrentLocation(location: Location) {
-        Logger.d("lat : ${location.latitude} , lon : ${location.longitude}")
-        this.location.emit(location)
+        TODO("Not yet implemented")
     }
 
     override fun getCurrentLocationFlow(): StateFlow<Location> {
-        return location
+        TODO("Not yet implemented")
     }
-}
+
+//    override suspend fun setCurrentLocation(location: Location) {
+//        Logger.d("lat : ${location.latitude} , lon : ${location.longitude}")
+//        this.location.emit(location)
+    }
+
+//    override fun getCurrentLocationFlow(): StateFlow<Location> {
+//        return location
+//    }
 
 @Module
 @InstallIn(SingletonComponent::class)

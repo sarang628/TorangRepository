@@ -2,9 +2,9 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_repository.repository.SearchRepository
 import com.sryang.torang_repository.data.dao.SearchDao
 import com.sryang.torang_repository.data.entity.SearchEntity
+import com.sryang.torang_repository.repository.SearchRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

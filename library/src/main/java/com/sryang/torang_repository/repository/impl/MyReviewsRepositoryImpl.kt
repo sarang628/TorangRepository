@@ -2,12 +2,7 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.data.entity.MyReview
-import com.sryang.torang_repository.repository.MyReviewsRepository
-import com.sryang.torang_core.util.Logger
-import com.sryang.torang_repository.datasource.MyReviewsLocalDataSource
-import com.sryang.torang_repository.datasource.MyReviewsRemoteDataSource
+import com.sryang.torang_repository.data.MyReview
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.MyReviewDao
 import com.sryang.torang_repository.data.dao.UserDao
@@ -15,6 +10,10 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.data.entity.toFeedEntity
+import com.sryang.torang_repository.datasource.MyReviewsLocalDataSource
+import com.sryang.torang_repository.datasource.MyReviewsRemoteDataSource
+import com.sryang.torang_repository.repository.MyReviewsRepository
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -70,7 +69,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
     }
 
     override fun getMyReviews1(restaurantId: Int): LiveData<List<FeedEntity>> {
-        Logger.d("${userId()}, $restaurantId")
+//        Logger.d("${userId()}, $restaurantId")
         return myReviewDao.getMyReviews(userId(), restaurantId)
     }
 

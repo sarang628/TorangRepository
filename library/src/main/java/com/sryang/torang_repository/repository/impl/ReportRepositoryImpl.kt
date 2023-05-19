@@ -1,11 +1,10 @@
 package com.sryang.torang_repository.repository.impl
 
-import com.sryang.torang_repository.services.ReportService
+import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.repository.ReportAfterSupport
 import com.sryang.torang_repository.repository.ReportReason
 import com.sryang.torang_repository.repository.ReportRepository
-import com.sryang.torang_core.util.Logger
-import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.services.ReportService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -46,7 +45,6 @@ class ReportRepositoryImpl @Inject constructor(
                 put("review_id", reviewId.toString())
             })
         } catch (e: Exception) {
-            Logger.e(e.toString())
             false
         }
         return false

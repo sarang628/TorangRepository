@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.remote
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.sryang.torang_core.data.entity.Feed
+import com.sryang.torang_repository.data.Feed
 import kotlin.streams.toList
 
 data class RemoteFeed(

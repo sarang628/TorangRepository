@@ -1,6 +1,10 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.entity.*
+import com.sryang.torang_repository.data.Distances
+import com.sryang.torang_repository.data.Filter
+import com.sryang.torang_repository.data.Prices
+import com.sryang.torang_repository.data.Ratings
+import com.sryang.torang_repository.data.RestaurantType
 import kotlinx.coroutines.flow.StateFlow
 
 interface FilterRepository {

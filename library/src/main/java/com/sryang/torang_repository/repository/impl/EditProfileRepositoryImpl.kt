@@ -2,7 +2,6 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
@@ -55,20 +54,19 @@ class EditProfileRepositoryImpl @Inject constructor(
         try {
             // 레트로핏으로 사용자 프로필 업데이트 Rest API 처리
             restaurantService.updateProfile(params, pictureList).let {
-                it.data?.let { user ->
+                it.data?.let {
                     // 통신 결과값을 Room을 이용하여 DB update : 로그인한 사용자 정보
-                    loggedInUserDao.update(user.userName, user.profilePicUrl)
+//                    loggedInUserDao.update(user.userName, user.profilePicUrl)
                     // 통신 결과값을 Room을 이용하여 DB update : 일반 사용자 정보
-                    userDao.update(
-                        TorangPreference().getUserId(context),
-                        user.userName,
-                        user.profilePicUrl
-                    )
+//                    userDao.update(
+//                        TorangPreference().getUserId(context),
+//                        user.userName,
+//                        user.profilePicUrl
+//                    )
                     response = EditProfileResponse.SUCCESS
                 }
             }
         } catch (e: Exception) {
-            Logger.e(e.toString())
         }
 
         return response

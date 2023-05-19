@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository
 
 import androidx.lifecycle.LiveData
-import com.sryang.torang_core.data.entity.Alarm
+import com.sryang.torang_repository.Alarm
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 
 interface AlarmRepository : LoginCheckableRepository {

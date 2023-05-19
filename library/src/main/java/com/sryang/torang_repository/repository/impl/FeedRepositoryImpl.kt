@@ -3,12 +3,9 @@ package com.sryang.torang_repository.repository.impl
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.sryang.torang_core.data.entity.Feed
-import com.sryang.torang_core.data.util.FeedUtil
-import com.sryang.torang_core.util.Logger
+import com.sryang.torang_repository.data.Feed
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
-import com.sryang.torang_repository.data.remote.response.toFeed
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
@@ -36,17 +33,20 @@ class FeedRepositoryImpl @Inject constructor(
         userDao.deleteFeed(reviewId)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun loadFeed(): List<Feed> {
-        val feedList = remoteDataSource.getFeeds(HashMap())
-        return feedList.stream().map {
-            try {
-                it.toFeed()
-            } catch (e: Exception) {
-                Logger.e("parse error ${e.toString()}, ${it}")
-                FeedUtil.createEmptyValue()
-            }
-        }.toList()
+        TODO("Not yet implemented")
     }
+
+//    @RequiresApi(Build.VERSION_CODES.N)
+//    override suspend fun loadFeed(): List<Feed> {
+//        val feedList = remoteDataSource.getFeeds(HashMap())
+//        return feedList.stream().map {
+//            try {
+//                it.toFeed()
+//            } catch (e: Exception) {
+//                FeedUtil.createEmptyValue()
+//            }
+//        }.toList()
+//    }
 
 }

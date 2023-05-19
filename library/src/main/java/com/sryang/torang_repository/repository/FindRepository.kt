@@ -1,6 +1,11 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_core.data.entity.*
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Distances
+import com.sryang.torang_repository.data.Prices
+import com.sryang.torang_repository.data.Ratings
+import com.sryang.torang_repository.data.RestaurantType
+import com.sryang.torang_repository.data.SearchType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

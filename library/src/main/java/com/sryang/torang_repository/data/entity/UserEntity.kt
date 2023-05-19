@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.GsonBuilder
-import com.sryang.torang_core.data.entity.User
 
 @Entity
 data class UserEntity(
@@ -28,7 +27,7 @@ data class UserEntity(
     }
 
     companion object {
-        fun parse(user: User?): UserEntity {
+        /*fun parse(user: User?): UserEntity {
             if (user == null)
                 return UserEntity(userId = -1)
 
@@ -45,7 +44,7 @@ data class UserEntity(
                 followers = user.followers.toString(),
                 following = user.following.toString()
             )
-        }
+        }*/
     }
 
     override fun toString(): String {

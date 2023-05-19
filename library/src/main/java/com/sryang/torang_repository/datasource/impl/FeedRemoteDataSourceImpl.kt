@@ -1,6 +1,5 @@
 package com.sryang.torang_repository.datasource.impl
 
-import com.sryang.torang_core.util.Logger
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource

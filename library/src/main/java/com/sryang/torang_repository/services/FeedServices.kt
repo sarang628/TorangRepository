@@ -1,8 +1,8 @@
 package com.sryang.torang_repository.services
 
-import com.sryang.torang_core.data.entity.Favorite
-import com.sryang.torang_core.data.entity.Like
-import com.sryang.torang_core.data.entity.Review
+import com.sryang.torang_repository.data.Favorite
+import com.sryang.torang_repository.data.Like
+import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.FeedResponse
 import retrofit2.http.Body

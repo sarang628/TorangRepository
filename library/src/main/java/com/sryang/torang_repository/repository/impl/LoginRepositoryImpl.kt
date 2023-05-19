@@ -2,11 +2,11 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.data.entity.User
-import com.sryang.torang_repository.repository.LoginRepository
+import com.sryang.torang_repository.data.User
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.repository.LoginRepository
+import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -31,11 +31,11 @@ class LoginRepositoryImpl @Inject constructor(
 
         restaurantService.facebook_login(token).data?.let {
 
-            LoggedInUserEntity.parse(it)?.let {
-                loggedInUserDao.insert(it)
-            }
+//            LoggedInUserEntity.parse(it)?.let {
+//                loggedInUserDao.insert(it)
+//            }
 
-            return it
+//            return it
         }
         return null
     }
