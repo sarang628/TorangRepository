@@ -2,7 +2,6 @@ package com.sryang.torang_repository.di.modules
 
 import android.content.Context
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_core.util.Logger
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -79,8 +78,6 @@ class TorangOkHttpClientImpl @Inject constructor(@ApplicationContext val context
                         chain: Array<X509Certificate?>?,
                         authType: String?
                     ) {
-                        Logger.d("checkClientTrusted $chain , $authType")
-                        Logger.d("chain ${chain?.get(0)}")
                     }
 
                     @Throws(CertificateException::class)
@@ -88,12 +85,9 @@ class TorangOkHttpClientImpl @Inject constructor(@ApplicationContext val context
                         chain: Array<X509Certificate?>?,
                         authType: String?
                     ) {
-                        Logger.d("checkServerTrusted $chain , $authType")
-                        Logger.d("chain ${chain?.get(0)}")
                     }
 
                     override fun getAcceptedIssuers(): Array<X509Certificate> {
-                        Logger.d("getAcceptedIssuers")
                         return arrayOf()
                     }
                 }
