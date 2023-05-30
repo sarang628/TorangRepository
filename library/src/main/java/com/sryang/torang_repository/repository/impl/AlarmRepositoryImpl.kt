@@ -1,19 +1,18 @@
 package com.sryang.torang_repository.repository.impl
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.sryang.torang_repository.Alarm
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_repository.services.RestaurantService
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AlarmRepositoryImpl @Inject constructor(
     private val loggedInUserDao: LoggedInUserDao,
-    private val restaurantService: RestaurantService, override val isLogin: LiveData<Boolean>
+    private val restaurantService: RestaurantService, override val isLogin: StateFlow<Boolean>
 ) : AlarmRepository {
 
 
@@ -29,7 +28,7 @@ class AlarmRepositoryImpl @Inject constructor(
 
     }
 
-    override fun user(): LiveData<LoggedInUserEntity?> {
+    override fun user(): StateFlow<LoggedInUserEntity?> {
         return loggedInUserDao.getLoggedInUserEntity()
     }
 }

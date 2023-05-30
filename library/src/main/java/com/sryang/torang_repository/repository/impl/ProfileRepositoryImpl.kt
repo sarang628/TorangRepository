@@ -1,7 +1,5 @@
 package com.sryang.torang_repository.repository.impl
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
@@ -11,6 +9,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,26 +17,26 @@ import javax.inject.Singleton
 class ProfileRepositoryImpl @Inject constructor(
     private val loggedUserDao: LoggedInUserDao,
     private val userDao: UserDao,
-    private val feedDao: FeedDao, override val isLogin: LiveData<Boolean>
+    private val feedDao: FeedDao, override val isLogin: StateFlow<Boolean>
 ) : ProfileRepository {
 
-    override fun getMyProfile(): LiveData<LoggedInUserEntity?> {
+    override fun getMyProfile(): StateFlow<LoggedInUserEntity?> {
         return loggedUserDao.getLoggedInUserEntity()
     }
 
-    override fun loadProfile(userId: Int): LiveData<UserEntity> {
+    override fun loadProfile(userId: Int): StateFlow<UserEntity> {
         return userDao.getUser(userId)
     }
 
-    override fun getMyFeed(userId: Int): LiveData<List<FeedEntity>> {
+    override fun getMyFeed(userId: Int): StateFlow<List<FeedEntity>> {
         return feedDao.getMyFeed(userId)
     }
 
-    override fun getMyFavorite(userId: Int): LiveData<List<FeedEntity>> {
+    override fun getMyFavorite(userId: Int): StateFlow<List<FeedEntity>> {
         return feedDao.getMyFavorite(userId)
     }
 
-    override fun getFeed(): LiveData<List<FeedEntity>> {
+    override fun getFeed(): StateFlow<List<FeedEntity>> {
         return userDao.getAllFeed()
     }
 
@@ -53,11 +52,11 @@ class ProfileRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getLike(reviewId: Int): LiveData<LikeEntity> {
+    override fun getLike(reviewId: Int): StateFlow<LikeEntity> {
         return userDao.getLike(reviewId)
     }
 
-    override fun getFavorite(reviewId: Int): LiveData<FavoriteEntity> {
+    override fun getFavorite(reviewId: Int): StateFlow<FavoriteEntity> {
         return userDao.getFavorite(reviewId)
     }
 
@@ -65,11 +64,11 @@ class ProfileRepositoryImpl @Inject constructor(
         return loggedUserDao.getLoggedInUserEntity1()
     }
 
-//    override val isLogin: LiveData<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
+//    override val isLogin: StateFlow<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
 //        if (it != null) {
-//            MutableLiveData(it.userId != 0)
+//            MutableStateFlow(it.userId != 0)
 //        } else {
-//            MutableLiveData(false)
+//            MutableStateFlow(false)
 //        }
 //    }
 
@@ -82,7 +81,7 @@ class ProfileRepositoryImpl @Inject constructor(
         loggedUserDao.clear()
     }
 
-    override fun getReviewImages(reviewId: Int): LiveData<List<ReviewImageEntity>> {
+    override fun getReviewImages(reviewId: Int): StateFlow<List<ReviewImageEntity>> {
         return userDao.getReviewImages(reviewId)
     }
 }

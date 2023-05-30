@@ -1,19 +1,19 @@
 package com.sryang.torang_repository.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface MyReviewDao {
     @Query("select * from ReviewImageEntity where review_id = (:reviewId) order by ReviewImageEntity.create_date desc")
-    fun getUploadedImage(reviewId: Int): LiveData<List<ReviewImageEntity>>
+    fun getUploadedImage(reviewId: Int): StateFlow<List<ReviewImageEntity>>
 
 
     @Query("select * from FeedEntity where userId = (:userId) and restaurant_id = (:restaurantId) order by FeedEntity.create_date desc")
-    fun getMyReviews(userId: Int, restaurantId: Int): LiveData<List<FeedEntity>>
+    fun getMyReviews(userId: Int, restaurantId: Int): StateFlow<List<FeedEntity>>
 
 
     /*@Query(

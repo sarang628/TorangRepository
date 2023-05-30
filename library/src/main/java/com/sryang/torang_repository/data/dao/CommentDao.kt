@@ -1,11 +1,11 @@
 package com.sryang.torang_repository.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.CommentEntity
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface CommentDao {
@@ -17,7 +17,7 @@ interface CommentDao {
         ORDER BY createDate DESC
         """
     )
-    fun getComments(reviewId: Int): LiveData<List<CommentEntity>>
+    fun getComments(reviewId: Int): StateFlow<List<CommentEntity>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

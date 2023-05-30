@@ -1,19 +1,23 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.sryang.torang_repository.data.ModifyFeedData
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
 import com.sryang.torang_repository.data.dao.UserDao
-import com.sryang.torang_repository.data.entity.*
+import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.RestaurantEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import com.sryang.torang_repository.data.entity.toFeedEntity
 import com.sryang.torang_repository.repository.MyReviewRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
@@ -29,12 +33,12 @@ class MyReviewRepositoryImpl @Inject constructor(
     private val loggedInUserDao: LoggedInUserDao
 ) :
     MyReviewRepository {
-    override fun getMyReview(reviewId: Int): LiveData<FeedEntity?> {
+    override fun getMyReview(reviewId: Int): StateFlow<FeedEntity?> {
         return reviewDao.getFeedbyReviewId(reviewId)
     }
 
-    override fun getUploadedPicture(reviewId: Int): LiveData<List<ReviewImageEntity>> {
-        return MutableLiveData<List<ReviewImageEntity>>()
+    override fun getUploadedPicture(reviewId: Int): StateFlow<List<ReviewImageEntity>> {
+        return MutableStateFlow<List<ReviewImageEntity>>(ArrayList())
     }
 
 

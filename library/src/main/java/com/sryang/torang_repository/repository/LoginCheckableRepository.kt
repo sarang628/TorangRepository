@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.StateFlow
 
 interface LoginCheckableRepository {
-    val isLogin: LiveData<Boolean>
+    val isLogin: StateFlow<Boolean>
 }

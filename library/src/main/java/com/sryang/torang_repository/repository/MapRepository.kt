@@ -1,14 +1,13 @@
 package com.sryang.torang_repository.repository
 
 import android.location.Location
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface MapRepository {
     @Deprecated("findRepository로 이동")
-    fun getRestaurant(): LiveData<List<RestaurantEntity>>
+    fun getRestaurant(): StateFlow<List<RestaurantEntity>>
 
     @Deprecated("findRepository로 이동")
     suspend fun loadRestaurant()

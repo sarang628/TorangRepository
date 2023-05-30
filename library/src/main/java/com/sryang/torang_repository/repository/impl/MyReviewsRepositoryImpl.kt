@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.MyReview
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.MyReviewDao
@@ -16,6 +15,7 @@ import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,7 +68,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
         return loggedInUserDao.getLoggedInUserEntity1()?.userId
     }
 
-    override fun getMyReviews1(restaurantId: Int): LiveData<List<FeedEntity>> {
+    override fun getMyReviews1(restaurantId: Int): StateFlow<List<FeedEntity>> {
 //        Logger.d("${userId()}, $restaurantId")
         return myReviewDao.getMyReviews(userId(), restaurantId)
     }

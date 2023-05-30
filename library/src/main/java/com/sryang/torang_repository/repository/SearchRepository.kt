@@ -1,10 +1,10 @@
 package com.sryang.torang_repository.repository
 
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.entity.SearchEntity
+import kotlinx.coroutines.flow.StateFlow
 
 interface SearchRepository {
-    fun getHistoryKeywords(): LiveData<List<SearchEntity>>
+    fun getHistoryKeywords(): StateFlow<List<SearchEntity>>
     suspend fun saveHistory(keyword: String)
     suspend fun removeKeyword(search: SearchEntity)
 }

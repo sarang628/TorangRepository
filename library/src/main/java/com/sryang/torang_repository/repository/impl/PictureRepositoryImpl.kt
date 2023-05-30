@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.graphics.Picture
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.repository.PicturesRepository
@@ -10,6 +9,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ class PicturesRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun getFeedPicture(reviewId: Int): LiveData<List<ReviewImageEntity>> {
+    override fun getFeedPicture(reviewId: Int): StateFlow<List<ReviewImageEntity>> {
 //        Logger.d(reviewId)
         return pictureDao.getFeedImage(reviewId)
     }

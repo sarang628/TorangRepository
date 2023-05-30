@@ -1,12 +1,12 @@
 package com.sryang.torang_repository.repository.test
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.sryang.torang_repository.Alarm
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_repository.services.RestaurantService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,10 +29,10 @@ class TestAlarmRepositoryImpl @Inject constructor(
 
     }
 
-    override fun user(): LiveData<LoggedInUserEntity?> {
-        return MutableLiveData(LoggedInUserEntity(userId = 4))
+    override fun user(): StateFlow<LoggedInUserEntity?> {
+        return MutableStateFlow(LoggedInUserEntity(userId = 4))
     }
 
-    override val isLogin: LiveData<Boolean>
-        get() = MutableLiveData(true)
+    override val isLogin: StateFlow<Boolean>
+        get() = MutableStateFlow(true)
 }

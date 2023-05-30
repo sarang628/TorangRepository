@@ -1,13 +1,11 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.EditProfileResponse
-import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.Binds
@@ -15,6 +13,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -73,7 +72,7 @@ class EditProfileRepositoryImpl @Inject constructor(
     }
 
 
-    override fun getUser(): LiveData<LoggedInUserEntity?> {
+    override fun getUser(): StateFlow<LoggedInUserEntity?> {
         return loggedInUserDao.getLoggedInUserEntity()
     }
 }

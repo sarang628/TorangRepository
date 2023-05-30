@@ -1,8 +1,6 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.sryang.torang_repository.Restaurant
 import com.sryang.torang_repository.data.Comment
 import com.sryang.torang_repository.data.Feed
@@ -19,6 +17,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +27,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
     private val commentDao: CommentDao,
     private val restaurantDao: RestaurantDao,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao, override val isLogin: LiveData<Boolean>
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: StateFlow<Boolean>
 ) :
     TimeLineDetailRepository {
 
@@ -38,20 +37,20 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
         return list
     }
 
-    override fun getComments(reviewId: Int): LiveData<List<CommentEntity>> {
+    override fun getComments(reviewId: Int): StateFlow<List<CommentEntity>> {
         return commentDao.getComments(reviewId)
     }
 
-    override fun getReview(): LiveData<Feed> {
+    override fun getReview(): StateFlow<Feed> {
         TODO("Not yet implemented")
     }
 
-    override fun getRestaurant(reviewId: Int): LiveData<Restaurant> {
+    override fun getRestaurant(reviewId: Int): StateFlow<Restaurant> {
         //return restaurantDao.getRestaurantByReviewId(reviewId)
         TODO()
     }
 
-    override fun getFeed(reviewId: Int): LiveData<Feed> {
+    override fun getFeed(reviewId: Int): StateFlow<Feed> {
         //return reviewDao.getFeedbyReviewId(reviewId)
         TODO()
     }
@@ -77,7 +76,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     private val restaurantDao: RestaurantDao,
     private val restaurantService: RestaurantService,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao, override val isLogin: LiveData<Boolean>
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: StateFlow<Boolean>
 ) :
     TimeLineDetailRepository {
 
@@ -85,20 +84,20 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
         return restaurantService.getComments(reviewId)
     }
 
-    override fun getComments(reviewId: Int): LiveData<List<CommentEntity>> {
+    override fun getComments(reviewId: Int): StateFlow<List<CommentEntity>> {
         TODO("Not yet implemented")
     }
 
-    override fun getReview(): LiveData<Feed> {
+    override fun getReview(): StateFlow<Feed> {
         TODO("Not yet implemented")
     }
 
-    override fun getRestaurant(reviewId: Int): LiveData<Restaurant> {
+    override fun getRestaurant(reviewId: Int): StateFlow<Restaurant> {
         //return restaurantDao.getRestaurantByReviewId(reviewId)
         TODO()
     }
 
-    override fun getFeed(reviewId: Int): LiveData<Feed> {
+    override fun getFeed(reviewId: Int): StateFlow<Feed> {
         //return reviewDao.getFeedbyReviewId(reviewId)
         TODO()
     }

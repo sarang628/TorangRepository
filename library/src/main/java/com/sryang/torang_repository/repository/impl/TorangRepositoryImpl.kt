@@ -3,7 +3,6 @@ package com.sryang.torang_repository.repository.impl
 import android.content.Context
 import android.location.Location
 import android.view.Menu
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.Restaurant
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.Review
@@ -68,7 +67,7 @@ class TorangRepository @Inject constructor(
         })
     }
 
-    override fun getRestaurant(): LiveData<List<RestaurantEntity>> {
+    override fun getRestaurant(): StateFlow<List<RestaurantEntity>> {
         return restaurantDao.getRestaurant()
     }
 

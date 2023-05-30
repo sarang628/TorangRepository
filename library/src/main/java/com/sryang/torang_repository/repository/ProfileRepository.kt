@@ -1,14 +1,14 @@
 package com.sryang.torang_repository.repository
 
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.entity.UserEntity
+import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileRepository : FeedListRepository {
-    fun getMyProfile(): LiveData<LoggedInUserEntity?>
-    fun loadProfile(userId: Int): LiveData<UserEntity>
-    fun getMyFeed(userId: Int): LiveData<List<FeedEntity>>
-    fun getMyFavorite(userId: Int): LiveData<List<FeedEntity>>
+    fun getMyProfile(): StateFlow<LoggedInUserEntity?>
+    fun loadProfile(userId: Int): StateFlow<UserEntity>
+    fun getMyFeed(userId: Int): StateFlow<List<FeedEntity>>
+    fun getMyFavorite(userId: Int): StateFlow<List<FeedEntity>>
     suspend fun logout()
 }

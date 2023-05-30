@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.User
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
@@ -10,6 +9,7 @@ import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,7 +44,7 @@ class LoginRepositoryImpl @Inject constructor(
         return loggedInUserDao.isLpogin()
     }
 
-    override fun getLoginUser(): LiveData<LoggedInUserEntity?> {
+    override fun getLoginUser(): StateFlow<LoggedInUserEntity?> {
         return loggedInUserDao.getLoggedInUserEntity()
     }
 

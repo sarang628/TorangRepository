@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.sryang.torang_repository.data.dao.SearchDao
 import com.sryang.torang_repository.data.entity.SearchEntity
 import com.sryang.torang_repository.repository.SearchRepository
@@ -10,6 +9,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ class SearchRepositoryImpl @Inject constructor(
     private val searchDao: SearchDao
 ) :
     SearchRepository {
-    override fun getHistoryKeywords(): LiveData<List<SearchEntity>> {
+    override fun getHistoryKeywords(): StateFlow<List<SearchEntity>> {
         return searchDao.getHistoryKeywords()
     }
 
