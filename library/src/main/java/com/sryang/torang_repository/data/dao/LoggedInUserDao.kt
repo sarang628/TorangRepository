@@ -6,12 +6,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface LoggedInUserDao {
     @Query("select * from LoggedInUserEntity")
-    fun getLoggedInUserEntity(): StateFlow<LoggedInUserEntity?>
+    fun getLoggedInUserEntity(): Flow<LoggedInUserEntity?>
 
     @Query("select * from LoggedInUserEntity")
     suspend fun getLoggedInUserEntity1(): LoggedInUserEntity?

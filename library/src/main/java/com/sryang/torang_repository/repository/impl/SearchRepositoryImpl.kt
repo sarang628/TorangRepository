@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ class SearchRepositoryImpl @Inject constructor(
     private val searchDao: SearchDao
 ) :
     SearchRepository {
-    override fun getHistoryKeywords(): StateFlow<List<SearchEntity>> {
+    override fun getHistoryKeywords(): Flow<List<SearchEntity>> {
         return searchDao.getHistoryKeywords()
     }
 

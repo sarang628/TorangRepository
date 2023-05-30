@@ -5,14 +5,14 @@ import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_repository.services.RestaurantService
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AlarmRepositoryImpl @Inject constructor(
     private val loggedInUserDao: LoggedInUserDao,
-    private val restaurantService: RestaurantService, override val isLogin: StateFlow<Boolean>
+    private val restaurantService: RestaurantService, override val isLogin: Flow<Boolean>
 ) : AlarmRepository {
 
 
@@ -28,7 +28,7 @@ class AlarmRepositoryImpl @Inject constructor(
 
     }
 
-    override fun user(): StateFlow<LoggedInUserEntity?> {
+    override fun user(): Flow<LoggedInUserEntity?> {
         return loggedInUserDao.getLoggedInUserEntity()
     }
 }

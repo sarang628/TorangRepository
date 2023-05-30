@@ -7,8 +7,6 @@ import com.sryang.torang_repository.data.Ratings
 import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 interface FindRepository {
     /** 맛집 검색 */
@@ -30,15 +28,15 @@ interface FindRepository {
     /** 검색 된 맛집 */
     fun getSearchedRestaurant(): Flow<List<Restaurant>>
     /** 최초위치요청 상태 가져오기 */
-    fun getIsFirstRequestLocation(): StateFlow<Boolean>
+    fun getIsFirstRequestLocation(): Flow<Boolean>
     /** 현재 위치를 요청중인지 */
-    fun isRequestingLocation(): StateFlow<Boolean>
+    fun isRequestingLocation(): Flow<Boolean>
     /** 현재 포커스된 맛집 위치 */
-    fun getCurrentPosition(): StateFlow<Int>
+    fun getCurrentPosition(): Flow<Int>
     /** 권한 소유 여부 */
-    fun hasGrantPermission(): MutableStateFlow<Int>
+    fun hasGrantPermission(): Flow<Int>
     /** 맛집카드, 필터 보여지는 여부 */
-    fun showRestaurantCardAndFilter(): StateFlow<Boolean>
+    fun showRestaurantCardAndFilter(): Flow<Boolean>
 }
 
 enum class RequestLocationResult {

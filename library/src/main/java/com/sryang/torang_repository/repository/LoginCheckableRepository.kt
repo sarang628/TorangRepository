@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface LoginCheckableRepository {
-    val isLogin: StateFlow<Boolean>
+    val isLogin: Flow<Boolean>
 }

@@ -3,11 +3,10 @@ package com.sryang.torang_repository.repository
 import android.location.Location
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 interface MapRepository {
     @Deprecated("findRepository로 이동")
-    fun getRestaurant(): StateFlow<List<RestaurantEntity>>
+    fun getRestaurant(): Flow<List<RestaurantEntity>>
 
     @Deprecated("findRepository로 이동")
     suspend fun loadRestaurant()
@@ -31,5 +30,5 @@ interface MapRepository {
     suspend fun showCard()
 
     suspend fun setCurrentLocation(location : Location)
-    fun getCurrentLocationFlow() : StateFlow<Location>
+    fun getCurrentLocationFlow() : Flow<Location>
 }

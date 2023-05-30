@@ -20,7 +20,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -67,7 +66,7 @@ class TorangRepository @Inject constructor(
         })
     }
 
-    override fun getRestaurant(): StateFlow<List<RestaurantEntity>> {
+    override fun getRestaurant(): Flow<List<RestaurantEntity>> {
         return restaurantDao.getRestaurant()
     }
 
@@ -133,7 +132,7 @@ class TorangRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getCurrentLocationFlow(): StateFlow<Location> {
+    override fun getCurrentLocationFlow(): Flow<Location> {
         TODO("Not yet implemented")
     }
 
@@ -142,7 +141,7 @@ class TorangRepository @Inject constructor(
 //        this.location.emit(location)
     }
 
-//    override fun getCurrentLocationFlow(): StateFlow<Location> {
+//    override fun getCurrentLocationFlow(): Flow<Location> {
 //        return location
 //    }
 

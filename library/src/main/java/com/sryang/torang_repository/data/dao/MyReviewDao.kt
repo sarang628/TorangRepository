@@ -4,16 +4,16 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MyReviewDao {
     @Query("select * from ReviewImageEntity where review_id = (:reviewId) order by ReviewImageEntity.create_date desc")
-    fun getUploadedImage(reviewId: Int): StateFlow<List<ReviewImageEntity>>
+    fun getUploadedImage(reviewId: Int): Flow<List<ReviewImageEntity>>
 
 
     @Query("select * from FeedEntity where userId = (:userId) and restaurant_id = (:restaurantId) order by FeedEntity.create_date desc")
-    fun getMyReviews(userId: Int, restaurantId: Int): StateFlow<List<FeedEntity>>
+    fun getMyReviews(userId: Int, restaurantId: Int): Flow<List<FeedEntity>>
 
 
     /*@Query(

@@ -13,7 +13,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -72,7 +72,7 @@ class EditProfileRepositoryImpl @Inject constructor(
     }
 
 
-    override fun getUser(): StateFlow<LoggedInUserEntity?> {
+    override fun getUser(): Flow<LoggedInUserEntity?> {
         return loggedInUserDao.getLoggedInUserEntity()
     }
 }

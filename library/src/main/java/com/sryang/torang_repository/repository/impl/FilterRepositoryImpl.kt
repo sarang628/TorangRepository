@@ -6,18 +6,17 @@ import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.Ratings
 import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.repository.FilterRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FilterRepositoryImpl @Inject constructor() : FilterRepository {
 
-    var filter: MutableStateFlow<Filter> = MutableStateFlow(Filter(0))
+    var filter = MutableStateFlow(Filter(0))
 
-    override fun getCurrentFilter(): StateFlow<Filter> {
+    override fun getCurrentFilter(): Flow<Filter> {
         return filter
     }
 

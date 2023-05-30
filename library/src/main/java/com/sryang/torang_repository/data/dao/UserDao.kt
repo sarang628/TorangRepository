@@ -2,12 +2,12 @@ package com.sryang.torang_repository.data.dao
 
 import androidx.room.*
 import com.sryang.torang_repository.data.entity.*
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM UserEntity")
-    fun getAll(): StateFlow<List<UserEntity>>
+    fun getAll(): Flow<List<UserEntity>>
 
     @Query("SELECT * FROM UserEntity WHERE userId IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<UserEntity>
@@ -67,11 +67,11 @@ interface UserDao {
             ORDER BY create_date DESC
             """
     )
-    fun getAllFeed(): StateFlow<List<FeedEntity>>
+    fun getAllFeed(): Flow<List<FeedEntity>>
 
 
     @Query("select * from FeedEntity where review_id = (:reviewId) order by FeedEntity.create_date desc")
-    fun getFeed(reviewId: Int): StateFlow<ReviewAndImageEntity>
+    fun getFeed(reviewId: Int): Flow<ReviewAndImageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFeed(feedData: List<FeedEntity>)
@@ -90,7 +90,7 @@ interface UserDao {
 
 
     @Query("select * from ReviewImageEntity where review_id = (:reviewId)")
-    fun getReviewImages(reviewId: Int): StateFlow<List<ReviewImageEntity>>
+    fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLikes(users: List<LikeEntity>)
@@ -102,7 +102,7 @@ interface UserDao {
     suspend fun deleteLikes(users: List<LikeEntity>)
 
     @Query("select * from LikeEntity where review_id = (:reviewId)")
-    fun getLike(reviewId: Int): StateFlow<LikeEntity>
+    fun getLike(reviewId: Int): Flow<LikeEntity>
 
     @Query("select * from LikeEntity where review_id = (:reviewId)")
     suspend fun getLike1(reviewId: Int): LikeEntity
@@ -111,10 +111,10 @@ interface UserDao {
     suspend fun hasLike(reviewId: Int): Int
 
     @Query("select * from UserEntity where userId = (:userId)")
-    fun getUser(userId: Int): StateFlow<UserEntity>
+    fun getUser(userId: Int): Flow<UserEntity>
 
     @Query("select * from FeedEntity order by FeedEntity.create_date desc")
-    fun getAllFeedWithUser(): StateFlow<List<ReviewAndImageEntity>>
+    fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>
 
     @Query("update UserEntity set userName = :userName ,profile_pic_url = :profilePicUrl  where userId = :userId")
     suspend fun update(userId: Int, userName: String, profilePicUrl: String)
@@ -136,5 +136,5 @@ interface UserDao {
     suspend fun insertFavorite(favorite: FavoriteEntity)
 
     @Query("select * from FavoriteEntity where review_id = (:reviewId)")
-    fun getFavorite(reviewId: Int): StateFlow<FavoriteEntity>
+    fun getFavorite(reviewId: Int): Flow<FavoriteEntity>
 }

@@ -5,11 +5,11 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface MyReviewRepository {
-    fun getMyReview(reviewId: Int): StateFlow<FeedEntity?>
-    fun getUploadedPicture(reviewId: Int): StateFlow<List<ReviewImageEntity>>
+    fun getMyReview(reviewId: Int): Flow<FeedEntity?>
+    fun getUploadedPicture(reviewId: Int): Flow<List<ReviewImageEntity>>
     fun userId(): Int
     suspend fun userId1(): Int
     suspend fun uploadReview(review: ReviewAndImageEntity)

@@ -5,12 +5,12 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.SearchEntity
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SearchDao {
     @Query("SELECT * FROM SearchEntity order by createDate desc")
-    fun getHistoryKeywords(): StateFlow<List<SearchEntity>>
+    fun getHistoryKeywords(): Flow<List<SearchEntity>>
 
     @Insert
     suspend fun insertAll(vararg searches: SearchEntity?)

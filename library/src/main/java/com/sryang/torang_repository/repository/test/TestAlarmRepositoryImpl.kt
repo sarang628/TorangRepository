@@ -6,7 +6,7 @@ import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_repository.services.RestaurantService
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,10 +29,10 @@ class TestAlarmRepositoryImpl @Inject constructor(
 
     }
 
-    override fun user(): StateFlow<LoggedInUserEntity?> {
+    override fun user(): Flow<LoggedInUserEntity?> {
         return MutableStateFlow(LoggedInUserEntity(userId = 4))
     }
 
-    override val isLogin: StateFlow<Boolean>
+    override val isLogin: Flow<Boolean>
         get() = MutableStateFlow(true)
 }

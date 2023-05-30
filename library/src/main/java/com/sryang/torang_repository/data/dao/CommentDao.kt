@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.CommentEntity
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CommentDao {
@@ -17,7 +17,7 @@ interface CommentDao {
         ORDER BY createDate DESC
         """
     )
-    fun getComments(reviewId: Int): StateFlow<List<CommentEntity>>
+    fun getComments(reviewId: Int): Flow<List<CommentEntity>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

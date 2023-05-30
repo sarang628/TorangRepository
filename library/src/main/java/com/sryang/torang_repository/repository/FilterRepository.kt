@@ -5,11 +5,11 @@ import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.Ratings
 import com.sryang.torang_repository.data.RestaurantType
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface FilterRepository {
     /** 현재 필터 상태 */
-    fun getCurrentFilter(): StateFlow<Filter>
+    fun getCurrentFilter(): Flow<Filter>
     /** 음식 종류 선택 */
     suspend fun selectRestaurantType(food: RestaurantType)
     /** 가격대 선택 */

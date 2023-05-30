@@ -17,7 +17,7 @@ import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
@@ -33,11 +33,11 @@ class MyReviewRepositoryImpl @Inject constructor(
     private val loggedInUserDao: LoggedInUserDao
 ) :
     MyReviewRepository {
-    override fun getMyReview(reviewId: Int): StateFlow<FeedEntity?> {
+    override fun getMyReview(reviewId: Int): Flow<FeedEntity?> {
         return reviewDao.getFeedbyReviewId(reviewId)
     }
 
-    override fun getUploadedPicture(reviewId: Int): StateFlow<List<ReviewImageEntity>> {
+    override fun getUploadedPicture(reviewId: Int): Flow<List<ReviewImageEntity>> {
         return MutableStateFlow<List<ReviewImageEntity>>(ArrayList())
     }
 

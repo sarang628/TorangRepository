@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FeedEntity
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FeedDao {
@@ -23,7 +23,7 @@ interface FeedDao {
         ORDER BY create_date DESC
         """
     )
-    fun getMyFeed(userId: Int): StateFlow<List<FeedEntity>>
+    fun getMyFeed(userId: Int): Flow<List<FeedEntity>>
 
     @Query("""
         SELECT FeedEntity.*, UserEntity.profile_pic_url, UserEntity.userName, UserEntity.userId, RestaurantEntity.restaurant_name, RestaurantEntity.restaurant_id
@@ -33,7 +33,7 @@ interface FeedDao {
         WHERE review_id IN (Select review_id from FavoriteEntity where user_id = (:userId) )
         ORDER BY create_date DESC
         """)
-    fun getMyFavorite(userId: Int): StateFlow<List<FeedEntity>>
+    fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
 
     @Query("DELETE FROM FeedEntity where review_id = (:reviewId)")
     suspend fun deleteFeed(reviewId: Int) : Int

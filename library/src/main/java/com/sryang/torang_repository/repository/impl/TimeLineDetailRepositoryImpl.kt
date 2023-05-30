@@ -17,7 +17,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,7 +27,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
     private val commentDao: CommentDao,
     private val restaurantDao: RestaurantDao,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao, override val isLogin: StateFlow<Boolean>
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
 ) :
     TimeLineDetailRepository {
 
@@ -37,20 +37,20 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
         return list
     }
 
-    override fun getComments(reviewId: Int): StateFlow<List<CommentEntity>> {
+    override fun getComments(reviewId: Int): Flow<List<CommentEntity>> {
         return commentDao.getComments(reviewId)
     }
 
-    override fun getReview(): StateFlow<Feed> {
+    override fun getReview(): Flow<Feed> {
         TODO("Not yet implemented")
     }
 
-    override fun getRestaurant(reviewId: Int): StateFlow<Restaurant> {
+    override fun getRestaurant(reviewId: Int): Flow<Restaurant> {
         //return restaurantDao.getRestaurantByReviewId(reviewId)
         TODO()
     }
 
-    override fun getFeed(reviewId: Int): StateFlow<Feed> {
+    override fun getFeed(reviewId: Int): Flow<Feed> {
         //return reviewDao.getFeedbyReviewId(reviewId)
         TODO()
     }
@@ -76,7 +76,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     private val restaurantDao: RestaurantDao,
     private val restaurantService: RestaurantService,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao, override val isLogin: StateFlow<Boolean>
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
 ) :
     TimeLineDetailRepository {
 
@@ -84,20 +84,20 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
         return restaurantService.getComments(reviewId)
     }
 
-    override fun getComments(reviewId: Int): StateFlow<List<CommentEntity>> {
+    override fun getComments(reviewId: Int): Flow<List<CommentEntity>> {
         TODO("Not yet implemented")
     }
 
-    override fun getReview(): StateFlow<Feed> {
+    override fun getReview(): Flow<Feed> {
         TODO("Not yet implemented")
     }
 
-    override fun getRestaurant(reviewId: Int): StateFlow<Restaurant> {
+    override fun getRestaurant(reviewId: Int): Flow<Restaurant> {
         //return restaurantDao.getRestaurantByReviewId(reviewId)
         TODO()
     }
 
-    override fun getFeed(reviewId: Int): StateFlow<Feed> {
+    override fun getFeed(reviewId: Int): Flow<Feed> {
         //return reviewDao.getFeedbyReviewId(reviewId)
         TODO()
     }

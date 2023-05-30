@@ -9,7 +9,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,26 +17,26 @@ import javax.inject.Singleton
 class ProfileRepositoryImpl @Inject constructor(
     private val loggedUserDao: LoggedInUserDao,
     private val userDao: UserDao,
-    private val feedDao: FeedDao, override val isLogin: StateFlow<Boolean>
+    private val feedDao: FeedDao, override val isLogin: Flow<Boolean>
 ) : ProfileRepository {
 
-    override fun getMyProfile(): StateFlow<LoggedInUserEntity?> {
+    override fun getMyProfile(): Flow<LoggedInUserEntity?> {
         return loggedUserDao.getLoggedInUserEntity()
     }
 
-    override fun loadProfile(userId: Int): StateFlow<UserEntity> {
+    override fun loadProfile(userId: Int): Flow<UserEntity> {
         return userDao.getUser(userId)
     }
 
-    override fun getMyFeed(userId: Int): StateFlow<List<FeedEntity>> {
+    override fun getMyFeed(userId: Int): Flow<List<FeedEntity>> {
         return feedDao.getMyFeed(userId)
     }
 
-    override fun getMyFavorite(userId: Int): StateFlow<List<FeedEntity>> {
+    override fun getMyFavorite(userId: Int): Flow<List<FeedEntity>> {
         return feedDao.getMyFavorite(userId)
     }
 
-    override fun getFeed(): StateFlow<List<FeedEntity>> {
+    override fun getFeed(): Flow<List<FeedEntity>> {
         return userDao.getAllFeed()
     }
 
@@ -52,11 +52,11 @@ class ProfileRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getLike(reviewId: Int): StateFlow<LikeEntity> {
+    override fun getLike(reviewId: Int): Flow<LikeEntity> {
         return userDao.getLike(reviewId)
     }
 
-    override fun getFavorite(reviewId: Int): StateFlow<FavoriteEntity> {
+    override fun getFavorite(reviewId: Int): Flow<FavoriteEntity> {
         return userDao.getFavorite(reviewId)
     }
 
@@ -64,7 +64,7 @@ class ProfileRepositoryImpl @Inject constructor(
         return loggedUserDao.getLoggedInUserEntity1()
     }
 
-//    override val isLogin: StateFlow<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
+//    override val isLogin: Flow<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
 //        if (it != null) {
 //            MutableStateFlow(it.userId != 0)
 //        } else {
@@ -81,7 +81,7 @@ class ProfileRepositoryImpl @Inject constructor(
         loggedUserDao.clear()
     }
 
-    override fun getReviewImages(reviewId: Int): StateFlow<List<ReviewImageEntity>> {
+    override fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>> {
         return userDao.getReviewImages(reviewId)
     }
 }

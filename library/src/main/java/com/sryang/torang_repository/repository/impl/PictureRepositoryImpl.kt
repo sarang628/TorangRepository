@@ -9,7 +9,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ class PicturesRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun getFeedPicture(reviewId: Int): StateFlow<List<ReviewImageEntity>> {
+    override fun getFeedPicture(reviewId: Int): Flow<List<ReviewImageEntity>> {
 //        Logger.d(reviewId)
         return pictureDao.getFeedImage(reviewId)
     }

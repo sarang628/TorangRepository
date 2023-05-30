@@ -17,7 +17,6 @@ import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -66,7 +65,7 @@ class FindRepositoryImpl @Inject constructor(
         /**
          * 화면 첫 진입 시 위치를 요청해야하는지에 대한 상태
          */
-        override fun getIsFirstRequestLocation(): StateFlow<Boolean> {
+        override fun getIsFirstRequestLocation(): Flow<Boolean> {
             return isFirstRequestLocation
         }
 
@@ -102,7 +101,7 @@ class FindRepositoryImpl @Inject constructor(
         /**
          * 현재 위치를 요청중인지 상태
          */
-        override fun isRequestingLocation(): StateFlow<Boolean> {
+        override fun isRequestingLocation(): Flow<Boolean> {
             return isRequestingLocation
         }
 
@@ -120,7 +119,7 @@ class FindRepositoryImpl @Inject constructor(
                 showRestaurantCardAndFilter.emit(true)
         }
 
-        override fun getCurrentPosition(): StateFlow<Int> {
+        override fun getCurrentPosition(): Flow<Int> {
             return currentPosition
         }
 
@@ -138,7 +137,7 @@ class FindRepositoryImpl @Inject constructor(
 //            hasGrantPermission.emit(PackageManager.PERMISSION_GRANTED)
         }
 
-        override fun showRestaurantCardAndFilter(): StateFlow<Boolean> {
+        override fun showRestaurantCardAndFilter(): Flow<Boolean> {
             return showRestaurantCardAndFilter
         }
 
@@ -191,15 +190,15 @@ class FindRepositoryImpl @Inject constructor(
 
     }
 
-    override fun getCurrentPosition(): StateFlow<Int> {
+    override fun getCurrentPosition(): Flow<Int> {
         return MutableStateFlow(0)
     }
 
-    override fun getIsFirstRequestLocation(): StateFlow<Boolean> {
+    override fun getIsFirstRequestLocation(): Flow<Boolean> {
         return MutableStateFlow(false)
     }
 
-    override fun getSearchedRestaurant(): StateFlow<List<Restaurant>> {
+    override fun getSearchedRestaurant(): Flow<List<Restaurant>> {
         return MutableStateFlow<List<Restaurant>>(ArrayList())
     }
 
@@ -207,7 +206,7 @@ class FindRepositoryImpl @Inject constructor(
         return MutableStateFlow(0)
     }
 
-    override fun isRequestingLocation(): StateFlow<Boolean> {
+    override fun isRequestingLocation(): Flow<Boolean> {
         return MutableStateFlow(false)
     }
 
@@ -251,7 +250,7 @@ class FindRepositoryImpl @Inject constructor(
 
     }
 
-    override fun showRestaurantCardAndFilter(): StateFlow<Boolean> {
+    override fun showRestaurantCardAndFilter(): Flow<Boolean> {
         return MutableStateFlow(false)
     }
 }

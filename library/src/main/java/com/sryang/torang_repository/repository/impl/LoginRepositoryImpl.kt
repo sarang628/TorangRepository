@@ -9,7 +9,6 @@ import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,7 +43,7 @@ class LoginRepositoryImpl @Inject constructor(
         return loggedInUserDao.isLpogin()
     }
 
-    override fun getLoginUser(): StateFlow<LoggedInUserEntity?> {
+    override fun getLoginUser(): Flow<LoggedInUserEntity?> {
         return loggedInUserDao.getLoggedInUserEntity()
     }
 
