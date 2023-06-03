@@ -39,5 +39,5 @@ interface FeedDao {
     suspend fun deleteFeed(reviewId: Int) : Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(plantList: List<FeedEntity>)
+    suspend fun insertAll(plantList: List<FeedEntity>)
 }

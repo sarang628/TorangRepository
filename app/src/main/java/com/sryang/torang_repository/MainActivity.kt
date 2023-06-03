@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Text
 import com.sryang.torang_repository.data.AppDatabase
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.impl.LoginRepositoryImpl
 import dagger.Binds
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,6 +30,22 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = AppDatabase.getInstance(this)
+        val dao = db.feedDao()
+        val loggedInUserDao = db.LoggedInUserDao()
+        runBlocking {
+            dao.insertAll(ArrayList())
+
+            loggedInUserDao.insert(
+                LoggedInUserEntity(
+                    constId = 0,
+                    userId = 0
+                )
+            )
+        }
+        //
+
         setContent {
             Text(text = "")
         }
