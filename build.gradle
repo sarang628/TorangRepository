@@ -16,6 +16,8 @@ ext {
     //hilt
     hiltVersion = '2.44'
 
+    room_version = "2.5.1"
+
     //navigation
     navigationVersion = '2.4.0-alpha06'
 
