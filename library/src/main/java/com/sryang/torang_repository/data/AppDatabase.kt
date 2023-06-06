@@ -4,8 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.sryang.torang_repository.workers.PLANT_DATA_FILENAME
+import com.sryang.torang_repository.workers.SeedDatabaseWorker
+import com.sryang.torang_repository.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
 import com.sryang.torang_repository.data.dao.AlarmDao
 import com.sryang.torang_repository.data.dao.CommentDao
 import com.sryang.torang_repository.data.dao.FeedDao
@@ -68,12 +73,29 @@ abstract class AppDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context, AppDatabase::class.java,
                 "DATABASE_NAME"
-            )
-                .addCallback(
-                    object : Callback() {
-                    }
-                )
-                .build()
+            ).addCallback(object : Callback() {}).build()
+        }
+
+        fun getTestFeedInstance(context: Context): AppDatabase {
+            return instance ?: synchronized(this)
+            {
+                instance ?: buildTestFeedDatabase(context).also { instance = it }
+            }
+        }
+
+        private fun buildTestFeedDatabase(context: Context): AppDatabase {
+            return Room.databaseBuilder(
+                context, AppDatabase::class.java,
+                "DATABASE_NAME"
+            ).addCallback(object : Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
+                        .setInputData(workDataOf(KEY_FILENAME to PLANT_DATA_FILENAME))
+                        .build()
+                    WorkManager.getInstance(context).enqueue(request)
+                }
+            }).build()
         }
     }
 }
