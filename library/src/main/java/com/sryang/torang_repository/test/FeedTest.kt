@@ -13,10 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.library.JsonToObjectGenerator
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.toFeedEntity
+import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import kotlinx.coroutines.launch
+import kotlin.streams.toList
 
 @Composable
-fun FeedTest(
+fun FeedTestMenu(
     clickLoadByFile: () -> (Unit),
     clickDeleteAllFeed: () -> (Unit)
 ) {
@@ -25,7 +28,9 @@ fun FeedTest(
     val scope = rememberCoroutineScope()
 
     Column {
-        Button(onClick = {}) {
+        Button(onClick = {
+            clickDeleteAllFeed.invoke()
+        }) {
             Text(text = "모든 피드 삭제하기")
         }
         Button(onClick = {
@@ -41,43 +46,35 @@ fun FeedTest(
         Button(onClick = {}) {
             Text(text = "피드 추가하기")
         }
-        Button(onClick = {}) {
-            Text(text = "피드 추가하기")
-        }
         Button(onClick = {
-            clickDeleteAllFeed.invoke()
         }) {
             Text(text = "피드 삭제하기")
         }
     }
 }
 
-fun loadFeedByFile(context: Context): List<FeedEntity> {
-    return JsonToObjectGenerator<FeedEntity>().getListByFile(
+fun loadFeedByFile(context: Context, fileName: String): List<FeedEntity> {
+    return JsonToObjectGenerator<RemoteFeed>().getListByFile(
         context = context,
-        "plants.json",
-        FeedEntity::class.java
-    )
+        fileName,
+        RemoteFeed::class.java
+    ).stream().map { it.toFeedEntity() }.toList()
 }
 
 @Composable
-fun FeedTest1(context: Context, feedDao: FeedDao) {
+fun FeedRepositoryTest(context: Context, feedDao: FeedDao) {
     val scope = rememberCoroutineScope()
     Column {
-        FeedTest(clickLoadByFile = {
+        FeedTestMenu(clickLoadByFile = {
             scope.launch {
-                feedDao.insertAll(loadFeedByFile(context = context))
+                feedDao.insertAll(loadFeedByFile(context, "plants.json"))
             }
-        },
-            clickDeleteAllFeed = {
-                scope.launch {
-                    feedDao.deleteAllFeed()
-                }
+        }, clickDeleteAllFeed = {
+            scope.launch {
+                feedDao.deleteAllFeed()
             }
-        )
-
-        val listFlow = feedDao.getMyFeed(0)
-        val list by listFlow.collectAsState(initial = ArrayList())
+        })
+        val list by feedDao.getAllFeed().collectAsState(initial = ArrayList())
         FeedList(list = list)
     }
 }
@@ -85,4 +82,11 @@ fun FeedTest1(context: Context, feedDao: FeedDao) {
 @Preview
 @Composable
 fun PreviewFeedTest() {
+    FeedTestMenu(clickLoadByFile = {}, clickDeleteAllFeed = {})
+}
+
+@Preview
+@Composable
+fun PreViewFeedList() {
+    FeedList(list = ArrayList())
 }

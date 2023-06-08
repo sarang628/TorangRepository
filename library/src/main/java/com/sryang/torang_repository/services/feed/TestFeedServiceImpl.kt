@@ -9,7 +9,7 @@ import com.sryang.torang_repository.data.Favorite
 import com.sryang.torang_repository.data.Like
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
-import com.sryang.torang_repository.data.remote.response.FeedResponse
+import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.services.FeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader
@@ -25,8 +25,8 @@ import javax.inject.Singleton
 class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : FeedServices {
-    override suspend fun getFeeds(params: Map<String, String>): List<FeedResponse> {
-        val feeds = ArrayList<FeedResponse>()
+    override suspend fun getFeeds(params: Map<String, String>): List<RemoteFeed> {
+        val feeds = ArrayList<RemoteFeed>()
         val list = JsonDataLoader<List<JsonObject>>(context).load(R.raw.feed_response1)
         for (jsonObject in list) {
             try {
@@ -57,8 +57,8 @@ class TestFeedServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    private fun JsonObject.toFeedResponse(): FeedResponse {
-        return Gson().fromJson(this, FeedResponse::class.java)
+    private fun JsonObject.toFeedResponse(): RemoteFeed {
+        return Gson().fromJson(this, RemoteFeed::class.java)
     }
 }
 

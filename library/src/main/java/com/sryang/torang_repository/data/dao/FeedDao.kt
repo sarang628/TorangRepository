@@ -10,6 +10,23 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FeedDao {
+
+    @Query(
+        """
+        SELECT FeedEntity.*, 
+               UserEntity.profile_pic_url,
+               UserEntity.userName, 
+               UserEntity.userId, 
+               RestaurantEntity.restaurant_name, 
+               RestaurantEntity.restaurant_id
+        FROM FeedEntity 
+        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
+        ORDER BY create_date DESC
+        """
+    )
+    fun getAllFeed(): Flow<List<FeedEntity>>
+
     @Query(
         """
         SELECT FeedEntity.*, 

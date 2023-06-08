@@ -12,7 +12,7 @@ import com.sryang.torang_repository.data.Like
 import com.sryang.torang_repository.data.MenuReview
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.User
-import com.sryang.torang_repository.data.remote.response.FeedResponse
+import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.Response
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -96,7 +96,7 @@ interface RestaurantService {
 
     @FormUrlEncoded
     @POST("getFeeds")
-    suspend fun getFeeds(@FieldMap params: Map<String, String>): ArrayList<FeedResponse>
+    suspend fun getFeeds(@FieldMap params: Map<String, String>): ArrayList<RemoteFeed>
 
     @POST("addMenuReview")
     suspend fun addMenuReview(@Body menuReview: MenuReview): Call<MenuReview>

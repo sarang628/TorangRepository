@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.RestaurantType
 
-data class RestaurantResponse(
+data class RemoteRestaurant(
     @SerializedName("restaurant_id")
     val restaurantId: Int?,
     @SerializedName("restaurant_name")
