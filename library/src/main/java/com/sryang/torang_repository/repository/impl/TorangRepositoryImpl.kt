@@ -9,7 +9,7 @@ import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.repository.InfoRepository
-import com.sryang.torang_repository.repository.MapRepository
+import com.sryang.torang_repository.repository.map.MapRepository
 import com.sryang.torang_repository.repository.MenuRepository
 import com.sryang.torang_repository.repository.ReviewRepository
 import com.sryang.torang_repository.services.RestaurantService
