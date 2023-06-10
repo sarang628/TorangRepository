@@ -86,7 +86,9 @@ fun FeedRepositoryTest(context: Context, feedDao: FeedDao, pictureDao: PictureDa
             }
         })
         val list by feedDao.getAllFeed().collectAsState(initial = ArrayList())
+        val list1 by feedDao.getAllFeed1().collectAsState(initial = ArrayList())
         FeedList(list = list)
+        FeedList1(list = list1)
     }
 }
 

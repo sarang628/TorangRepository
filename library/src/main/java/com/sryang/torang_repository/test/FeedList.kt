@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.FeedEntity1
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
 
 
 @Composable
@@ -22,6 +24,19 @@ fun FeedList(list: List<FeedEntity>) {
         items(list.size) {
             Column {
                 FeedItem(list[it])
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+        }
+    })
+}
+
+@Composable
+fun FeedList1(list: List<FeedEntity1>) {
+    Log.d("sryang123", list.toString())
+    LazyColumn(content = {
+        items(list.size) {
+            Column {
+                //FeedItem(list[it])
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }

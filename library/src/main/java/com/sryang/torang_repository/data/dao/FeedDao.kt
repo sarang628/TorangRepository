@@ -5,11 +5,22 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.sryang.torang_repository.data.ReviewImage
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.FeedEntity1
+import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FeedDao {
+
+    @Query(
+        """
+        SELECT FeedEntity.*
+        FROM FeedEntity
+        """
+    )
+    fun getAllFeed1(): Flow<List<FeedEntity1>>
 
     @Query(
         """
