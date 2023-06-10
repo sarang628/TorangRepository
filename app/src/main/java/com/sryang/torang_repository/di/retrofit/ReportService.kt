@@ -1,6 +1,7 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.retrofit
 
 import android.content.Context
+import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.services.ReportService
 import dagger.Module
@@ -24,7 +25,8 @@ class ProductReportService @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "https://www.vrscoo.com:8080/"
+    private var url = "http://sarang628.iptime.org:8080/"
+//    private var url = "https://www.vrscoo.com:8080/"
     fun create(): ReportService {
         return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
             ReportService::class.java

@@ -1,5 +1,6 @@
 package com.sryang.torang_repository.di
 
+import com.sryang.torang_repository.services.FeedServices
 import com.sryang.torang_repository.services.RestaurantService
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,13 @@ class RestaurantServiceModule {
         productRestaurantService: ProductRestaurantService
     ): RestaurantService {
         return productRestaurantService.create()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFeedServiceService(
+        productFeedServiceImpl: ProductFeedServiceImpl
+    ): FeedServices {
+        return productFeedServiceImpl.create()
     }
 }
