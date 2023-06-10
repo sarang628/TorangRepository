@@ -2,6 +2,9 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sryang.torang_repository.data.remote.response.RemoteFeed
+import com.sryang.torang_repository.data.remote.response.RemotePicture
+import kotlin.streams.toList
 
 
 @Entity
@@ -15,22 +18,12 @@ data class ReviewImageEntity(
     val menu_id: Int,
     val menu: Int
 ) {
-    fun getPictureUrl(){
+    fun getPictureUrl() {
 
     }
+
     companion object {
-        /*fun Picture.toReviewImage(): ReviewImageEntity {
-            return ReviewImageEntity(
-                picture_id = this.pictureId,
-                restaurant_id = this.restaurantId,
-                user_id = this.userId,
-                review_id = this.reviewId,
-                picture_url = this.pictureUrl,
-                create_date = this.createDate,
-                menu_id = this.menuId,
-                menu = 1
-            )
-        }*/
+
 
         /*fun parse(picture: Picture): ReviewImageEntity {
             return ReviewImageEntity(
@@ -57,5 +50,24 @@ data class ReviewImageEntity(
                 user_id = -1
             )
         }
+    }
+
+    fun RemoteFeed.toPictureEntityList(): List<ReviewImageEntity> {
+        return pictures.stream().map {
+            it.toPictureEntity()
+        }.toList()
+    }
+
+    fun RemotePicture.toPictureEntity(): ReviewImageEntity {
+        return ReviewImageEntity(
+            picture_id = picture_id,
+            restaurant_id = restaurant_id,
+            user_id = user_id,
+            review_id = review_id,
+            picture_url = picture_url,
+            create_date = create_date,
+            menu_id = menu_id,
+            menu = menu.toInt()
+        )
     }
 }

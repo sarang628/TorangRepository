@@ -12,9 +12,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.library.JsonToObjectGenerator
 import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.toFeedEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
+import com.sryang.torang_repository.data.remote.response.toReviewImage
 import kotlinx.coroutines.launch
 import kotlin.streams.toList
 
@@ -53,21 +55,30 @@ fun FeedTestMenu(
     }
 }
 
-fun loadFeedByFile(context: Context, fileName: String): List<FeedEntity> {
+fun loadFeedByFile(context: Context, fileName: String): List<RemoteFeed> {
     return JsonToObjectGenerator<RemoteFeed>().getListByFile(
         context = context,
         fileName,
         RemoteFeed::class.java
-    ).stream().map { it.toFeedEntity() }.toList()
+    )
 }
 
 @Composable
-fun FeedRepositoryTest(context: Context, feedDao: FeedDao) {
+fun FeedRepositoryTest(context: Context, feedDao: FeedDao, pictureDao: PictureDao) {
     val scope = rememberCoroutineScope()
     Column {
         FeedTestMenu(clickLoadByFile = {
             scope.launch {
-                feedDao.insertAll(loadFeedByFile(context, "plants.json"))
+                val list: List<RemoteFeed> = loadFeedByFile(context, "plants.json")
+                feedDao.insertAll(list.stream().map { it.toFeedEntity() }.toList())
+
+                for (feed: RemoteFeed in list) {
+                    pictureDao.insertAll(
+                        feed.pictures.stream().map {
+                            it.toReviewImage()
+                        }.toList()
+                    )
+                }
             }
         }, clickDeleteAllFeed = {
             scope.launch {

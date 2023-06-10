@@ -13,5 +13,5 @@ interface PictureDao {
     fun getFeedImage(reviewId: Int): Flow<List<ReviewImageEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(plantList: List<ReviewImageEntity>)
+    suspend fun insertAll(plantList: List<ReviewImageEntity>)
 }
