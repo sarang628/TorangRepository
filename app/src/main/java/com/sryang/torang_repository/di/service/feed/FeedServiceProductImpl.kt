@@ -19,7 +19,8 @@ class FeedServiceProductImpl @Inject constructor(
     //    private var url = "https://www.vrscoo.com:8080/"
     fun create(): FeedServices {
         return retrofitModule
-            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
+//            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
+            .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
             .create(FeedServices::class.java)
     }
 }
