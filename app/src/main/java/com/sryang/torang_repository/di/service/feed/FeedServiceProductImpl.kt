@@ -1,6 +1,7 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.service.feed
 
 import com.sryang.torang_repository.di.retrofit.RetrofitModule
+import com.sryang.torang_repository.di.retrofit.TorangOkhttpClient
 import com.sryang.torang_repository.services.FeedServices
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -9,15 +10,16 @@ import javax.inject.Singleton
  * 실서버 피드 서비스
  */
 @Singleton
-class ProductFeedServiceImpl @Inject constructor(
+class FeedServiceProductImpl @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "https://sarang628.iptime.org:8080/"
-//    private var url = "https://www.vrscoo.com:8080/"
+    private var url = "http://sarang628.iptime.org:8081/"
+
+    //    private var url = "https://www.vrscoo.com:8080/"
     fun create(): FeedServices {
         return retrofitModule
-            .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
+            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
             .create(FeedServices::class.java)
     }
 }

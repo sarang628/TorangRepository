@@ -1,6 +1,7 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.service.restaurant
 
 import com.sryang.torang_repository.di.retrofit.RetrofitModule
+import com.sryang.torang_repository.di.retrofit.TorangOkhttpClient
 import com.sryang.torang_repository.services.RestaurantService
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,7 +11,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class ProductRestaurantService @Inject constructor(
-    private val torangOkHttpClientImpl: com.sryang.torang_repository.di.TorangOkhttpClient,
+    private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
     private var url = "https://www.vrscoo.com:8080/"

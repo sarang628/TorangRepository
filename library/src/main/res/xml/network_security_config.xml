@@ -3,7 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">sarang628.iptime.org</domain>
         <trust-anchors>
-            <certificates src="@raw/my_ca" />
             <certificates src="system" />
         </trust-anchors>
     </domain-config>

@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.retrofit
 
 import android.content.Context
 import com.sryang.torang_repository.repository.preference.TorangPreference
@@ -22,6 +22,7 @@ import javax.net.ssl.X509TrustManager
 
 interface TorangOkhttpClient {
     fun getHttpClient(): OkHttpClient
+    fun getUnsafeOkHttpClient(): OkHttpClient
 }
 
 @Singleton
@@ -36,39 +37,20 @@ class TorangOkHttpClientImpl @Inject constructor(@ApplicationContext val context
         httpClient.addInterceptor(logger)
         httpClient.writeTimeout(10, TimeUnit.SECONDS)
         httpClient.connectTimeout(10, TimeUnit.SECONDS)
-        httpClient.writeTimeout(10, TimeUnit.SECONDS)
         httpClient.readTimeout(10, TimeUnit.SECONDS)
-
-        /*httpClient.hostnameVerifier(object : HostnameVerifier{
-            override fun verify(p0: String?, p1: SSLSession?): Boolean {
-                Logger.d("!!!!!$p0")
-                Logger.d( "!!!!!${p1?.cipherSuite} \n" +
-                        "${p1?.creationTime} \n" +
-                        "${p1?.peerHost} \n" +
-                        "${p1?.peerPort} \n" +
-                        "${p1?.protocol} \n" +
-                        "")
-                return p0.equals(p1?.peerHost)
-            }
-        })*/
-
         httpClient.addInterceptor { chain ->
             val original = chain.request()
             val request = original.newBuilder()
                 .header("User-Agent", "android")
-                .header(
-                    "accessToken",
-                    TorangPreference().getAccessToken(context)!!
-                )
+                .header("accessToken", TorangPreference().getAccessToken(context)!!)
                 .method(original.method, original.body)
                 .build()
             chain.proceed(request)
         }
         return httpClient.build()
-//        return getUnsafeOkHttpClient()
     }
 
-    fun getUnsafeOkHttpClient(): OkHttpClient {
+    override fun getUnsafeOkHttpClient(): OkHttpClient {
         return try {
             // Create a trust manager that does not validate certificate chains
             val trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(
@@ -101,6 +83,9 @@ class TorangOkHttpClientImpl @Inject constructor(@ApplicationContext val context
             val builder: OkHttpClient.Builder = OkHttpClient.Builder()
             builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
             builder.hostnameVerifier { _, _ -> true }
+            builder.writeTimeout(100, TimeUnit.SECONDS)
+            builder.connectTimeout(100, TimeUnit.SECONDS)
+            builder.readTimeout(100, TimeUnit.SECONDS)
             builder.build()
         } catch (e: Exception) {
             throw RuntimeException(e)

@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.room
 
 import com.sryang.torang_repository.data.AppDatabase
 import com.sryang.torang_repository.data.dao.FeedDao
