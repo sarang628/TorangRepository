@@ -12,9 +12,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import com.google.gson.GsonBuilder
 import com.sryang.torang_repository.services.FeedServices
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import javax.net.ssl.SSLException
@@ -43,6 +45,10 @@ fun FeedServiceTest(feedServices: FeedServices) {
                     error = e.toString()
                     loading = false
                 } catch (e: SocketTimeoutException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: HttpException){
                     Log.e("sryang123", e.toString())
                     error = e.toString()
                     loading = false

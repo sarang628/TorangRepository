@@ -57,22 +57,46 @@ fun FeedServiceTest(feedServices: FeedServices) {
 
     var error: String by remember { mutableStateOf("") }
     var padding: String by remember { mutableStateOf("") }
-    LaunchedEffect(key1 = "", block = {
-        scope.launch {
-            try {
-                val result = feedServices.getFeeds(HashMap())
-                padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
-            } catch (e: SSLException) {
-                Log.e("sryang123", e.toString())
-                error = e.toString()
-            }
-        }
-    })
+    var loading: Boolean by remember { mutableStateOf(false) }
 
     Column {
         Text(text = "FeedServiceTest")
-        Text(text = padding)
-        Text(text = error)
+        Button(onClick = {
+            if (loading)
+                return@Button
+
+            loading = true
+            scope.launch {
+                try {
+                    val result = feedServices.getFeeds(HashMap())
+                    padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
+                } catch (e: SSLException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: SocketTimeoutException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: HttpException){
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                }
+            }
+        }) {
+            if (loading) {
+                Text(text = "요청중")
+            } else {
+                Text(text = "요청하기")
+            }
+        }
+        if (padding.isNotBlank())
+            Text(text = padding)
+        if (error.isNotBlank())
+            Text(text = error)
+        if (loading)
+            CircularProgressIndicator()
     }
 }
 ```
