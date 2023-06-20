@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.di.service.feed
 
-import com.sryang.torang_repository.di.retrofit.RetrofitModule
-import com.sryang.torang_repository.di.retrofit.TorangOkhttpClient
+import com.sryang.torang_repository.di.RetrofitModule
+import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.services.FeedServices
 import javax.inject.Inject
 import javax.inject.Singleton

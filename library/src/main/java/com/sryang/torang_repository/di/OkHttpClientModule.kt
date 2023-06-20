@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.retrofit
+package com.sryang.torang_repository.di
 
 import android.content.Context
 import com.sryang.torang_repository.repository.preference.TorangPreference
