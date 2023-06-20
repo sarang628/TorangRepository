@@ -52,22 +52,18 @@ class MainActivity : ComponentActivity() {
 # 피드 서비스 모듈 설정하기
 
 ```
-/**
- * 피드 서비스 Product
- */
-@Singleton
-class FeedServiceProductImpl @Inject constructor(
-    private val torangOkHttpClientImpl: TorangOkhttpClient,
-    private val retrofitModule: RetrofitModule
-) {
-    private var url = "http://sarang628.iptime.org:8081/"
-    fun create(): FeedServices {
-        return retrofitModule
-//            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
-            .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
-            .create(FeedServices::class.java)
+@InstallIn(SingletonComponent::class)
+@Module
+class RestaurantServiceModule {
+    @Singleton
+    @Provides
+    fun provideFeedServiceService(
+        productFeedServiceImpl: FeedServiceProductImpl
+    ): FeedServices {
+        return productFeedServiceImpl.create()
     }
 }
+
 ```
 
 ```
