@@ -8,7 +8,7 @@ data class RemoteFeed(
     val pictures: List<RemotePicture>,
     var medias: ArrayList<RemoteAdMedia>?,
     var restaurant: RemoteRestaurant?,
-    val user: RemoteUser,
+    val user: RemoteUser?,
     var contents: String?,
     var create_date: String?,
     var rating: Float?,

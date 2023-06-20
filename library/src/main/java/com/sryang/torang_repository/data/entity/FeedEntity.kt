@@ -25,11 +25,11 @@ data class FeedEntity(
 fun RemoteFeed.toFeedEntity(): FeedEntity {
     return FeedEntity(
         review_id = reviewId,
-        userId = user.userId,
+        userId = user?.userId ?: 0,
         isFavorite = favorite != null,
         contents = contents,
         rating = rating,
-        userName = user.userName,
+        userName = user?.userName,
         likeAmount = like_amount,
         commentAmount = comment_amount,
         restaurantName = restaurant?.restaurantName,
