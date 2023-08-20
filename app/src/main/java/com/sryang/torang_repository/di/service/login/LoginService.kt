@@ -1,0 +1,48 @@
+package com.sryang.torang_repository.di.service.login
+
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import com.sryang.torang_repository.di.RetrofitModule
+import com.sryang.torang_repository.di.TorangOkHttpClientImpl
+import com.sryang.torang_repository.di.TorangOkhttpClient
+import com.sryang.torang_repository.services.LoginService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class LoginService @Inject constructor(
+    private val torangOkhttpClient: TorangOkhttpClient,
+    private val retrofitModule: RetrofitModule
+) {
+    private var url = "http://sarang628.iptime.org:8081/"
+    fun create(): LoginService {
+        return retrofitModule.getRetrofit(torangOkhttpClient.getHttpClient(), url).create(
+            LoginService::class.java
+        )
+    }
+}
+
+@Preview
+@Composable
+fun LoginServiceTest() {
+    val loginService = LoginService(
+        torangOkhttpClient = TorangOkHttpClientImpl(LocalContext.current),
+        retrofitModule = RetrofitModule()
+    ).create()
+
+    val coroutine = rememberCoroutineScope()
+
+    Button(onClick = {
+        coroutine.launch {
+            loginService.emailLogin("a", "b")
+        }
+    }) {
+        Text(text = "test")
+    }
+}
