@@ -1,16 +1,21 @@
 package com.sryang.torang_repository.di.service.login
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.sryang.torang_repository.di.RetrofitModule
 import com.sryang.torang_repository.di.TorangOkHttpClientImpl
 import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.services.LoginService
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,13 +41,23 @@ fun LoginServiceTest() {
         retrofitModule = RetrofitModule()
     ).create()
 
+    var loginResult by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     val coroutine = rememberCoroutineScope()
 
-    Button(onClick = {
-        coroutine.launch {
-            loginService.emailLogin("a", "b")
+    Column {
+        TextField(value = email, onValueChange = { email = it })
+        TextField(value = password, onValueChange = { password = it })
+        Button(onClick = {
+            coroutine.launch {
+                loginResult = loginService.emailLogin(email, password).toString()
+            }
+        }) {
+            Text(text = "test")
         }
-    }) {
-        Text(text = "test")
+
+        Text(text = loginResult)
     }
 }
