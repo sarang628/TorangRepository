@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.service.login
+package com.sryang.torang_repository.services.impl
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
