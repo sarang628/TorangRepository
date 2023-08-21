@@ -1,5 +1,6 @@
 package com.sryang.torang_repository.di.service.login
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -33,14 +34,17 @@ class LoginService @Inject constructor(
     }
 }
 
+fun getLoginService(context: Context): LoginService {
+    return LoginService(
+        torangOkhttpClient = TorangOkHttpClientImpl(context),
+        retrofitModule = RetrofitModule()
+    ).create()
+}
+
 @Preview
 @Composable
 fun LoginServiceTest() {
-    val loginService = LoginService(
-        torangOkhttpClient = TorangOkHttpClientImpl(LocalContext.current),
-        retrofitModule = RetrofitModule()
-    ).create()
-
+    val loginService = getLoginService(LocalContext.current)
     var loginResult by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
