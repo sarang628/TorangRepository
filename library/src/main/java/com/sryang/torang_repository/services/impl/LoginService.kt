@@ -2,6 +2,7 @@ package com.sryang.torang_repository.services.impl
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -29,7 +30,8 @@ class LoginService @Inject constructor(
     private val torangOkhttpClient: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "http://sarang628.iptime.org:8081/"
+    //private var url = "http://sarang628.iptime.org:8081/"
+    private var url = "http://192.168.0.14:8081/"
     fun create(): LoginService {
         return retrofitModule.getRetrofit(torangOkhttpClient.getHttpClient(), url).create(
             LoginService::class.java
@@ -53,6 +55,7 @@ fun LoginServiceTest() {
     var password by remember { mutableStateOf("") }
 
     val coroutine = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Column {
         TextField(value = email, onValueChange = { email = it })
@@ -60,9 +63,19 @@ fun LoginServiceTest() {
         Button(onClick = {
             coroutine.launch {
                 try {
-                    loginResult = loginService.emailLogin(email, password)
+                    //loginResult =
+                    val result = loginService.emailLogin(email, password)
+                    result.body()?.let {
+                        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                        Log.d("__sryang", it.toString())
+                    }
+
                 } catch (e: HttpException) {
-                    Log.e("__sryang", e.message())
+                    e.response()?.errorBody()?.string()?.let {
+                        loginResult = it
+                    }
+                } catch (e: Exception) {
+                    loginResult = e.toString()
                 }
             }
         }) {
