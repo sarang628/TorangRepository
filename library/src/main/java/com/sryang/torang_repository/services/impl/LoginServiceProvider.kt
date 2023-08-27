@@ -15,32 +15,65 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.di.RetrofitModule
 import com.sryang.torang_repository.di.TorangOkHttpClientImpl
 import com.sryang.torang_repository.di.TorangOkhttpClient
-import com.sryang.torang_repository.services.LoginService
+import com.sryang.torang_repository.services.LoginResult
+import com.sryang.torang_repository.services.LoginServiceForRetrofit
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoginService @Inject constructor(
+class LoginServiceProvider @Inject constructor(
     private val torangOkhttpClient: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
     //private var url = "http://sarang628.iptime.org:8081/"
     private var url = "http://192.168.0.14:8081/"
-    fun create(): LoginService {
+    fun create1(): LoginServiceForRetrofit {
         return retrofitModule.getRetrofit(torangOkhttpClient.getHttpClient(), url).create(
-            LoginService::class.java
+            LoginServiceForRetrofit::class.java
         )
+    }
+
+    fun create(): LoginService {
+        val loginServiceForRetrofit = create1()
+        return object : LoginService {
+            override suspend fun emailLogin(email: String, password: String): LoginResult {
+                val response = loginServiceForRetrofit.emailLogin(email, password)
+
+                if (response.body() == null)
+                    throw Exception("")
+                else
+                    return response.body()!!
+
+            }
+
+            override suspend fun join(filter: Filter): ArrayList<Restaurant> {
+                TODO("Not yet implemented")
+            }
+        }
     }
 }
 
+interface LoginService {
+    suspend fun emailLogin(email: String, password: String): LoginResult
+    suspend fun join(filter: Filter): ArrayList<Restaurant>
+
+}
+
 fun getLoginService(context: Context): LoginService {
-    return LoginService(
+    return LoginServiceProvider(
         torangOkhttpClient = TorangOkHttpClientImpl(context),
         retrofitModule = RetrofitModule()
     ).create()
@@ -65,10 +98,9 @@ fun LoginServiceTest() {
                 try {
                     //loginResult =
                     val result = loginService.emailLogin(email, password)
-                    result.body()?.let {
-                        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
-                        Log.d("__sryang", it.toString())
-                    }
+
+                    Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show()
+                    Log.d("__sryang", result.toString())
 
                 } catch (e: HttpException) {
                     e.response()?.errorBody()?.string()?.let {

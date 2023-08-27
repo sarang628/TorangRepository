@@ -2,11 +2,10 @@ package com.sryang.torang_repository.services
 
 import com.sryang.torang_repository.Restaurant
 import com.sryang.torang_repository.data.Filter
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
-interface LoginService {
+interface LoginServiceForRetrofit {
     @FormUrlEncoded
     @POST("emailLogin")
     suspend fun emailLogin(
