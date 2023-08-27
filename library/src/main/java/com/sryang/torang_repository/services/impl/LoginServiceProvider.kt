@@ -22,6 +22,7 @@ import com.sryang.torang_repository.di.TorangOkHttpClientImpl
 import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.services.LoginResult
 import com.sryang.torang_repository.services.LoginServiceForRetrofit
+import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.Response
@@ -39,7 +40,8 @@ class LoginServiceProvider @Inject constructor(
     private val retrofitModule: RetrofitModule
 ) {
     private var url = "http://sarang628.iptime.org:8081/"
-//    private var url = "http://192.168.0.14:8081/"
+
+    //    private var url = "http://192.168.0.14:8081/"
     private fun createLoginRetrofitService(url: String): LoginServiceForRetrofit {
         return retrofitModule.getRetrofit(torangOkhttpClient.getHttpClient(), url).create(
             LoginServiceForRetrofit::class.java
@@ -83,6 +85,7 @@ fun getLoginService(context: Context): LoginService {
 @Composable
 fun LoginServiceTest() {
     val loginService = getLoginService(LocalContext.current)
+    val sessionService = SessionService(LocalContext.current)
     var loginResult by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -101,6 +104,7 @@ fun LoginServiceTest() {
 
                     Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show()
                     Log.d("__sryang", result.toString())
+                    sessionService.saveToken(result.token)
 
                 } catch (e: HttpException) {
                     e.response()?.errorBody()?.string()?.let {
@@ -113,7 +117,9 @@ fun LoginServiceTest() {
         }) {
             Text(text = "test")
         }
-
         Text(text = loginResult)
+        sessionService.getToken()?.let {
+            Text(text = it)
+        }
     }
 }
