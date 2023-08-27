@@ -8,10 +8,9 @@ interface LoginService {
     @FormUrlEncoded
     @POST("emailLogin")
     suspend fun emailLogin(
-        //@FieldMap params: Map<String, String>
         @Field("email") email: String,
         @Field("passWord") password: String
-    ): Boolean
+    ): String
 
     @POST("join")
     suspend fun join(@Body filter: Filter): ArrayList<Restaurant>

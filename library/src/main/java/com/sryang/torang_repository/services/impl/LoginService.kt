@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.services.impl
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -18,6 +19,8 @@ import com.sryang.torang_repository.di.TorangOkHttpClientImpl
 import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.services.LoginService
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -56,7 +59,11 @@ fun LoginServiceTest() {
         TextField(value = password, onValueChange = { password = it })
         Button(onClick = {
             coroutine.launch {
-                loginResult = loginService.emailLogin(email, password).toString()
+                try {
+                    loginResult = loginService.emailLogin(email, password)
+                } catch (e: HttpException) {
+                    Log.e("__sryang", e.message())
+                }
             }
         }) {
             Text(text = "test")
