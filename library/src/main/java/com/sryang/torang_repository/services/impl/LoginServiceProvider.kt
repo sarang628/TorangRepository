@@ -38,16 +38,16 @@ class LoginServiceProvider @Inject constructor(
     private val torangOkhttpClient: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    //private var url = "http://sarang628.iptime.org:8081/"
-    private var url = "http://192.168.0.14:8081/"
-    fun create1(): LoginServiceForRetrofit {
+    private var url = "http://sarang628.iptime.org:8081/"
+//    private var url = "http://192.168.0.14:8081/"
+    private fun createLoginRetrofitService(url: String): LoginServiceForRetrofit {
         return retrofitModule.getRetrofit(torangOkhttpClient.getHttpClient(), url).create(
             LoginServiceForRetrofit::class.java
         )
     }
 
-    fun create(): LoginService {
-        val loginServiceForRetrofit = create1()
+    fun create(url: String = this@LoginServiceProvider.url): LoginService {
+        val loginServiceForRetrofit = createLoginRetrofitService(url)
         return object : LoginService {
             override suspend fun emailLogin(email: String, password: String): LoginResult {
                 val response = loginServiceForRetrofit.emailLogin(email, password)
