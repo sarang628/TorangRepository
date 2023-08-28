@@ -12,4 +12,8 @@ class SessionService(context: Context) {
     fun getToken(): String? {
         return pref.getString("token", "")
     }
+
+    fun removeToken() {
+        pref.edit().putString("token", null).apply()
+    }
 }
