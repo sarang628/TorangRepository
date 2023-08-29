@@ -115,11 +115,14 @@ fun LoginServiceTest() {
                 }
             }
         }) {
-            Text(text = "test")
+            Text(text = "Login")
+        }
+        Button(onClick = { sessionService.removeToken() }) {
+            Text(text = "Logout")
         }
         Text(text = loginResult)
         sessionService.getToken()?.let {
-            Text(text = it)
+            Text(text = "Token:$it")
         }
     }
 }
