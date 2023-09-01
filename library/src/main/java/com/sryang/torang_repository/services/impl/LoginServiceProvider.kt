@@ -8,6 +8,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,12 +26,6 @@ import com.sryang.torang_repository.services.LoginServiceForRetrofit
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -92,6 +87,7 @@ fun LoginServiceTest() {
 
     val coroutine = rememberCoroutineScope()
     val context = LocalContext.current
+    val isLogin by sessionService.isLogin.collectAsState()
 
     Column {
         TextField(value = email, onValueChange = { email = it })
@@ -117,12 +113,20 @@ fun LoginServiceTest() {
         }) {
             Text(text = "Login")
         }
-        Button(onClick = { sessionService.removeToken() }) {
+        Button(onClick = {
+            //sessionService.removeToken()
+        }) {
             Text(text = "Logout")
         }
         Text(text = loginResult)
-        sessionService.getToken()?.let {
-            Text(text = "Token:$it")
-        }
+
+        Text(text = "Token:${sessionService.getToken()}")
+
+        IsLogin(isLogin = isLogin)
     }
+}
+
+@Composable
+fun IsLogin(isLogin: Boolean) {
+    Text(text = isLogin.toString())
 }
