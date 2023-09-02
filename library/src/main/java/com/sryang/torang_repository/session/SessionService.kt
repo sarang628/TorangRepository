@@ -27,7 +27,7 @@ class SessionService(context: Context) {
     suspend fun saveToken(token: String) {
         pref.edit().putString("token", token).apply()
         this@SessionService.token.emit(getToken())
-        isLogin.emit(isEmptyToken())
+        isLogin.emit(!isEmptyToken())
     }
 
     fun getToken(): String {
@@ -37,7 +37,7 @@ class SessionService(context: Context) {
     suspend fun removeToken() {
         pref.edit().putString("token", null).apply()
         this@SessionService.token.emit(getToken())
-        isLogin.emit(isEmptyToken())
+        isLogin.emit(!isEmptyToken())
     }
 
     private fun isEmptyToken(): Boolean {
