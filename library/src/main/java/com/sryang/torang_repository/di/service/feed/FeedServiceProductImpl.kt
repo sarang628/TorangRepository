@@ -2,7 +2,7 @@ package com.sryang.torang_repository.di.service.feed
 
 import com.sryang.torang_repository.di.RetrofitModule
 import com.sryang.torang_repository.di.TorangOkhttpClient
-import com.sryang.torang_repository.services.FeedServices
+import com.sryang.torang_repository.services.RemoteFeedServices
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,10 +15,10 @@ class FeedServiceProductImpl @Inject constructor(
     private val retrofitModule: RetrofitModule
 ) {
     private var url = "http://sarang628.iptime.org:8081/"
-    fun create(): FeedServices {
+    fun create(): RemoteFeedServices {
         return retrofitModule
 //            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
             .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
-            .create(FeedServices::class.java)
+            .create(RemoteFeedServices::class.java)
     }
 }

@@ -10,7 +10,7 @@ import com.sryang.torang_repository.data.Like
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
-import com.sryang.torang_repository.services.FeedServices
+import com.sryang.torang_repository.services.RemoteFeedServices
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader
 import java.io.InputStream
@@ -24,7 +24,7 @@ import javax.inject.Singleton
 @Singleton
 class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
-) : FeedServices {
+) : RemoteFeedServices {
     override suspend fun getFeeds(params: Map<String, String>): List<RemoteFeed> {
         val feeds = ArrayList<RemoteFeed>()
         val list = JsonDataLoader<List<JsonObject>>(context).load(R.raw.feed_response1)

@@ -6,23 +6,20 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import com.google.gson.GsonBuilder
-import com.sryang.torang_repository.services.FeedServices
+import com.sryang.torang_repository.services.RemoteFeedServices
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import java.net.SocketException
 import java.net.SocketTimeoutException
 import javax.net.ssl.SSLException
 
 @Composable
-fun FeedServiceTest(feedServices: FeedServices) {
+fun FeedServiceTest(remoteFeedServices: RemoteFeedServices) {
     val scope = rememberCoroutineScope()
 
     var error: String by remember { mutableStateOf("") }
@@ -38,7 +35,7 @@ fun FeedServiceTest(feedServices: FeedServices) {
             loading = true
             scope.launch {
                 try {
-                    val result = feedServices.getFeeds(HashMap())
+                    val result = remoteFeedServices.getFeeds(HashMap())
                     padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
                 } catch (e: SSLException) {
                     Log.e("sryang123", e.toString())

@@ -10,7 +10,7 @@ import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface FeedServices {
+interface RemoteFeedServices {
     @FormUrlEncoded
     @POST("getFeeds")
     suspend fun getFeeds(@FieldMap params: Map<String, String>): List<RemoteFeed>

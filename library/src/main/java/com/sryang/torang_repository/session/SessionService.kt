@@ -50,12 +50,10 @@ class SessionService(context: Context) {
 fun TestSessionService() {
     val sessionService = SessionService(LocalContext.current)
     val isLogin by sessionService.isLogin.collectAsState()
-    val token by sessionService.token.collectAsState()
     val coroutine = rememberCoroutineScope()
 
     Column {
         Text(text = "isLogin = $isLogin")
-        Text(text = "token = $token")
         Row {
             Button(onClick = {
                 coroutine.launch {

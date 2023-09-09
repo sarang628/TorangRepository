@@ -3,7 +3,7 @@ package com.sryang.torang_repository
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.sryang.torang_repository.services.FeedServices
+import com.sryang.torang_repository.services.RemoteFeedServices
 import com.sryang.torang_repository.test.FeedServiceTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
-    lateinit var feedServices: FeedServices
+    lateinit var remoteFeedServices: RemoteFeedServices
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
             )*/
 
 
-            FeedServiceTest(feedServices)
+            FeedServiceTest(remoteFeedServices)
         }
     }
 }
