@@ -1,7 +1,9 @@
 package com.sryang.torang_repository.di.remote
 
 import com.sryang.torang_repository.di.service.feed.FeedServiceProductImpl
+import com.sryang.torang_repository.di.service.review.ReviewServiceProductImpl
 import com.sryang.torang_repository.services.RemoteFeedServices
+import com.sryang.torang_repository.services.RemoteReviewService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,13 +13,13 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RemoteFeedModule {
+class RemoteReviewModule {
 
     @Singleton
     @Provides
     fun provideRemoveFeedService(
-        productFeedServiceImpl: FeedServiceProductImpl
-    ): RemoteFeedServices {
-        return productFeedServiceImpl.create()
+        reviewServiceProduct: ReviewServiceProductImpl
+    ): RemoteReviewService {
+        return reviewServiceProduct.create()
     }
 }

@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.sryang.torang_repository.services.RemoteFeedServices
+import com.sryang.torang_repository.services.RemoteReviewService
 import com.sryang.torang_repository.test.FeedServiceTest
+import com.sryang.torang_repository.test.ReviewServiceTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -12,6 +14,9 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var remoteFeedServices: RemoteFeedServices
+
+    @Inject
+    lateinit var remoteReviewService: RemoteReviewService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +30,8 @@ class MainActivity : ComponentActivity() {
             )*/
 
 
-            FeedServiceTest(remoteFeedServices)
+            //FeedServiceTest(remoteFeedServices)
+            ReviewServiceTest(remoteReviewService = remoteReviewService)
         }
     }
 }
