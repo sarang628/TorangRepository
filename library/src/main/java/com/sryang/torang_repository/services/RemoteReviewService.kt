@@ -24,7 +24,10 @@ interface RemoteReviewService {
 
     @Multipart
     @POST("addReview")
-    suspend fun addReview(@PartMap params: HashMap<String, RequestBody>): JsonObject
+    suspend fun addReview(
+        @PartMap params: HashMap<String, RequestBody>,
+        @Part file: ArrayList<MultipartBody.Part>
+    ): JsonObject
 
     @POST("updateReview")
     suspend fun updateReview(@Body reviewBody: Review): Call<Review>
