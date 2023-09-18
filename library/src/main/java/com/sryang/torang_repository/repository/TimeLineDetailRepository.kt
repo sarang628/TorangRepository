@@ -1,8 +1,8 @@
 package com.sryang.torang_repository.repository
 
+import com.sryang.library.entity.Feed
 import com.sryang.torang_repository.Restaurant
 import com.sryang.torang_repository.data.Comment
-import com.sryang.torang_repository.data.Feed
 import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.repository.login.LoginCheckableRepository
 import kotlinx.coroutines.flow.Flow

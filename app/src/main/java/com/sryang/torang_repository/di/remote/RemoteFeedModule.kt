@@ -12,7 +12,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class RemoteFeedModule {
-
     @Singleton
     @Provides
     fun provideRemoveFeedService(
