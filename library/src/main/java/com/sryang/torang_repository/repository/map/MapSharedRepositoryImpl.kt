@@ -3,7 +3,7 @@ package com.sryang.torang_repository.repository.map
 import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.entity.RestaurantEntity
-import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.util.DistanceManager.getDistance
 import dagger.Binds
 import dagger.Module
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 open class MapSharedRepositoryImpl @Inject constructor(
     private val restaurantDao: RestaurantDao,
-    private val restaurantService: RestaurantService
+    private val restaurantService: ApiRestaurant
 ) :
     MapSharedRepository {
 

@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository.nation
 
 
-import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.NationItem
 import com.sryang.torang_repository.repository.map.MapSharedRepository
 import kotlinx.coroutines.flow.Flow

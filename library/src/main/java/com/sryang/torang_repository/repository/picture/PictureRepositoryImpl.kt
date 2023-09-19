@@ -3,7 +3,7 @@ package com.sryang.torang_repository.repository.picture
 import android.graphics.Picture
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
-import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.api.ApiRestaurant
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PicturesRepositoryImpl @Inject constructor(
-    private val restaurantService: RestaurantService,
+    private val restaurantService: ApiRestaurant,
     private val pictureDao: PictureDao
 ) :
     PicturesRepository {

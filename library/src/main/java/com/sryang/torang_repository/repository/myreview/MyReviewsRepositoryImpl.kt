@@ -13,7 +13,8 @@ import com.sryang.torang_repository.datasource.MyReviewsLocalDataSource
 import com.sryang.torang_repository.datasource.MyReviewsRemoteDataSource
 import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.api.ApiReview
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -22,7 +23,7 @@ import javax.inject.Singleton
 @Singleton
 class MyReviewsRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    @Deprecated("MyReviewsRemoteDataSource로 이동") private val restaurantService: RestaurantService,
+    private val apiReview: ApiReview,
     @Deprecated("MyReviewsLocalDataSource 이동") private val userDao: UserDao,
     @Deprecated("MyReviewsLocalDataSource 이동") private val myReviewDao: MyReviewDao,
     @Deprecated("MyReviewsLocalDataSource 이동") private val loggedInUserDao: LoggedInUserDao,
@@ -32,7 +33,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
     MyReviewsRepository {
 
     override suspend fun getMyReviews(restaurantId: Int): List<ReviewAndImageEntity> {
-        val list = restaurantService.getMyReviews(HashMap<String, String>().apply {
+        val list = apiReview.getMyReviews(HashMap<String, String>().apply {
             put("restaurant_id", restaurantId.toString())
             put("user_id", TorangPreference().getUserId(context).toString())
         })
@@ -74,7 +75,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMyReviews3(restaurantId: Int): List<MyReview> {
-        val list = restaurantService.getMyReviews(HashMap<String, String>().apply {
+        val list = apiReview.getMyReviews(HashMap<String, String>().apply {
             put("user_id", "" + userId1())
             put("restaurant_id", "" + restaurantId)
         })

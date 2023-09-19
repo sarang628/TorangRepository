@@ -25,28 +25,6 @@ data class UserEntity(
         }
         return super.equals(other)
     }
-
-    companion object {
-        /*fun parse(user: User?): UserEntity {
-            if (user == null)
-                return UserEntity(userId = -1)
-
-            return UserEntity(
-                userId = user.userId,
-                email = user.email,
-                userName = user.userName,
-                loginPlatform = user.loginPlatform,
-                create_date = user.createDate,
-                access_token = user.accessToken,
-                profile_pic_url = user.profilePicUrl,
-                point = user.point,
-                review_count = user.reviewCount.toString(),
-                followers = user.followers.toString(),
-                following = user.following.toString()
-            )
-        }*/
-    }
-
     override fun toString(): String {
         val gson = GsonBuilder().setPrettyPrinting().create()
         return gson.toJson(this)

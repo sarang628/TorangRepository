@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.di.service
 
 import com.sryang.torang_repository.di.service.restaurant.ProductRestaurantService
-import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.api.ApiRestaurant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +17,7 @@ class RestaurantServiceModule {
     @Provides
     fun provideRestaurantService(
         productRestaurantService: ProductRestaurantService
-    ): RestaurantService {
+    ): ApiRestaurant {
         return productRestaurantService.create()
     }
 }

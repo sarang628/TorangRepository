@@ -4,14 +4,14 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Distances
 import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.Ratings
 import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
 import com.sryang.torang_repository.data.dao.RestaurantDao
-import com.sryang.torang_repository.services.RestaurantService
+import com.sryang.torang_repository.api.ApiRestaurant
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Singleton
 class FindRepositoryImpl @Inject constructor(
     private val restaurantDao: RestaurantDao,
-    private val restaurantService: RestaurantService
+    private val restaurantService: ApiRestaurant
 ) : FindRepository {
     //최초 위치요쳥을 false로 설정 시 화면단에서 요청해야함
     val isFirstRequestLocation = MutableStateFlow(false)
@@ -32,7 +32,7 @@ class FindRepositoryImpl @Inject constructor(
     @Singleton
     class FindRepositoryImpl @Inject constructor(
         private val restaurantDao: RestaurantDao,
-        private val restaurantService: RestaurantService,
+        private val restaurantService: ApiRestaurant,
         //private val locationPreferences: LocationPreferences,
         @ApplicationContext private val context: Context
     ) : FindRepository {

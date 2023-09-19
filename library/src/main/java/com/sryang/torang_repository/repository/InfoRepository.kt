@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository
 
 import android.view.Menu
-import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.HoursOfOperation
 
 interface InfoRepository {

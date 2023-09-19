@@ -3,13 +3,9 @@ package com.sryang.torang_repository
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.repository.feed.FeedRepository
-import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
-import com.sryang.torang_repository.services.RemoteFeedServices
-import com.sryang.torang_repository.services.RemoteReviewService
-import com.sryang.torang_repository.test.FeedServiceTest
-import com.sryang.torang_repository.test.ReviewServiceTest
+import com.sryang.torang_repository.repository.profile.ProfileRepository
+import com.sryang.torang_repository.repository.profile.ProfileRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,6 +23,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var feedRepository: FeedRepository
 
+    @Inject
+    lateinit var profileRepository: ProfileRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,8 @@ class MainActivity : ComponentActivity() {
 
             //FeedServiceTest(remoteFeedServices)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)
-            FeedRepositoryTest(feedRepository = feedRepository)
+            ///FeedRepositoryTest(feedRepository = feedRepository)
+            ProfileRepositoryTest(profileRepository = profileRepository)
         }
     }
 }

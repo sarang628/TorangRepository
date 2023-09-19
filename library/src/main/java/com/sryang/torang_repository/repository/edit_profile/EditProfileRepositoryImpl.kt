@@ -1,12 +1,12 @@
 package com.sryang.torang_repository.repository.edit_profile
 
 import android.content.Context
+import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.profile.EditProfileRepository
 import com.sryang.torang_repository.repository.profile.EditProfileResponse
-import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.Binds
 import dagger.Module
@@ -26,7 +26,7 @@ import kotlin.collections.set
 @Singleton
 class EditProfileRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val restaurantService: RestaurantService,
+    private val apiProfile: ApiProfile,
     private val loggedInUserDao: LoggedInUserDao,
     private val userDao: UserDao
 ) : EditProfileRepository {
@@ -52,7 +52,7 @@ class EditProfileRepositoryImpl @Inject constructor(
 
         try {
             // 레트로핏으로 사용자 프로필 업데이트 Rest API 처리
-            restaurantService.updateProfile(params, pictureList).let {
+            apiProfile.updateProfile(params, pictureList).let {
                 it.data?.let {
                     // 통신 결과값을 Room을 이용하여 DB update : 로그인한 사용자 정보
 //                    loggedInUserDao.update(user.userName, user.profilePicUrl)

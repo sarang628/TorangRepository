@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository.report
 
 import com.sryang.torang_repository.data.dao.FeedDao
-import com.sryang.torang_repository.services.ReportService
+import com.sryang.torang_repository.api.ApiReport
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ReportRepositoryImpl @Inject constructor(
-    private val reportService: ReportService,
+    private val reportService: ApiReport,
     private val feedDao: FeedDao
 ) : ReportRepository {
 

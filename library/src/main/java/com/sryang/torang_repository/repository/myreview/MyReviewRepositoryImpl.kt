@@ -1,6 +1,8 @@
 package com.sryang.torang_repository.repository.myreview
 
 import android.content.Context
+import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.api.ApiReview
 import com.sryang.torang_repository.data.ModifyFeedData
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
@@ -13,11 +15,10 @@ import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.data.entity.toFeedEntity
 import com.sryang.torang_repository.repository.MyReviewRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_repository.services.RestaurantService
 import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
@@ -27,7 +28,8 @@ import javax.inject.Singleton
 class MyReviewRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val reviewDao: ReviewDao,
-    private val restaurantService: RestaurantService,
+    private val restaurantService: ApiRestaurant,
+    private val apiReview: ApiReview,
     private val userDao: UserDao,
     private val restaurantDao: RestaurantDao,
     private val loggedInUserDao: LoggedInUserDao
@@ -128,7 +130,7 @@ class MyReviewRepositoryImpl @Inject constructor(
         }
 
         try {
-            val result = restaurantService.updateReview(review.toMap(), pictureList)
+            val result = apiReview.updateReview(review.toMap(), pictureList)
 
             //피드 추가기
             val list1 = ArrayList<ReviewAndImageEntity>()

@@ -2,8 +2,10 @@ package com.sryang.torang_repository.repository.feed_detail
 
 import android.content.Context
 import com.sryang.library.entity.Feed
-import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.api.ApiComment
+import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.Comment
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.dao.CommentDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
@@ -11,7 +13,6 @@ import com.sryang.torang_repository.data.dao.ReviewDao
 import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.repository.TimeLineDetailRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
-import com.sryang.torang_repository.services.RestaurantService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,7 +24,8 @@ import javax.inject.Singleton
 
 @Singleton
 class TimeLineDetailRepositoryImpl @Inject constructor(
-    private val restaurantService: RestaurantService,
+    private val restaurantService: ApiRestaurant,
+    private val apiComment: ApiComment,
     private val commentDao: CommentDao,
     private val restaurantDao: RestaurantDao,
     private val reviewDao: ReviewDao,
@@ -32,7 +34,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
     TimeLineDetailRepository {
 
     override suspend fun getComments(reviewId: String): ArrayList<Comment> {
-        val list = restaurantService.getComments(reviewId)
+        val list = apiComment.getComments(reviewId)
         commentDao.insertComments(CommentEntity.parse(list))
         return list
     }
@@ -74,14 +76,15 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
 class TimeLineDetailRepositoryTestImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val restaurantDao: RestaurantDao,
-    private val restaurantService: RestaurantService,
+    private val restaurantService: ApiRestaurant,
+    private val apiComment: ApiComment,
     private val reviewDao: ReviewDao,
     private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
 ) :
     TimeLineDetailRepository {
 
     override suspend fun getComments(reviewId: String): ArrayList<Comment> {
-        return restaurantService.getComments(reviewId)
+        return apiComment.getComments(reviewId)
     }
 
     override fun getComments(reviewId: Int): Flow<List<CommentEntity>> {

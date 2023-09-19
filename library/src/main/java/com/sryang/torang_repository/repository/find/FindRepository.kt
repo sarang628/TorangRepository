@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository.find
 
-import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Distances
 import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.Ratings

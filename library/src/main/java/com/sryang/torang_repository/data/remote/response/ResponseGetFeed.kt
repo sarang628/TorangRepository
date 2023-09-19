@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.data.remote.response
 
 import android.graphics.Picture
-import com.sryang.torang_repository.Restaurant
+import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Favorite
 import com.sryang.torang_repository.data.Like
 import com.sryang.torang_repository.data.User

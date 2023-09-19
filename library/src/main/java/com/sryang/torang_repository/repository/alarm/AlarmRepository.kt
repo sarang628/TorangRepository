@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.repository.alarm
 
-import com.sryang.torang_repository.Alarm
+import com.sryang.torang_repository.data.Alarm
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.login.LoginCheckableRepository
 import kotlinx.coroutines.flow.Flow
