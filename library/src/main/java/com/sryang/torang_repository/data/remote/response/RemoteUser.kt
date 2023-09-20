@@ -6,7 +6,7 @@ data class RemoteUser(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("user_name")
-    val userName: String?,
+    val userName: String,
     @SerializedName("email")
     val email: String?,
     @SerializedName("login_platform")
@@ -14,11 +14,11 @@ data class RemoteUser(
     @SerializedName("create_date")
     val createDate: String?,
     @SerializedName("profile_pic_url")
-    val profilePicUrl: String?,
+    val profilePicUrl: String,
     @SerializedName("review_count")
-    val reviewCount: Int?,
+    val reviewCount: Int,
     @SerializedName("followers")
-    val followers: Int?,
+    val followers: Int,
     @SerializedName("following")
-    val following: Int?
+    val following: Int
 )

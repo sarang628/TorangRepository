@@ -87,7 +87,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
     kapt "org.xerial:sqlite-jdbc:3.36.0"
 
-    implementation 'com.github.sarang628:JsonToObjectGenerator:960fe9fece'
+    implementation "com.github.sarang628:JsonToObjectGenerator:$jsonToObjectGeneratorVersion"
     implementation "com.github.sarang628:Data:$dataVersion"
-    implementation "com.github.sarang628:Design:973242b6ae"
+    implementation "com.github.sarang628:Design:$designVersion"
 }

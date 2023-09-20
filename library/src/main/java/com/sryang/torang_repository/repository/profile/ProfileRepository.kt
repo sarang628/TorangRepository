@@ -1,6 +1,5 @@
 package com.sryang.torang_repository.repository.profile
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -12,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.sryang.library.entity.user.UserProfile
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.entity.UserEntity
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 interface ProfileRepository : FeedListRepository {
     fun getMyProfile(): Flow<LoggedInUserEntity?>
-    suspend fun loadProfile(userId: Int): UserEntity
+    suspend fun loadProfile(userId: Int): UserProfile
     fun getMyFeed(userId: Int): Flow<List<FeedEntity>>
     fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
     suspend fun logout()

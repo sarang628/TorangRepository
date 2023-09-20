@@ -2,7 +2,7 @@ package com.sryang.torang_repository.repository.feed
 
 import com.sryang.library.entity.Feed
 import com.sryang.library.entity.Restaurant
-import com.sryang.library.entity.User
+import com.sryang.library.entity.user.User
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.remote.response.RemoteFeed

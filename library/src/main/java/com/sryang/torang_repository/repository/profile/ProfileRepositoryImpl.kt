@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.repository.profile
 
-import android.util.Log
+import com.sryang.library.entity.user.User
+import com.sryang.library.entity.user.UserProfile
 import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
@@ -10,21 +11,24 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LikeEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
-import com.sryang.torang_repository.data.entity.UserEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
-fun RemoteUser.toUserEntity(): UserEntity {
-    return UserEntity(
-        userId = this.userId,
-        userName = this.userName,
-        email = this.email,
-        profile_pic_url = this.profilePicUrl,
-        review_count = this.reviewCount.toString()
+fun RemoteUser.toUserProfile(): UserProfile {
+    return UserProfile(
+        user = User(
+            userId = this.userId,
+            name = this.userName,
+            profilePictureUrl = this.profilePicUrl
+        ),
+        following = this.following,
+        follower = this.followers,
+        post = this.reviewCount
     )
 }
+
 
 @Singleton
 class ProfileRepositoryImpl @Inject constructor(
@@ -38,14 +42,14 @@ class ProfileRepositoryImpl @Inject constructor(
         return loggedUserDao.getLoggedInUserEntity()
     }
 
-    override suspend fun loadProfile(userId: Int): UserEntity {
+    override suspend fun loadProfile(userId: Int): UserProfile {
 
         val remoteUser = apiProfile.getProfile(userId.toString())
 
         if (remoteUser.body() == null)
             throw Exception("")
 
-        return remoteUser.body()!!.toUserEntity()
+        return remoteUser.body()!!.toUserProfile()
     }
 
     override fun getMyFeed(userId: Int): Flow<List<FeedEntity>> {
