@@ -1,7 +1,5 @@
 package com.sryang.torang_repository.repository.profile
 
-import com.sryang.library.entity.user.User
-import com.sryang.library.entity.user.UserProfile
 import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
@@ -15,19 +13,6 @@ import com.sryang.torang_repository.data.remote.response.RemoteUser
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
-
-fun RemoteUser.toUserProfile(): UserProfile {
-    return UserProfile(
-        user = User(
-            userId = this.userId,
-            name = this.userName,
-            profilePictureUrl = this.profilePicUrl
-        ),
-        following = this.following,
-        follower = this.followers,
-        post = this.reviewCount
-    )
-}
 
 
 @Singleton

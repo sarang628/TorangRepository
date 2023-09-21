@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.sryang.library.entity.Feed
+import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import kotlinx.coroutines.launch
 import java.util.stream.Collectors
 
@@ -15,12 +16,12 @@ import java.util.stream.Collectors
 interface FeedRepository {
     // 내 리뷰 삭제
     suspend fun deleteFeed(reviewId: Int)
-    suspend fun loadFeed(): List<Feed>
+    suspend fun loadFeed(): List<RemoteFeed>
 }
 
 @Composable
 fun FeedRepositoryTest(feedRepository: FeedRepository) {
-    var list = remember { mutableStateListOf<Feed>() }
+    var list = remember { mutableStateListOf<RemoteFeed>() }
     val coroutine = rememberCoroutineScope()
     Column {
         Button(onClick = {

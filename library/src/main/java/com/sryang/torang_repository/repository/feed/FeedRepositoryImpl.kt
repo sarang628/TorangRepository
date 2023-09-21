@@ -25,11 +25,9 @@ class FeedRepositoryImpl @Inject constructor(
         userDao.deleteFeed(reviewId)
     }
 
-    override suspend fun loadFeed(): List<Feed> {
+    override suspend fun loadFeed(): List<RemoteFeed> {
         val feedList = remoteDataSource.getFeeds(HashMap())
-        return feedList.stream().map {
-            it.toFeed()
-        }.toList()
+        return feedList
     }
 
 }
