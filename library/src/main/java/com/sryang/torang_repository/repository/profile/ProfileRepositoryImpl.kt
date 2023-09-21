@@ -42,14 +42,14 @@ class ProfileRepositoryImpl @Inject constructor(
         return loggedUserDao.getLoggedInUserEntity()
     }
 
-    override suspend fun loadProfile(userId: Int): UserProfile {
+    override suspend fun loadProfile(userId: Int): RemoteUser {
 
         val remoteUser = apiProfile.getProfile(userId.toString())
 
         if (remoteUser.body() == null)
             throw Exception("")
 
-        return remoteUser.body()!!.toUserProfile()
+        return remoteUser.body()!!
     }
 
     override fun getMyFeed(userId: Int): Flow<List<FeedEntity>> {
