@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.FeedEntity1
-import com.sryang.torang_repository.data.entity.ReviewImageEntity
 
 
 @Composable
@@ -47,7 +46,7 @@ fun FeedList1(list: List<FeedEntity1>) {
 @Composable
 fun PreviewFeedItem() {
     val feedEntity = FeedEntity(
-        review_id = 0,
+        reviewId = 0,
         userId = 1,
         isFavorite = false,
         contents = "contents",
@@ -82,7 +81,7 @@ fun FeedItem(feedEntity: FeedEntity) {
             Text(text = "restaurantId:")
         }
         Column(Modifier.padding(start = 5.dp)) {
-            Text(text = feedEntity.review_id.toString())
+            Text(text = feedEntity.reviewId.toString())
             Text(text = feedEntity.userId.toString())
             Text(text = feedEntity.isFavorite.toString())
             Text(text = feedEntity.contents.toString())

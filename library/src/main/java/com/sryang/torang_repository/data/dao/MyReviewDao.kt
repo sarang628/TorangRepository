@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MyReviewDao {
-    @Query("select * from ReviewImageEntity where review_id = (:reviewId) order by ReviewImageEntity.create_date desc")
+    @Query("select * from ReviewImageEntity where reviewId = (:reviewId) order by ReviewImageEntity.createDate desc")
     fun getUploadedImage(reviewId: Int): Flow<List<ReviewImageEntity>>
 
 

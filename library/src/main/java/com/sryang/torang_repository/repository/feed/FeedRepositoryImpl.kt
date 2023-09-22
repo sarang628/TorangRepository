@@ -5,7 +5,10 @@ import com.sryang.library.entity.Restaurant
 import com.sryang.library.entity.user.User
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.PictureDao
+import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
+import com.sryang.torang_repository.data.remote.response.toReviewImage
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,6 +18,7 @@ import kotlin.streams.toList
 class FeedRepositoryImpl @Inject constructor(
     private val remoteDataSource: FeedRemoteDataSource,
     private val feedDao: FeedDao,
+    private val pictureDao: PictureDao,
     private val user: LoggedInUserDao
 ) : FeedRepository {
 
@@ -27,9 +31,35 @@ class FeedRepositoryImpl @Inject constructor(
 
     override suspend fun loadFeed(): List<RemoteFeed> {
         val feedList = remoteDataSource.getFeeds(HashMap())
+        feedDao.insertFeed(feedList.stream().map {
+            it.toFeedEntity()
+        }.toList())
+
+        for (feed in feedList) {
+            pictureDao.insertPictures(feed.pictures.stream().map { it.toReviewImage() }.toList())
+        }
+
+
         return feedList
     }
 
+}
+
+fun RemoteFeed.toFeedEntity(): FeedEntity {
+    return FeedEntity(
+        reviewId = this.reviewId,
+        userId = this.user?.userId ?: 0,
+        isFavorite = this.favorite?.isFavority ?: false,
+        rating = this.rating ?: 0f,
+        userName = this.user?.userName ?: "",
+        profilePicUrl = this.user?.profilePicUrl ?: "",
+        likeAmount = this.like_amount ?: 0,
+        commentAmount = this.comment_amount ?: 0,
+        restaurantName = this.restaurant?.restaurantName ?: "",
+        restaurantId = this.restaurant?.restaurantId ?: 0,
+        contents = this.contents ?: "",
+        createDate = this.create_date ?: ""
+    )
 }
 
 fun RemoteFeed.toFeed(): Feed {

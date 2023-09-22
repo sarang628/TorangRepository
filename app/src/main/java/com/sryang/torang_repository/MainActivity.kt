@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.sryang.torang_repository.repository.feed.FeedRepository
+import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
 import com.sryang.torang_repository.repository.profile.ProfileRepository
 import com.sryang.torang_repository.repository.profile.ProfileRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +42,8 @@ class MainActivity : ComponentActivity() {
 
             //FeedServiceTest(remoteFeedServices)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)
-            ///FeedRepositoryTest(feedRepository = feedRepository)
-            ProfileRepositoryTest(profileRepository = profileRepository)
+            FeedRepositoryTest(feedRepository = feedRepository)
+//            ProfileRepositoryTest(profileRepository = profileRepository)
         }
     }
 }

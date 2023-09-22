@@ -19,7 +19,7 @@ interface RestaurantDao {
     suspend fun getRestaurantDistance(): List<RestaurantEntity>
 
 
-    @Query("select * from RestaurantEntity Where restaurant_id = (SELECT restaurant_id FROM FeedEntity WHERE review_id = :reviewId)")
+    @Query("select * from RestaurantEntity Where restaurant_id = (SELECT restaurant_id FROM FeedEntity WHERE reviewId = :reviewId)")
     fun getRestaurantByReviewId(reviewId: Int): Flow<RestaurantEntity>
 
     @Query("select * from RestaurantEntity Where restaurant_id = :restaurantId")

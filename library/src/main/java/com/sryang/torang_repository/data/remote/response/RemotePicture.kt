@@ -16,12 +16,12 @@ data class RemotePicture(
 fun RemotePicture.toReviewImage(): ReviewImageEntity {
     return ReviewImageEntity(
         picture_id = this.picture_id,
-        restaurant_id = this.restaurant_id,
-        user_id = this.user_id,
-        review_id = this.review_id,
-        picture_url = this.picture_url,
-        create_date = this.create_date,
-        menu_id = this.menu_id,
+        restaurantId = this.restaurant_id,
+        userId = this.user_id,
+        reviewId = this.review_id,
+        pictureUrl = this.picture_url,
+        createDate = this.create_date,
+        menuId = this.menu_id,
         menu = 1
     )
 }

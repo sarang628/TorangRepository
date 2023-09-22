@@ -67,7 +67,7 @@ interface FeedDao {
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
         LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
-        WHERE review_id IN (Select review_id from FavoriteEntity where user_id = (:userId) )
+        WHERE reviewId IN (Select reviewId from FavoriteEntity where user_id = (:userId) )
         ORDER BY create_date DESC
         """
     )
@@ -76,7 +76,7 @@ interface FeedDao {
     @Query("select * from FeedEntity order by FeedEntity.create_date desc")
     fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>
 
-    @Query("DELETE FROM FeedEntity where review_id = (:reviewId)")
+    @Query("DELETE FROM FeedEntity where reviewId = (:reviewId)")
     suspend fun deleteFeed(reviewId: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -91,7 +91,7 @@ interface FeedDao {
     @Query("DELETE FROM FeedEntity")
     suspend fun deleteAll()
 
-    @Query("select * from FeedEntity where review_id = (:reviewId) order by FeedEntity.create_date desc")
+    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.create_date desc")
     fun getFeed(reviewId: Int): Flow<ReviewAndImageEntity>
 
     @Transaction
@@ -129,9 +129,9 @@ interface FeedDao {
         favorites: List<FavoriteEntity>,
     )
 
-    @Query("DELETE FROM ReviewImageEntity where review_id = (:reviewId)")
+    @Query("DELETE FROM ReviewImageEntity where reviewId = (:reviewId)")
     suspend fun deletePicturesByReviewId(reviewId: Int)
 
-    @Query("select * from ReviewImageEntity where review_id = (:reviewId)")
+    @Query("select * from ReviewImageEntity where reviewId = (:reviewId)")
     fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
 }

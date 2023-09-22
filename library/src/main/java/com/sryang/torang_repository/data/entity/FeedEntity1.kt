@@ -8,8 +8,8 @@ import androidx.room.Relation
 data class FeedEntity1(
     @Embedded val user: FeedEntity,
     @Relation(
-        parentColumn = "review_id",
-        entityColumn = "review_id"
+        parentColumn = "reviewId",
+        entityColumn = "reviewId"
     )
     val reviewImages: List<ReviewImageEntity>
 )

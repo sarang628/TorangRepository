@@ -13,7 +13,6 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
-import com.sryang.torang_repository.data.entity.toFeedEntity
 import com.sryang.torang_repository.repository.MyReviewRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.util.CountingFileRequestBody
@@ -58,7 +57,7 @@ class MyReviewRepositoryImpl @Inject constructor(
 
         review.images?.let {
             for (image in it) {
-                fileList.add(File(image.picture_url))
+                fileList.add(File(image.pictureUrl))
             }
         }
 
@@ -87,9 +86,9 @@ class MyReviewRepositoryImpl @Inject constructor(
             val feeds = ArrayList<FeedEntity>()
             val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                reviewAndInage.toFeedEntity()?.let {
+                /*reviewAndInage.toFeedEntity().let {
                     feeds.add(it)
-                }
+                }*/
                 reviewAndInage.images?.let {
                     images.addAll(it)
                 }
@@ -113,7 +112,7 @@ class MyReviewRepositoryImpl @Inject constructor(
 
         review.images?.let {
             for (image in it) {
-                fileList.add(File(image.picture_url))
+                fileList.add(File(image.pictureUrl))
             }
         }
 
@@ -142,9 +141,9 @@ class MyReviewRepositoryImpl @Inject constructor(
             val feeds = ArrayList<FeedEntity>()
             val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                reviewAndInage.toFeedEntity()?.let {
+                /*reviewAndInage.toFeedEntity()?.let {
                     feeds.add(it)
-                }
+                }*/
                 reviewAndInage.images?.let {
                     images.addAll(it)
                 }
@@ -197,9 +196,9 @@ class MyReviewRepositoryImpl @Inject constructor(
             val feeds = ArrayList<FeedEntity>()
             val images = ArrayList<ReviewImageEntity>()
             for (reviewAndInage in list1) {
-                reviewAndInage.toFeedEntity()?.let {
+                /*reviewAndInage.toFeedEntity()?.let {
                     feeds.add(it)
-                }
+                }*/
                 reviewAndInage.images?.let {
                     //images.addAll(it)
                 }

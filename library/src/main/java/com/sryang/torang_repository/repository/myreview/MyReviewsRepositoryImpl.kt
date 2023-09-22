@@ -50,9 +50,9 @@ class MyReviewsRepositoryImpl @Inject constructor(
         val feeds = ArrayList<FeedEntity>()
         val images = ArrayList<ReviewImageEntity>()
         for (reviewAndInage in list1) {
-            reviewAndInage.toFeedEntity()?.let {
+            /*reviewAndInage.toFeedEntity()?.let {
                 feeds.add(it)
-            }
+            }*/
 
             reviewAndInage.images?.let {
                 images.addAll(it)

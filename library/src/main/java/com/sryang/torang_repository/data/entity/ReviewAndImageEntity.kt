@@ -8,8 +8,8 @@ import okhttp3.RequestBody
 data class ReviewAndImageEntity(
     @Embedded val review: FeedEntity,
     @Relation(
-        parentColumn = "review_id",
-        entityColumn = "review_id"
+        parentColumn = "reviewId",
+        entityColumn = "reviewId"
     )
     val images: List<ReviewImageEntity>? = null,
 
@@ -22,7 +22,7 @@ data class ReviewAndImageEntity(
     fun toMap(): HashMap<String, RequestBody> {
         val params: HashMap<String, RequestBody> = HashMap()
         params["review_id"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.review_id)
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.reviewId)
         params["torang_id"] =
             RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.restaurantId)
         user?.userId?.let {
@@ -33,12 +33,4 @@ data class ReviewAndImageEntity(
         params["rating"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.rating)
         return params
     }
-}
-
-
-fun ReviewAndImageEntity.toFeedEntity(): FeedEntity {
-    return FeedEntity(
-        userId = user!!.userId,
-        review_id = review.review_id
-    )
 }
