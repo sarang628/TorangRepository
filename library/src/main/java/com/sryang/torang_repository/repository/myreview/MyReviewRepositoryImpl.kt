@@ -4,10 +4,11 @@ import android.content.Context
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.api.ApiReview
 import com.sryang.torang_repository.data.ModifyFeedData
+import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
-import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
@@ -30,7 +31,8 @@ class MyReviewRepositoryImpl @Inject constructor(
     private val reviewDao: ReviewDao,
     private val restaurantService: ApiRestaurant,
     private val apiReview: ApiReview,
-    private val userDao: UserDao,
+    private val feedDao: FeedDao,
+    private val pictureDao: PictureDao,
     private val restaurantDao: RestaurantDao,
     private val loggedInUserDao: LoggedInUserDao
 ) :
@@ -93,8 +95,8 @@ class MyReviewRepositoryImpl @Inject constructor(
                 }
 
             }
-            userDao.insertFeed(feedData = feeds)
-            userDao.insertPictures(images)
+            feedDao.insertFeed(feedData = feeds)
+            pictureDao.insertPictures(images)
         } catch (e: Exception) {
         }
     }
@@ -148,8 +150,8 @@ class MyReviewRepositoryImpl @Inject constructor(
                 }
 
             }
-            userDao.insertFeed(feedData = feeds)
-            userDao.insertPictures(images)
+            feedDao.insertFeed(feedData = feeds)
+            pictureDao.insertPictures(images)
         } catch (e: Exception) {
         }
     }
@@ -203,9 +205,9 @@ class MyReviewRepositoryImpl @Inject constructor(
                 }
 
             }
-            userDao.insertFeed(feedData = feeds)
+            feedDao.insertFeed(feedData = feeds)
             //userDao.deletePicturesByReviewId(review.reviewAndImage.review!!.review_id)
-            userDao.insertPictures(images)
+            pictureDao.insertPictures(images)
         } catch (e: Exception) {
 //            Logger.e(e.toString())
         }

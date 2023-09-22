@@ -3,8 +3,8 @@ package com.sryang.torang_repository.repository.feed
 import com.sryang.library.entity.Feed
 import com.sryang.library.entity.Restaurant
 import com.sryang.library.entity.user.User
+import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import kotlin.streams.toList
 @Singleton
 class FeedRepositoryImpl @Inject constructor(
     private val remoteDataSource: FeedRemoteDataSource,
-    private val userDao: UserDao,
+    private val feedDao: FeedDao,
     private val user: LoggedInUserDao
 ) : FeedRepository {
 
@@ -22,7 +22,7 @@ class FeedRepositoryImpl @Inject constructor(
         //원격 저장소 요청
         //remoteDataSource.deleteFeed(reviewId)
         //로컬 저장소에서 삭제
-        userDao.deleteFeed(reviewId)
+        feedDao.deleteFeed(reviewId)
     }
 
     override suspend fun loadFeed(): List<RemoteFeed> {

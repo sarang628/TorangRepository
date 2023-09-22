@@ -14,4 +14,7 @@ interface PictureDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(plantList: List<ReviewImageEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPictures(reviewImages: List<ReviewImageEntity>)
 }

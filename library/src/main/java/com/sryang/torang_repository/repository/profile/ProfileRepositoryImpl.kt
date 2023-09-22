@@ -1,7 +1,9 @@
 package com.sryang.torang_repository.repository.profile
 
 import com.sryang.torang_repository.api.ApiProfile
+import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.data.dao.LikeDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FavoriteEntity
@@ -20,7 +22,9 @@ class ProfileRepositoryImpl @Inject constructor(
     private val apiProfile: ApiProfile,
     private val loggedUserDao: LoggedInUserDao,
     private val userDao: UserDao,
-    private val feedDao: FeedDao
+    private val feedDao: FeedDao,
+    private val likeDao: LikeDao,
+    private val favoriteDao: FavoriteDao
 ) : ProfileRepository {
 
     override fun getMyProfile(): Flow<LoggedInUserEntity?> {
@@ -46,7 +50,7 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun getFeed(): Flow<List<FeedEntity>> {
-        return userDao.getAllFeed()
+        return feedDao.getAllFeed()
     }
 
     override suspend fun loadFeed() {
@@ -62,11 +66,11 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun getLike(reviewId: Int): Flow<LikeEntity> {
-        return userDao.getLike(reviewId)
+        return likeDao.getLike(reviewId)
     }
 
     override fun getFavorite(reviewId: Int): Flow<FavoriteEntity> {
-        return userDao.getFavorite(reviewId)
+        return favoriteDao.getFavorite(reviewId)
     }
 
     override suspend fun user1(): LoggedInUserEntity? {
@@ -91,6 +95,6 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>> {
-        return userDao.getReviewImages(reviewId)
+        return feedDao.getReviewImages(reviewId)
     }
 }

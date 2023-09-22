@@ -1,11 +1,13 @@
 package com.sryang.torang_repository.data.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface FavoriteDao {
 
     @Query("select count(*) from FavoriteEntity where review_id = (:reviewId)")

@@ -18,7 +18,4 @@ interface ReviewDao {
 
     @Query("select * from FeedEntity where review_id = (:reviewId) order by FeedEntity.create_date desc")
     fun getFeedbyReviewId(reviewId: Int): Flow<FeedEntity?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPictures(reviewImages: List<ReviewImageEntity>)
 }

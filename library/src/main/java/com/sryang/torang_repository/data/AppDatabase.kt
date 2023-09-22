@@ -8,12 +8,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.sryang.torang_repository.workers.PLANT_DATA_FILENAME
-import com.sryang.torang_repository.workers.SeedDatabaseWorker
-import com.sryang.torang_repository.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
 import com.sryang.torang_repository.data.dao.AlarmDao
 import com.sryang.torang_repository.data.dao.CommentDao
+import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.data.dao.LikeDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.MenuDao
 import com.sryang.torang_repository.data.dao.MyReviewDao
@@ -33,6 +32,9 @@ import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.data.entity.SearchEntity
 import com.sryang.torang_repository.data.entity.UserEntity
+import com.sryang.torang_repository.workers.PLANT_DATA_FILENAME
+import com.sryang.torang_repository.workers.SeedDatabaseWorker
+import com.sryang.torang_repository.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
 
 
 /**
@@ -57,6 +59,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun pictureDao(): PictureDao
     abstract fun feedDao(): FeedDao
     abstract fun commentDao(): CommentDao
+    abstract fun likeDao() : LikeDao
+    abstract fun favoriteDao() : FavoriteDao
 
     companion object {
         // For Singleton instantiation

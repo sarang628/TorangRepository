@@ -15,6 +15,8 @@ import com.sryang.torang_repository.repository.MyReviewsRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.api.ApiReview
+import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.data.dao.PictureDao
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -24,7 +26,8 @@ import javax.inject.Singleton
 class MyReviewsRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val apiReview: ApiReview,
-    @Deprecated("MyReviewsLocalDataSource 이동") private val userDao: UserDao,
+    private val feedDao: FeedDao,
+    private val pictureDao: PictureDao,
     @Deprecated("MyReviewsLocalDataSource 이동") private val myReviewDao: MyReviewDao,
     @Deprecated("MyReviewsLocalDataSource 이동") private val loggedInUserDao: LoggedInUserDao,
     private val myReviewsLocalDataSource: MyReviewsLocalDataSource,
@@ -56,8 +59,8 @@ class MyReviewsRepositoryImpl @Inject constructor(
             }
 
         }
-        userDao.insertFeed(feedData = feeds)
-        userDao.insertPictures(images)
+        feedDao.insertFeed(feedData = feeds)
+        pictureDao.insertPictures(images)
         return list1
     }
 
