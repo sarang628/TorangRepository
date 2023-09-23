@@ -1,6 +1,5 @@
 package com.sryang.torang_repository.data.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
@@ -8,25 +7,23 @@ import com.sryang.torang_repository.data.remote.response.RemoteFeed
 @Entity
 data class FeedEntity(
     @PrimaryKey
-    val reviewId: Int = -1,
-    val userId: Int,
-    @ColumnInfo(name = "is_favorite") val isFavorite: Boolean,
-    @ColumnInfo(name = "contents") val contents: String,
-    @ColumnInfo(name = "create_date") val createDate: String,
-    @ColumnInfo(name = "rating") val rating: Float,
-    @ColumnInfo(name = "userName") val userName: String,
-    @ColumnInfo(name = "profile_pic_url") val profilePicUrl: String,
-    @ColumnInfo(name = "like_amount") val likeAmount: Int,
-    @ColumnInfo(name = "comment_amount") val commentAmount: Int,
-    @ColumnInfo(name = "restaurant_name") val restaurantName: String,
-    @ColumnInfo(name = "restaurant_id") val restaurantId: Int
+    val reviewId: Int = -1,/* 1 */
+    val userId: Int,/* 2 */
+    val restaurantId: Int,/* 3 */
+    val userName: String,/* 4 */
+    val restaurantName: String,/* 5 */
+    val profilePicUrl: String,/* 6 */
+    val contents: String,/* 7 */
+    val rating: Float,/* 8 */
+    val likeAmount: Int,/* 9 */
+    val commentAmount: Int,/* 10 */
+    val createDate: String/* 11 */
 )
 
 fun RemoteFeed.toFeedEntity(): FeedEntity {
     return FeedEntity(
         reviewId = reviewId,
         userId = user?.userId ?: 0,
-        isFavorite = favorite != null,
         contents = contents ?: "",
         rating = rating ?: 0f,
         userName = user?.userName ?: "",

@@ -12,7 +12,7 @@ interface MyReviewDao {
     fun getUploadedImage(reviewId: Int): Flow<List<ReviewImageEntity>>
 
 
-    @Query("select * from FeedEntity where userId = (:userId) and restaurant_id = (:restaurantId) order by FeedEntity.create_date desc")
+    @Query("select * from FeedEntity where userId = (:userId) and restaurantId = (:restaurantId) order by FeedEntity.createDate desc")
     fun getMyReviews(userId: Int, restaurantId: Int): Flow<List<FeedEntity>>
 
 

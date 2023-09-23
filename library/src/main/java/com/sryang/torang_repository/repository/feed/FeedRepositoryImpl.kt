@@ -4,12 +4,14 @@ import com.sryang.library.entity.Feed
 import com.sryang.library.entity.Restaurant
 import com.sryang.library.entity.user.User
 import com.sryang.torang_repository.data.dao.FeedDao
-import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.PictureDao
+import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.UserEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.streams.toList
@@ -19,8 +21,10 @@ class FeedRepositoryImpl @Inject constructor(
     private val remoteDataSource: FeedRemoteDataSource,
     private val feedDao: FeedDao,
     private val pictureDao: PictureDao,
-    private val user: LoggedInUserDao
+    private val userDao: UserDao
 ) : FeedRepository {
+
+    override val feeds: Flow<List<FeedEntity>> = feedDao.getAllFeed()
 
     override suspend fun deleteFeed(reviewId: Int) {
         //원격 저장소 요청
@@ -29,7 +33,11 @@ class FeedRepositoryImpl @Inject constructor(
         feedDao.deleteFeed(reviewId)
     }
 
-    override suspend fun loadFeed(): List<RemoteFeed> {
+    override suspend fun deleteFeedAll() {
+        feedDao.deleteAllFeed()
+    }
+
+    override suspend fun loadFeed() {
         val feedList = remoteDataSource.getFeeds(HashMap())
         feedDao.insertFeed(feedList.stream().map {
             it.toFeedEntity()
@@ -39,17 +47,33 @@ class FeedRepositoryImpl @Inject constructor(
             pictureDao.insertPictures(feed.pictures.stream().map { it.toReviewImage() }.toList())
         }
 
-
-        return feedList
+        userDao.insertAll(feedList.stream().map {
+            it.toUserEntity()
+        }.toList())
     }
 
+}
+
+fun RemoteFeed.toUserEntity(): UserEntity {
+    return UserEntity(
+        userId = this.user?.userId ?: 0,
+        email = this.user?.email ?: "",
+        loginPlatform = this.user?.loginPlatform ?: "",
+        create_date = this.user?.createDate ?: "",
+        access_token = "",
+        profile_pic_url = this.user?.profilePicUrl,
+        point = 0,
+        review_count = "0",
+        following = "0",
+        followers = "0"
+
+    )
 }
 
 fun RemoteFeed.toFeedEntity(): FeedEntity {
     return FeedEntity(
         reviewId = this.reviewId,
         userId = this.user?.userId ?: 0,
-        isFavorite = this.favorite?.isFavority ?: false,
         rating = this.rating ?: 0f,
         userName = this.user?.userName ?: "",
         profilePicUrl = this.user?.profilePicUrl ?: "",

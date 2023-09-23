@@ -46,7 +46,7 @@ data class ReviewImageEntity(
             userId = user_id,
             reviewId = review_id,
             pictureUrl = picture_url,
-            createDate = create_date,
+            createDate = create_date ?: "",
             menuId = menu_id,
             menu = menu.toInt()
         )

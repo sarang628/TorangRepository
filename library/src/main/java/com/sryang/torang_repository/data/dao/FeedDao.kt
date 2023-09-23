@@ -22,6 +22,32 @@ interface FeedDao {
 
     @Query(
         """
+        SELECT FeedEntity.reviewId,/*1*/
+               FeedEntity.userId,/*2*/
+               FeedEntity.restaurantId,/*3*/
+               FeedEntity.userName,/*4*/
+               FeedEntity.restaurantName,/*5*/
+               FeedEntity.profilePicUrl,/*6*/
+               FeedEntity.contents,/*7*/
+               FeedEntity.rating,/*8*/
+               FeedEntity.likeAmount,/*9*/
+               FeedEntity.commentAmount,/*10*/
+               FeedEntity.createDate,/*11*/
+               UserEntity.profile_pic_url,
+               UserEntity.userName, 
+               UserEntity.userId,
+               RestaurantEntity.restaurant_name, 
+               RestaurantEntity.restaurant_id
+        FROM FeedEntity 
+        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
+        ORDER BY create_date DESC
+        """
+    )
+    fun getAllFeed(): Flow<List<FeedEntity>>
+
+    @Query(
+        """
         SELECT FeedEntity.*
         FROM FeedEntity
         """
@@ -38,23 +64,7 @@ interface FeedDao {
                RestaurantEntity.restaurant_id
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
-        ORDER BY create_date DESC
-        """
-    )
-    fun getAllFeed(): Flow<List<FeedEntity>>
-
-    @Query(
-        """
-        SELECT FeedEntity.*, 
-               UserEntity.profile_pic_url,
-               UserEntity.userName, 
-               UserEntity.userId, 
-               RestaurantEntity.restaurant_name, 
-               RestaurantEntity.restaurant_id
-        FROM FeedEntity 
-        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
         WHERE FeedEntity.userId = (:userId)
         ORDER BY create_date DESC
         """
@@ -66,14 +76,14 @@ interface FeedDao {
         SELECT FeedEntity.*, UserEntity.profile_pic_url, UserEntity.userName, UserEntity.userId, RestaurantEntity.restaurant_name, RestaurantEntity.restaurant_id
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurant_id = RestaurantEntity.restaurant_id
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
         WHERE reviewId IN (Select reviewId from FavoriteEntity where user_id = (:userId) )
         ORDER BY create_date DESC
         """
     )
     fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
 
-    @Query("select * from FeedEntity order by FeedEntity.create_date desc")
+    @Query("select * from FeedEntity order by FeedEntity.createDate desc")
     fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>
 
     @Query("DELETE FROM FeedEntity where reviewId = (:reviewId)")
@@ -91,7 +101,7 @@ interface FeedDao {
     @Query("DELETE FROM FeedEntity")
     suspend fun deleteAll()
 
-    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.create_date desc")
+    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
     fun getFeed(reviewId: Int): Flow<ReviewAndImageEntity>
 
     @Transaction

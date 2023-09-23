@@ -48,7 +48,6 @@ fun PreviewFeedItem() {
     val feedEntity = FeedEntity(
         reviewId = 0,
         userId = 1,
-        isFavorite = false,
         contents = "contents",
         createDate = "create_date",
         rating = 5f,
@@ -83,7 +82,6 @@ fun FeedItem(feedEntity: FeedEntity) {
         Column(Modifier.padding(start = 5.dp)) {
             Text(text = feedEntity.reviewId.toString())
             Text(text = feedEntity.userId.toString())
-            Text(text = feedEntity.isFavorite.toString())
             Text(text = feedEntity.contents.toString())
             Text(text = feedEntity.createDate.toString())
             Text(text = feedEntity.rating.toString())
