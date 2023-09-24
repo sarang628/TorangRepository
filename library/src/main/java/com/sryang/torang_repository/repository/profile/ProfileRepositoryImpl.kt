@@ -46,11 +46,7 @@ class ProfileRepositoryImpl @Inject constructor(
     }
 
     override fun getMyFavorite(userId: Int): Flow<List<FeedEntity>> {
-        return feedDao.getMyFavorite(userId)
-    }
-
-    override fun getFeed(): Flow<List<FeedEntity>> {
-        return feedDao.getAllFeed()
+        return favoriteDao.getMyFavorite(userId)
     }
 
     override suspend fun loadFeed() {

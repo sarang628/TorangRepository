@@ -95,7 +95,7 @@ class MyReviewRepositoryImpl @Inject constructor(
                 }
 
             }
-            feedDao.insertFeed(feedData = feeds)
+            feedDao.insertAll(feeds)
             pictureDao.insertPictures(images)
         } catch (e: Exception) {
         }
@@ -150,7 +150,7 @@ class MyReviewRepositoryImpl @Inject constructor(
                 }
 
             }
-            feedDao.insertFeed(feedData = feeds)
+            feedDao.insertAll(feeds)
             pictureDao.insertPictures(images)
         } catch (e: Exception) {
         }
@@ -200,12 +200,12 @@ class MyReviewRepositoryImpl @Inject constructor(
                 /*reviewAndInage.toFeedEntity()?.let {
                     feeds.add(it)
                 }*/
-                reviewAndInage.images?.let {
+                reviewAndInage.images.let {
                     //images.addAll(it)
                 }
 
             }
-            feedDao.insertFeed(feedData = feeds)
+            feedDao.insertAll(feeds)
             //userDao.deletePicturesByReviewId(review.reviewAndImage.review!!.review_id)
             pictureDao.insertPictures(images)
         } catch (e: Exception) {

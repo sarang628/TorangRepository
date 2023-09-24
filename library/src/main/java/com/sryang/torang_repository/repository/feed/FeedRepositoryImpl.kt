@@ -24,8 +24,6 @@ class FeedRepositoryImpl @Inject constructor(
     private val pictureDao: PictureDao,
     private val userDao: UserDao
 ) : FeedRepository {
-
-    override val feeds: Flow<List<FeedEntity>> = feedDao.getAllFeed()
     override val feeds1: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
 
     override suspend fun deleteFeed(reviewId: Int) {
@@ -36,12 +34,12 @@ class FeedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteFeedAll() {
-        feedDao.deleteAllFeed()
+        feedDao.deleteAll()
     }
 
     override suspend fun loadFeed() {
         val feedList = remoteDataSource.getFeeds(HashMap())
-        feedDao.insertFeed(feedList.stream().map {
+        feedDao.insertAll(feedList.stream().map {
             it.toFeedEntity()
         }.toList())
 

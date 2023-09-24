@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.Flow
 interface FeedListRepository {
     // 피드 중앙 리뷰이미지 불러오기
     fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
-    // 피드 리스트 불러오기
-    fun getFeed(): Flow<List<FeedEntity>>
     // 피드 리스트 갱신하기
     suspend fun loadFeed()
     // 좋아요 처리

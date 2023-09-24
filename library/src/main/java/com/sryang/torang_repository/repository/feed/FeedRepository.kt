@@ -14,7 +14,6 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.util.stream.Collectors
 
 
 interface FeedRepository {
@@ -23,13 +22,11 @@ interface FeedRepository {
     suspend fun deleteFeedAll()
     suspend fun loadFeed()
 
-    val feeds: Flow<List<FeedEntity>>
     val feeds1: Flow<List<ReviewAndImageEntity>>
 }
 
 @Composable
 fun FeedRepositoryTest(feedRepository: FeedRepository) {
-    val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
     val feeds1 by feedRepository.feeds1.collectAsState(initial = ArrayList())
     val gson = Gson().newBuilder().setPrettyPrinting().create()
 
@@ -51,8 +48,10 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 Text(text = "DeleteFeed")
             }
         }
-        //Text(text = feeds.toString())
-        Text(text = gson.toJson(feeds1))
-
+        LazyColumn(content = {
+            items(feeds1.size) {
+                Text(text = gson.toJson(feeds1[it]))
+            }
+        })
     }
 }

@@ -54,12 +54,12 @@ class MyReviewsRepositoryImpl @Inject constructor(
                 feeds.add(it)
             }*/
 
-            reviewAndInage.images?.let {
+            reviewAndInage.images.let {
                 images.addAll(it)
             }
 
         }
-        feedDao.insertFeed(feedData = feeds)
+        feedDao.insertAll(feeds)
         pictureDao.insertPictures(images)
         return list1
     }

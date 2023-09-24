@@ -82,11 +82,10 @@ fun FeedRepositoryTest(context: Context, feedDao: FeedDao, pictureDao: PictureDa
             }
         }, clickDeleteAllFeed = {
             scope.launch {
-                feedDao.deleteAllFeed()
+                feedDao.deleteAll()
             }
         })
-        val list by feedDao.getAllFeed().collectAsState(initial = ArrayList())
-        FeedList(list = list)
+
     }
 }
 

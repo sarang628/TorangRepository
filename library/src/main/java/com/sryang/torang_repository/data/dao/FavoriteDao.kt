@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FavoriteEntity
+import com.sryang.torang_repository.data.entity.FeedEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,4 +26,16 @@ interface FavoriteDao {
 
     @Query("select * from FavoriteEntity where review_id = (:reviewId)")
     fun getFavorite(reviewId: Int): Flow<FavoriteEntity>
+
+    @Query(
+        """
+        SELECT FeedEntity.*, UserEntity.profile_pic_url, UserEntity.userName, UserEntity.userId, RestaurantEntity.restaurant_name, RestaurantEntity.restaurant_id
+        FROM FeedEntity 
+        JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
+        WHERE reviewId IN (Select reviewId from FavoriteEntity where user_id = (:userId) )
+        ORDER BY create_date DESC
+        """
+    )
+    fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
 }
