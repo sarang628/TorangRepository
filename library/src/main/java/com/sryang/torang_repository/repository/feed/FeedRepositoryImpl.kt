@@ -7,6 +7,7 @@ import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.UserEntity
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
@@ -25,6 +26,7 @@ class FeedRepositoryImpl @Inject constructor(
 ) : FeedRepository {
 
     override val feeds: Flow<List<FeedEntity>> = feedDao.getAllFeed()
+    override val feeds1: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
 
     override suspend fun deleteFeed(reviewId: Int) {
         //원격 저장소 요청

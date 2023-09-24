@@ -11,26 +11,26 @@ data class ReviewAndImageEntity(
         parentColumn = "reviewId",
         entityColumn = "reviewId"
     )
-    val images: List<ReviewImageEntity>? = null,
+    val images: List<ReviewImageEntity>,
 
     @Relation(
         parentColumn = "userId",
         entityColumn = "userId"
     )
-    val user: UserEntity? = null
-) {
-    fun toMap(): HashMap<String, RequestBody> {
-        val params: HashMap<String, RequestBody> = HashMap()
-        params["review_id"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.reviewId)
-        params["torang_id"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.restaurantId)
-        user?.userId?.let {
-            params["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + it)
-        }
-        params["contents"] =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.contents)
-        params["rating"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.rating)
-        return params
+    val user: UserEntity
+)
+
+fun ReviewAndImageEntity.toMap(): HashMap<String, RequestBody> {
+    val params: HashMap<String, RequestBody> = HashMap()
+    params["review_id"] =
+        RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.reviewId)
+    params["torang_id"] =
+        RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.restaurantId)
+    user?.userId?.let {
+        params["user_id"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + it)
     }
+    params["contents"] =
+        RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.contents)
+    params["rating"] = RequestBody.create("text/plain".toMediaTypeOrNull(), "" + review.rating)
+    return params
 }

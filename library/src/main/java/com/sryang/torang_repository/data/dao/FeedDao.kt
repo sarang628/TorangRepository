@@ -48,14 +48,6 @@ interface FeedDao {
 
     @Query(
         """
-        SELECT FeedEntity.*
-        FROM FeedEntity
-        """
-    )
-    fun getAllFeed1(): Flow<List<FeedEntity1>>
-
-    @Query(
-        """
         SELECT FeedEntity.*, 
                UserEntity.profile_pic_url,
                UserEntity.userName, 

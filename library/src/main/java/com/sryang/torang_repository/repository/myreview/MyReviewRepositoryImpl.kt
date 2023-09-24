@@ -13,6 +13,7 @@ import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
+import com.sryang.torang_repository.data.entity.toMap
 import com.sryang.torang_repository.repository.MyReviewRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import com.sryang.torang_repository.util.CountingFileRequestBody
