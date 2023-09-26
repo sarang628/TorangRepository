@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di
+package com.sryang.torang_repository.di.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

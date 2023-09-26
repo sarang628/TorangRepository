@@ -6,6 +6,7 @@ import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Review
+import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -14,14 +15,14 @@ import retrofit2.http.*
 interface ApiRestaurant {
     @FormUrlEncoded
     @POST("getAllRestaurant")
-    suspend fun getAllRestaurant(@FieldMap params: Map<String, String>): ArrayList<Restaurant>
+    suspend fun getAllRestaurant(@FieldMap params: Map<String, String>): ArrayList<RemoteRestaurant>
 
     @POST("getFilterRestaurant")
-    suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<Restaurant>
+    suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<RemoteRestaurant>
 
     @FormUrlEncoded
     @POST("getRestaurant")
-    suspend fun getRestaurant(@FieldMap params: Map<String, String>): Restaurant
+    suspend fun getRestaurant(@FieldMap params: Map<String, String>): RemoteRestaurant
 
     @FormUrlEncoded
     @POST("getOpenHours")

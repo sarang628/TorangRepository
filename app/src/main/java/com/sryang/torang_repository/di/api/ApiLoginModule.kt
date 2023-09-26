@@ -5,9 +5,6 @@ import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.api.ApiLogin
 import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.remote.response.LoginResult
-import com.sryang.torang_repository.di.RetrofitModule
-import com.sryang.torang_repository.di.TorangOkHttpClientImpl
-import com.sryang.torang_repository.di.TorangOkhttpClient
 import com.sryang.torang_repository.repository.LoginService
 import javax.inject.Inject
 import javax.inject.Singleton

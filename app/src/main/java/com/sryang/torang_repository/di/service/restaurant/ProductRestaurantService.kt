@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.di.service.restaurant
 
-import com.sryang.torang_repository.di.RetrofitModule
-import com.sryang.torang_repository.di.TorangOkhttpClient
+import com.sryang.torang_repository.di.api.RetrofitModule
+import com.sryang.torang_repository.di.api.TorangOkhttpClient
 import com.sryang.torang_repository.api.ApiRestaurant
 import javax.inject.Inject
 import javax.inject.Singleton

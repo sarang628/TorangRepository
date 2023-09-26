@@ -11,8 +11,6 @@ import com.sryang.torang_repository.data.Like
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
-import com.sryang.torang_repository.di.RetrofitModule
-import com.sryang.torang_repository.di.TorangOkhttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
