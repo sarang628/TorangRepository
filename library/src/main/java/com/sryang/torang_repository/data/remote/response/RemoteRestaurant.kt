@@ -1,8 +1,6 @@
 package com.sryang.torang_repository.data.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.sryang.torang_repository.data.Prices
-import com.sryang.torang_repository.data.RestaurantType
 
 data class RemoteRestaurant(
     @SerializedName("restaurant_id")

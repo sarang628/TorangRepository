@@ -53,7 +53,22 @@ interface FeedDao {
     suspend fun deleteFeed(reviewId: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction
     suspend fun insertAll(plantList: List<FeedEntity>)
+
+    @Transaction
+    suspend fun insertAllFeed(
+        feedList: List<FeedEntity>,
+        pictureDao: PictureDao,
+        reviewImages: List<ReviewImageEntity>,
+        userDao: UserDao,
+        userList: List<UserEntity>
+    ) {
+        pictureDao.insertAll(reviewImages)
+        userDao.insertAll(userList)
+        //마지막에 안넣어주면 앱 강제종료
+        insertAll(feedList)
+    }
 
     @Query("DELETE FROM FeedEntity")
     suspend fun deleteAll()

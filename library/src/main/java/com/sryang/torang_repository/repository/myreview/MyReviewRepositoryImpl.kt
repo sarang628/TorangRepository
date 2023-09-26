@@ -77,7 +77,7 @@ class MyReviewRepositoryImpl @Inject constructor(
 
         //피드 추가하기
         val list1 = ArrayList<ReviewAndImageEntity>()
-        list1.add(ReviewAndImageEntity.parse(result))
+        //list1.add(ReviewAndImageEntity.parse(result))
 
         //피드 추가하기
         val feeds = ArrayList<FeedEntity>()
@@ -126,15 +126,15 @@ class MyReviewRepositoryImpl @Inject constructor(
 
         //피드 추가기
         val list1 = ArrayList<ReviewAndImageEntity>()
-        list1.add(ReviewAndImageEntity.parse(result))
+        //list1.add(ReviewAndImageEntity.parse(result))
 
         //피드 추가하기
         val feeds = ArrayList<FeedEntity>()
         val images = ArrayList<ReviewImageEntity>()
         for (reviewAndInage in list1) {
-            reviewAndInage.toFeedEntity().let {
+            /*reviewAndInage.toFeedEntity().let {
                 feeds.add(it)
-            }
+            }*/
             reviewAndInage.images.let {
                 images.addAll(it)
             }

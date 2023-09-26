@@ -13,6 +13,7 @@ interface UserDao {
     fun loadAllByIds(userIds: IntArray): List<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction
     suspend fun insertAll(users: List<UserEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

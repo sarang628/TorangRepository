@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -13,6 +14,7 @@ interface PictureDao {
     fun getFeedImage(reviewId: Int): Flow<List<ReviewImageEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction
     suspend fun insertAll(plantList: List<ReviewImageEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

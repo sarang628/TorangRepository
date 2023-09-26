@@ -1,5 +1,7 @@
 package com.sryang.torang_repository.repository.feed
 
+import android.util.Log
+import com.google.gson.Gson
 import com.sryang.library.entity.Feed
 import com.sryang.library.entity.Restaurant
 import com.sryang.library.entity.user.User
@@ -39,29 +41,42 @@ class FeedRepositoryImpl @Inject constructor(
 
     override suspend fun loadFeed() {
         val feedList = remoteDataSource.getFeeds(HashMap())
-        feedDao.insertAll(feedList.stream().map {
-            it.toFeedEntity()
-        }.toList())
+        try {
+            feedDao.insertAll(feedList.stream().map {
+                it.toFeedEntity()
+            }.toList())
 
-        for (feed in feedList) {
-            pictureDao.insertPictures(feed.pictures.stream().map { it.toReviewImage() }.toList())
+            val list = feedList
+                .stream().map { it.pictures }.toList()
+                .stream().flatMap { it.stream() }.toList()
+                .stream().map { it.toReviewImage() }.toList()
+
+            feedDao.insertAllFeed(
+                feedList = feedList.stream().map { it.toFeedEntity() }.toList(),
+                userDao = userDao,
+                pictureDao = pictureDao,
+                reviewImages = list,
+                userList = feedList.stream().map { it.toUserEntity() }.toList()
+            )
+        } catch (e: Exception) {
+            Log.e("FeedRepositoryImpl", e.toString())
+            Log.e(
+                "FeedRepositoryImpl",
+                Gson().newBuilder().setPrettyPrinting().create().toJson(feedList)
+            )
         }
-
-        userDao.insertAll(feedList.stream().map {
-            it.toUserEntity()
-        }.toList())
     }
 
 }
 
 fun RemoteFeed.toUserEntity(): UserEntity {
     return UserEntity(
-        userId = this.user?.userId ?: 0,
-        email = this.user?.email ?: "",
-        loginPlatform = this.user?.loginPlatform ?: "",
-        create_date = this.user?.createDate ?: "",
+        userId = this.user.userId ?: 0,
+        email = this.user.email ?: "",
+        loginPlatform = this.user.loginPlatform ?: "",
+        create_date = this.user.createDate ?: "",
         access_token = "",
-        profile_pic_url = this.user?.profilePicUrl,
+        profile_pic_url = this.user.profilePicUrl,
         point = 0,
         review_count = "0",
         following = "0",
@@ -73,16 +88,16 @@ fun RemoteFeed.toUserEntity(): UserEntity {
 fun RemoteFeed.toFeedEntity(): FeedEntity {
     return FeedEntity(
         reviewId = this.reviewId,
-        userId = this.user?.userId ?: 0,
-        rating = this.rating ?: 0f,
-        userName = this.user?.userName ?: "",
-        profilePicUrl = this.user?.profilePicUrl ?: "",
-        likeAmount = this.like_amount ?: 0,
-        commentAmount = this.comment_amount ?: 0,
-        restaurantName = this.restaurant?.restaurantName ?: "",
-        restaurantId = this.restaurant?.restaurantId ?: 0,
-        contents = this.contents ?: "",
-        createDate = this.create_date ?: ""
+        userId = this.user.userId,
+        rating = this.rating,
+        userName = this.user.userName,
+        profilePicUrl = this.user.profilePicUrl,
+        likeAmount = this.like_amount,
+        commentAmount = this.comment_amount,
+        restaurantName = this.restaurant.restaurantName,
+        restaurantId = this.restaurant.restaurantId,
+        contents = this.contents,
+        createDate = this.create_date
     )
 }
 

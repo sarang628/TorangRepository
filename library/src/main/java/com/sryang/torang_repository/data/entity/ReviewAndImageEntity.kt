@@ -20,15 +20,15 @@ data class ReviewAndImageEntity(
     )
     val user: UserEntity
 ) {
-    fun toFeedEntity(): FeedEntity {
+    /*fun toFeedEntity(): FeedEntity {
         TODO("Not yet implemented")
-    }
+    }*/
 
-    companion object {
+    /*companion object {
         fun parse(result: Review): ReviewAndImageEntity {
             TODO("Not yet implemented")
         }
-    }
+    }*/
 }
 
 fun ReviewAndImageEntity.toMap(): HashMap<String, RequestBody> {

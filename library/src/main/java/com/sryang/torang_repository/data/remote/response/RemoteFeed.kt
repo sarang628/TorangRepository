@@ -7,13 +7,13 @@ data class RemoteFeed(
     val reviewId: Int,
     val pictures: List<RemotePicture>,
     var medias: ArrayList<RemoteAdMedia>?,
-    var restaurant: RemoteRestaurant?,
-    val user: RemoteUser?,
-    var contents: String?,
-    var create_date: String?,
-    var rating: Float?,
+    var restaurant: RemoteRestaurant,
+    val user: RemoteUser,
+    var contents: String,
+    var create_date: String,
+    var rating: Float,
     var like: LikeResponse?,
     var favorite: FavoriteResponse?,
-    val comment_amount: Int?,
-    val like_amount: Int?
+    val comment_amount: Int,
+    val like_amount: Int
 )

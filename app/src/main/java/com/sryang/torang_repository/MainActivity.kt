@@ -41,9 +41,9 @@ class MainActivity : ComponentActivity() {
             //FeedRepositoryTest(context = this@MainActivity,feedDao = feedDao,pictureDao = pictureDao)
             //FeedServiceTest(remoteFeedServices)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)
-            //FeedRepositoryTest(feedRepository = feedRepository)
+            FeedRepositoryTest(feedRepository = feedRepository)
             //ProfileRepositoryTest(profileRepository = profileRepository)
-            TestApiRestaurant(apiRestaurant = apiRestaurant)
+            //TestApiRestaurant(apiRestaurant = apiRestaurant)
         }
     }
 }
