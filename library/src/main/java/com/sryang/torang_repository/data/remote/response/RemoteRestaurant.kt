@@ -15,7 +15,6 @@ data class RemoteRestaurant(
     val lat: Double,
     @SerializedName("lon")
     val lon: Double,
-
     @SerializedName("rating")
     val rating: Float,
     @SerializedName("tel")
