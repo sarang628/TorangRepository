@@ -6,6 +6,7 @@ import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.dao.RestaurantDao
+import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import com.sryang.torang_repository.repository.InfoRepository
 import com.sryang.torang_repository.repository.MenuRepository
 import com.sryang.torang_repository.repository.ReviewRepository
@@ -30,7 +31,7 @@ class InfoRepositoryImpl @Inject constructor(
     private val mapClick = MutableStateFlow<Boolean>(false)
 //    private val location = MutableStateFlow(Location(0.0, 0.0))
 
-    override suspend fun loadRestaurant(restaurantId: Int): Restaurant {
+    override suspend fun loadRestaurant(restaurantId: Int): RemoteRestaurant {
         return restaurantService.getRestaurant(HashMap<String, String>().apply {
             put("restaurant_id", restaurantId.toString())
         })

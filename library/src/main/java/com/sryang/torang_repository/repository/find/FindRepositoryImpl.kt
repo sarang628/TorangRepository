@@ -12,6 +12,7 @@ import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +50,7 @@ class FindRepositoryImpl @Inject constructor(
         private val hasGrantPermission: MutableStateFlow<Int> =
             MutableStateFlow<Int>(context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION))
 
-        private val restaurants = MutableStateFlow<List<Restaurant>>(ArrayList())
+        private val restaurants = MutableStateFlow<List<RemoteRestaurant>>(ArrayList())
 
         private val manager: LocationManager =
             context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -143,8 +144,8 @@ class FindRepositoryImpl @Inject constructor(
             showRestaurantCardAndFilter.emit(!showRestaurantCardAndFilter.value)
         }
 
-        override fun getSearchedRestaurant(): Flow<List<Restaurant>> {
-            return restaurants
+        override fun getSearchedRestaurant(): List<RemoteRestaurant> {
+            return restaurants.value
         }
 
         override suspend fun searchRestaurant(
@@ -196,8 +197,8 @@ class FindRepositoryImpl @Inject constructor(
         return MutableStateFlow(false)
     }
 
-    override fun getSearchedRestaurant(): Flow<List<Restaurant>> {
-        return MutableStateFlow<List<Restaurant>>(ArrayList())
+    override fun getSearchedRestaurant(): List<RemoteRestaurant> {
+        return ArrayList()
     }
 
     override fun hasGrantPermission(): MutableStateFlow<Int> {

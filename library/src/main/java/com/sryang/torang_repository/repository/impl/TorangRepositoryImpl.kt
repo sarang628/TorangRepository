@@ -12,6 +12,7 @@ import com.sryang.torang_repository.repository.map.MapRepository
 import com.sryang.torang_repository.repository.MenuRepository
 import com.sryang.torang_repository.repository.ReviewRepository
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -34,7 +35,7 @@ class TorangRepository @Inject constructor(
     private val mapClick = MutableStateFlow<Boolean>(false)
 //    private val location = MutableStateFlow(Location(0.0, 0.0))
 
-    override suspend fun loadRestaurant(restaurantId: Int): Restaurant {
+    override suspend fun loadRestaurant(restaurantId: Int): RemoteRestaurant {
         return restaurantService.getRestaurant(HashMap<String, String>().apply {
             put("restaurant_id", restaurantId.toString())
         })
@@ -51,6 +52,7 @@ class TorangRepository @Inject constructor(
             put("restaurant_id", restaurantId.toString())
         })
     }
+
     override fun getRestaurant(): Flow<List<RestaurantEntity>> {
         return restaurantDao.getRestaurant()
     }
@@ -121,4 +123,4 @@ class TorangRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    }
+}

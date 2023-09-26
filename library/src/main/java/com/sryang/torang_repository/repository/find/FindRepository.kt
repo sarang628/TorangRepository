@@ -6,6 +6,7 @@ import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.Ratings
 import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
+import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import kotlinx.coroutines.flow.Flow
 
 interface FindRepository {
@@ -26,7 +27,7 @@ interface FindRepository {
     /** */
     suspend fun searchIfRestaurantEmpty()
     /** 검색 된 맛집 */
-    fun getSearchedRestaurant(): Flow<List<Restaurant>>
+    fun getSearchedRestaurant(): List<RemoteRestaurant>
     /** 최초위치요청 상태 가져오기 */
     fun getIsFirstRequestLocation(): Flow<Boolean>
     /** 현재 위치를 요청중인지 */
