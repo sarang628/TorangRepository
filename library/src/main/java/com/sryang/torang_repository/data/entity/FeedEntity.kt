@@ -38,24 +38,24 @@ fun RemoteFeed.toFeedEntity(): FeedEntity {
 
 
 fun FeedEntity.profilePicUrl(): String {
-    var url = ""
-    profilePicUrl?.let {
+    var url: String
+    profilePicUrl.let {
         url = it
     }
     return url
 }
 
 fun FeedEntity.userName(): String {
-    var nm = "";
-    userName?.let {
+    var nm: String;
+    userName.let {
         nm = it
     }
     return nm
 }
 
 fun FeedEntity.restaurantName(): String {
-    var nm = "";
-    restaurantName?.let {
+    var nm: String;
+    restaurantName.let {
         nm = it
     }
     return nm
