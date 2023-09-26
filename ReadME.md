@@ -1,12 +1,26 @@
-# 안드로이드 저장소 테스트 환경 설정하기
+# 토랑 저장소
 
 ## 역할
-서버에서 전달하는 데이터와 앱에서 필요로하는 데이터의 종류가 다를 수 있음.<br>
-이 차이를 조율함.
+앱에서 필요로하는 데이터를 저장하는 역할<br>
+앱에서 제공하는 서비스를 전반적으로 이해하여 필요로하는 데이터를 제공<br>
+변경과 유지보수가 유연하게 설계하기
 
-[TOC]
+## 서비스
+내부 DB 데이터 UDF가 적용된 FLOW 데이터 타입으로 제공
+원격 서버와 통신하여 데이터 동기화 및 UI에서 필요로하는 API 제공
+자주 변경되는 API는 UI에서 직접 구현 할 수 있는 API 호출 가이드 제공
 
-## 환경설정하기
+## 의존성 추가
+```
+dependencies {
+	        implementation 'com.github.sarang628:TorangRepository:1cbda8c53d'
+	}
+```
+
+
+## 안드로이드 저장소 테스트 환경 설정하기
+
+### 환경설정하기
 
 ```
 @Singleton
@@ -25,7 +39,7 @@ class FeedServiceProductImpl @Inject constructor(
 }
 ```
 
-# Feed 테스트하기
+### Feed 테스트하기
 
 피드 서비스 모듈
 
@@ -53,7 +67,7 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
-# 피드 서비스 모듈 설정하기
+### 피드 서비스 모듈 설정하기
 
 ```
 @InstallIn(SingletonComponent::class)
