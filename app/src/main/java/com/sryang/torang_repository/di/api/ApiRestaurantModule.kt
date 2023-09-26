@@ -1,24 +1,37 @@
 package com.sryang.torang_repository.di.api
 
+import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.di.RetrofitModule
 import com.sryang.torang_repository.di.TorangOkhttpClient
-import com.sryang.torang_repository.api.ApiReview
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * 리뷰 서비스 Product
- */
+@InstallIn(SingletonComponent::class)
+@Module
+class ApiRestaurantModule {
+    @Singleton
+    @Provides
+    fun provideRemoteFeedService(
+        apiRestaurant: ProductApiRestaurant
+    ): ApiRestaurant {
+        return apiRestaurant.create()
+    }
+}
+
 @Singleton
-class ReviewServiceProductImpl @Inject constructor(
+class ProductApiRestaurant @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
     private var url = "http://sarang628.iptime.org:8081/"
-    fun create(): ApiReview {
+    fun create(): ApiRestaurant {
         return retrofitModule
 //            .getRetrofit(torangOkHttpClientImpl.getUnsafeOkHttpClient(), url)
             .getRetrofit(torangOkHttpClientImpl.getHttpClient(), url)
-            .create(ApiReview::class.java)
+            .create(ApiRestaurant::class.java)
     }
 }
