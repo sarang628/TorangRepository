@@ -3,6 +3,8 @@ package com.sryang.torang_repository
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.di.api.TestApiRestaurant
 import com.sryang.torang_repository.repository.feed.FeedRepository
 import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
 import com.sryang.torang_repository.repository.profile.ProfileRepository
@@ -27,23 +29,21 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var profileRepository: ProfileRepository
 
+    @Inject
+    lateinit var apiRestaurant: ApiRestaurant
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         setContent {
-            /*FeedRepositoryTest(
-                context = this@MainActivity,
-                feedDao = feedDao,
-                pictureDao = pictureDao
-            )*/
-
-
+            //FeedRepositoryTest(context = this@MainActivity,feedDao = feedDao,pictureDao = pictureDao)
             //FeedServiceTest(remoteFeedServices)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)
-            FeedRepositoryTest(feedRepository = feedRepository)
-//            ProfileRepositoryTest(profileRepository = profileRepository)
+            //FeedRepositoryTest(feedRepository = feedRepository)
+            //ProfileRepositoryTest(profileRepository = profileRepository)
+            TestApiRestaurant(apiRestaurant = apiRestaurant)
         }
     }
 }
