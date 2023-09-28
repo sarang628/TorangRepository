@@ -32,9 +32,7 @@ class InfoRepositoryImpl @Inject constructor(
 //    private val location = MutableStateFlow(Location(0.0, 0.0))
 
     override suspend fun loadRestaurant(restaurantId: Int): RemoteRestaurant {
-        return restaurantService.getRestaurant(HashMap<String, String>().apply {
-            put("restaurant_id", restaurantId.toString())
-        })
+        return restaurantService.getRestaurantById(restaurantId)
     }
 
     override suspend fun loadMenus(restaurantId: Int): ArrayList<Menu> {

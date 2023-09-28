@@ -21,8 +21,8 @@ interface ApiRestaurant {
     suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<RemoteRestaurant>
 
     @FormUrlEncoded
-    @POST("getRestaurant")
-    suspend fun getRestaurant(@FieldMap params: Map<String, String>): RemoteRestaurant
+    @POST("getRestaurantById")
+    suspend fun getRestaurantById(@Field("restaurant_id") restaurantId: Int): RemoteRestaurant
 
     @FormUrlEncoded
     @POST("getOpenHours")
