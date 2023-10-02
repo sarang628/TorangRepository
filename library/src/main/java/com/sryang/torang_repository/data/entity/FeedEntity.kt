@@ -23,16 +23,16 @@ data class FeedEntity(
 fun RemoteFeed.toFeedEntity(): FeedEntity {
     return FeedEntity(
         reviewId = reviewId,
-        userId = user?.userId ?: 0,
-        contents = contents ?: "",
-        rating = rating ?: 0f,
-        userName = user?.userName ?: "",
-        likeAmount = like_amount ?: 0,
-        commentAmount = comment_amount ?: 0,
-        restaurantName = restaurant?.restaurantName ?: "",
-        restaurantId = restaurant?.restaurantId ?: 0,
-        createDate = this.create_date ?: "",
-        profilePicUrl = this.user?.profilePicUrl ?: ""
+        userId = user.userId,
+        contents = contents,
+        rating = rating,
+        userName = user.userName,
+        likeAmount = like_amount,
+        commentAmount = comment_amount,
+        restaurantName = restaurant.restaurantName,
+        restaurantId = restaurant.restaurantId,
+        createDate = this.create_date,
+        profilePicUrl = this.user.profilePicUrl
     )
 }
 

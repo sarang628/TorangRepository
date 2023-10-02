@@ -48,7 +48,7 @@ class MyReviewRepositoryImpl @Inject constructor(
 
     override suspend fun uploadReview(review: ReviewAndImageEntity) {
 
-        if (review.user.userId == -1)
+        if (review.review.userId == -1)
             throw IllegalArgumentException("사용자 정보가 없습니다.")
 
         val fileList = ArrayList<File>()
@@ -97,7 +97,7 @@ class MyReviewRepositoryImpl @Inject constructor(
 
     override suspend fun modifyReview(review: ReviewAndImageEntity) {
 
-        if (review.user.userId == -1)
+        if (review.review.userId == -1)
             throw IllegalArgumentException("사용자 정보가 없습니다.")
 
         val fileList = ArrayList<File>()
