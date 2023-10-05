@@ -5,6 +5,7 @@ import android.view.Menu
 import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.Restaurant
+import com.sryang.torang_repository.data.RestaurantDetail
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import okhttp3.MultipartBody
@@ -23,6 +24,10 @@ interface ApiRestaurant {
     @FormUrlEncoded
     @POST("getRestaurantById")
     suspend fun getRestaurantById(@Field("restaurant_id") restaurantId: Int): RemoteRestaurant
+
+    @FormUrlEncoded
+    @POST("getRestaurantDetail")
+    suspend fun getRestaurantDetail(@Field("restaurant_id") restaurantId: Int): RestaurantDetail
 
     @FormUrlEncoded
     @POST("getOpenHours")

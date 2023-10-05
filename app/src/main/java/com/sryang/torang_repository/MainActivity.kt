@@ -38,13 +38,13 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            FeedRepositoryTest(feedRepository = feedRepository)
+//            FeedRepositoryTest(feedRepository = feedRepository)
             //FeedServiceTest(remoteFeedServices)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)
             //FeedRepositoryTest(feedRepository = feedRepository)
             //ProfileRepositoryTest(profileRepository = profileRepository)
             //TestApiRestaurant(apiRestaurant = apiRestaurant)
-            //TestApiRestaurant(apiRestaurant = apiRestaurant)
+            TestApiRestaurant(apiRestaurant = apiRestaurant)
         }
     }
 }
