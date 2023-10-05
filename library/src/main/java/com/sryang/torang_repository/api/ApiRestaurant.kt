@@ -4,7 +4,6 @@ import android.graphics.Picture
 import android.view.Menu
 import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.HoursOfOperation
-import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.RestaurantDetail
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant

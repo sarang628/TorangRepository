@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.repository
 
 import android.view.Menu
-import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 
