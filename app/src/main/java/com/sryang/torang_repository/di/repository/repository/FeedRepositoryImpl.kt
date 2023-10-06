@@ -79,8 +79,9 @@ class FeedRepositoryImpl @Inject constructor(
         likeDao.insertLike(result.toLikeEntity())
     }
 
-    override suspend fun deleteLike(likeId: Int) {
-        val remoteLike = apiFeed.deleteLike(likeId = likeId)
+    override suspend fun deleteLike(userId: Int, reviewId: Int) {
+        val like = likeDao.getLike1(reviewId = reviewId)
+        val remoteLike = apiFeed.deleteLike(like.like_id)
         likeDao.deleteLike(
             remoteLike.toLikeEntity()
         )
