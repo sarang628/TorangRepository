@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.repository.feed_detail
 
 import android.content.Context
-import com.sryang.library.entity.Feed
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.Comment
@@ -11,6 +10,7 @@ import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
 import com.sryang.torang_repository.data.entity.CommentEntity
+import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.repository.TimeLineDetailRepository
 import com.sryang.torang_repository.repository.preference.TorangPreference
 import dagger.Binds
@@ -43,7 +43,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
         return commentDao.getComments(reviewId)
     }
 
-    override fun getReview(): Flow<Feed> {
+    override fun getReview(): Flow<FeedEntity> {
         TODO("Not yet implemented")
     }
 
@@ -52,7 +52,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
         TODO()
     }
 
-    override fun getFeed(reviewId: Int): Flow<Feed> {
+    override fun getFeed(reviewId: Int): Flow<FeedEntity> {
         //return reviewDao.getFeedbyReviewId(reviewId)
         TODO()
     }
@@ -91,7 +91,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getReview(): Flow<Feed> {
+    override fun getReview(): Flow<FeedEntity> {
         TODO("Not yet implemented")
     }
 
@@ -100,7 +100,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
         TODO()
     }
 
-    override fun getFeed(reviewId: Int): Flow<Feed> {
+    override fun getFeed(reviewId: Int): Flow<FeedEntity> {
         //return reviewDao.getFeedbyReviewId(reviewId)
         TODO()
     }

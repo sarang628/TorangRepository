@@ -3,7 +3,7 @@ package com.sryang.torang_repository.data.remote.response
 import android.graphics.Picture
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Favorite
-import com.sryang.torang_repository.data.Like
+import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.User
 
 
@@ -17,7 +17,7 @@ data class ResponseGetFeed(
     val contents: String? = null,
     val create_date: String? = null,
     val rating: Float = 0f,
-    val like: Like? = null,
+    val like: RemoteLike? = null,
     val favorite: Favorite? = null,
     val like_amount: Int = 0
 )

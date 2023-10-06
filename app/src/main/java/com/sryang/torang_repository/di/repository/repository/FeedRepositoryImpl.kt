@@ -1,22 +1,22 @@
-package com.sryang.torang_repository.repository.feed
+package com.sryang.torang_repository.di.repository.repository
 
 import android.util.Log
 import com.google.gson.Gson
-import com.sryang.library.entity.Feed
-import com.sryang.library.entity.Restaurant
-import com.sryang.library.entity.user.User
+import com.sryang.torang_repository.api.ApiFeed
+import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LikeDao
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LikeEntity
+import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.UserEntity
 import com.sryang.torang_repository.data.remote.response.LikeResponse
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
-import com.sryang.torang_repository.datasource.FeedRemoteDataSource
+import com.sryang.torang_repository.repository.feed.FeedRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +24,7 @@ import kotlin.streams.toList
 
 @Singleton
 class FeedRepositoryImpl @Inject constructor(
-    private val remoteDataSource: FeedRemoteDataSource,
+    private val apiFeed: ApiFeed,
     private val feedDao: FeedDao,
     private val pictureDao: PictureDao,
     private val userDao: UserDao,
@@ -44,7 +44,7 @@ class FeedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadFeed(userId: Int) {
-        val feedList = remoteDataSource.getFeeds(userId = userId)
+        val feedList = apiFeed.getFeeds(userId = userId)
         try {
             feedDao.insertAll(feedList.stream().map {
                 it.toFeedEntity()
@@ -72,6 +72,18 @@ class FeedRepositoryImpl @Inject constructor(
                 Gson().newBuilder().setPrettyPrinting().create().toJson(feedList)
             )
         }
+    }
+
+    override suspend fun addLike(userId: Int, reviewId: Int) {
+        val result = apiFeed.addLike(userId, reviewId)
+        likeDao.insertLike(result.toLikeEntity())
+    }
+
+    override suspend fun deleteLike(likeId: Int) {
+        val remoteLike = apiFeed.deleteLike(likeId = likeId)
+        likeDao.deleteLike(
+            remoteLike.toLikeEntity()
+        )
     }
 
 }
@@ -108,33 +120,20 @@ fun RemoteFeed.toFeedEntity(): FeedEntity {
     )
 }
 
-fun RemoteFeed.toFeed(): Feed {
-    return Feed(
-        reviewId = this.reviewId,
-        writer = User(
-            userId = 0,
-            name = this.user.userName,
-            profilePictureUrl = this.user.profilePicUrl
-        ),
-        restaurant = Restaurant(
-            restaurantName = this.restaurant.restaurantName
-        ),
-        rating = this.rating,
-        likeAmount = this.like_amount,
-        commentAmount = this.comment_amount,
-        comments = ArrayList(),
-        isLike = this.like == null,
-        isFavorite = this.favorite?.isFavority ?: false,
-        reviewImages = this.pictures.stream().map { it.picture_url }.toList(),
-        contents = this.contents
-    )
-}
-
 fun LikeResponse.toLikeEntity(): LikeEntity {
     return LikeEntity(
         reviewId = this.review_id,
         like_id = this.like_id,
         user_id = this.user_id,
         create_date = this.create_date
+    )
+}
+
+fun RemoteLike.toLikeEntity(): LikeEntity {
+    return LikeEntity(
+        like_id = likeId,
+        user_id = userId,
+        create_date = createDate,
+        reviewId = reviewId
     )
 }

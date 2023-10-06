@@ -89,5 +89,4 @@ dependencies {
 
     implementation "com.github.sarang628:JsonToObjectGenerator:$jsonToObjectGeneratorVersion"
     implementation "com.github.sarang628:Data:$dataVersion"
-    implementation "com.github.sarang628:Design:$designVersion"
 }

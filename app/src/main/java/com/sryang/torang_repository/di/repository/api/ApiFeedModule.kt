@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.api
+package com.sryang.torang_repository.di.repository.api
 
 import android.content.Context
 import com.example.torangrepository.R
@@ -7,7 +7,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.data.Favorite
-import com.sryang.torang_repository.data.Like
+import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
@@ -16,6 +16,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.http.Field
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -92,11 +93,14 @@ class TestFeedServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun addLike(like: Like): Like {
+    override suspend fun addLike(
+        @Field(value = "userId") userId: Int,
+        @Field(value = "reviewId") reviewId: Int
+    ): RemoteLike {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteLike(like: Like): Like {
+    override suspend fun deleteLike(@Field(value = "likeId") likeId: Int): RemoteLike {
         TODO("Not yet implemented")
     }
 

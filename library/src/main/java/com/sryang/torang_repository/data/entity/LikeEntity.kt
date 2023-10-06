@@ -10,10 +10,10 @@ import com.google.gson.annotations.SerializedName
         unique = true)))
 data class LikeEntity constructor(
         @PrimaryKey
+        var like_id: Int,
         @ColumnInfo(name = "review_id")
         @SerializedName("review_id")
         var reviewId: Int,
-        var like_id: Int,
         var user_id: Int,
         var create_date: String?
 )

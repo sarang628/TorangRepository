@@ -5,10 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.api.LikeTest
 import com.sryang.torang_repository.repository.feed.FeedRepository
 import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
 import com.sryang.torang_repository.repository.profile.ProfileRepository
-import com.sryang.torang_repository.test.ApiFeedTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+//            LikeTest(apiFeed = apiFeed)
             FeedRepositoryTest(feedRepository = feedRepository)
             //ApiFeedTest(apiFeed)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)

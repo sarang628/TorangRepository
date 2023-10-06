@@ -11,10 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.sryang.library.entity.user.UserProfile
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
-import com.sryang.torang_repository.data.entity.UserEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser
 import com.sryang.torang_repository.repository.feed.FeedListRepository
 import kotlinx.coroutines.flow.Flow

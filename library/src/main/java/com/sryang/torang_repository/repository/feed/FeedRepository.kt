@@ -21,6 +21,8 @@ interface FeedRepository {
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
     suspend fun loadFeed(userId: Int)
+    suspend fun addLike(userId: Int, reviewId: Int)
+    suspend fun deleteLike(likeId: Int)
 
     val feeds1: Flow<List<ReviewAndImageEntity>>
 }
@@ -46,6 +48,20 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 }
             }) {
                 Text(text = "DeleteFeed")
+            }
+            Button(onClick = {
+                coroutine.launch {
+                    feedRepository.addLike(1, 82)
+                }
+            }) {
+                Text(text = "addLike")
+            }
+            Button(onClick = {
+                coroutine.launch {
+                    feedRepository.deleteLike(19)
+                }
+            }) {
+                Text(text = "deleteLike")
             }
         }
         LazyColumn(content = {

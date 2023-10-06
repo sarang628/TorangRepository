@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.di.api
+package com.sryang.torang_repository.di.repository.api
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
