@@ -116,7 +116,7 @@ fun RemoteFeed.toFeed(): Feed {
         likeAmount = this.like_amount ?: 0,
         commentAmount = this.comment_amount ?: 0,
         comments = ArrayList(),
-        isLike = this.like?.isLike ?: false,
+        isLike = this.like == null,
         isFavorite = this.favorite?.isFavority ?: false,
         reviewImages = this.pictures.stream().map { it.picture_url }.toList(),
         contents = this.contents ?: ""

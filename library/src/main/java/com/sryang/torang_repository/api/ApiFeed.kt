@@ -6,6 +6,7 @@ import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import retrofit2.http.Body
+import retrofit2.http.Field
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -13,7 +14,7 @@ import retrofit2.http.POST
 interface ApiFeed {
     @FormUrlEncoded
     @POST("getFeeds")
-    suspend fun getFeeds(@FieldMap params: Map<String, String>): List<RemoteFeed>
+    suspend fun getFeeds(@Field("user_id") userId: Int): List<RemoteFeed>
 
     @POST("deleteReview")
     suspend fun deleteReview(@Body review: ReviewDeleteRequestVO): Review

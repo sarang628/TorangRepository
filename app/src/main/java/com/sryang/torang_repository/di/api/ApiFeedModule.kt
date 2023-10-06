@@ -32,7 +32,8 @@ class ApiFeedModule {
     @Singleton
     @Provides
     fun provideRemoteFeedService(
-        apiFeed: ProductApiFeed
+        apiFeed: ProductApiFeed,
+//        apiFeed: LocalApiFeed
     ): ApiFeed {
         return apiFeed.create()
     }
@@ -63,7 +64,7 @@ class LocalApiFeed @Inject constructor(
     private val torangOkHttpClientImpl: TorangOkhttpClient,
     private val retrofitModule: RetrofitModule
 ) {
-    private var url = "http://10.0.2.2:8080/"
+    private var url = "http://192.168.0.14:8081/"
     fun create(): ApiFeed {
         return retrofitModule.getRetrofit(torangOkHttpClientImpl.getHttpClient(), url).create(
             ApiFeed::class.java
@@ -75,7 +76,7 @@ class LocalApiFeed @Inject constructor(
 class TestFeedServiceImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : ApiFeed {
-    override suspend fun getFeeds(params: Map<String, String>): List<RemoteFeed> {
+    override suspend fun getFeeds(userId: Int): List<RemoteFeed> {
         val feeds = ArrayList<RemoteFeed>()
         val list = JsonDataLoader<List<JsonObject>>(context).load(R.raw.feed_response1)
         for (jsonObject in list) {

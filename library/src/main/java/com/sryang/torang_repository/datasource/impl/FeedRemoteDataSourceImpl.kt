@@ -12,7 +12,7 @@ class FeedRemoteDataSourceImpl @Inject constructor(
     private val remoteService: ApiFeed
 ) : FeedRemoteDataSource {
     override suspend fun getFeeds(hashMap: HashMap<String, String>): List<RemoteFeed> {
-        val list = remoteService.getFeeds(hashMap)
+        val list = remoteService.getFeeds(1)
         return list
     }
 
