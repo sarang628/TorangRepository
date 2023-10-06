@@ -11,8 +11,8 @@ import javax.inject.Singleton
 class FeedRemoteDataSourceImpl @Inject constructor(
     private val remoteService: ApiFeed
 ) : FeedRemoteDataSource {
-    override suspend fun getFeeds(hashMap: HashMap<String, String>): List<RemoteFeed> {
-        val list = remoteService.getFeeds(1)
+    override suspend fun getFeeds(userId: Int): List<RemoteFeed> {
+        val list = remoteService.getFeeds(userId)
         return list
     }
 

@@ -20,7 +20,7 @@ interface FeedRepository {
     // 내 리뷰 삭제
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
-    suspend fun loadFeed()
+    suspend fun loadFeed(userId: Int)
 
     val feeds1: Flow<List<ReviewAndImageEntity>>
 }
@@ -35,7 +35,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
         Row {
             Button(onClick = {
                 coroutine.launch {
-                    feedRepository.loadFeed()
+                    feedRepository.loadFeed(1)
                 }
             }) {
                 Text(text = "LoadFeed")

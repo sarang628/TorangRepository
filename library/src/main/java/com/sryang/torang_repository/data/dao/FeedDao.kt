@@ -1,15 +1,12 @@
 package com.sryang.torang_repository.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.sryang.torang_repository.data.ReviewImage
 import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
-import com.sryang.torang_repository.data.entity.FeedEntity1
 import com.sryang.torang_repository.data.entity.LikeEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
@@ -62,10 +59,14 @@ interface FeedDao {
         pictureDao: PictureDao,
         reviewImages: List<ReviewImageEntity>,
         userDao: UserDao,
-        userList: List<UserEntity>
+        userList: List<UserEntity>,
+        likeDao: LikeDao,
+        likeList: List<LikeEntity>
     ) {
         pictureDao.insertAll(reviewImages)
         userDao.insertAll(userList)
+        likeDao.deleteAll1()
+        likeDao.insertLikes(likeList)
         //마지막에 안넣어주면 앱 강제종료
         insertAll(feedList)
     }
@@ -122,18 +123,10 @@ interface FeedDao {
     @Query(
         """
             Select * 
-            From FeedEntity 
+            From FeedEntity
         """
     )
     fun feedIncludeLike() {
 
     }
 }
-
-/*
-* Select
-fe.*
-,(select * from ReviewImageEntity)
-,le.review_id
-,IIF(fe.reviewId != null , true, false) as 'lsLike'
-From FeedEntity fe left outer join LikeEntity le on fe.reviewId = le.review_id*/

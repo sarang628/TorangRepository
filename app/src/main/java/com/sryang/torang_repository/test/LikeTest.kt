@@ -23,7 +23,7 @@ import java.net.SocketTimeoutException
 import javax.net.ssl.SSLException
 
 @Composable
-fun ApiFeedTest(remoteFeedServices: ApiFeed) {
+fun LikeTest(remoteFeedServices: ApiFeed) {
     val scope = rememberCoroutineScope()
 
     var error: String by remember { mutableStateOf("") }

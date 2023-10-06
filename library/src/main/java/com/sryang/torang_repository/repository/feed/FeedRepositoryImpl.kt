@@ -6,11 +6,14 @@ import com.sryang.library.entity.Feed
 import com.sryang.library.entity.Restaurant
 import com.sryang.library.entity.user.User
 import com.sryang.torang_repository.data.dao.FeedDao
+import com.sryang.torang_repository.data.dao.LikeDao
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.LikeEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.UserEntity
+import com.sryang.torang_repository.data.remote.response.LikeResponse
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
@@ -24,7 +27,8 @@ class FeedRepositoryImpl @Inject constructor(
     private val remoteDataSource: FeedRemoteDataSource,
     private val feedDao: FeedDao,
     private val pictureDao: PictureDao,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val likeDao: LikeDao
 ) : FeedRepository {
     override val feeds1: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
 
@@ -39,8 +43,8 @@ class FeedRepositoryImpl @Inject constructor(
         feedDao.deleteAll()
     }
 
-    override suspend fun loadFeed() {
-        val feedList = remoteDataSource.getFeeds(HashMap())
+    override suspend fun loadFeed(userId: Int) {
+        val feedList = remoteDataSource.getFeeds(userId = userId)
         try {
             feedDao.insertAll(feedList.stream().map {
                 it.toFeedEntity()
@@ -56,7 +60,10 @@ class FeedRepositoryImpl @Inject constructor(
                 userDao = userDao,
                 pictureDao = pictureDao,
                 reviewImages = list,
-                userList = feedList.stream().map { it.toUserEntity() }.toList()
+                userList = feedList.stream().map { it.toUserEntity() }.toList(),
+                likeDao = likeDao,
+                likeList = feedList.stream().filter { it.like != null }
+                    .map { it.like!!.toLikeEntity() }.toList()
             )
         } catch (e: Exception) {
             Log.e("FeedRepositoryImpl", e.toString())
@@ -106,19 +113,28 @@ fun RemoteFeed.toFeed(): Feed {
         reviewId = this.reviewId,
         writer = User(
             userId = 0,
-            name = this.user?.userName ?: "",
-            profilePictureUrl = this.user?.profilePicUrl ?: ""
+            name = this.user.userName,
+            profilePictureUrl = this.user.profilePicUrl
         ),
         restaurant = Restaurant(
-            restaurantName = this.restaurant?.restaurantName ?: ""
+            restaurantName = this.restaurant.restaurantName
         ),
-        rating = this.rating ?: 0.0f,
-        likeAmount = this.like_amount ?: 0,
-        commentAmount = this.comment_amount ?: 0,
+        rating = this.rating,
+        likeAmount = this.like_amount,
+        commentAmount = this.comment_amount,
         comments = ArrayList(),
         isLike = this.like == null,
         isFavorite = this.favorite?.isFavority ?: false,
         reviewImages = this.pictures.stream().map { it.picture_url }.toList(),
-        contents = this.contents ?: ""
+        contents = this.contents
+    )
+}
+
+fun LikeResponse.toLikeEntity(): LikeEntity {
+    return LikeEntity(
+        reviewId = this.review_id,
+        like_id = this.like_id,
+        user_id = this.user_id,
+        create_date = this.create_date
     )
 }

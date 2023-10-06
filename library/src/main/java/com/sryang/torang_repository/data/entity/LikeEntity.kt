@@ -15,5 +15,5 @@ data class LikeEntity constructor(
         var reviewId: Int,
         var like_id: Int,
         var user_id: Int,
-        var create_date: String
+        var create_date: String?
 )
