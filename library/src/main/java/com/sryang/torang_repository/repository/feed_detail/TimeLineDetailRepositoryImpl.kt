@@ -33,13 +33,13 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
 ) :
     TimeLineDetailRepository {
 
-    override suspend fun getComments(reviewId: String): ArrayList<Comment> {
+    override suspend fun getComments(reviewId: Int): List<Comment> {
         val list = apiComment.getComments(reviewId)
         commentDao.insertComments(CommentEntity.parse(list))
         return list
     }
 
-    override fun getComments(reviewId: Int): Flow<List<CommentEntity>> {
+    override fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>> {
         return commentDao.getComments(reviewId)
     }
 
@@ -83,11 +83,11 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
 ) :
     TimeLineDetailRepository {
 
-    override suspend fun getComments(reviewId: String): ArrayList<Comment> {
+    override suspend fun getComments(reviewId: Int): List<Comment> {
         return apiComment.getComments(reviewId)
     }
 
-    override fun getComments(reviewId: Int): Flow<List<CommentEntity>> {
+    override fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>> {
         TODO("Not yet implemented")
     }
 

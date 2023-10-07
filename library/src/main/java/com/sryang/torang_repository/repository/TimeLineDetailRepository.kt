@@ -8,10 +8,10 @@ import com.sryang.torang_repository.repository.login.LoginCheckableRepository
 import kotlinx.coroutines.flow.Flow
 
 interface TimeLineDetailRepository : LoginCheckableRepository {
-    suspend fun getComments(reviewId: String): ArrayList<Comment>
+    suspend fun getComments(reviewId: Int): List<Comment>
     fun getReview(): Flow<FeedEntity>
     fun getRestaurant(reviewId: Int): Flow<Restaurant>
     fun getFeed(reviewId: Int): Flow<FeedEntity>
     suspend fun addComment(reviewId: Int, value: String) : Comment
-    fun getComments(reviewId: Int) : Flow<List<CommentEntity>>
+    fun getCommentsFlow(reviewId: Int) : Flow<List<CommentEntity>>
 }

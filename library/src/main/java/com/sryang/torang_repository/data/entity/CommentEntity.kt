@@ -15,7 +15,7 @@ data class CommentEntity(
     val createDate: String
 ) {
     companion object {
-        fun parse(list: ArrayList<Comment>): ArrayList<CommentEntity> {
+        fun parse(list: List<Comment>): List<CommentEntity> {
             val commentList = ArrayList<CommentEntity>()
             for (comment in list) {
 //                commentList.add(parse(comment))
