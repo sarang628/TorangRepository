@@ -38,4 +38,9 @@ interface FavoriteDao {
         """
     )
     fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
+
+    @Query("""
+        DELETE FROM FavoriteEntity
+    """)
+    fun deleteAll()
 }

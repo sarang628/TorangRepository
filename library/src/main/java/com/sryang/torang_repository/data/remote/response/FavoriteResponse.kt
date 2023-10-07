@@ -1,6 +1,8 @@
 package com.sryang.torang_repository.data.remote.response
 
 data class FavoriteResponse(
-    val favorityId: Int?,
-    val isFavority: Boolean?
+    val favorite_id: Int,
+    val user_id: Int,
+    val review_id: Int,
+    val create_date: String?
 )

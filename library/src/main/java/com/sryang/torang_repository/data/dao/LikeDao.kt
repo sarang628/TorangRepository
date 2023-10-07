@@ -24,7 +24,7 @@ interface LikeDao {
     suspend fun deleteLikes(users: List<LikeEntity>)
 
     @Query("delete from LikeEntity")
-    suspend fun deleteAll1()
+    suspend fun deleteAll()
 
     @Query("select * from LikeEntity where review_id = (:reviewId)")
     fun getLike(reviewId: Int): Flow<LikeEntity>

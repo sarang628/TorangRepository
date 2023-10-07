@@ -61,11 +61,13 @@ interface FeedDao {
         userDao: UserDao,
         userList: List<UserEntity>,
         likeDao: LikeDao,
-        likeList: List<LikeEntity>
+        likeList: List<LikeEntity>,
+        favoriteDao: FavoriteDao,
+        favorites: List<FavoriteEntity>
     ) {
         pictureDao.insertAll(reviewImages)
         userDao.insertAll(userList)
-        likeDao.deleteAll1()
+        likeDao.deleteAll()
         likeDao.insertLikes(likeList)
         //마지막에 안넣어주면 앱 강제종료
         insertAll(feedList)

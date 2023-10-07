@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.di.repository.repository
 
 import android.util.Log
+import androidx.room.Transaction
 import com.google.gson.Gson
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.data.RemoteFavorite
@@ -13,9 +14,9 @@ import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LikeEntity
-import com.sryang.torang_repository.data.entity.RestaurantEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.UserEntity
+import com.sryang.torang_repository.data.remote.response.FavoriteResponse
 import com.sryang.torang_repository.data.remote.response.LikeResponse
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
@@ -43,8 +44,11 @@ class FeedRepositoryImpl @Inject constructor(
         feedDao.deleteFeed(reviewId)
     }
 
+    @Transaction
     override suspend fun deleteFeedAll() {
         feedDao.deleteAll()
+        likeDao.deleteAll()
+        favoriteDao.deleteAll()
     }
 
     override suspend fun loadFeed(userId: Int) {
@@ -67,7 +71,10 @@ class FeedRepositoryImpl @Inject constructor(
                 userList = feedList.stream().map { it.toUserEntity() }.toList(),
                 likeDao = likeDao,
                 likeList = feedList.stream().filter { it.like != null }
-                    .map { it.like!!.toLikeEntity() }.toList()
+                    .map { it.like!!.toLikeEntity() }.toList(),
+                favoriteDao = favoriteDao,
+                favorites = feedList.stream().filter { it.favorite != null }
+                    .map { it.favorite!!.toFavoriteEntity() }.toList()
             )
         } catch (e: Exception) {
             Log.e("FeedRepositoryImpl", e.toString())
@@ -142,6 +149,15 @@ fun LikeResponse.toLikeEntity(): LikeEntity {
     return LikeEntity(
         reviewId = this.review_id,
         like_id = this.like_id,
+        user_id = this.user_id,
+        create_date = this.create_date
+    )
+}
+
+fun FavoriteResponse.toFavoriteEntity(): FavoriteEntity {
+    return FavoriteEntity(
+        reviewId = this.review_id,
+        favorite_id = this.favorite_id,
         user_id = this.user_id,
         create_date = this.create_date
     )
