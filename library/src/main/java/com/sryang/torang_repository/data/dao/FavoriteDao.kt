@@ -3,6 +3,7 @@ package com.sryang.torang_repository.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
@@ -39,8 +40,13 @@ interface FavoriteDao {
     )
     fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
 
-    @Query("""
+    @Query(
+        """
         DELETE FROM FavoriteEntity
-    """)
-    fun deleteAll()
+    """
+    )
+    suspend fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(feedList: List<FavoriteEntity>)
 }

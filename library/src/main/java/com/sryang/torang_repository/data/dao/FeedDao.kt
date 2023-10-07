@@ -69,6 +69,7 @@ interface FeedDao {
         userDao.insertAll(userList)
         likeDao.deleteAll()
         likeDao.insertLikes(likeList)
+        favoriteDao.insertAll(favorites)
         //마지막에 안넣어주면 앱 강제종료
         insertAll(feedList)
     }
