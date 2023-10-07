@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.api.FavoriteTest
 import com.sryang.torang_repository.api.LikeTest
 import com.sryang.torang_repository.repository.feed.FeedRepository
 import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
@@ -38,7 +39,8 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-//            LikeTest(apiFeed = apiFeed)
+            //FavoriteTest(apiFeed = apiFeed)
+            //LikeTest(apiFeed = apiFeed)
             FeedRepositoryTest(feedRepository = feedRepository)
             //ApiFeedTest(apiFeed)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)

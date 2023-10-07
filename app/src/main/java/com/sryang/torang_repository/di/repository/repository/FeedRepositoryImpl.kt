@@ -3,11 +3,14 @@ package com.sryang.torang_repository.di.repository.repository
 import android.util.Log
 import com.google.gson.Gson
 import com.sryang.torang_repository.api.ApiFeed
+import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
+import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LikeDao
 import com.sryang.torang_repository.data.dao.PictureDao
 import com.sryang.torang_repository.data.dao.UserDao
+import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LikeEntity
 import com.sryang.torang_repository.data.entity.RestaurantEntity
@@ -28,7 +31,8 @@ class FeedRepositoryImpl @Inject constructor(
     private val feedDao: FeedDao,
     private val pictureDao: PictureDao,
     private val userDao: UserDao,
-    private val likeDao: LikeDao
+    private val likeDao: LikeDao,
+    private val favoriteDao: FavoriteDao
 ) : FeedRepository {
     override val feeds1: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
 
@@ -87,6 +91,19 @@ class FeedRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun addFavorite(userId: Int, reviewId: Int) {
+        val result = apiFeed.addFavorite(userId, reviewId)
+        favoriteDao.insertFavorite(result.toFavoriteEntity())
+    }
+
+    override suspend fun deleteFavorite(userId: Int, reviewId: Int) {
+        val favorite = favoriteDao.getFavorite1(reviewId = reviewId)
+        val remoteFavorite = apiFeed.deleteFavorite(favorite.favorite_id)
+        favoriteDao.deleteFavorite(
+            remoteFavorite.toFavoriteEntity()
+        )
+    }
+
 }
 
 fun RemoteFeed.toUserEntity(): UserEntity {
@@ -136,5 +153,14 @@ fun RemoteLike.toLikeEntity(): LikeEntity {
         user_id = userId,
         create_date = createDate,
         reviewId = reviewId
+    )
+}
+
+fun RemoteFavorite.toFavoriteEntity(): FavoriteEntity {
+    return FavoriteEntity(
+        reviewId = review_id,
+        favorite_id = favorite_id,
+        user_id = user_id,
+        create_date = create_date
     )
 }

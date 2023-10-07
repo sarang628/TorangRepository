@@ -15,7 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.google.gson.GsonBuilder
-import com.sryang.torang_repository.data.Favorite
+import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
@@ -50,11 +50,16 @@ interface ApiFeed {
     @POST("deleteLike")
     suspend fun deleteLike(@Field("likeId") likeId: Int): RemoteLike
 
+    @FormUrlEncoded
     @POST("deleteFavorite")
-    suspend fun deleteFavorite(@Body favorite: Favorite): Favorite
+    suspend fun deleteFavorite(@Field("favoriteId") likeId: Int): RemoteFavorite
 
+    @FormUrlEncoded
     @POST("addFavorite")
-    suspend fun addFavorite(@Body favorite: Favorite): Favorite
+    suspend fun addFavorite(
+        @Field("userId") userId: Int,
+        @Field("reviewId") reviewId: Int
+    ): RemoteFavorite
 }
 
 @Composable
@@ -121,6 +126,83 @@ fun LikeTest(apiFeed: ApiFeed) {
                 Text(text = "요청중")
             } else {
                 Text(text = "좋아요 삭제")
+            }
+        }
+        if (padding.isNotBlank())
+            Text(
+                text = padding, Modifier.verticalScroll(rememberScrollState())
+            )
+        if (error.isNotBlank())
+            Text(text = error)
+        if (loading)
+            CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun FavoriteTest(apiFeed: ApiFeed) {
+    val scope = rememberCoroutineScope()
+
+    var error: String by remember { mutableStateOf("") }
+    var padding: String by remember { mutableStateOf("") }
+    var loading: Boolean by remember { mutableStateOf(false) }
+
+    Column {
+        Text(text = "FavoriteTest")
+        Button(onClick = {
+            if (loading)
+                return@Button
+            loading = true
+            scope.launch {
+                try {
+                    val result = apiFeed.addFavorite(1, 64)
+                    padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
+                } catch (e: SSLException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: SocketTimeoutException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: HttpException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.response()?.errorBody()?.string() ?: ""
+                    loading = false
+                }
+            }
+        }) {
+            if (loading) {
+                Text(text = "요청중")
+            } else {
+                Text(text = "즐겨찾기 추가")
+            }
+        }
+        Button(onClick = {
+            scope.launch {
+                try {
+                    val result = apiFeed.deleteFavorite(4)
+                    padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
+                } catch (e: SSLException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: SocketTimeoutException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.toString()
+                    loading = false
+                } catch (e: HttpException) {
+                    Log.e("sryang123", e.toString())
+                    error = e.response()?.errorBody()?.string() ?: ""
+                    loading = false
+                }
+            }
+        }) {
+
+            if (loading) {
+                Text(text = "요청중")
+            } else {
+                Text(text = "즐겨찾기 삭제")
             }
         }
         if (padding.isNotBlank())

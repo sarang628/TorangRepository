@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.sryang.torang_repository.api.ApiFeed
-import com.sryang.torang_repository.data.Favorite
+import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.Review
 import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
@@ -104,11 +104,14 @@ class TestFeedServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFavorite(favorite: Favorite): Favorite {
+    override suspend fun deleteFavorite(@Field(value = "favoriteId") likeId: Int): RemoteFavorite {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addFavorite(favorite: Favorite): Favorite {
+    override suspend fun addFavorite(
+        @Field(value = "userId") userId: Int,
+        @Field(value = "reviewId") reviewId: Int
+    ): RemoteFavorite {
         TODO("Not yet implemented")
     }
 

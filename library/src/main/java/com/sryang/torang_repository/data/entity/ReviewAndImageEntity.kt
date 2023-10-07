@@ -16,7 +16,13 @@ data class ReviewAndImageEntity(
         parentColumn = "reviewId",
         entityColumn = "review_id"
     )
-    val like: LikeEntity?
+    val like: LikeEntity?,
+    @Relation(
+        parentColumn = "reviewId",
+        entityColumn = "review_id"
+    )
+    val favorite: FavoriteEntity?
+
 )
 
 fun ReviewAndImageEntity.toMap(): HashMap<String, RequestBody> {

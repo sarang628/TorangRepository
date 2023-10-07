@@ -21,5 +21,5 @@ data class FavoriteEntity constructor(
     var reviewId: Int,
     var favorite_id: Int,
     var user_id: Int,
-    var create_date: String
+    var create_date: String?
 )
