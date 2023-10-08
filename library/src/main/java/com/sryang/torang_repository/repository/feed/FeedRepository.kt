@@ -10,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import com.google.gson.Gson
-import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -25,6 +24,9 @@ interface FeedRepository {
     suspend fun deleteLike(userId: Int, reviewId: Int)
     suspend fun addFavorite(userId: Int, reviewId: Int)
     suspend fun deleteFavorite(userId: Int, reviewId: Int)
+    suspend fun getComment(reviewId: Int) : List<com.sryang.torang_repository.data.Comment>
+    suspend fun deleteComment(commentId: Int)
+    suspend fun addComment(reviewId: Int, userId: Int, comment: String)
 
     val feeds1: Flow<List<ReviewAndImageEntity>>
 }
@@ -39,15 +41,52 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
         Column {
             Row {
                 Button(onClick = { coroutine.launch { feedRepository.loadFeed(1) } }) { Text(text = "getFeed") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteFeedAll() } }) { Text(text = "delFeed") }
-                Button(onClick = { coroutine.launch { feedRepository.addLike(1, 82) } }) { Text(text = "addLike") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) { Text(text = "delLike") }
+                Button(onClick = { coroutine.launch { feedRepository.deleteFeedAll() } }) {
+                    Text(
+                        text = "delFeed"
+                    )
+                }
+                Button(onClick = {
+                    coroutine.launch {
+                        feedRepository.addLike(
+                            1,
+                            82
+                        )
+                    }
+                }) { Text(text = "addLike") }
+                Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) {
+                    Text(
+                        text = "delLike"
+                    )
+                }
             }
             Row {
-                Button(onClick = { coroutine.launch { feedRepository.addFavorite(1, 82) } }) { Text(text = "addFav") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteFavorite(1, 82) } }) { Text(text = "delFav") }
-                Button(onClick = { coroutine.launch { feedRepository.addLike(1, 82) } }) { Text(text = "addLike") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) { Text(text = "deleteLike") }
+                Button(onClick = { coroutine.launch { feedRepository.addFavorite(1, 82) } }) {
+                    Text(
+                        text = "addFav"
+                    )
+                }
+                Button(onClick = {
+                    coroutine.launch {
+                        feedRepository.deleteFavorite(
+                            1,
+                            82
+                        )
+                    }
+                }) { Text(text = "delFav") }
+                Button(onClick = {
+                    coroutine.launch {
+                        feedRepository.addLike(
+                            1,
+                            82
+                        )
+                    }
+                }) { Text(text = "addLike") }
+                Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) {
+                    Text(
+                        text = "deleteLike"
+                    )
+                }
             }
         }
         LazyColumn(content = {

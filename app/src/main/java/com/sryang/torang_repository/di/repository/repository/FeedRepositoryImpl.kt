@@ -3,7 +3,9 @@ package com.sryang.torang_repository.di.repository.repository
 import android.util.Log
 import androidx.room.Transaction
 import com.google.gson.Gson
+import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
+import com.sryang.torang_repository.data.Comment
 import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.dao.FavoriteDao
@@ -33,7 +35,8 @@ class FeedRepositoryImpl @Inject constructor(
     private val pictureDao: PictureDao,
     private val userDao: UserDao,
     private val likeDao: LikeDao,
-    private val favoriteDao: FavoriteDao
+    private val favoriteDao: FavoriteDao,
+    private val apiComment: ApiComment
 ) : FeedRepository {
     override val feeds1: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
 
@@ -109,6 +112,18 @@ class FeedRepositoryImpl @Inject constructor(
         favoriteDao.deleteFavorite(
             remoteFavorite.toFavoriteEntity()
         )
+    }
+
+    override suspend fun getComment(reviewId: Int): List<Comment> {
+        return apiComment.getComments(reviewId)
+    }
+
+    override suspend fun deleteComment(commentId: Int) {
+        apiComment.deleteComment(commentId = commentId)
+    }
+
+    override suspend fun addComment(reviewId: Int, userId: Int, comment: String) {
+        apiComment.addComment(reviewId, userId, comment)
     }
 
 }
