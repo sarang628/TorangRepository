@@ -5,7 +5,7 @@ import androidx.room.Transaction
 import com.google.gson.Gson
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
-import com.sryang.torang_repository.data.Comment
+import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.dao.FavoriteDao
@@ -24,6 +24,7 @@ import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
 import com.sryang.torang_repository.repository.feed.FeedRepository
 import kotlinx.coroutines.flow.Flow
+import java.util.Objects
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.streams.toList
@@ -114,8 +115,20 @@ class FeedRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getComment(reviewId: Int): List<Comment> {
-        return apiComment.getComments(reviewId)
+    override suspend fun getComment(reviewId: Int): List<RemoteComment> {
+        val result = apiComment.getComments(reviewId);
+        Log.d("FeedRepositoryImpl", result.toString())
+        return result.stream().map {
+            RemoteComment(
+                comment_id = it.get("comment_id").toString().toInt(),
+                review_id = it.get("review_id").toString().toInt(),
+                comment = it.get("comment").toString(),
+                create_date = it.get("create_date").toString(),
+                user_id = (it.getAsJsonObject("user")).get("user_id").toString().toInt(),
+                user_name = (it.getAsJsonObject("user")).get("user_name").toString(),
+                profile_pic_url = (it.getAsJsonObject("user")).get("profile_pic_url").toString()
+            )
+        }.toList()
     }
 
     override suspend fun deleteComment(commentId: Int) {

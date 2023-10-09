@@ -46,8 +46,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             //FavoriteTest(apiFeed = apiFeed)
             //LikeTest(apiFeed = apiFeed)
-            //FeedRepositoryTest(feedRepository = feedRepository)
-            ApiCommentTest(apiComment = apiComment)
+            FeedRepositoryTest(feedRepository = feedRepository)
+            //ApiCommentTest(apiComment = apiComment)
             //ApiFeedTest(apiFeed)
             //ReviewServiceTest(remoteReviewService = remoteReviewService)
             //FeedRepositoryTest(feedRepository = feedRepository)

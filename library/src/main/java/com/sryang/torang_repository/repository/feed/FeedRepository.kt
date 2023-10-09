@@ -8,8 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import com.google.gson.Gson
+import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -24,7 +28,7 @@ interface FeedRepository {
     suspend fun deleteLike(userId: Int, reviewId: Int)
     suspend fun addFavorite(userId: Int, reviewId: Int)
     suspend fun deleteFavorite(userId: Int, reviewId: Int)
-    suspend fun getComment(reviewId: Int) : List<com.sryang.torang_repository.data.Comment>
+    suspend fun getComment(reviewId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
     suspend fun addComment(reviewId: Int, userId: Int, comment: String)
 
@@ -35,6 +39,7 @@ interface FeedRepository {
 fun FeedRepositoryTest(feedRepository: FeedRepository) {
     val feeds1 by feedRepository.feeds1.collectAsState(initial = ArrayList())
     val gson = Gson().newBuilder().setPrettyPrinting().create()
+    var result1 by remember { mutableStateOf("") }
 
     val coroutine = rememberCoroutineScope()
     Column {
@@ -76,12 +81,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 }) { Text(text = "delFav") }
                 Button(onClick = {
                     coroutine.launch {
-                        feedRepository.addLike(
-                            1,
-                            82
-                        )
+                        result1 = feedRepository.getComment(82).toString()
                     }
-                }) { Text(text = "addLike") }
+                }) { Text(text = "getComment") }
                 Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) {
                     Text(
                         text = "deleteLike"
@@ -94,5 +96,6 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 Text(text = gson.toJson(feeds1[it]))
             }
         })
+        Text(text = result1)
     }
 }

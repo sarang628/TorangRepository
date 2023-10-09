@@ -2,7 +2,7 @@ package com.sryang.torang_repository.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sryang.torang_repository.data.Comment
+import java.util.Objects
 
 @Entity
 data class CommentEntity(
@@ -15,7 +15,7 @@ data class CommentEntity(
     val createDate: String
 ) {
     companion object {
-        fun parse(list: List<Comment>): List<CommentEntity> {
+        fun parse(list: String): List<CommentEntity> {
             val commentList = ArrayList<CommentEntity>()
             for (comment in list) {
 //                commentList.add(parse(comment))

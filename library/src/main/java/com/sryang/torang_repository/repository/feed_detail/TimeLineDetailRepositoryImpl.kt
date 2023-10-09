@@ -3,7 +3,7 @@ package com.sryang.torang_repository.repository.feed_detail
 import android.content.Context
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiRestaurant
-import com.sryang.torang_repository.data.Comment
+import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.dao.CommentDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
@@ -33,10 +33,10 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
 ) :
     TimeLineDetailRepository {
 
-    override suspend fun getComments(reviewId: Int): List<Comment> {
+    override suspend fun getComments(reviewId: Int): List<RemoteComment> {
         val list = apiComment.getComments(reviewId)
-        commentDao.insertComments(CommentEntity.parse(list))
-        return list
+        //commentDao.insertComments(CommentEntity.parse(list))
+        return ArrayList()
     }
 
     override fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>> {
@@ -57,7 +57,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
         TODO()
     }
 
-    override suspend fun addComment(reviewId: Int, value: String): Comment {
+    override suspend fun addComment(reviewId: Int, value: String): RemoteComment {
 
         /*val comment = restaurantService.addComment(Comment().apply {
             user = User().apply { userId = loggedInUserDao.getLoggedInUserEntity1()!!.userId!! }
@@ -83,8 +83,8 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
 ) :
     TimeLineDetailRepository {
 
-    override suspend fun getComments(reviewId: Int): List<Comment> {
-        return apiComment.getComments(reviewId)
+    override suspend fun getComments(reviewId: Int): List<RemoteComment> {
+        return ArrayList()
     }
 
     override fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>> {
@@ -111,7 +111,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
         else -1
     }
 
-    override suspend fun addComment(reviewId: Int, value: String): Comment {
+    override suspend fun addComment(reviewId: Int, value: String): RemoteComment {
         TODO("not yet implemented")
     }
 }
