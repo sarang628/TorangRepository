@@ -19,7 +19,7 @@ data class RemoteRestaurant(
     val tel: String,
     @SerializedName("prices")
     val prices: String,
-    @SerializedName("restaurantType")
+    @SerializedName("restaurant_type")
     val restaurantType: String,
     @SerializedName("region_code")
     val regionCode: Int,
