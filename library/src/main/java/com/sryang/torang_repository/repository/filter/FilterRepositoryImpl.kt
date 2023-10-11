@@ -5,6 +5,7 @@ import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.Prices
 import com.sryang.torang_repository.data.Ratings
 import com.sryang.torang_repository.data.RestaurantType
+import com.sryang.torang_repository.data.SearchType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -13,7 +14,13 @@ import javax.inject.Singleton
 @Singleton
 class FilterRepositoryImpl @Inject constructor() : FilterRepository {
 
-    var filter = MutableStateFlow(Filter(0))
+    var filter = MutableStateFlow(
+        Filter(
+            SearchType.AROUND,
+            ratings = ArrayList(),
+            restaurantTypes = ArrayList()
+        )
+    )
 
     override fun getCurrentFilter(): Flow<Filter> {
         return filter

@@ -1,3 +1,6 @@
 package com.sryang.torang_repository.data
 
-data class SearchType(val d: Int)
+enum class SearchType {
+    AROUND, BOUND
+}
+
