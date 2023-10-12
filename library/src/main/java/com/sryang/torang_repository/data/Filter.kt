@@ -5,7 +5,7 @@ data class Filter(
     var searchType: SearchType = SearchType.AROUND,
     var keyword: String? = null,
     var distances: String? = null,
-    var prices: String? = null,
+    var prices: List<String>? = null,
     var restaurantTypes: List<String>? = null,
     var ratings: List<String>? = null,
     var lat: Double? = null,
