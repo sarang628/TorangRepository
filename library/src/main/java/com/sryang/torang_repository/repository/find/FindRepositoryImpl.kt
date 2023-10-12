@@ -7,8 +7,6 @@ import android.location.LocationManager
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Distances
 import com.sryang.torang_repository.data.Prices
-import com.sryang.torang_repository.data.Ratings
-import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.api.ApiRestaurant
@@ -150,9 +148,9 @@ class FindRepositoryImpl @Inject constructor(
 
         override suspend fun searchRestaurant(
             distances: Distances?,
-            restaurantType: ArrayList<RestaurantType>?,
+            restaurantType: ArrayList<String>?,
             prices: Prices?,
-            ratings: ArrayList<Ratings>?,
+            ratings: ArrayList<String>?,
             latitude: Double,
             longitude: Double,
             northEastLatitude: Double,
@@ -231,9 +229,9 @@ class FindRepositoryImpl @Inject constructor(
 
     override suspend fun searchRestaurant(
         distances: Distances?,
-        restaurantType: ArrayList<RestaurantType>?,
+        restaurantType: ArrayList<String>?,
         prices: Prices?,
-        ratings: ArrayList<Ratings>?,
+        ratings: ArrayList<String>?,
         latitude: Double,
         longitude: Double,
         northEastLatitude: Double,

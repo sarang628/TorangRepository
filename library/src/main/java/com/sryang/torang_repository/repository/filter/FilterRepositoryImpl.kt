@@ -3,8 +3,6 @@ package com.sryang.torang_repository.repository.filter
 import com.sryang.torang_repository.data.Distances
 import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.Prices
-import com.sryang.torang_repository.data.Ratings
-import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +24,7 @@ class FilterRepositoryImpl @Inject constructor() : FilterRepository {
         return filter
     }
 
-    override suspend fun selectRestaurantType(food: RestaurantType) {
+    override suspend fun selectRestaurantType(food: String) {
     }
 
     override suspend fun selectPrice(price: Prices) {
@@ -38,7 +36,7 @@ class FilterRepositoryImpl @Inject constructor() : FilterRepository {
 //        }
     }
 
-    override suspend fun selectRatings(ratings: Ratings) {
+    override suspend fun selectRatings(ratings: String) {
 //        filter.update {
 //            val list = ArrayList<Ratings>()
 //            list.addAll(it.ratings)

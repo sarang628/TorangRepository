@@ -91,10 +91,7 @@ fun ApiRestaurantTest(apiRestaurant: ApiRestaurant) {
         Button(onClick = {
             coroutine.launch {
                 val result = apiRestaurant.getFilterRestaurant(
-                    Filter(
-                        ratings = ArrayList(),
-                        restaurantTypes = ArrayList()
-                    )
+                    Filter()
                 )
                 text = result.toString()
             }

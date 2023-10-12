@@ -1,17 +1,14 @@
 package com.sryang.torang_repository.repository.find
 
-import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.Distances
 import com.sryang.torang_repository.data.Prices
-import com.sryang.torang_repository.data.Ratings
-import com.sryang.torang_repository.data.RestaurantType
 import com.sryang.torang_repository.data.SearchType
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import kotlinx.coroutines.flow.Flow
 
 interface FindRepository {
     /** 맛집 검색 */
-    suspend fun searchRestaurant(distances: Distances? = null, restaurantType: ArrayList<RestaurantType>? = null, prices: Prices? = null, ratings: ArrayList<Ratings>? = null, latitude: Double = 0.0, longitude: Double = 0.0, northEastLatitude: Double = 0.0, northEastLongitude: Double = 0.0, southWestLatitude: Double = 0.0, southWestLongitude: Double = 0.0, searchType: SearchType)
+    suspend fun searchRestaurant(distances: Distances? = null, restaurantType: ArrayList<String>? = null, prices: Prices? = null, ratings: ArrayList<String>? = null, latitude: Double = 0.0, longitude: Double = 0.0, northEastLatitude: Double = 0.0, northEastLongitude: Double = 0.0, southWestLatitude: Double = 0.0, southWestLongitude: Double = 0.0, searchType: SearchType)
     /** 상태를 가져오고 뷰에서 위치 요청을 했다면 요청했다고 저장소에 알려주기 */
     suspend fun notifyRequestLocation(): RequestLocationResult
     /** 위치를 받아왔을때 알려줘야함 */
