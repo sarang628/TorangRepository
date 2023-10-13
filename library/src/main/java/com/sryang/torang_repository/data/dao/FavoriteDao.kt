@@ -46,7 +46,7 @@ interface FavoriteDao {
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
         LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
-        WHERE reviewId IN (Select reviewId from FavoriteEntity where user_id = (:userId) )
+        WHERE reviewId IN (Select review_id from FavoriteEntity where user_id = (:userId) )
         ORDER BY createDate DESC
         """
     )
