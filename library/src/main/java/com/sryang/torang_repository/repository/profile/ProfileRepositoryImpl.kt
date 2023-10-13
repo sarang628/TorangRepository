@@ -10,6 +10,7 @@ import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LikeEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser
 import kotlinx.coroutines.flow.Flow
@@ -41,11 +42,11 @@ class ProfileRepositoryImpl @Inject constructor(
         return remoteUser.body()!!
     }
 
-    override fun getMyFeed(userId: Int): Flow<List<FeedEntity>> {
+    override fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>> {
         return feedDao.getMyFeed(userId)
     }
 
-    override fun getMyFavorite(userId: Int): Flow<List<FeedEntity>> {
+    override fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>> {
         return favoriteDao.getMyFavorite(userId)
     }
 

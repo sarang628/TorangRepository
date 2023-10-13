@@ -41,7 +41,7 @@ interface FeedDao {
         ORDER BY create_date DESC
         """
     )
-    fun getMyFeed(userId: Int): Flow<List<FeedEntity>>
+    fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
 
     @Query("select * from FeedEntity order by FeedEntity.createDate desc")
     fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>

@@ -17,6 +17,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -50,7 +51,7 @@ interface FavoriteDao {
         ORDER BY createDate DESC
         """
     )
-    fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
+    fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
 
     @Query(
         """

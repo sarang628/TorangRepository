@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser
 import com.sryang.torang_repository.repository.feed.FeedListRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,8 +23,8 @@ import kotlinx.coroutines.launch
 interface ProfileRepository : FeedListRepository {
     fun getMyProfile(): Flow<LoggedInUserEntity?>
     suspend fun loadProfile(userId: Int): RemoteUser
-    fun getMyFeed(userId: Int): Flow<List<FeedEntity>>
-    fun getMyFavorite(userId: Int): Flow<List<FeedEntity>>
+    fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
+    fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
     suspend fun logout()
 
     override val isLogin: Flow<Boolean>
