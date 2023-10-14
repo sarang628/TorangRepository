@@ -30,13 +30,14 @@ class EditProfileRepositoryImpl @Inject constructor(
     private val loggedInUserDao: LoggedInUserDao,
     private val userDao: UserDao
 ) : EditProfileRepository {
-    override suspend fun editProfile(name: String?, uri: String?): EditProfileResponse {
+    override suspend fun editProfile(userId : Int, name: String?, uri: String?): EditProfileResponse {
 
         var response = EditProfileResponse.NO_USER
 
         val params: HashMap<String, RequestBody> = HashMap()
         params["user_name"] = ("" + name).toRequestBody("text/plain".toMediaTypeOrNull())
-        params["user_id"] = ("" + loggedInUserDao.getLoggedInUserEntity1()?.userId).toRequestBody("text/plain".toMediaTypeOrNull())
+        //params["user_id"] = ("" + loggedInUserDao.getLoggedInUserEntity1()?.userId).toRequestBody("text/plain".toMediaTypeOrNull())
+        params["user_id"] = ("" + userId).toRequestBody("text/plain".toMediaTypeOrNull())
 
         val pictureList = ArrayList<MultipartBody.Part>()
         if (uri != null) {
