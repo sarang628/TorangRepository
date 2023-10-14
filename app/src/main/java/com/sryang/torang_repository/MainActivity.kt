@@ -10,12 +10,11 @@ import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FavoriteDaoTest
-import com.sryang.torang_repository.data.dao.FeedDao
-import com.sryang.torang_repository.di.repository.api.ApiRestaurantTest
-import com.sryang.torang_repository.repository.feed.FeedRepository
-import com.sryang.torang_repository.repository.feed.FeedRepositoryTest
-import com.sryang.torang_repository.repository.profile.ProfileRepository
-import com.sryang.torang_repository.repository.profile.ProfileRepositoryTest
+import com.sryang.torang_repository.repository.EditProfileRepository
+import com.sryang.torang_repository.repository.EditProfileRepositoryTest
+import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.FeedRepositoryTest
+import com.sryang.torang_repository.repository.ProfileRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,6 +44,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var favoriteDao: FavoriteDao
 
+    @Inject
+    lateinit var editProfileRepository: EditProfileRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +54,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Column {
-                Column(Modifier.weight(1f)) {
+                /*Column(Modifier.weight(1f)) {
                     FeedRepositoryTest(feedRepository = feedRepository)
                 }
                 Column(Modifier.weight(1f)) {
                     FavoriteDaoTest(feedDao = favoriteDao)
-                }
+                }*/
                 //FavoriteTest(apiFeed = apiFeed)
                 //LikeTest(apiFeed = apiFeed)
                 //ApiCommentTest(apiComment = apiComment)
@@ -66,6 +68,7 @@ class MainActivity : ComponentActivity() {
                 //FeedRepositoryTest(feedRepository = feedRepository)
                 //ProfileRepositoryTest(profileRepository = profileRepository)
                 //ApiRestaurantTest(apiRestaurant = apiRestaurant)
+                EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
             }
         }
     }

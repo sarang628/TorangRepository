@@ -4,7 +4,6 @@ import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
-import com.sryang.torang_repository.repository.login.LoginCheckableRepository
 import kotlinx.coroutines.flow.Flow
 
 interface TimeLineDetailRepository : LoginCheckableRepository {
