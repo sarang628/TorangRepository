@@ -12,7 +12,7 @@
 
 ## 의존성 추가
 ```
-implementation 'com.github.sarang628:TorangRepository:1cbda8c53d'
+implementation 'com.github.sarang628:TorangRepository:928fce8039'
 ```
 
 ```
