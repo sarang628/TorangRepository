@@ -6,7 +6,7 @@ import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
 import kotlinx.coroutines.flow.Flow
 
-interface TimeLineDetailRepository : LoginCheckableRepository {
+interface FeedDetailRepository : LoginCheckableRepository {
     suspend fun getComments(reviewId: Int): List<RemoteComment>
     fun getReview(): Flow<FeedEntity>
     fun getRestaurant(reviewId: Int): Flow<Restaurant>

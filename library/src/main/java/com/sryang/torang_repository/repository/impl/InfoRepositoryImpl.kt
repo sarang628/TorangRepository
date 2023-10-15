@@ -6,7 +6,7 @@ import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
-import com.sryang.torang_repository.repository.InfoRepository
+import com.sryang.torang_repository.repository.RestaurantRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class InfoRepositoryImpl @Inject constructor(
     private val restaurantService: ApiRestaurant,
     private val restaurantDao: RestaurantDao
 ) :
-    InfoRepository {
+    RestaurantRepository {
 
     private val mapClick = MutableStateFlow<Boolean>(false)
 //    private val location = MutableStateFlow(Location(0.0, 0.0))

@@ -11,7 +11,7 @@ import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.dao.ReviewDao
 import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
-import com.sryang.torang_repository.repository.TimeLineDetailRepository
+import com.sryang.torang_repository.repository.FeedDetailRepository
 import com.sryang.torang_repository.preference.TorangPreference
 import dagger.Binds
 import dagger.Module
@@ -31,7 +31,7 @@ class TimeLineDetailRepositoryImpl @Inject constructor(
     private val reviewDao: ReviewDao,
     private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
 ) :
-    TimeLineDetailRepository {
+    FeedDetailRepository {
 
     override suspend fun getComments(reviewId: Int): List<RemoteComment> {
         val list = apiComment.getComments(reviewId)
@@ -81,7 +81,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     private val reviewDao: ReviewDao,
     private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
 ) :
-    TimeLineDetailRepository {
+    FeedDetailRepository {
 
     override suspend fun getComments(reviewId: Int): List<RemoteComment> {
         return ArrayList()
@@ -122,5 +122,5 @@ abstract class TimeLineDetailRepositoryModule {
     @Binds
     abstract fun bindTimeLineDetailRepository(
         timeLineDetailRepositoryImpl: TimeLineDetailRepositoryImpl
-    ): TimeLineDetailRepository
+    ): FeedDetailRepository
 }

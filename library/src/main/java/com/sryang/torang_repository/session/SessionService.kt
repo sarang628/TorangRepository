@@ -8,40 +8,42 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import kotlinx.coroutines.delay
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SessionService(context: Context) {
+@Singleton
+class SessionService @Inject constructor(@ApplicationContext context: Context) :
+    SessionClientService {
     private val pref = context.getSharedPreferences("torang", Context.MODE_PRIVATE)
-    var isLogin = MutableStateFlow(!isEmptyToken())
-    var token = MutableStateFlow(getToken())
+    private var _isLogin = MutableStateFlow(false)
+    override var isLogin = _isLogin.asStateFlow()
+
+    init {
+        getToken()?.let {
+            _isLogin.value = true
+        }
+    }
 
     suspend fun saveToken(token: String) {
         pref.edit().putString("token", token).apply()
-        this@SessionService.token.emit(getToken())
-        isLogin.emit(!isEmptyToken())
+        _isLogin.emit(true)
     }
 
-    fun getToken(): String {
-        return pref.getString("token", "")!!
+    override fun getToken(): String? {
+        return pref.getString("token", null)
     }
 
     suspend fun removeToken() {
         pref.edit().putString("token", null).apply()
-        this@SessionService.token.emit(getToken())
-        isLogin.emit(!isEmptyToken())
-    }
-
-    private fun isEmptyToken(): Boolean {
-        return getToken() == ""
+        _isLogin.emit(false)
     }
 }
 

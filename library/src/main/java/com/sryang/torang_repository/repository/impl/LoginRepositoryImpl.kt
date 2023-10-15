@@ -1,64 +1,32 @@
 package com.sryang.torang_repository.repository.impl
 
-import android.content.Context
-import com.sryang.torang_repository.data.User
-import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.api.ApiLogin
 import com.sryang.torang_repository.repository.LoginRepository
-import com.sryang.torang_repository.preference.TorangPreference
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.sryang.torang_repository.session.SessionService
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class LoginRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-//    private val restaurantService: RestaurantService,
-    private val loggedInUserDao: LoggedInUserDao
+    private val apiLogin: ApiLogin,
+    private val sessionService: SessionService
 ) : LoginRepository {
-
-//    @Inject
-//    lateinit var facebookLoginProvider: FaceBookLoginProviderForRepository
-
-    override suspend fun isLogin(): Boolean {
-        return TorangPreference().getUserId(context) != -1
+    override suspend fun emailLogin(
+        email: String,
+        password: String
+    ): String {
+        return apiLogin.emailLogin(email = email, password = password).token
     }
 
-    override suspend fun facebookLogin(token: String): User? {
-
-//        restaurantService.facebook_login(token).data?.let {
-
-//            LoggedInUserEntity.parse(it)?.let {
-//                loggedInUserDao.insert(it)
-//            }
-
-//            return it
-//        }
-        return null
+    override suspend fun saveToken(token: String) {
+        sessionService.saveToken(token)
     }
 
-    override fun isLoginFlow(): Flow<Int> {
-        //return loggedInUserDao.isLpogin()
-        return MutableStateFlow(0)
+    override suspend fun logout() {
+        sessionService.removeToken()
     }
 
-    override fun getLoginUser(): Flow<LoggedInUserEntity?> {
-//        return loggedInUserDao.getLoggedInUserEntity()
-        return MutableStateFlow(
-            LoggedInUserEntity(
-                constId = 0,
-                userId = 1
-            )
-        )
-    }
+    override val isLogin: StateFlow<Boolean> get() = sessionService.isLogin
 
-    override suspend fun setLoggedInUser(LoggedInUserEntity: LoggedInUserEntity) {
-        LoggedInUserEntity.access_token?.let {
-            TorangPreference().saveAccessToken(context, it)
-        }
-        TorangPreference().saveUserId(context, LoggedInUserEntity.userId)
-//        loggedInUserDao.insert(LoggedInUserEntity)
-    }
 }
