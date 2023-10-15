@@ -12,13 +12,13 @@ interface DeletedRestaurantDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllRestaurant(restaurants: ArrayList<RestaurantEntity>)
 
-    @Query("select * from RestaurantEntity order by restaurant_name desc")
+    @Query("select * from RestaurantEntity order by restaurantName desc")
     fun getRestaurant(): Flow<List<RestaurantEntity>>
 
-    @Query("select * from RestaurantEntity order by restaurant_name desc")
+    @Query("select * from RestaurantEntity order by restaurantName desc")
     suspend fun getRestaurantDistance(): List<RestaurantEntity>
 
 
-    @Query("select * from RestaurantEntity Where restaurant_id = (SELECT restaurant_id FROM FeedEntity WHERE reviewId = :reviewId)")
+    @Query("select * from RestaurantEntity Where restaurantId = (SELECT restaurantId FROM FeedEntity WHERE reviewId = :reviewId)")
     fun getRestaurantByReviewId(reviewId: Int): Flow<RestaurantEntity>
 }

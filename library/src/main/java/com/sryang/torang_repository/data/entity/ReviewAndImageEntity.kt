@@ -14,12 +14,12 @@ data class ReviewAndImageEntity(
     val images: List<ReviewImageEntity>,
     @Relation(
         parentColumn = "reviewId",
-        entityColumn = "review_id"
+        entityColumn = "reviewId"
     )
     val like: LikeEntity?,
     @Relation(
         parentColumn = "reviewId",
-        entityColumn = "review_id"
+        entityColumn = "reviewId"
     )
     val favorite: FavoriteEntity?
 

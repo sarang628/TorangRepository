@@ -10,5 +10,5 @@ data class RemoteLike(
     @SerializedName("like_id")
     val likeId: Int,
     @SerializedName("create_date")
-    val createDate: String?
+    val createDate: String
 )

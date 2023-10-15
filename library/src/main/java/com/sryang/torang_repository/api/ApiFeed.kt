@@ -17,14 +17,15 @@ import androidx.compose.ui.Modifier
 import com.google.gson.GsonBuilder
 import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
-import com.sryang.torang_repository.data.Review
-import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
+import com.sryang.torang_repository.data.RemoteReview
+import com.sryang.torang_repository.data.remote.request.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
 import retrofit2.http.POST
 import java.net.SocketTimeoutException
 import javax.net.ssl.SSLException
@@ -35,16 +36,18 @@ import javax.net.ssl.SSLException
  * [좋아요](http://sarang628.iptime.org:8081/swagger-ui/#/%EC%A2%8B%EC%95%84%EC%9A%94)
  */
 interface ApiFeed {
-    @FormUrlEncoded
     @POST("getFeeds")
-    suspend fun getFeeds(@Field("user_id") userId: Int): List<RemoteFeed>
+    suspend fun getFeeds(@Header("authorization") auth: String?): List<RemoteFeed>
 
     @POST("deleteReview")
-    suspend fun deleteReview(@Body review: ReviewDeleteRequestVO): Review
+    suspend fun deleteReview(@Body review: ReviewDeleteRequestVO): RemoteReview
 
     @FormUrlEncoded
     @POST("addLike")
-    suspend fun addLike(@Field("userId") userId: Int, @Field("reviewId") reviewId: Int): RemoteLike
+    suspend fun addLike(
+        @Header("authorization") auth: String,
+        @Field("reviewId") reviewId: Int
+    ): RemoteLike
 
     @FormUrlEncoded
     @POST("deleteLike")
@@ -57,7 +60,7 @@ interface ApiFeed {
     @FormUrlEncoded
     @POST("addFavorite")
     suspend fun addFavorite(
-        @Field("userId") userId: Int,
+        @Header("authorization") auth: String,
         @Field("reviewId") reviewId: Int
     ): RemoteFavorite
 }
@@ -78,7 +81,7 @@ fun LikeTest(apiFeed: ApiFeed) {
             loading = true
             scope.launch {
                 try {
-                    val result = apiFeed.addLike(1, 64)
+                    val result = apiFeed.addLike("", 64)
                     padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
                 } catch (e: SSLException) {
                     Log.e("sryang123", e.toString())
@@ -155,7 +158,7 @@ fun ApiFeedTest(remoteFeedServices: ApiFeed) {
             loading = true
             scope.launch {
                 try {
-                    val result = remoteFeedServices.getFeeds(1)
+                    val result = remoteFeedServices.getFeeds("")
                     padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
                 } catch (e: SSLException) {
                     Log.e("sryang123", e.toString())
@@ -205,7 +208,7 @@ fun FavoriteTest(apiFeed: ApiFeed) {
             loading = true
             scope.launch {
                 try {
-                    val result = apiFeed.addFavorite(1, 64)
+                    val result = apiFeed.addFavorite("", 64)
                     padding = GsonBuilder().setPrettyPrinting().create().toJson(result)
                 } catch (e: SSLException) {
                     Log.e("sryang123", e.toString())

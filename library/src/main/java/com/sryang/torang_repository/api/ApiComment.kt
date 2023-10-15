@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
 import retrofit2.http.POST
 import java.util.Objects
 
@@ -22,8 +23,8 @@ interface ApiComment {
     @FormUrlEncoded
     @POST("addComment")
     suspend fun addComment(
+        @Header("authorization") auth: String,
         @Field("review_id") review_id: Int,
-        @Field("user_id") user_id: Int,
         @Field("comment") comment: String
     ): RemoteComment
 
@@ -47,7 +48,7 @@ fun ApiCommentTest(apiComment: ApiComment) {
             coroutine.launch {
                 apiComment.addComment(
                     review_id = 82,
-                    user_id = 1,
+                    auth = "",
                     comment = "ㅋㅋㅋㅋㅋㅋ"
                 )
             }

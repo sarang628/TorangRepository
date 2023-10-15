@@ -13,6 +13,6 @@ interface AlarmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAlarms(users: List<AlarmEntity>)
 
-    @Query("select * from AlarmEntity order by AlarmEntity.create_date desc")
+    @Query("select * from AlarmEntity order by AlarmEntity.createDate desc")
     fun getAllAlarmData(): Flow<List<AlarmAndUserEntity>>
 }

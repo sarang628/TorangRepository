@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toFile
 import com.google.gson.JsonObject
 import com.sryang.torang_repository.data.MenuReview
-import com.sryang.torang_repository.data.Review
+import com.sryang.torang_repository.data.RemoteReview
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -35,11 +35,11 @@ import java.io.File
 interface ApiReview {
     @FormUrlEncoded
     @POST("getReviews")
-    suspend fun getReviews(@FieldMap params: Map<String, String>): ArrayList<Review>
+    suspend fun getReviews(@FieldMap params: Map<String, String>): ArrayList<RemoteReview>
 
     @FormUrlEncoded
     @POST("getMyReview")
-    suspend fun getMyReview(@FieldMap params: Map<String, String>): Call<Review>
+    suspend fun getMyReview(@FieldMap params: Map<String, String>): Call<RemoteReview>
 
     @Multipart
     @POST("addReview")
@@ -49,31 +49,31 @@ interface ApiReview {
     ): JsonObject
 
     @POST("updateReview")
-    suspend fun updateReview(@Body reviewBody: Review): Call<Review>
+    suspend fun updateReview(@Body reviewBody: RemoteReview): Call<RemoteReview>
 
     @POST("deleteReview")
-    suspend fun deleteReview(@Body review: Review): Review
+    suspend fun deleteReview(@Body review: RemoteReview): RemoteReview
 
     @Multipart
     @POST("updateReview")
     suspend fun updateReview(
         @PartMap params: HashMap<String, RequestBody>,
         @Part pictures: ArrayList<MultipartBody.Part>
-    ): Review
+    ): RemoteReview
 
     @FormUrlEncoded
     @POST("getMyReviews")
-    suspend fun getMyReviews(@FieldMap params: Map<String, String>): ArrayList<Review>
+    suspend fun getMyReviews(@FieldMap params: Map<String, String>): ArrayList<RemoteReview>
 
     @POST("addMenuReview")
     suspend fun addMenuReview(@Body menuReview: MenuReview): Call<MenuReview>
 
     @POST("getMyMenuReviews")
-    suspend fun getMyMenuReviews(@Body review: Review): Call<ArrayList<MenuReview>>
+    suspend fun getMyMenuReviews(@Body review: RemoteReview): Call<ArrayList<MenuReview>>
 
     @FormUrlEncoded
     @POST("getMyReviewsByUserId")
-    suspend fun getMyReviewsByUserId(@FieldMap params: Map<String, String>): Call<ArrayList<Review>>
+    suspend fun getMyReviewsByUserId(@FieldMap params: Map<String, String>): Call<ArrayList<RemoteReview>>
 }
 
 @Composable

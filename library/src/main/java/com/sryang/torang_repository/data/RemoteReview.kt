@@ -1,3 +1,3 @@
 package com.sryang.torang_repository.data
 
-data class Review(val d : Int)
+data class RemoteReview(val d : Int)

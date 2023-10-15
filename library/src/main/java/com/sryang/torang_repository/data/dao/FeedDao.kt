@@ -29,16 +29,16 @@ interface FeedDao {
                FeedEntity.likeAmount,/*9*/
                FeedEntity.commentAmount,/*10*/
                FeedEntity.createDate,/*11*/ 
-               UserEntity.profile_pic_url,
+               UserEntity.profilePicUrl,
                UserEntity.userName, 
                UserEntity.userId, 
-               RestaurantEntity.restaurant_name, 
-               RestaurantEntity.restaurant_id
+               RestaurantEntity.restaurantName, 
+               RestaurantEntity.restaurantId
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
         WHERE FeedEntity.userId = (:userId)
-        ORDER BY create_date DESC
+        ORDER BY FeedEntity.createDate DESC
         """
     )
     fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>

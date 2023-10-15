@@ -1,7 +1,7 @@
 package com.sryang.torang_repository.repository
 
-import com.sryang.torang_repository.data.Review
+import com.sryang.torang_repository.data.RemoteReview
 
 interface ReviewRepository {
-    suspend fun getReviews(restaurantId: Int) : ArrayList<Review>
+    suspend fun getReviews(restaurantId: Int) : ArrayList<RemoteReview>
 }

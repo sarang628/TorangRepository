@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.data.entity
+package com.sryang.torang_repository.data.remote.request
 
 import com.google.gson.annotations.SerializedName
 

@@ -3,7 +3,6 @@ package com.sryang.torang_repository.repository.impl
 import com.sryang.torang_repository.api.ApiAlarm
 import com.sryang.torang_repository.data.Alarm
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.AlarmRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -26,9 +25,5 @@ class AlarmRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAlarm() {
 
-    }
-
-    override fun user(): Flow<LoggedInUserEntity?> {
-        return loggedInUserDao.getLoggedInUserEntity()
     }
 }

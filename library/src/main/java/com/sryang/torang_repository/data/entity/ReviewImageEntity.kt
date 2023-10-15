@@ -9,7 +9,7 @@ import kotlin.streams.toList
 
 @Entity
 data class ReviewImageEntity(
-    @PrimaryKey val picture_id: Int,
+    @PrimaryKey val pictureId: Int,
     val restaurantId: Int,
     val userId: Int,
     val reviewId: Int,
@@ -21,7 +21,7 @@ data class ReviewImageEntity(
     companion object {
         fun uploadParam(path: String): ReviewImageEntity {
             return ReviewImageEntity(
-                picture_id = -1,
+                pictureId = -1,
                 restaurantId = -1,
                 reviewId = -1,
                 pictureUrl = path,
@@ -41,7 +41,7 @@ data class ReviewImageEntity(
 
     fun RemotePicture.toPictureEntity(): ReviewImageEntity {
         return ReviewImageEntity(
-            picture_id = picture_id,
+            pictureId = picture_id,
             restaurantId = restaurant_id,
             userId = user_id,
             reviewId = review_id,

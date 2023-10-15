@@ -23,6 +23,7 @@ import com.sryang.torang_repository.data.remote.response.LikeResponse
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.data.remote.response.toReviewImage
 import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.session.SessionClientService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,9 +37,10 @@ class FeedRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val likeDao: LikeDao,
     private val favoriteDao: FavoriteDao,
-    private val apiComment: ApiComment
+    private val apiComment: ApiComment,
+    private val sessionClientService: SessionClientService
 ) : FeedRepository {
-    override val feeds1: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
+    override val feeds: Flow<List<ReviewAndImageEntity>> = feedDao.getAllFeedWithUser()
 
     override suspend fun deleteFeed(reviewId: Int) {
         //원격 저장소 요청
@@ -54,8 +56,8 @@ class FeedRepositoryImpl @Inject constructor(
         favoriteDao.deleteAll()
     }
 
-    override suspend fun loadFeed(userId: Int) {
-        val feedList = apiFeed.getFeeds(userId = userId)
+    override suspend fun loadFeed() {
+        val feedList = apiFeed.getFeeds(sessionClientService.getToken())
         try {
             feedDao.insertAll(feedList.stream().map {
                 it.toFeedEntity()
@@ -88,27 +90,32 @@ class FeedRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addLike(userId: Int, reviewId: Int) {
-        val result = apiFeed.addLike(userId, reviewId)
-        likeDao.insertLike(result.toLikeEntity())
+    override suspend fun addLike(reviewId: Int) {
+        sessionClientService.getToken()?.let {
+            val result = apiFeed.addLike(it, reviewId)
+//            val result = apiFeed.addLike(it, reviewId)
+            likeDao.insertLike(result.toLikeEntity())
+        }
     }
 
-    override suspend fun deleteLike(userId: Int, reviewId: Int) {
+    override suspend fun deleteLike(reviewId: Int) {
         val like = likeDao.getLike1(reviewId = reviewId)
-        val remoteLike = apiFeed.deleteLike(like.like_id)
+        val remoteLike = apiFeed.deleteLike(like.likeId)
         likeDao.deleteLike(
             remoteLike.toLikeEntity()
         )
     }
 
-    override suspend fun addFavorite(userId: Int, reviewId: Int) {
-        val result = apiFeed.addFavorite(userId, reviewId)
-        favoriteDao.insertFavorite(result.toFavoriteEntity())
+    override suspend fun addFavorite(reviewId: Int) {
+        sessionClientService.getToken()?.let {
+            val result = apiFeed.addFavorite(it, reviewId)
+            favoriteDao.insertFavorite(result.toFavoriteEntity())
+        }
     }
 
-    override suspend fun deleteFavorite(userId: Int, reviewId: Int) {
+    override suspend fun deleteFavorite(reviewId: Int) {
         val favorite = favoriteDao.getFavorite1(reviewId = reviewId)
-        val remoteFavorite = apiFeed.deleteFavorite(favorite.favorite_id)
+        val remoteFavorite = apiFeed.deleteFavorite(favorite.favoriteId)
         favoriteDao.deleteFavorite(
             remoteFavorite.toFavoriteEntity()
         )
@@ -134,25 +141,25 @@ class FeedRepositoryImpl @Inject constructor(
         apiComment.deleteComment(commentId = commentId)
     }
 
-    override suspend fun addComment(reviewId: Int, userId: Int, comment: String) {
-        apiComment.addComment(reviewId, userId, comment)
+    override suspend fun addComment(reviewId: Int, comment: String) {
+        apiComment.addComment("", reviewId, comment)
     }
 
 }
 
 fun RemoteFeed.toUserEntity(): UserEntity {
     return UserEntity(
-        userId = this.user.userId ?: 0,
+        userId = this.user.userId,
         email = this.user.email ?: "",
         loginPlatform = this.user.loginPlatform ?: "",
-        create_date = this.user.createDate ?: "",
-        access_token = "",
-        profile_pic_url = this.user.profilePicUrl,
+        createDate = this.user.createDate ?: "",
+        accessToken = "",
+        profilePicUrl = this.user.profilePicUrl,
         point = 0,
-        review_count = "0",
+        reviewCount = "0",
         following = "0",
-        followers = "0"
-
+        followers = "0",
+        userName = this.user.userName
     )
 }
 
@@ -175,26 +182,26 @@ fun RemoteFeed.toFeedEntity(): FeedEntity {
 fun LikeResponse.toLikeEntity(): LikeEntity {
     return LikeEntity(
         reviewId = this.review_id,
-        like_id = this.like_id,
-        user_id = this.user_id,
-        create_date = this.create_date
+        likeId = this.like_id,
+        userId = this.user_id,
+        createDate = this.create_date
     )
 }
 
 fun FavoriteResponse.toFavoriteEntity(): FavoriteEntity {
     return FavoriteEntity(
         reviewId = this.review_id,
-        favorite_id = this.favorite_id,
-        user_id = this.user_id,
-        create_date = this.create_date
+        favoriteId = this.favorite_id,
+        userId = this.user_id,
+        createDate = this.create_date
     )
 }
 
 fun RemoteLike.toLikeEntity(): LikeEntity {
     return LikeEntity(
-        like_id = likeId,
-        user_id = userId,
-        create_date = createDate,
+        likeId = likeId,
+        userId = userId,
+        createDate = createDate,
         reviewId = reviewId
     )
 }
@@ -202,8 +209,8 @@ fun RemoteLike.toLikeEntity(): LikeEntity {
 fun RemoteFavorite.toFavoriteEntity(): FavoriteEntity {
     return FavoriteEntity(
         reviewId = review_id,
-        favorite_id = favorite_id,
-        user_id = user_id,
-        create_date = create_date
+        favoriteId = favorite_id,
+        userId = user_id,
+        createDate = create_date
     )
 }

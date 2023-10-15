@@ -25,29 +25,29 @@ import kotlinx.coroutines.launch
 @Dao
 interface FavoriteDao {
 
-    @Query("select count(*) from FavoriteEntity where review_id = (:reviewId)")
+    @Query("select count(*) from FavoriteEntity where reviewId = (:reviewId)")
     suspend fun hasFavorite(reviewId: Int): Int
 
 
     @Delete
     suspend fun deleteFavorite(favorite: FavoriteEntity)
 
-    @Query("select * from FavoriteEntity where review_id = (:reviewId)")
+    @Query("select * from FavoriteEntity where reviewId = (:reviewId)")
     suspend fun getFavorite1(reviewId: Int): FavoriteEntity
 
     @Insert
     suspend fun insertFavorite(favorite: FavoriteEntity)
 
-    @Query("select * from FavoriteEntity where review_id = (:reviewId)")
+    @Query("select * from FavoriteEntity where reviewId = (:reviewId)")
     fun getFavorite(reviewId: Int): Flow<FavoriteEntity>
 
     @Query(
         """
-        SELECT FeedEntity.*, UserEntity.profile_pic_url, UserEntity.userId
+        SELECT FeedEntity.*, UserEntity.profilePicUrl, UserEntity.userId
         FROM FeedEntity 
         JOIN UserEntity ON FeedEntity.userId =  UserEntity.userId
-        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurant_id
-        WHERE reviewId IN (Select review_id from FavoriteEntity where user_id = (:userId) )
+        LEFT OUTER JOIN RestaurantEntity ON FeedEntity.restaurantId = RestaurantEntity.restaurantId
+        WHERE reviewId IN (Select reviewId from FavoriteEntity where userId = (:userId) )
         ORDER BY createDate DESC
         """
     )

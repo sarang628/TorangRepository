@@ -6,12 +6,12 @@ import androidx.room.Relation
 data class AlarmAndUserEntity(
     @Embedded val alarm: AlarmEntity,
     @Relation(
-        parentColumn = "user_id",
+        parentColumn = "userId",
         entityColumn = "userId"
     )
     val user: UserEntity?,
     @Relation(
-        parentColumn = "other_user_id",
+        parentColumn = "otherUserId",
         entityColumn = "userId"
     )
     val another: UserEntity?

@@ -12,7 +12,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import com.google.gson.Gson
+import com.sryang.torang_repository.api.handle
 import com.sryang.torang_repository.data.RemoteComment
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
@@ -23,29 +26,30 @@ interface FeedRepository {
     // 내 리뷰 삭제
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
-    suspend fun loadFeed(userId: Int)
-    suspend fun addLike(userId: Int, reviewId: Int)
-    suspend fun deleteLike(userId: Int, reviewId: Int)
-    suspend fun addFavorite(userId: Int, reviewId: Int)
-    suspend fun deleteFavorite(userId: Int, reviewId: Int)
+    suspend fun loadFeed()
+    suspend fun addLike(reviewId: Int)
+    suspend fun deleteLike(reviewId: Int)
+    suspend fun addFavorite(reviewId: Int)
+    suspend fun deleteFavorite(reviewId: Int)
     suspend fun getComment(reviewId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
-    suspend fun addComment(reviewId: Int, userId: Int, comment: String)
+    suspend fun addComment(reviewId: Int, comment: String)
 
-    val feeds1: Flow<List<ReviewAndImageEntity>>
+    val feeds: Flow<List<ReviewAndImageEntity>>
 }
 
 @Composable
 fun FeedRepositoryTest(feedRepository: FeedRepository) {
-    val feeds1 by feedRepository.feeds1.collectAsState(initial = ArrayList())
+    val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
     val gson = Gson().newBuilder().setPrettyPrinting().create()
-    var result1 by remember { mutableStateOf("") }
-
+    var result by remember { mutableStateOf("") }
+    var error by remember { mutableStateOf("") }
     val coroutine = rememberCoroutineScope()
     Column {
         Column {
+            Text(text = error, color = Color.Red, fontWeight = FontWeight.Bold)
             Row {
-                Button(onClick = { coroutine.launch { feedRepository.loadFeed(1) } }) { Text(text = "getFeed") }
+                Button(onClick = { coroutine.launch { feedRepository.loadFeed() } }) { Text(text = "getFeed") }
                 Button(onClick = { coroutine.launch { feedRepository.deleteFeedAll() } }) {
                     Text(
                         text = "delFeed"
@@ -53,38 +57,44 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 }
                 Button(onClick = {
                     coroutine.launch {
-                        feedRepository.addLike(
-                            1,
-                            82
-                        )
+                        try {
+                            feedRepository.addLike(82)
+                        } catch (e: Exception) {
+                            error = e.handle()
+                        }
                     }
                 }) { Text(text = "addLike") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) {
+                Button(onClick = { coroutine.launch { feedRepository.deleteLike(82) } }) {
                     Text(
                         text = "delLike"
                     )
                 }
             }
             Row {
-                Button(onClick = { coroutine.launch { feedRepository.addFavorite(1, 82) } }) {
+                Button(onClick = {
+                    coroutine.launch {
+                        try {
+                            feedRepository.addFavorite(82)
+                        } catch (e: Exception) {
+                            error = e.handle()
+                        }
+                    }
+                }) {
                     Text(
                         text = "addFav"
                     )
                 }
                 Button(onClick = {
                     coroutine.launch {
-                        feedRepository.deleteFavorite(
-                            1,
-                            82
-                        )
+                        feedRepository.deleteFavorite(82)
                     }
                 }) { Text(text = "delFav") }
                 Button(onClick = {
                     coroutine.launch {
-                        result1 = feedRepository.getComment(82).toString()
+                        result = feedRepository.getComment(82).toString()
                     }
                 }) { Text(text = "getComment") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteLike(1, 82) } }) {
+                Button(onClick = { coroutine.launch { feedRepository.deleteLike(82) } }) {
                     Text(
                         text = "deleteLike"
                     )
@@ -92,10 +102,10 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
             }
         }
         LazyColumn(content = {
-            items(feeds1.size) {
-                Text(text = gson.toJson(feeds1[it]))
+            items(feeds.size) {
+                Text(text = gson.toJson(feeds[it]))
             }
         })
-        Text(text = result1)
+        Text(text = result)
     }
 }

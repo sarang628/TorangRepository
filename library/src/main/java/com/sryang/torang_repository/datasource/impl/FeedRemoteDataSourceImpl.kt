@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.datasource.impl
 
-import com.sryang.torang_repository.data.entity.ReviewDeleteRequestVO
+import com.sryang.torang_repository.data.remote.request.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.datasource.FeedRemoteDataSource
 import com.sryang.torang_repository.api.ApiFeed
@@ -12,7 +12,7 @@ class FeedRemoteDataSourceImpl @Inject constructor(
     private val remoteService: ApiFeed
 ) : FeedRemoteDataSource {
     override suspend fun getFeeds(userId: Int): List<RemoteFeed> {
-        val list = remoteService.getFeeds(userId)
+        val list = remoteService.getFeeds("a")
         return list
     }
 

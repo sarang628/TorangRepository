@@ -2,7 +2,7 @@ package com.sryang.torang_repository.repository.impl
 
 import android.content.Context
 import com.sryang.torang_repository.api.ApiReview
-import com.sryang.torang_repository.data.Review
+import com.sryang.torang_repository.data.RemoteReview
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.repository.ReviewRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -19,7 +19,7 @@ class ReviewRepositoryImpl @Inject constructor(
 
     private val mapClick = MutableStateFlow<Boolean>(false)
 
-    override suspend fun getReviews(restaurantId: Int): ArrayList<Review> {
+    override suspend fun getReviews(restaurantId: Int): ArrayList<RemoteReview> {
         return apiReview.getReviews(HashMap<String, String>().apply {
             put("restaurant_id", restaurantId.toString())
         })

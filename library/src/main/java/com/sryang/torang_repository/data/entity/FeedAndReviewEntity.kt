@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Relation
 
 @Entity
-data class FeedEntity1(
+data class FeedAndReviewEntity(
     @Embedded val user: FeedEntity,
     @Relation(
         parentColumn = "reviewId",

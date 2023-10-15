@@ -11,9 +11,6 @@ interface AlarmRepository : LoginCheckableRepository {
     suspend fun loadAlarm(): ArrayList<Alarm>
 
     suspend fun deleteAlarm()
-
-    //사용자 로그인상태를 판단하는 데이터
-    fun user(): Flow<LoggedInUserEntity?>
 }
 
 class AlarmRepositoryTest constructor(
@@ -29,13 +26,7 @@ class AlarmRepositoryTest constructor(
         return apiAlarm.getAlarms(user_id = 4)
     }
 
-    override suspend fun deleteAlarm() {
-
-    }
-
-    override fun user(): Flow<LoggedInUserEntity?> {
-        return MutableStateFlow(LoggedInUserEntity(userId = 4))
-    }
+    override suspend fun deleteAlarm() {}
 
     override val isLogin: Flow<Boolean>
         get() = MutableStateFlow(true)

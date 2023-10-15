@@ -26,12 +26,12 @@ interface LikeDao {
     @Query("delete from LikeEntity")
     suspend fun deleteAll()
 
-    @Query("select * from LikeEntity where review_id = (:reviewId)")
+    @Query("select * from LikeEntity where reviewId = (:reviewId)")
     fun getLike(reviewId: Int): Flow<LikeEntity>
 
-    @Query("select * from LikeEntity where review_id = (:reviewId)")
+    @Query("select * from LikeEntity where reviewId = (:reviewId)")
     suspend fun getLike1(reviewId: Int): LikeEntity
 
-    @Query("select count(*) from LikeEntity where review_id = (:reviewId)")
+    @Query("select count(*) from LikeEntity where reviewId = (:reviewId)")
     suspend fun hasLike(reviewId: Int): Int
 }

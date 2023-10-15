@@ -5,7 +5,7 @@ import android.view.Menu
 import com.sryang.torang_repository.data.Filter
 import com.sryang.torang_repository.data.HoursOfOperation
 import com.sryang.torang_repository.data.RestaurantDetail
-import com.sryang.torang_repository.data.Review
+import com.sryang.torang_repository.data.RemoteReview
 import com.sryang.torang_repository.data.remote.response.RemoteRestaurant
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -45,7 +45,7 @@ interface ApiRestaurant {
     suspend fun fileUpload(
         @PartMap params: HashMap<String, RequestBody>,
         @Part pictures: ArrayList<MultipartBody.Part>
-    ): Review
+    ): RemoteReview
 
     @FormUrlEncoded
     @POST("deletePicture")
@@ -53,7 +53,7 @@ interface ApiRestaurant {
 
     @FormUrlEncoded
     @POST("getTimelines")
-    suspend fun getTimelines(@FieldMap params: Map<String, String>): Call<ArrayList<Review>>
+    suspend fun getTimelines(@FieldMap params: Map<String, String>): Call<ArrayList<RemoteReview>>
 
     @FormUrlEncoded
     @POST("saveMenu")

@@ -18,7 +18,7 @@ interface LoggedInUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: LoggedInUserEntity)
 
-    @Query("update LoggedInUserEntity set userName = :name ,profile_pic_url = :url  where constId = 1")
+    @Query("update LoggedInUserEntity set userName = :name ,profilePicUrl = :url  where constId = 1")
     suspend fun update(name: String, url: String)
 
     @Query("delete from LoggedInUserEntity where constId = 1")

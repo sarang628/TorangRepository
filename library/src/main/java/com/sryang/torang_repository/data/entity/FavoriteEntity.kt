@@ -6,20 +6,11 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(
-    indices = arrayOf(
-        Index(
-            value = ["favorite_id"],
-            unique = true
-        )
-    )
-)
-data class FavoriteEntity constructor(
+@Entity(indices = [Index(value = ["favoriteId"], unique = true)])
+data class FavoriteEntity(
     @PrimaryKey
-    @ColumnInfo(name = "review_id")
-    @SerializedName("review_id")
     var reviewId: Int,
-    var favorite_id: Int,
-    var user_id: Int,
-    var create_date: String?
+    var favoriteId: Int,
+    var userId: Int,
+    var createDate: String
 )

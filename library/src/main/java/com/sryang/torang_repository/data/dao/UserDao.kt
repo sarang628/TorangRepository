@@ -25,7 +25,6 @@ interface UserDao {
     @Query("select * from UserEntity where userId = (:userId)")
     fun getUser(userId: Int): Flow<UserEntity>
 
-    @Query("update UserEntity set userName = :userName ,profile_pic_url = :profilePicUrl  where userId = :userId")
+    @Query("update UserEntity set userName = :userName ,profilePicUrl = :profilePicUrl  where userId = :userId")
     suspend fun updateUser(userId: Int, userName: String, profilePicUrl: String)
-
 }
