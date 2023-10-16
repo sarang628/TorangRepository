@@ -31,16 +31,15 @@ class EditProfileRepositoryImpl @Inject constructor(
     private val sessionClientService: SessionClientService
 ) : EditProfileRepository {
     override suspend fun editProfile(
-        userId: Int,
         name: String?,
         uri: String?
     ): EditProfileResponse {
-
         var response = EditProfileResponse.NO_USER
+
+        val userId = sessionClientService.getToken()!!
 
         val params: HashMap<String, RequestBody> = HashMap()
         params["user_name"] = ("" + name).toRequestBody("text/plain".toMediaTypeOrNull())
-        //params["user_id"] = ("" + loggedInUserDao.getLoggedInUserEntity1()?.userId).toRequestBody("text/plain".toMediaTypeOrNull())
         params["user_id"] = ("" + userId).toRequestBody("text/plain".toMediaTypeOrNull())
 
         val pictureList = ArrayList<MultipartBody.Part>()
@@ -55,16 +54,11 @@ class EditProfileRepositoryImpl @Inject constructor(
             pictureList.add(MultipartBody.Part.createFormData("file", file.name, requestFile))
         }
 
-        try {
-            // 레트로핏으로 사용자 프로필 업데이트 Rest API 처리
-            sessionClientService.getToken()?.let {
-                apiProfile.updateProfile(it, params, pictureList).let {
-                    it.data?.let {
-                        response = EditProfileResponse.SUCCESS
-                    }
-                }
+        // 레트로핏으로 사용자 프로필 업데이트 Rest API 처리
+        apiProfile.updateProfile(userId, params, pictureList).let {
+            it.data?.let {
+                response = EditProfileResponse.SUCCESS
             }
-        } catch (e: Exception) {
         }
 
         return response

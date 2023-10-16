@@ -17,7 +17,7 @@ enum class EditProfileResponse {
 }
 
 interface EditProfileRepository {
-    suspend fun editProfile(userId: Int, name: String?, uri: String?): EditProfileResponse
+    suspend fun editProfile(name: String?, uri: String?): EditProfileResponse
 }
 
 @Composable
@@ -25,7 +25,7 @@ fun EditProfileRepositoryTest(editProfileRepository: EditProfileRepository) {
     val coroutine = rememberCoroutineScope()
     Button(onClick = {
         coroutine.launch {
-            editProfileRepository.editProfile(1, "", "")
+            editProfileRepository.editProfile("", "")
         }
     }) {
 
