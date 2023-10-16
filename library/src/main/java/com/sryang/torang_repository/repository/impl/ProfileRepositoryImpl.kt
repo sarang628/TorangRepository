@@ -4,11 +4,8 @@ import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FeedDao
 import com.sryang.torang_repository.data.dao.LikeDao
-import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.FavoriteEntity
 import com.sryang.torang_repository.data.entity.LikeEntity
-import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser

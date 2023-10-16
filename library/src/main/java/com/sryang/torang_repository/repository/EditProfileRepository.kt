@@ -18,7 +18,6 @@ enum class EditProfileResponse {
 
 interface EditProfileRepository {
     suspend fun editProfile(userId: Int, name: String?, uri: String?): EditProfileResponse
-    fun getUser(): Flow<LoggedInUserEntity?>
 }
 
 @Composable

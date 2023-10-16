@@ -7,6 +7,7 @@ import com.sryang.torang_repository.data.dao.UserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.EditProfileResponse
+import com.sryang.torang_repository.session.SessionClientService
 import com.sryang.torang_repository.util.CountingFileRequestBody
 import dagger.Binds
 import dagger.Module
@@ -27,10 +28,13 @@ import kotlin.collections.set
 class EditProfileRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val apiProfile: ApiProfile,
-    private val loggedInUserDao: LoggedInUserDao,
-    private val userDao: UserDao
+    private val sessionClientService: SessionClientService
 ) : EditProfileRepository {
-    override suspend fun editProfile(userId : Int, name: String?, uri: String?): EditProfileResponse {
+    override suspend fun editProfile(
+        userId: Int,
+        name: String?,
+        uri: String?
+    ): EditProfileResponse {
 
         var response = EditProfileResponse.NO_USER
 
@@ -53,27 +57,16 @@ class EditProfileRepositoryImpl @Inject constructor(
 
         try {
             // 레트로핏으로 사용자 프로필 업데이트 Rest API 처리
-            apiProfile.updateProfile(params, pictureList).let {
-                it.data?.let {
-                    // 통신 결과값을 Room을 이용하여 DB update : 로그인한 사용자 정보
-//                    loggedInUserDao.update(user.userName, user.profilePicUrl)
-                    // 통신 결과값을 Room을 이용하여 DB update : 일반 사용자 정보
-//                    userDao.update(
-//                        TorangPreference().getUserId(context),
-//                        user.userName,
-//                        user.profilePicUrl
-//                    )
-                    response = EditProfileResponse.SUCCESS
+            sessionClientService.getToken()?.let {
+                apiProfile.updateProfile(it, params, pictureList).let {
+                    it.data?.let {
+                        response = EditProfileResponse.SUCCESS
+                    }
                 }
             }
         } catch (e: Exception) {
         }
 
         return response
-    }
-
-
-    override fun getUser(): Flow<LoggedInUserEntity?> {
-        return loggedInUserDao.getLoggedInUserEntity()
     }
 }

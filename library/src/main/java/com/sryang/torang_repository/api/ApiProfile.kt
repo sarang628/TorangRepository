@@ -18,6 +18,7 @@ interface ApiProfile {
     @Multipart
     @POST("updateProfile")
     suspend fun updateProfile(
+        @Header("authorization") auth: String,
         @PartMap params: HashMap<String, RequestBody>,
         @Part pictures: ArrayList<MultipartBody.Part>
     ): Response<User>
