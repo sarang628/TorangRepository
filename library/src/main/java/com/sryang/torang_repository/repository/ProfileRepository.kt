@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.sryang.torang_repository.api.handle
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser
@@ -19,11 +20,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 interface ProfileRepository : FeedListRepository {
-    fun getMyProfile(): Flow<LoggedInUserEntity?>
     suspend fun loadProfile(userId: Int): RemoteUser
+    suspend fun loadProfileByToken(token: String): RemoteUser
     fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
     fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
-    suspend fun logout()
 
     override val isLogin: Flow<Boolean>
         get() = MutableStateFlow(false)
@@ -47,11 +47,26 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                         profile = result.toString()
                         isProgress = false
                     }
+                }) {}
+
+                Button(onClick = {
+                    coroutine.launch {
+                        isProgress = true
+                        try {
+                            val result = profileRepository.loadProfileByToken("abc")
+                            profile = result.toString()
+                        } catch (e: Exception) {
+                            profile = e.handle()
+                        } finally {
+                            isProgress = false
+                        }
+                    }
                 }) {
 
                 }
+
                 Text(
-                    text = profile.toString()
+                    text = profile
                 )
             }
             if (isProgress)

@@ -20,8 +20,6 @@ interface FeedListRepository {
     fun getLike(reviewId: Int): Flow<LikeEntity>
     // 즐겨찾기 여부
     fun getFavorite(reviewId: Int): Flow<FavoriteEntity>
-    // 사용자 정보 로그인 및 메뉴처리
-    suspend fun user1(): LoggedInUserEntity?
     // 로그인 여부
     val isLogin: Flow<Boolean>
     suspend fun isLogin() : Boolean

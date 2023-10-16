@@ -13,6 +13,7 @@ import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import com.sryang.torang_repository.data.remote.response.RemoteUser
 import com.sryang.torang_repository.repository.ProfileRepository
+import com.sryang.torang_repository.session.SessionClientService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,16 +22,11 @@ import javax.inject.Singleton
 @Singleton
 class ProfileRepositoryImpl @Inject constructor(
     private val apiProfile: ApiProfile,
-    private val loggedUserDao: LoggedInUserDao,
-    private val userDao: UserDao,
     private val feedDao: FeedDao,
     private val likeDao: LikeDao,
-    private val favoriteDao: FavoriteDao
+    private val favoriteDao: FavoriteDao,
+    private val sessionClientService: SessionClientService
 ) : ProfileRepository {
-
-    override fun getMyProfile(): Flow<LoggedInUserEntity?> {
-        return loggedUserDao.getLoggedInUserEntity()
-    }
 
     override suspend fun loadProfile(userId: Int): RemoteUser {
 
@@ -40,6 +36,18 @@ class ProfileRepositoryImpl @Inject constructor(
             throw Exception("")
 
         return remoteUser.body()!!
+    }
+
+    override suspend fun loadProfileByToken(token: String): RemoteUser {
+        sessionClientService.getToken()?.let {
+            val remoteUser = apiProfile.getProfileByToken(it)
+
+            if (remoteUser.body() == null)
+                throw Exception("")
+
+            return remoteUser.body()!!
+        }
+        throw Exception("로그인 상태가 아닙니다.")
     }
 
     override fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>> {
@@ -70,25 +78,8 @@ class ProfileRepositoryImpl @Inject constructor(
         return favoriteDao.getFavorite(reviewId)
     }
 
-    override suspend fun user1(): LoggedInUserEntity? {
-        return loggedUserDao.getLoggedInUserEntity1()
-    }
-
-//    override val isLogin: Flow<Boolean> = loggedUserDao.getLoggedInUserEntity().switchMap {
-//        if (it != null) {
-//            MutableStateFlow(it.userId != 0)
-//        } else {
-//            MutableStateFlow(false)
-//        }
-//    }
-
-
     override suspend fun isLogin(): Boolean {
         return true
-    }
-
-    override suspend fun logout() {
-        loggedUserDao.clear()
     }
 
     override fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>> {

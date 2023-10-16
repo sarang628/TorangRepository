@@ -16,6 +16,7 @@ import com.sryang.torang_repository.repository.FeedRepositoryTest
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.LoginRepositoryTest
 import com.sryang.torang_repository.repository.ProfileRepository
+import com.sryang.torang_repository.repository.ProfileRepositoryTest
 import com.sryang.torang_repository.session.SessionClientService
 import com.sryang.torang_repository.session.SessionClientServiceTest
 import com.sryang.torang_repository.session.SessionService
@@ -67,22 +68,22 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Column {
-                Column(Modifier.weight(1f)) {
+                /*Column(Modifier.weight(1f)) {
                     FeedRepositoryTest(feedRepository = feedRepository)
                 }
                 Column(Modifier.weight(1f)) {
                     FavoriteDaoTest(feedDao = favoriteDao)
-                }
+                }*/
                 //FavoriteTest(apiFeed = apiFeed)
                 //LikeTest(apiFeed = apiFeed)
                 //ApiCommentTest(apiComment = apiComment)
                 //ApiFeedTest(apiFeed)
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository)
-                //ProfileRepositoryTest(profileRepository = profileRepository)
+                ProfileRepositoryTest(profileRepository = profileRepository)
                 //ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
-                //LoginRepositoryTest(loginRepository = loginRepository)
+                LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
             }
         }
