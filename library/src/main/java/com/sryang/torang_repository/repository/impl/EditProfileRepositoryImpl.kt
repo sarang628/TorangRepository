@@ -36,11 +36,10 @@ class EditProfileRepositoryImpl @Inject constructor(
     ): EditProfileResponse {
         var response = EditProfileResponse.NO_USER
 
-        val userId = sessionClientService.getToken()!!
+        val token = sessionClientService.getToken()!!
 
         val params: HashMap<String, RequestBody> = HashMap()
         params["user_name"] = ("" + name).toRequestBody("text/plain".toMediaTypeOrNull())
-        params["user_id"] = ("" + userId).toRequestBody("text/plain".toMediaTypeOrNull())
 
         val pictureList = ArrayList<MultipartBody.Part>()
         if (uri != null) {
@@ -55,7 +54,7 @@ class EditProfileRepositoryImpl @Inject constructor(
         }
 
         // 레트로핏으로 사용자 프로필 업데이트 Rest API 처리
-        apiProfile.updateProfile(userId, params, pictureList).let {
+        apiProfile.updateProfile(token, params, pictureList).let {
             it.data?.let {
                 response = EditProfileResponse.SUCCESS
             }
