@@ -38,7 +38,7 @@ class ProfileRepositoryImpl @Inject constructor(
         return remoteUser.body()!!
     }
 
-    override suspend fun loadProfileByToken(token: String): RemoteUser {
+    override suspend fun loadProfileByToken(): RemoteUser {
         sessionClientService.getToken()?.let {
             val remoteUser = apiProfile.getProfileByToken(it)
 

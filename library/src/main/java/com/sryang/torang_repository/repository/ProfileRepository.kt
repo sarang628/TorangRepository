@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 interface ProfileRepository : FeedListRepository {
     suspend fun loadProfile(userId: Int): RemoteUser
-    suspend fun loadProfileByToken(token: String): RemoteUser
+    suspend fun loadProfileByToken(): RemoteUser
     fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
     fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
 
@@ -53,7 +53,7 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                     coroutine.launch {
                         isProgress = true
                         try {
-                            val result = profileRepository.loadProfileByToken("abc")
+                            val result = profileRepository.loadProfileByToken()
                             profile = result.toString()
                         } catch (e: Exception) {
                             profile = e.handle()
