@@ -10,6 +10,7 @@ import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FavoriteDaoTest
+import com.sryang.torang_repository.di.repository.api.ApiRestaurantTest
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.FeedRepositoryTest
@@ -80,10 +81,10 @@ class MainActivity : ComponentActivity() {
                 //ApiFeedTest(apiFeed)
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository)
-                ProfileRepositoryTest(profileRepository = profileRepository)
-                //ApiRestaurantTest(apiRestaurant = apiRestaurant)
+                //ProfileRepositoryTest(profileRepository = profileRepository)
+                ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
-                LoginRepositoryTest(loginRepository = loginRepository)
+                //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
             }
         }

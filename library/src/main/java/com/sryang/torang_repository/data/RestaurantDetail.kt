@@ -11,6 +11,7 @@ data class RestaurantDetail(
     val pictures: ArrayList<Picture>,
     val comments: ArrayList<RestaurantComment>,
     val menus: ArrayList<Menu>,
+    val hoursOfOperations: List<HoursOfOperation>,
     val restaurantRating: RestaurantRating
 ) {
     override fun toString(): String {
