@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
+import com.sryang.torang_repository.api.ApiReview
+import com.sryang.torang_repository.api.ApiReviewTest
 import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.FavoriteDaoTest
 import com.sryang.torang_repository.di.repository.api.ApiRestaurantTest
@@ -62,6 +64,8 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var loginRepository: LoginRepository
 
+    @Inject
+    lateinit var apiReview: ApiReview
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,10 +86,11 @@ class MainActivity : ComponentActivity() {
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository)
                 //ProfileRepositoryTest(profileRepository = profileRepository)
-                ApiRestaurantTest(apiRestaurant = apiRestaurant)
+                //ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
+                ApiReviewTest(apiReview = apiReview)
             }
         }
     }
