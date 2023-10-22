@@ -90,7 +90,8 @@ class MainActivity : ComponentActivity() {
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
-                ApiReviewTest(apiReview = apiReview)
+                //ApiReviewTest(apiReview = apiReview)
+                LoginRepositoryTest(loginRepository = loginRepository)
             }
         }
     }

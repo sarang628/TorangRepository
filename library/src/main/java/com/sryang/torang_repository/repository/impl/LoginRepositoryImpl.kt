@@ -27,6 +27,13 @@ class LoginRepositoryImpl @Inject constructor(
         sessionService.removeToken()
     }
 
+    override suspend fun sessionCheck(): Boolean {
+        sessionService.getToken()?.let {
+            return apiLogin.sessionCheck(it)
+        }
+        return false;
+    }
+
     override val isLogin: StateFlow<Boolean> get() = sessionService.isLogin
 
 }

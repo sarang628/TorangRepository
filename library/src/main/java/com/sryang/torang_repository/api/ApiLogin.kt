@@ -22,4 +22,7 @@ interface ApiLogin {
     @FormUrlEncoded
     @POST("facebook_login")
     suspend fun facebook_login(@Field("accessToken") accessToken: String): Response<User>
+
+    @POST("sessionCheck")
+    suspend fun sessionCheck(@Header("authorization") auth: String): Boolean
 }

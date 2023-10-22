@@ -12,6 +12,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.sryang.torang_repository.api.handle
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,8 @@ interface LoginRepository {
 
     suspend fun saveToken(token: String)
     suspend fun logout()
+
+    suspend fun sessionCheck(): Boolean
 
     val isLogin: StateFlow<Boolean>
 }
@@ -56,6 +59,15 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
                 Text(text = "logout", color = Color.White)
             }
         }
+
+        Button(onClick = {
+            coroutine.launch {
+                success = loginRepository.sessionCheck().toString()
+            }
+        }) {
+            Text(text = "sessionCheck")
+        }
+
         Text(text = error, color = Color.Red)
         Text(text = success, color = Color.Blue)
 
