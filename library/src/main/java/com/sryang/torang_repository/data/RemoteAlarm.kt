@@ -18,6 +18,5 @@ data class RemoteAlarm(
     @SerializedName("create_date")
     var createDate: String,
     var user: RemoteUser,
-    @SerializedName("other_user")
     var otherUser: RemoteUser
 )
