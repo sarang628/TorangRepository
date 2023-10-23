@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.Modifier
+import com.sryang.torang_repository.api.ApiAlarm
+import com.sryang.torang_repository.api.ApiAlarmTest
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
@@ -67,6 +69,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var apiReview: ApiReview
 
+    @Inject
+    lateinit var apiAlarm: ApiAlarm
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -92,6 +97,7 @@ class MainActivity : ComponentActivity() {
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
                 //ApiReviewTest(apiReview = apiReview)
                 LoginRepositoryTest(loginRepository = loginRepository)
+                ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
             }
         }
     }
