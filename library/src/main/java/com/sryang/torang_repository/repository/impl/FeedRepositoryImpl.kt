@@ -130,8 +130,11 @@ class FeedRepositoryImpl @Inject constructor(
         apiComment.deleteComment(commentId = commentId)
     }
 
-    override suspend fun addComment(reviewId: Int, comment: String) {
-        apiComment.addComment("", reviewId, comment)
+    override suspend fun addComment(reviewId: Int, comment: String): RemoteComment {
+        sessionClientService.getToken()?.let {
+            return apiComment.addComment(it, reviewId, comment)
+        }
+        throw Exception("token is empty")
     }
 
 }

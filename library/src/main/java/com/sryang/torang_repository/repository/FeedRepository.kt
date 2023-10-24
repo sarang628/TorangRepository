@@ -34,7 +34,7 @@ interface FeedRepository {
     suspend fun deleteFavorite(reviewId: Int)
     suspend fun getComment(reviewId: Int): RemoteCommentList
     suspend fun deleteComment(commentId: Int)
-    suspend fun addComment(reviewId: Int, comment: String)
+    suspend fun addComment(reviewId: Int, comment: String): RemoteComment
 
     val feeds: Flow<List<ReviewAndImageEntity>>
 }
