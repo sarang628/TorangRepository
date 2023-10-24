@@ -121,20 +121,10 @@ class FeedRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getComment(reviewId: Int): List<RemoteComment> {
-        val result = apiComment.getComments(reviewId);
+    override suspend fun getComment(auth: String, reviewId: Int): List<RemoteComment> {
+        val result = apiComment.getComments(auth, reviewId);
         Log.d("FeedRepositoryImpl", result.toString())
-        return result.stream().map {
-            RemoteComment(
-                comment_id = it.get("comment_id").toString().toInt(),
-                review_id = it.get("review_id").toString().toInt(),
-                comment = it.get("comment").toString(),
-                create_date = it.get("create_date").toString(),
-                user_id = (it.getAsJsonObject("user")).get("user_id").toString().toInt(),
-                user_name = (it.getAsJsonObject("user")).get("user_name").toString(),
-                profile_pic_url = (it.getAsJsonObject("user")).get("profile_pic_url").toString()
-            )
-        }.toList()
+        return result.list
     }
 
     override suspend fun deleteComment(commentId: Int) {

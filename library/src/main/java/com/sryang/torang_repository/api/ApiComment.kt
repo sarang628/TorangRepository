@@ -1,5 +1,6 @@
 package com.sryang.torang_repository.api
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -7,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import com.google.gson.JsonObject
 import com.sryang.torang_repository.data.RemoteComment
+import com.sryang.torang_repository.data.RemoteCommentList
+import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -37,11 +40,14 @@ interface ApiComment {
 
     @FormUrlEncoded
     @POST("getComments")
-    suspend fun getComments(@Field("review_id") review_id: Int): ArrayList<JsonObject>
+    suspend fun getComments(
+        @Header("authorization") auth: String,
+        @Field("review_id") reviewId: Int
+    ): RemoteCommentList
 }
 
 @Composable
-fun ApiCommentTest(apiComment: ApiComment) {
+fun ApiCommentTest(apiComment: ApiComment, sessionService: SessionService) {
     val coroutine = rememberCoroutineScope()
     Column {
         Button(onClick = {
@@ -65,8 +71,11 @@ fun ApiCommentTest(apiComment: ApiComment) {
         }
 
         Button(onClick = {
-            coroutine.launch {
-                apiComment.getComments(82)
+            sessionService.getToken()?.let {
+                coroutine.launch {
+                    val list = apiComment.getComments(it, 82)
+                    Log.d("ApiCommentTest", list.toString())
+                }
             }
         }) {
             Text(text = "get")

@@ -1,11 +1,11 @@
 package com.sryang.torang_repository.data
 
+import com.sryang.torang_repository.data.remote.response.RemoteUser
+
 data class RemoteComment(
     val comment_id: Int,
     val review_id: Int,
     val comment: String,
-    val create_date: String,
-    val user_id: Int,
-    val user_name: String,
-    val profile_pic_url: String
+    val user: RemoteUser,
+    val create_date: String
 )

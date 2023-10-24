@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import com.sryang.torang_repository.api.ApiAlarm
 import com.sryang.torang_repository.api.ApiAlarmTest
 import com.sryang.torang_repository.api.ApiComment
+import com.sryang.torang_repository.api.ApiCommentTest
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.api.ApiReview
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity() {
                 }*/
                 //FavoriteTest(apiFeed = apiFeed)
                 //LikeTest(apiFeed = apiFeed)
-                //ApiCommentTest(apiComment = apiComment)
+                ApiCommentTest(apiComment = apiComment, sessionService = sessionService)
                 //ApiFeedTest(apiFeed)
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository)
@@ -96,8 +97,8 @@ class MainActivity : ComponentActivity() {
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
                 //ApiReviewTest(apiReview = apiReview)
-                LoginRepositoryTest(loginRepository = loginRepository)
-                ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
+//                LoginRepositoryTest(loginRepository = loginRepository)
+//                ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
             }
         }
     }

@@ -13,6 +13,7 @@ import com.sryang.torang_repository.data.entity.CommentEntity
 import com.sryang.torang_repository.data.entity.FeedEntity
 import com.sryang.torang_repository.repository.FeedDetailRepository
 import com.sryang.torang_repository.preference.TorangPreference
+import com.sryang.torang_repository.session.SessionService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,20 +24,24 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TimeLineDetailRepositoryImpl @Inject constructor(
+class FeedDetailRepositoryImpl @Inject constructor(
     private val restaurantService: ApiRestaurant,
     private val apiComment: ApiComment,
     private val commentDao: CommentDao,
     private val restaurantDao: RestaurantDao,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>,
+    private val sessionService: SessionService
 ) :
     FeedDetailRepository {
 
     override suspend fun getComments(reviewId: Int): List<RemoteComment> {
-        val list = apiComment.getComments(reviewId)
+        var list: List<RemoteComment> = ArrayList();
+        sessionService.getToken()?.let {
+            list = apiComment.getComments(it, reviewId).list
+        }
         //commentDao.insertComments(CommentEntity.parse(list))
-        return ArrayList()
+        return list
     }
 
     override fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>> {
@@ -121,6 +126,6 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
 abstract class TimeLineDetailRepositoryModule {
     @Binds
     abstract fun bindTimeLineDetailRepository(
-        timeLineDetailRepositoryImpl: TimeLineDetailRepositoryImpl
+        timeLineDetailRepositoryImpl: FeedDetailRepositoryImpl
     ): FeedDetailRepository
 }
