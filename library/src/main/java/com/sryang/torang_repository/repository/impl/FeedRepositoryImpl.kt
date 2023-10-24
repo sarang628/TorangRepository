@@ -121,10 +121,11 @@ class FeedRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getComment(auth: String, reviewId: Int): List<RemoteComment> {
-        val result = apiComment.getComments(auth, reviewId);
-        Log.d("FeedRepositoryImpl", result.toString())
-        return result.list
+    override suspend fun getComment(reviewId: Int): List<RemoteComment> {
+        sessionClientService.getToken()?.let {
+            return apiComment.getComments(it, reviewId).list
+        }
+        return ArrayList()
     }
 
     override suspend fun deleteComment(commentId: Int) {

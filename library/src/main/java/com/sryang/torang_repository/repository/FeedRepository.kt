@@ -31,7 +31,7 @@ interface FeedRepository {
     suspend fun deleteLike(reviewId: Int)
     suspend fun addFavorite(reviewId: Int)
     suspend fun deleteFavorite(reviewId: Int)
-    suspend fun getComment(auth: String, reviewId: Int): List<RemoteComment>
+    suspend fun getComment(reviewId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
     suspend fun addComment(reviewId: Int, comment: String)
 
@@ -91,7 +91,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 }) { Text(text = "delFav") }
                 Button(onClick = {
                     coroutine.launch {
-                        result = feedRepository.getComment("", 82).toString()
+                        result = feedRepository.getComment(82).toString()
                     }
                 }) { Text(text = "getComment") }
                 Button(onClick = { coroutine.launch { feedRepository.deleteLike(82) } }) {
