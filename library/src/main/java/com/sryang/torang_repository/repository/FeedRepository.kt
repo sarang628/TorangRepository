@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.google.gson.Gson
 import com.sryang.torang_repository.api.handle
 import com.sryang.torang_repository.data.RemoteComment
+import com.sryang.torang_repository.data.RemoteCommentList
 import com.sryang.torang_repository.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ interface FeedRepository {
     suspend fun deleteLike(reviewId: Int)
     suspend fun addFavorite(reviewId: Int)
     suspend fun deleteFavorite(reviewId: Int)
-    suspend fun getComment(reviewId: Int): List<RemoteComment>
+    suspend fun getComment(reviewId: Int): RemoteCommentList
     suspend fun deleteComment(commentId: Int)
     suspend fun addComment(reviewId: Int, comment: String)
 

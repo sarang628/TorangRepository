@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.data.RemoteComment
+import com.sryang.torang_repository.data.RemoteCommentList
 import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
 import com.sryang.torang_repository.data.dao.FavoriteDao
@@ -121,11 +122,8 @@ class FeedRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getComment(reviewId: Int): List<RemoteComment> {
-        sessionClientService.getToken()?.let {
-            return apiComment.getComments(it, reviewId).list
-        }
-        return ArrayList()
+    override suspend fun getComment(reviewId: Int): RemoteCommentList {
+        return apiComment.getComments(sessionClientService.getToken()!!, reviewId)
     }
 
     override suspend fun deleteComment(commentId: Int) {
