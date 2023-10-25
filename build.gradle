@@ -28,5 +28,5 @@ ext {
     dataVersion = '5e905f6f1f'
     roomVersion = '2.5.1'
     workVersion = '2.8.1'
-    jsonToObjectGeneratorVersion = '960fe9fece'
+    jsonToObjectGeneratorVersion = '8d8a65e1f1'
 }
