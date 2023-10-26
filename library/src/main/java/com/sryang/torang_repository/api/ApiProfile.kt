@@ -1,7 +1,6 @@
 package com.sryang.torang_repository.api
 
 import com.sryang.torang_repository.data.User
-import com.sryang.torang_repository.data.remote.response.LoginResult
 import com.sryang.torang_repository.data.remote.response.RemoteUser
 import com.sryang.torang_repository.data.remote.response.Response
 import okhttp3.MultipartBody

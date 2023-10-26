@@ -66,7 +66,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
     }
 
     suspend fun userId1() : Int?{
-        return loggedInUserDao.getLoggedInUserEntity1()?.userId
+        return 0
     }
 
     override fun getMyReviews1(restaurantId: Int): Flow<List<FeedEntity>> {

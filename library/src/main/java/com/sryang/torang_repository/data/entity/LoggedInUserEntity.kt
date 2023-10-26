@@ -5,16 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class LoggedInUserEntity(
-    @PrimaryKey val constId: Int,
+    @PrimaryKey
     val userId: Int,
     val userName: String,
-    val email: String,
-    val loginPlatform: String,
-    val createDate: String,
-    val accessToken: String,
-    val profilePicUrl: String,
-    val point: Int,
-    val reviewCount: String,
-    val followers: String,
-    val following: String
+    val email: String?,
+    val loginPlatform: String?,
+    val createDate: String?,
+    val profilePicUrl: String?
 )

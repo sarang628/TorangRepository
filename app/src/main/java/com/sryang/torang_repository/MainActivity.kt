@@ -23,6 +23,8 @@ import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.LoginRepositoryTest
 import com.sryang.torang_repository.repository.ProfileRepository
 import com.sryang.torang_repository.repository.ProfileRepositoryTest
+import com.sryang.torang_repository.repository.SettingRepositoryTest
+import com.sryang.torang_repository.repository.SettingsRepository
 import com.sryang.torang_repository.session.SessionClientService
 import com.sryang.torang_repository.session.SessionClientServiceTest
 import com.sryang.torang_repository.session.SessionService
@@ -73,6 +75,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var apiAlarm: ApiAlarm
 
+    @Inject
+    lateinit var settingRepository: SettingsRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -87,18 +92,19 @@ class MainActivity : ComponentActivity() {
                 }*/
                 //FavoriteTest(apiFeed = apiFeed)
                 //LikeTest(apiFeed = apiFeed)
-                ApiCommentTest(apiComment = apiComment, sessionService = sessionService)
+                //ApiCommentTest(apiComment = apiComment, sessionService = sessionService)
                 //ApiFeedTest(apiFeed)
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository)
                 //ProfileRepositoryTest(profileRepository = profileRepository)
                 //ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
-                //LoginRepositoryTest(loginRepository = loginRepository)
+                LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
                 //ApiReviewTest(apiReview = apiReview)
-//                LoginRepositoryTest(loginRepository = loginRepository)
-//                ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
+                //LoginRepositoryTest(loginRepository = loginRepository)
+                //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
+                SettingRepositoryTest(settingRepository)
             }
         }
     }

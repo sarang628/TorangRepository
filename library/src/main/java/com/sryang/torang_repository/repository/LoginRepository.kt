@@ -12,7 +12,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.sryang.torang_repository.api.handle
+import com.sryang.torang_repository.data.remote.response.LoginResponse
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -20,14 +22,15 @@ interface LoginRepository {
     suspend fun emailLogin(
         email: String,
         password: String
-    ): String
+    ): LoginResponse
 
-    suspend fun saveToken(token: String)
     suspend fun logout()
 
     suspend fun sessionCheck(): Boolean
 
     val isLogin: StateFlow<Boolean>
+
+    fun getUserName(): Flow<String>
 }
 
 @Composable
@@ -41,8 +44,8 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
             Button(onClick = {
                 coroutine.launch {
                     try {
-                        success = loginRepository.emailLogin("sarang628@naver.com", "1234")
-                        loginRepository.saveToken(success)
+                        success =
+                            loginRepository.emailLogin("sarang628@naver.com", "1234").toString()
                     } catch (e: Exception) {
                         error = e.handle()
                     }

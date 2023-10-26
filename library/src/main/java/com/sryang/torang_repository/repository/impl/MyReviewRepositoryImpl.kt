@@ -212,13 +212,6 @@ class MyReviewRepositoryImpl @Inject constructor(
     override suspend fun userId1(): Int {
         var userId = -1
 
-        loggedInUserDao.getLoggedInUserEntity1()?.let {
-            userId = it.userId
-        }
-
-        loggedInUserDao.getLoggedInUserEntity1()?.userId?.let {
-            userId = it
-        }
         return userId
     }
 }

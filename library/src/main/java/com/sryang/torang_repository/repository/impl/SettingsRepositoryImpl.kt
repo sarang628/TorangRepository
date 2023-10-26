@@ -2,20 +2,26 @@ package com.sryang.torang_repository.repository.impl
 
 import com.sryang.torang_repository.repository.SettingsRepository
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.repository.LoginRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SettingsRepositoryImpl @Inject constructor(
-    private val loggedInUserDao: LoggedInUserDao
+    val loginRepository: LoginRepository
 ) :
     SettingsRepository {
     override suspend fun logout() {
-        loggedInUserDao.clear()
+        loginRepository.logout()
+    }
+
+    override fun getUsername(): Flow<String> {
+        return loginRepository.getUserName()
     }
 }
 

@@ -1,8 +1,13 @@
 package com.sryang.torang_repository.repository.impl
 
 import com.sryang.torang_repository.api.ApiLogin
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.entity.LoggedInUserEntity
+import com.sryang.torang_repository.data.remote.response.LoginResponse
+import com.sryang.torang_repository.data.remote.response.RemoteUser
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,20 +15,23 @@ import javax.inject.Singleton
 @Singleton
 class LoginRepositoryImpl @Inject constructor(
     private val apiLogin: ApiLogin,
-    private val sessionService: SessionService
+    private val sessionService: SessionService,
+    private val loggedInUserDao: LoggedInUserDao
 ) : LoginRepository {
     override suspend fun emailLogin(
         email: String,
         password: String
-    ): String {
-        return apiLogin.emailLogin(email = email, password = password).token
-    }
-
-    override suspend fun saveToken(token: String) {
-        sessionService.saveToken(token)
+    ): LoginResponse {
+        val result = apiLogin.emailLogin(email = email, password = password)
+        loggedInUserDao.insert(
+            result.profile.toLoggedInUserEntity()
+        )
+        sessionService.saveToken(result.token)
+        return result
     }
 
     override suspend fun logout() {
+        loggedInUserDao.clear()
         sessionService.removeToken()
     }
 
@@ -35,5 +43,19 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     override val isLogin: StateFlow<Boolean> get() = sessionService.isLogin
+    override fun getUserName(): Flow<String> {
+        return loggedInUserDao.getUserName()
+    }
 
+}
+
+fun RemoteUser.toLoggedInUserEntity(): LoggedInUserEntity {
+    return LoggedInUserEntity(
+        userId = this.userId,
+        userName = this.userName,
+        email = this.email,
+        loginPlatform = this.loginPlatform,
+        createDate = this.createDate,
+        profilePicUrl = profilePicUrl
+    )
 }
