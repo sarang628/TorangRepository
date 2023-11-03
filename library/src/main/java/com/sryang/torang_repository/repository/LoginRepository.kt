@@ -13,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.sryang.torang_repository.api.handle
 import com.sryang.torang_repository.data.remote.response.LoginResponse
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -31,6 +30,15 @@ interface LoginRepository {
     val isLogin: StateFlow<Boolean>
 
     fun getUserName(): Flow<String>
+
+    suspend fun checkEmail(email: String, password: String): String
+    suspend fun confirmCode(
+        token: String,
+        confirmCode: String,
+        name: String,
+        email: String,
+        password: String
+    ): Boolean
 }
 
 @Composable
@@ -69,6 +77,26 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
             }
         }) {
             Text(text = "sessionCheck")
+        }
+
+        Button(onClick = {
+            coroutine.launch {
+                success = loginRepository.checkEmail("sarang628@gmail.com", "11111")
+            }
+        }) {
+            Text(text = "SignUp")
+        }
+
+        Button(onClick = {
+            coroutine.launch {
+                success = loginRepository.confirmCode(
+                    token = "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjExMTExIiwianRpIjoiOTY4ODE0Iiwic3ViIjoic2FyYW5nNjI4QGdtYWlsLmNvbSIsImlhdCI6MTY5ODk5MTEwNCwiZXhwIjoxNjk4OTk0NzA0fQ.BRvZ_v234_74UaWCxUl8LYBXn559i_r-DPahq-nzOtY",
+                    confirmCode = "968814",
+                    email = "sarang628@gmail.com", password = "11111", name = "aab"
+                ).toString()
+            }
+        }) {
+            Text(text = "confirmCode")
         }
 
         Text(text = error, color = Color.Red)

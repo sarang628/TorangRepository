@@ -47,6 +47,20 @@ class LoginRepositoryImpl @Inject constructor(
         return loggedInUserDao.getUserName()
     }
 
+    override suspend fun checkEmail(email: String, password: String): String {
+        return apiLogin.checkEmail(email, password)
+    }
+
+    override suspend fun confirmCode(
+        token: String,
+        confirmCode: String,
+        name: String,
+        email: String,
+        password: String
+    ): Boolean {
+        return apiLogin.confirmCode(token, confirmCode, name, email, password)
+    }
+
 }
 
 fun RemoteUser.toLoggedInUserEntity(): LoggedInUserEntity {

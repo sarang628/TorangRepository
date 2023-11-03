@@ -24,4 +24,21 @@ interface ApiLogin {
 
     @POST("sessionCheck")
     suspend fun sessionCheck(@Header("authorization") auth: String): Boolean
+
+    @FormUrlEncoded
+    @POST("checkEmail")
+    suspend fun checkEmail(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): String
+
+    @FormUrlEncoded
+    @POST("confirmCode")
+    suspend fun confirmCode(
+        @Field("token") token: String,
+        @Field("confirmationCode") confirmCode: String,
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Boolean
 }
