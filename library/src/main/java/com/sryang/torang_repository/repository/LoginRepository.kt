@@ -81,7 +81,11 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
 
         Button(onClick = {
             coroutine.launch {
-                success = loginRepository.checkEmail("sarang628@gmail.com", "11111")
+                try {
+                    success = loginRepository.checkEmail("sarang628@gmail.com", "11111")
+                } catch (e: Exception) {
+                    error = e.message.toString()
+                }
             }
         }) {
             Text(text = "SignUp")
@@ -89,11 +93,15 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
 
         Button(onClick = {
             coroutine.launch {
-                success = loginRepository.confirmCode(
-                    token = "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjExMTExIiwianRpIjoiOTY4ODE0Iiwic3ViIjoic2FyYW5nNjI4QGdtYWlsLmNvbSIsImlhdCI6MTY5ODk5MTEwNCwiZXhwIjoxNjk4OTk0NzA0fQ.BRvZ_v234_74UaWCxUl8LYBXn559i_r-DPahq-nzOtY",
-                    confirmCode = "968814",
-                    email = "sarang628@gmail.com", password = "11111", name = "aab"
-                ).toString()
+                try {
+                    success = loginRepository.confirmCode(
+                        token = "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjExMTExIiwianRpIjoiOTY4ODE0Iiwic3ViIjoic2FyYW5nNjI4QGdtYWlsLmNvbSIsImlhdCI6MTY5ODk5MTEwNCwiZXhwIjoxNjk4OTk0NzA0fQ.BRvZ_v234_74UaWCxUl8LYBXn559i_r-DPahq-nzOtY",
+                        confirmCode = "968814",
+                        email = "sarang628@gmail.com", password = "11111", name = "aab"
+                    ).toString()
+                } catch (e: Exception) {
+                    error = e.message.toString()
+                }
             }
         }) {
             Text(text = "confirmCode")

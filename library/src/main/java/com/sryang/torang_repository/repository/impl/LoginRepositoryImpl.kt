@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.repository.impl
 
 import com.sryang.torang_repository.api.ApiLogin
+import com.sryang.torang_repository.api.handle
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.data.remote.response.LoginResponse
@@ -9,6 +10,7 @@ import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,7 +50,11 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkEmail(email: String, password: String): String {
-        return apiLogin.checkEmail(email, password)
+        try {
+            return apiLogin.checkEmail(email, password)
+        } catch (e: HttpException) {
+            throw Exception(e.handle())
+        }
     }
 
     override suspend fun confirmCode(
@@ -58,7 +64,11 @@ class LoginRepositoryImpl @Inject constructor(
         email: String,
         password: String
     ): Boolean {
-        return apiLogin.confirmCode(token, confirmCode, name, email, password)
+        try {
+            return apiLogin.confirmCode(token, confirmCode, name, email, password);
+        } catch (e: HttpException) {
+            throw Exception(e.handle())
+        }
     }
 
 }
