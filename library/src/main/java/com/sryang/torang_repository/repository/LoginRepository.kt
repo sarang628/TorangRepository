@@ -53,7 +53,7 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
                 coroutine.launch {
                     try {
                         success =
-                            loginRepository.emailLogin("sarang628@naver.com", "1234").toString()
+                            loginRepository.emailLogin("sarang628@naver.com", "aaaaa").toString()
                     } catch (e: Exception) {
                         error = e.handle()
                     }
