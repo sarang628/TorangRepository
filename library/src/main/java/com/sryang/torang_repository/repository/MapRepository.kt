@@ -1,34 +1,35 @@
 package com.sryang.torang_repository.repository
 
-import android.location.Location
-import com.sryang.torang_repository.data.entity.RestaurantEntity
-import kotlinx.coroutines.flow.Flow
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 
 interface MapRepository {
-    @Deprecated("findRepository로 이동")
-    fun getRestaurant(): Flow<List<RestaurantEntity>>
+    /** 미자막 좌표 저장 zoom level 저장 */
+    fun saveLat(lat: Double)
+    fun savelon(lon: Double)
+    fun saveZoom(level: Float)
+    fun loadLat(): Double
+    fun loadLon(): Double
+    fun loadZoom(): Float
+}
 
-    @Deprecated("findRepository로 이동")
-    suspend fun loadRestaurant()
+@Composable
+fun MapRepositoryTest(mapRepository: MapRepository) {
+    Column {
+        Button(onClick = { mapRepository.saveLat(10.0) }) {
+            Text(text = "SaveLat")
+        }
+        Button(onClick = { mapRepository.savelon(10.0) }) {
+            Text(text = "SaveLon")
+        }
+        Button(onClick = { mapRepository.saveZoom(10.0f) }) {
+            Text(text = "saveZoom")
+        }
 
-    /** 맵 클릭 시 정보 표시 여부 애니메이션 */
-    @Deprecated("findRepository로 이동")
-    fun getClickMap(): Flow<Boolean>
-    suspend fun clickMap()
-
-    /** 현재 보이는 지도 범위 좌표 저장 */
-    fun setNorthEastLatitude(latitude: Double)
-    fun setNorthEastLongitude(longitude: Double)
-    fun setSouthWestLatitude(latitude: Double)
-    fun setSouthWestLongitude(longitude: Double)
-
-    fun getNorthEastLatitude(): Double
-    fun getNorthEastLongitude(): Double
-    fun getSouthWestLatitude(): Double
-    fun getSouthWestLongitude(): Double
-
-    suspend fun showCard()
-
-    suspend fun setCurrentLocation(location : Location)
-    fun getCurrentLocationFlow() : Flow<Location>
+        Text(text = "lat ${mapRepository.loadLat()}")
+        Text(text = "lon ${mapRepository.loadLon()}")
+        Text(text = "lon ${mapRepository.loadZoom()}")
+    }
 }

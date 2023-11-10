@@ -21,6 +21,8 @@ import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.FeedRepositoryTest
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.LoginRepositoryTest
+import com.sryang.torang_repository.repository.MapRepository
+import com.sryang.torang_repository.repository.MapRepositoryTest
 import com.sryang.torang_repository.repository.ProfileRepository
 import com.sryang.torang_repository.repository.ProfileRepositoryTest
 import com.sryang.torang_repository.repository.SettingRepositoryTest
@@ -78,6 +80,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var settingRepository: SettingsRepository
 
+    @Inject
+    lateinit var mapRepository: MapRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -99,12 +104,13 @@ class MainActivity : ComponentActivity() {
                 //ProfileRepositoryTest(profileRepository = profileRepository)
                 //ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
-                LoginRepositoryTest(loginRepository = loginRepository)
+                //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
                 //ApiReviewTest(apiReview = apiReview)
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
-                SettingRepositoryTest(settingRepository)
+                //SettingRepositoryTest(settingRepository)
+                MapRepositoryTest(mapRepository = mapRepository)
             }
         }
     }

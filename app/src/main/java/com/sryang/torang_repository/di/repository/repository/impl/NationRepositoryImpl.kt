@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import com.sryang.torang_repository.data.Restaurant
 import com.sryang.torang_repository.data.NationItem
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class NationRepositoryImpl @Inject constructor(
     private val restaurantDao: RestaurantDao,
     private val restaurantService: ApiRestaurant
-) : NationRepository, MapSharedRepositoryImpl(restaurantDao, restaurantService) {
+) : NationRepository {
 
     private val selectNationItem: MutableStateFlow<NationItem> = MutableStateFlow(NationItem(0))
 

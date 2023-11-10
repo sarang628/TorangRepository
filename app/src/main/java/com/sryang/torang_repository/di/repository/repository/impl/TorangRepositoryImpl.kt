@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import android.content.Context
 import android.view.Menu
@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Deprecated("기능별로 나눠진 저장소로 사용하세요.")
 @Singleton
-class InfoRepositoryImpl @Inject constructor(
+class TorangRepository @Inject constructor(
     @ApplicationContext context: Context,
     private val restaurantService: ApiRestaurant,
     private val restaurantDao: RestaurantDao

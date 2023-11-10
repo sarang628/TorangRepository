@@ -1,8 +1,7 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import com.sryang.torang_repository.api.ApiAlarm
 import com.sryang.torang_repository.data.RemoteAlarm
-import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.repository.AlarmRepository
 import com.sryang.torang_repository.session.SessionService
 import kotlinx.coroutines.flow.Flow

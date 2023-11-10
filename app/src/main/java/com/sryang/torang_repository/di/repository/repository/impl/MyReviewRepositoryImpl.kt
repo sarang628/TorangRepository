@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import android.content.Context
 import com.sryang.torang_repository.api.ApiRestaurant
@@ -34,7 +34,8 @@ class MyReviewRepositoryImpl @Inject constructor(
     private val feedDao: FeedDao,
     private val pictureDao: PictureDao,
     private val restaurantDao: RestaurantDao,
-    private val loggedInUserDao: LoggedInUserDao
+    private val loggedInUserDao: LoggedInUserDao,
+    private val torangPreference: TorangPreference
 ) :
     MyReviewRepository {
     override fun getMyReview(reviewId: Int): Flow<FeedEntity?> {
@@ -206,7 +207,7 @@ class MyReviewRepositoryImpl @Inject constructor(
     }
 
     override fun userId(): Int {
-        return TorangPreference().getUserId(context)
+        return torangPreference.getUserId()
     }
 
     override suspend fun userId1(): Int {

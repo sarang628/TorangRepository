@@ -1,20 +1,12 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import android.content.Context
 import com.sryang.torang_repository.api.ApiProfile
-import com.sryang.torang_repository.data.dao.LoggedInUserDao
-import com.sryang.torang_repository.data.dao.UserDao
-import com.sryang.torang_repository.data.entity.LoggedInUserEntity
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.EditProfileResponse
 import com.sryang.torang_repository.session.SessionClientService
 import com.sryang.torang_repository.util.CountingFileRequestBody
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

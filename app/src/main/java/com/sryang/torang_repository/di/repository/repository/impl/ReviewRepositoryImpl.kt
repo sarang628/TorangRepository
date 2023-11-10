@@ -1,8 +1,7 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import android.content.Context
 import com.sryang.torang_repository.api.ApiReview
-import com.sryang.torang_repository.data.RemoteReview
 import com.sryang.torang_repository.data.dao.RestaurantDao
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import com.sryang.torang_repository.repository.ReviewRepository

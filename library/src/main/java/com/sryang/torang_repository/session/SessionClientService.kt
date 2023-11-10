@@ -1,6 +1,6 @@
 package com.sryang.torang_repository.session
 
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.flow.StateFlow
 

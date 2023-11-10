@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import com.sryang.torang_repository.api.ApiLogin
 import com.sryang.torang_repository.api.handle

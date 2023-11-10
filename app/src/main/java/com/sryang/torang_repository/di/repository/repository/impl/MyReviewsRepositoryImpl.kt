@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import android.content.Context
 import com.sryang.torang_repository.api.ApiReview
@@ -28,14 +28,15 @@ class MyReviewsRepositoryImpl @Inject constructor(
     @Deprecated("MyReviewsLocalDataSource 이동") private val myReviewDao: MyReviewDao,
     @Deprecated("MyReviewsLocalDataSource 이동") private val loggedInUserDao: LoggedInUserDao,
     private val myReviewsLocalDataSource: MyReviewsLocalDataSource,
-    private val myReviewsRemoteDataSource: MyReviewsRemoteDataSource
+    private val myReviewsRemoteDataSource: MyReviewsRemoteDataSource,
+    private val torangPreference: TorangPreference
 ) :
     MyReviewsRepository {
 
     override suspend fun getMyReviews(restaurantId: Int): List<ReviewAndImageEntity> {
         val list = apiReview.getMyReviews(HashMap<String, String>().apply {
             put("restaurant_id", restaurantId.toString())
-            put("user_id", TorangPreference().getUserId(context).toString())
+            put("user_id", torangPreference.getUserId().toString())
         })
 
         val list1 = ArrayList<ReviewAndImageEntity>()
@@ -62,7 +63,7 @@ class MyReviewsRepositoryImpl @Inject constructor(
     }
 
     fun userId(): Int {
-        return TorangPreference().getUserId(context)
+        return torangPreference.getUserId()
     }
 
     suspend fun userId1() : Int?{

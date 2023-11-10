@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import com.sryang.torang_repository.api.ApiProfile
 import com.sryang.torang_repository.data.dao.FavoriteDao

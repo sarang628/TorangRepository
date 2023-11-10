@@ -1,4 +1,4 @@
-package com.sryang.torang_repository.repository.impl
+package com.sryang.torang_repository.di.repository.repository.impl
 
 import android.content.Context
 import com.sryang.torang_repository.api.ApiComment
@@ -84,7 +84,8 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     private val restaurantService: ApiRestaurant,
     private val apiComment: ApiComment,
     private val reviewDao: ReviewDao,
-    private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>
+    private val loggedInUserDao: LoggedInUserDao, override val isLogin: Flow<Boolean>,
+    private val torangPreference: TorangPreference
 ) :
     FeedDetailRepository {
 
@@ -111,9 +112,7 @@ class TimeLineDetailRepositoryTestImpl @Inject constructor(
     }
 
     fun userId(): Int {
-        return if (context != null)
-            TorangPreference().getUserId(context!!)
-        else -1
+        return torangPreference.getUserId()
     }
 
     override suspend fun addComment(reviewId: Int, value: String): RemoteComment {
