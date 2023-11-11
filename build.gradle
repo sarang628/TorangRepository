@@ -20,6 +20,7 @@ ext {
 
     //navigation
     navigationVersion = '2.4.0-alpha06'
+    nav_version = "2.5.3"
 
     mapVersion = 'f0bfeb81ec'
     themeVersion = '6f8e2a7a08'

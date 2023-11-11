@@ -13,6 +13,14 @@ interface MapRepository {
     fun loadLat(): Double
     fun loadLon(): Double
     fun loadZoom(): Float
+    fun setNElat(latitude: Double)
+    fun setNElon(longitude: Double)
+    fun setSWlat(latitude: Double)
+    fun setSWlon(latitude: Double)
+    fun getNElat(): Double
+    fun getNElon(): Double
+    fun getSWlat(): Double
+    fun getSWlon(): Double
 }
 
 @Composable
