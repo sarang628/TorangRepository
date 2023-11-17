@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import kotlinx.coroutines.flow.StateFlow
 
 interface SessionClientService {
-    val isLogin: StateFlow<Boolean>
     fun getToken(): String?
 }
 

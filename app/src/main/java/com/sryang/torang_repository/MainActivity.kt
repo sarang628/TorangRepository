@@ -4,12 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.Modifier
 import com.sryang.torang_repository.api.ApiAlarm
 import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.api.ApiReview
 import com.sryang.torang_repository.data.dao.FavoriteDao
+import com.sryang.torang_repository.data.dao.LoggedInUserDao
+import com.sryang.torang_repository.data.dao.TestLoggedInUserDao
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.LoginRepository
@@ -72,10 +77,13 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var mapRepository: MapRepository
 
+    @Inject
+    lateinit var loggedInUserDao: LoggedInUserDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
                 /*Column(Modifier.weight(1f)) {
                     FeedRepositoryTest(feedRepository = feedRepository)
                 }
@@ -91,13 +99,14 @@ class MainActivity : ComponentActivity() {
                 //ProfileRepositoryTest(profileRepository = profileRepository)
                 //ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
-                LoginRepositoryTest(loginRepository = loginRepository)
+                //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
                 //ApiReviewTest(apiReview = apiReview)
-                //LoginRepositoryTest(loginRepository = loginRepository)
+                LoginRepositoryTest(loginRepository = loginRepository)
                 //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
                 //SettingRepositoryTest(settingRepository)
                 //MapRepositoryTest(mapRepository = mapRepository)
+                TestLoggedInUserDao(loggedInUserDao = loggedInUserDao)
             }
         }
     }

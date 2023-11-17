@@ -23,18 +23,9 @@ import javax.inject.Singleton
 class SessionService @Inject constructor(@ApplicationContext context: Context) :
     SessionClientService {
     private val pref = context.getSharedPreferences("torang", Context.MODE_PRIVATE)
-    private var _isLogin = MutableStateFlow(false)
-    override var isLogin = _isLogin.asStateFlow()
-
-    init {
-        getToken()?.let {
-            _isLogin.value = true
-        }
-    }
 
     suspend fun saveToken(token: String) {
         pref.edit().putString("token", token).apply()
-        _isLogin.emit(true)
     }
 
     override fun getToken(): String? {
@@ -43,7 +34,6 @@ class SessionService @Inject constructor(@ApplicationContext context: Context) :
 
     suspend fun removeToken() {
         pref.edit().putString("token", null).apply()
-        _isLogin.emit(false)
     }
 }
 
@@ -51,11 +41,9 @@ class SessionService @Inject constructor(@ApplicationContext context: Context) :
 @Composable
 fun TestSessionService() {
     val sessionService = SessionService(LocalContext.current)
-    val isLogin by sessionService.isLogin.collectAsState()
     val coroutine = rememberCoroutineScope()
 
     Column {
-        Text(text = "isLogin = $isLogin")
         Row {
             Button(onClick = {
                 coroutine.launch {
