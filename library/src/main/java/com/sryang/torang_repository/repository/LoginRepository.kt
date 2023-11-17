@@ -1,8 +1,12 @@
 package com.sryang.torang_repository.repository
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,11 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 interface LoginRepository {
-    suspend fun emailLogin(
-        email: String,
-        password: String
-    ): LoginResponse
-
+    suspend fun emailLogin(email: String, password: String)
     suspend fun logout()
 
     suspend fun sessionCheck(): Boolean
@@ -47,15 +47,21 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
     var error by remember { mutableStateOf("") }
     var success by remember { mutableStateOf("") }
     val isLogin by loginRepository.isLogin.collectAsState()
+    var id by remember { mutableStateOf("sarang628@naver.com") }
+    var pw by remember { mutableStateOf("aaaaa") }
     Column {
         if (!isLogin) {
+            OutlinedTextField(value = id, onValueChange = { id = it })
+            OutlinedTextField(value = pw, onValueChange = { pw = it })
             Button(onClick = {
                 coroutine.launch {
                     try {
-                        success =
-                            loginRepository.emailLogin("sarang628@naver.com", "aaaaa").toString()
+                        loginRepository.emailLogin(id, pw).toString()
+                        error = ""
+                        success = "로그인에 성공하였습니다."
                     } catch (e: Exception) {
-                        error = e.handle()
+                        success = ""
+                        error = e.message.toString()
                     }
                 }
             }) {
