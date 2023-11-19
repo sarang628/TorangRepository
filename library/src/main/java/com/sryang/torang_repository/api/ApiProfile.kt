@@ -56,4 +56,11 @@ interface ApiProfile {
         @Header("authorization") auth: String,
         @Field("user_id") user_id: Int
     ): Boolean
+
+    @FormUrlEncoded
+    @POST("getProfileWithFollow")
+    suspend fun getProfileWithFollow(
+        @Header("authorization") auth: String,
+        @Field("user_id") user_id: Int
+    ): RemoteUser
 }

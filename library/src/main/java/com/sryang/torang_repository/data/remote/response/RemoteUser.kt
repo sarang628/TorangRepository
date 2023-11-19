@@ -20,5 +20,7 @@ data class RemoteUser(
     @SerializedName("followers")
     val followers: Int,
     @SerializedName("following")
-    val following: Int
+    val following: Int,
+    @SerializedName("follow")
+    val follow: Int
 )
