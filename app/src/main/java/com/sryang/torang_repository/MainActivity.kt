@@ -17,11 +17,13 @@ import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.TestLoggedInUserDao
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.FeedRepository
+import com.sryang.torang_repository.repository.FollowRepository
 import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.LoginRepositoryTest
 import com.sryang.torang_repository.repository.MapRepository
 import com.sryang.torang_repository.repository.ProfileRepository
 import com.sryang.torang_repository.repository.SettingsRepository
+import com.sryang.torang_repository.repository.TestFollowRepository
 import com.sryang.torang_repository.session.SessionClientService
 import com.sryang.torang_repository.session.SessionService
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +82,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var loggedInUserDao: LoggedInUserDao
 
+    @Inject
+    lateinit var followRepository: FollowRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -106,7 +111,8 @@ class MainActivity : ComponentActivity() {
                 //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
                 //SettingRepositoryTest(settingRepository)
                 //MapRepositoryTest(mapRepository = mapRepository)
-                TestLoggedInUserDao(loggedInUserDao = loggedInUserDao)
+                //TestLoggedInUserDao(loggedInUserDao = loggedInUserDao)
+                TestFollowRepository(followRepository = followRepository)
             }
         }
     }
