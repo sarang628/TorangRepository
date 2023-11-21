@@ -43,11 +43,13 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                 Button(onClick = {
                     coroutine.launch {
                         isProgress = true
-                        val result = profileRepository.loadProfile(0)
+                        val result = profileRepository.loadProfile(1)
                         profile = result.toString()
                         isProgress = false
                     }
-                }) {}
+                }) {
+                    Text(text = "loadProfile 1")
+                }
 
                 Button(onClick = {
                     coroutine.launch {
@@ -62,7 +64,7 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                         }
                     }
                 }) {
-
+                    Text(text = "loadProfileByToken")
                 }
 
                 Text(

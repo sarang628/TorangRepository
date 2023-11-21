@@ -22,6 +22,7 @@ import com.sryang.torang_repository.repository.LoginRepository
 import com.sryang.torang_repository.repository.LoginRepositoryTest
 import com.sryang.torang_repository.repository.MapRepository
 import com.sryang.torang_repository.repository.ProfileRepository
+import com.sryang.torang_repository.repository.ProfileRepositoryTest
 import com.sryang.torang_repository.repository.SettingsRepository
 import com.sryang.torang_repository.repository.TestFollowRepository
 import com.sryang.torang_repository.session.SessionClientService
@@ -101,7 +102,7 @@ class MainActivity : ComponentActivity() {
                 //ApiFeedTest(apiFeed)
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository)
-                //ProfileRepositoryTest(profileRepository = profileRepository)
+                ProfileRepositoryTest(profileRepository = profileRepository)
                 //ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
                 //LoginRepositoryTest(loginRepository = loginRepository)
@@ -112,7 +113,7 @@ class MainActivity : ComponentActivity() {
                 //SettingRepositoryTest(settingRepository)
                 //MapRepositoryTest(mapRepository = mapRepository)
                 //TestLoggedInUserDao(loggedInUserDao = loggedInUserDao)
-                TestFollowRepository(followRepository = followRepository)
+                //TestFollowRepository(followRepository = followRepository)
             }
         }
     }

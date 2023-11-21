@@ -7,7 +7,6 @@ data class RemoteUser(
     val userId: Int,
     @SerializedName("user_name")
     val userName: String,
-    @SerializedName("email")
     val email: String?,
     @SerializedName("login_platform")
     val loginPlatform: String?,
@@ -15,12 +14,8 @@ data class RemoteUser(
     val createDate: String?,
     @SerializedName("profile_pic_url")
     val profilePicUrl: String,
-    @SerializedName("review_count")
-    val reviewCount: Int,
-    @SerializedName("followers")
-    val followers: Int,
-    @SerializedName("following")
+    val post: Int,
+    val follower: Int,
     val following: Int,
-    @SerializedName("follow")
     val follow: Int
 )
