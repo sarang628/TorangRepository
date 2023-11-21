@@ -108,12 +108,12 @@ class MainActivity : ComponentActivity() {
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
                 //ApiReviewTest(apiReview = apiReview)
-                LoginRepositoryTest(loginRepository = loginRepository)
                 //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
                 //SettingRepositoryTest(settingRepository)
                 //MapRepositoryTest(mapRepository = mapRepository)
                 //TestLoggedInUserDao(loggedInUserDao = loggedInUserDao)
-                //TestFollowRepository(followRepository = followRepository)
+                TestFollowRepository(followRepository = followRepository)
+                LoginRepositoryTest(loginRepository = loginRepository)
             }
         }
     }
