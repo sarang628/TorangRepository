@@ -21,6 +21,7 @@ interface FollowRepository {
     suspend fun getFollowing(): List<RemoteFollower>
     suspend fun follow(userId: Int): Boolean
     suspend fun unFollow(userId: Int): Boolean
+    suspend fun delete(userId: Int): Boolean
 }
 
 @Composable

@@ -58,6 +58,13 @@ interface ApiProfile {
     ): Boolean
 
     @FormUrlEncoded
+    @POST("delete")
+    suspend fun delete(
+        @Header("authorization") auth: String,
+        @Field("user_id") user_id: Int
+    ): Boolean
+
+    @FormUrlEncoded
     @POST("getProfileWithFollow")
     suspend fun getProfileWithFollow(
         @Header("authorization") auth: String,
