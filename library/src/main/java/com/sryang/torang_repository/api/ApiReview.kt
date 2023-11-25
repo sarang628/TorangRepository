@@ -2,7 +2,12 @@ package com.sryang.torang_repository.api
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -10,8 +15,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.net.toFile
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.sryang.torang_repository.data.MenuReview
 import com.sryang.torang_repository.data.RemoteReview
@@ -34,7 +45,8 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 import java.io.File
 
-interface ApiReview {
+interface ApiReview
+{
     @FormUrlEncoded
     @POST("getReviews")
     suspend fun getReviews(@Field("restaurant_id") id: Int): List<RemoteFeed>
@@ -45,10 +57,7 @@ interface ApiReview {
 
     @Multipart
     @POST("addReview")
-    suspend fun addReview(
-        @PartMap params: HashMap<String, RequestBody>,
-        @Part file: ArrayList<MultipartBody.Part>
-    ): JsonObject
+    suspend fun addReview(@PartMap params: HashMap<String, RequestBody>, @Part file: ArrayList<MultipartBody.Part>): JsonObject
 
     @POST("updateReview")
     suspend fun updateReview(@Body reviewBody: RemoteReview): Call<RemoteReview>
@@ -58,10 +67,7 @@ interface ApiReview {
 
     @Multipart
     @POST("updateReview")
-    suspend fun updateReview(
-        @PartMap params: HashMap<String, RequestBody>,
-        @Part pictures: ArrayList<MultipartBody.Part>
-    ): RemoteReview
+    suspend fun updateReview(@PartMap params: HashMap<String, RequestBody>, @Part pictures: ArrayList<MultipartBody.Part>): RemoteReview
 
     @FormUrlEncoded
     @POST("getMyReviews")
@@ -76,13 +82,19 @@ interface ApiReview {
     @FormUrlEncoded
     @POST("getMyReviewsByUserId")
     suspend fun getMyReviewsByUserId(@FieldMap params: Map<String, String>): Call<ArrayList<RemoteReview>>
+
+    @FormUrlEncoded
+    @POST("getReviewsById")
+    suspend fun getReviewsById(@Field("reviewId") reviewId: Int): RemoteFeed
+
+
 }
 
 @Composable
-fun ApiReviewTest(apiReview: ApiReview) {
+fun ApiReviewTest(apiReview: ApiReview)
+{
     val coroutine = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     val file1 = Uri.fromFile(
         File("/storage/emulated/0/DCIM/06 interior/IMG_2082.JPG")
@@ -92,43 +104,48 @@ fun ApiReviewTest(apiReview: ApiReview) {
     val file = ArrayList<MultipartBody.Part>().apply {
         add(
             MultipartBody.Part.createFormData(
-                name = "file",
-                filename = file1.name,
-                body = file1.asRequestBody()
+                name = "file", filename = file1.name, body = file1.asRequestBody()
             )
         )
     }
-    Column {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .height(500.dp)
+    ) {
+        HorizontalDivider(color = Color.LightGray)
+        Text(text = "ApiReviewTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Button(onClick = {
-            try {
+            try
+            {
                 coroutine.launch {
-                    try {
+                    try
+                    {
                         message = apiReview.addReview(
                             params = HashMap<String, RequestBody>().apply {
                                 put(
-                                    "contents",
-                                    "aaaa".toRequestBody("text/plain".toMediaTypeOrNull())
+                                    "contents", "aaaa".toRequestBody("text/plain".toMediaTypeOrNull())
                                 )
                                 put(
-                                    "torang_id",
-                                    "1".toRequestBody("text/plain".toMediaTypeOrNull())
+                                    "torang_id", "1".toRequestBody("text/plain".toMediaTypeOrNull())
                                 )
                                 put(
-                                    "user_id",
-                                    "1".toRequestBody("text/plain".toMediaTypeOrNull())
+                                    "user_id", "1".toRequestBody("text/plain".toMediaTypeOrNull())
                                 )
                                 put(
-                                    "rating",
-                                    "3".toRequestBody("text/plain".toMediaTypeOrNull())
+                                    "rating", "3".toRequestBody("text/plain".toMediaTypeOrNull())
                                 )
-                            },
-                            file = file
+                            }, file = file
                         ).toString()
-                    } catch (e: HttpException) {
+                    }
+                    catch (e: HttpException)
+                    {
                         message = e.toString()
                     }
                 }
-            } catch (e: Exception) {
+            }
+            catch (e: Exception)
+            {
                 message = e.handle()
             }
         }) {
@@ -136,16 +153,36 @@ fun ApiReviewTest(apiReview: ApiReview) {
         }
         Button(onClick = {
             coroutine.launch {
-                try {
+                try
+                {
                     message = apiReview.getReviews(1).toString()
-                } catch (e: Exception) {
+                }
+                catch (e: Exception)
+                {
                     message = e.handle()
                 }
             }
         }) {
             Text(text = "음식점 리뷰 가져오기 테스트")
         }
-        Text(text = message)
+        Button(onClick = {
+            coroutine.launch {
+                try
+                {
+                    message = GsonBuilder().setPrettyPrinting().create().toJson(apiReview.getReviewsById(78))
+
+                }
+                catch (e: Exception)
+                {
+                    message = e.toString()
+                }
+            }
+        }) {
+            Text(text = "리뷰id로 리뷰 가져오기")
+        }
+        Column(Modifier.weight(1f)) {}
+        Text(modifier = Modifier.verticalScroll(rememberScrollState()), text = message)
+        HorizontalDivider(color = Color.LightGray)
     }
 
 }

@@ -12,6 +12,7 @@ import com.sryang.torang_repository.api.ApiComment
 import com.sryang.torang_repository.api.ApiFeed
 import com.sryang.torang_repository.api.ApiRestaurant
 import com.sryang.torang_repository.api.ApiReview
+import com.sryang.torang_repository.api.ApiReviewTest
 import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.TestLoggedInUserDao
@@ -94,7 +95,7 @@ class MainActivity : ComponentActivity()
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
-                //ApiReviewTest(apiReview = apiReview)
+                ApiReviewTest(apiReview = apiReview)
                 //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
                 //SettingRepositoryTest(settingRepository)
                 //MapRepositoryTest(mapRepository = mapRepository)
