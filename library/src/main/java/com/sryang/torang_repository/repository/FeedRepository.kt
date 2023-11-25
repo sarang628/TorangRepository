@@ -2,8 +2,11 @@ package com.sryang.torang_repository.repository
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,8 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.sryang.torang_repository.api.handle
 import com.sryang.torang_repository.data.RemoteComment
@@ -23,7 +29,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
-interface FeedRepository {
+interface FeedRepository
+{
     // 내 리뷰 삭제
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
@@ -40,13 +47,20 @@ interface FeedRepository {
 }
 
 @Composable
-fun FeedRepositoryTest(feedRepository: FeedRepository) {
+fun FeedRepositoryTest(feedRepository: FeedRepository)
+{
     val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
     val gson = Gson().newBuilder().setPrettyPrinting().create()
     var result by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
     val coroutine = rememberCoroutineScope()
-    Column {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .height(700.dp)
+    ) {
+        HorizontalDivider(color = Color.LightGray)
+        Text(text = "FeedRepositoryTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Column {
             Text(text = error, color = Color.Red, fontWeight = FontWeight.Bold)
             Row {
@@ -58,9 +72,12 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 }
                 Button(onClick = {
                     coroutine.launch {
-                        try {
+                        try
+                        {
                             feedRepository.addLike(82)
-                        } catch (e: Exception) {
+                        }
+                        catch (e: Exception)
+                        {
                             error = e.handle()
                         }
                     }
@@ -74,9 +91,12 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
             Row {
                 Button(onClick = {
                     coroutine.launch {
-                        try {
+                        try
+                        {
                             feedRepository.addFavorite(82)
-                        } catch (e: Exception) {
+                        }
+                        catch (e: Exception)
+                        {
                             error = e.handle()
                         }
                     }

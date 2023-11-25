@@ -1,13 +1,18 @@
 package com.sryang.torang_repository.api
 
+import retrofit2.http.Field
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface ApiReport {
+interface ApiReport
+{
     @FormUrlEncoded
     @POST("reportReason")
-    suspend fun reportReason(@FieldMap params: Map<String, String>): Boolean
+    suspend fun reportReason(
+        @Field("reviewId") reviewId: Int,
+        @Field("reason") reason: String
+    ): Boolean
 
     @FormUrlEncoded
     @POST("reportAfterSupport")
@@ -15,5 +20,5 @@ interface ApiReport {
 
     @FormUrlEncoded
     @POST("hasFeed")
-    suspend fun hasFeed(@FieldMap params: Map<String, String>): Boolean
+    suspend fun hasFeed(@Field("reviewId") reviewId: Int): Boolean
 }
