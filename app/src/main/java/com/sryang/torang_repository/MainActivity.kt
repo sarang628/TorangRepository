@@ -16,6 +16,7 @@ import com.sryang.torang_repository.api.ApiReviewTest
 import com.sryang.torang_repository.data.dao.FavoriteDao
 import com.sryang.torang_repository.data.dao.LoggedInUserDao
 import com.sryang.torang_repository.data.dao.TestLoggedInUserDao
+import com.sryang.torang_repository.di.repository.api.ApiRestaurantTest
 import com.sryang.torang_repository.repository.EditProfileRepository
 import com.sryang.torang_repository.repository.FeedRepository
 import com.sryang.torang_repository.repository.FeedRepositoryTest
@@ -91,18 +92,18 @@ class MainActivity : ComponentActivity()
                 //ApiFeedTest(apiFeed)
                 //ReviewServiceTest(remoteReviewService = remoteReviewService)
                 //FeedRepositoryTest(feedRepository = feedRepository) //ProfileRepositoryTest(profileRepository = profileRepository)
-                //ApiRestaurantTest(apiRestaurant = apiRestaurant)
+                ApiRestaurantTest(apiRestaurant = apiRestaurant)
                 //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
                 //LoginRepositoryTest(loginRepository = loginRepository)
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
-                ApiReviewTest(apiReview = apiReview)
+//                ApiReviewTest(apiReview = apiReview)
                 //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
                 //SettingRepositoryTest(settingRepository)
                 //MapRepositoryTest(mapRepository = mapRepository)
                 //TestLoggedInUserDao(loggedInUserDao = loggedInUserDao)
                 //TestFollowRepository(followRepository = followRepository)
                 //LoginRepositoryTest(loginRepository = loginRepository)
-                TestReportRepository(reportRepository = reportRepository)
+//                TestReportRepository(reportRepository = reportRepository)
             }
         }
     }

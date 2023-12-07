@@ -15,7 +15,7 @@ import retrofit2.http.*
 interface ApiRestaurant {
     @FormUrlEncoded
     @POST("getAllRestaurant")
-    suspend fun getAllRestaurant(@FieldMap params: Map<String, String>): ArrayList<RemoteRestaurant>
+    suspend fun getAllRestaurant(): ArrayList<RemoteRestaurant>
 
     @POST("getFilterRestaurant")
     suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<RemoteRestaurant>
