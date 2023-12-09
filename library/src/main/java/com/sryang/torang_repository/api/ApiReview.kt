@@ -45,8 +45,7 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 import java.io.File
 
-interface ApiReview
-{
+interface ApiReview {
     @FormUrlEncoded
     @POST("getReviews")
     suspend fun getReviews(@Field("restaurant_id") id: Int): List<RemoteFeed>
@@ -57,7 +56,22 @@ interface ApiReview
 
     @Multipart
     @POST("addReview")
-    suspend fun addReview(@PartMap params: HashMap<String, RequestBody>, @Part file: ArrayList<MultipartBody.Part>): JsonObject
+    suspend fun addReview(
+        @PartMap params: HashMap<String, RequestBody>,
+        @Part file: ArrayList<MultipartBody.Part>
+    ): JsonObject
+
+    @Multipart
+    @POST("addReview")
+    suspend fun addReview1(
+        @Part("review_id") review_id: Int,
+        @Part("contents") contents: String,
+        @Part("rating") rating: Float,
+        @Part("torang_id") torang_id: Int,
+        @Part("user_id") user_id: Int,
+        @Part("uploadedImage") uploadedImage: List<Int>,
+        @Part file: ArrayList<MultipartBody.Part>
+    ): JsonObject
 
     @POST("updateReview")
     suspend fun updateReview(@Body reviewBody: RemoteReview): Call<RemoteReview>
@@ -67,7 +81,10 @@ interface ApiReview
 
     @Multipart
     @POST("updateReview")
-    suspend fun updateReview(@PartMap params: HashMap<String, RequestBody>, @Part pictures: ArrayList<MultipartBody.Part>): RemoteReview
+    suspend fun updateReview(
+        @PartMap params: HashMap<String, RequestBody>,
+        @Part pictures: ArrayList<MultipartBody.Part>
+    ): RemoteReview
 
     @FormUrlEncoded
     @POST("getMyReviews")
@@ -91,22 +108,21 @@ interface ApiReview
 }
 
 @Composable
-fun ApiReviewTest(apiReview: ApiReview)
-{
+fun ApiReviewTest(apiReview: ApiReview) {
     val coroutine = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
 
-    val file1 = Uri.fromFile(
+    /*val file1 = Uri.fromFile(
         File("/storage/emulated/0/DCIM/06 interior/IMG_2082.JPG")
-    ).toFile()
+    ).toFile()*/
 
     ///storage/emulated/0/DCIM/06 interior/IMG_2082.JPG
     val file = ArrayList<MultipartBody.Part>().apply {
-        add(
+        /*add(
             MultipartBody.Part.createFormData(
                 name = "file", filename = file1.name, body = file1.asRequestBody()
             )
-        )
+        )*/
     }
     Column(
         Modifier
@@ -116,49 +132,34 @@ fun ApiReviewTest(apiReview: ApiReview)
         HorizontalDivider(color = Color.LightGray)
         Text(text = "ApiReviewTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Button(onClick = {
-            try
-            {
+            try {
                 coroutine.launch {
-                    try
-                    {
-                        message = apiReview.addReview(
-                            params = HashMap<String, RequestBody>().apply {
-                                put(
-                                    "contents", "aaaa".toRequestBody("text/plain".toMediaTypeOrNull())
-                                )
-                                put(
-                                    "torang_id", "1".toRequestBody("text/plain".toMediaTypeOrNull())
-                                )
-                                put(
-                                    "user_id", "1".toRequestBody("text/plain".toMediaTypeOrNull())
-                                )
-                                put(
-                                    "rating", "3".toRequestBody("text/plain".toMediaTypeOrNull())
-                                )
-                            }, file = file
+                    try {
+                        message = apiReview.addReview1(
+                            review_id = 10,
+                            contents = "contents",
+                            rating = 3.0f,
+                            torang_id = 1,
+                            user_id = 1,
+                            file = file,
+                            uploadedImage = arrayOf(1,2,3).toList()
                         ).toString()
-                    }
-                    catch (e: HttpException)
-                    {
+                    } catch (e: HttpException) {
                         message = e.toString()
                     }
                 }
-            }
-            catch (e: Exception)
-            {
+            } catch (e: Exception) {
                 message = e.handle()
             }
         }) {
             Text(text = "리뷰 등록 테스트")
         }
+
         Button(onClick = {
             coroutine.launch {
-                try
-                {
+                try {
                     message = apiReview.getReviews(1).toString()
-                }
-                catch (e: Exception)
-                {
+                } catch (e: Exception) {
                     message = e.handle()
                 }
             }
@@ -167,13 +168,11 @@ fun ApiReviewTest(apiReview: ApiReview)
         }
         Button(onClick = {
             coroutine.launch {
-                try
-                {
-                    message = GsonBuilder().setPrettyPrinting().create().toJson(apiReview.getReviewsById(78))
+                try {
+                    message = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(apiReview.getReviewsById(78))
 
-                }
-                catch (e: Exception)
-                {
+                } catch (e: Exception) {
                     message = e.toString()
                 }
             }
