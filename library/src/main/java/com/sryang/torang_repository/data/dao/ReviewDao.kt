@@ -1,12 +1,21 @@
 package com.sryang.torang_repository.data.dao
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sryang.torang_repository.data.entity.FeedEntity
-import com.sryang.torang_repository.data.entity.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 @Dao
 interface ReviewDao {
@@ -16,6 +25,42 @@ interface ReviewDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(users: List<FeedEntity>)
 
-    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
-    fun getFeedbyReviewId(reviewId: Int): Flow<FeedEntity?>
+    @Query(
+        """
+        select * 
+        from FeedEntity 
+        where reviewId = (:reviewId) order by FeedEntity.createDate desc
+        """
+    )
+    fun getFeedFlowbyReviewId(reviewId: Int): Flow<FeedEntity?>
+
+    @Query(
+        """
+        select * 
+        from FeedEntity 
+        where reviewId = (:reviewId) order by FeedEntity.createDate desc
+        """
+    )
+    suspend fun getFeedbyReviewId(reviewId: Int): FeedEntity
+}
+
+@Composable
+fun ReviewDaoTest(reviewDao: ReviewDao) {
+    val coroutine = rememberCoroutineScope()
+    var text by remember { mutableStateOf("") }
+    Column {
+        Button(onClick = {
+            coroutine.launch {
+                try {
+                    val feed = reviewDao.getFeedbyReviewId(110)
+                    text = feed.toString()
+                } catch (e: Exception) {
+                    text = e.message.toString()
+                }
+            }
+        }) {
+            Text(text = "getFeedbyReviewId : 110")
+        }
+        Text(text = text)
+    }
 }
