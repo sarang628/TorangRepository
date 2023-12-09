@@ -65,7 +65,7 @@ interface ApiReview {
     @POST("addReview")
     suspend fun addReview1(
         @Part("review_id") review_id: Int? = null,
-        @Part("contents") contents: String,
+        @Part("contents") contents: RequestBody,
         @Part("rating") rating: Float,
         @Part("torang_id") torang_id: Int,
         @Part("user_id") user_id: Int,
@@ -137,7 +137,7 @@ fun ApiReviewTest(apiReview: ApiReview) {
                     try {
                         message = apiReview.addReview1(
                             review_id = 10,
-                            contents = "contents",
+                            contents = "contents1".toRequestBody(),
                             rating = 3.0f,
                             torang_id = 1,
                             user_id = 1,
