@@ -64,13 +64,13 @@ interface ApiReview {
     @Multipart
     @POST("addReview")
     suspend fun addReview1(
-        @Part("review_id") review_id: Int,
+        @Part("review_id") review_id: Int? = null,
         @Part("contents") contents: String,
         @Part("rating") rating: Float,
         @Part("torang_id") torang_id: Int,
         @Part("user_id") user_id: Int,
-        @Part("uploadedImage") uploadedImage: List<Int>,
-        @Part file: ArrayList<MultipartBody.Part>
+        @Part("uploadedImage") uploadedImage: List<Int>? = null,
+        @Part file: ArrayList<MultipartBody.Part>? = null
     ): JsonObject
 
     @POST("updateReview")
@@ -142,7 +142,7 @@ fun ApiReviewTest(apiReview: ApiReview) {
                             torang_id = 1,
                             user_id = 1,
                             file = file,
-                            uploadedImage = arrayOf(1,2,3).toList()
+                            uploadedImage = arrayOf(1, 2, 3).toList()
                         ).toString()
                     } catch (e: HttpException) {
                         message = e.toString()
