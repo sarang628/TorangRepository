@@ -1,6 +1,5 @@
 package com.sryang.torang_repository.api
 
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,24 +16,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toFile
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.sryang.torang_repository.data.MenuReview
 import com.sryang.torang_repository.data.RemoteReview
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
-import retrofit2.HttpException
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FieldMap
@@ -43,7 +37,6 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
-import java.io.File
 
 interface ApiReview {
     @FormUrlEncoded
@@ -57,13 +50,6 @@ interface ApiReview {
     @Multipart
     @POST("addReview")
     suspend fun addReview(
-        @PartMap params: HashMap<String, RequestBody>,
-        @Part file: ArrayList<MultipartBody.Part>
-    ): JsonObject
-
-    @Multipart
-    @POST("addReview")
-    suspend fun addReview1(
         @Part("review_id") review_id: Int? = null,
         @Part("contents") contents: RequestBody,
         @Part("rating") rating: Float,
@@ -71,7 +57,7 @@ interface ApiReview {
         @Part("user_id") user_id: Int,
         @Part("uploadedImage") uploadedImage: List<Int>? = null,
         @Part file: ArrayList<MultipartBody.Part>? = null
-    ): JsonObject
+    ): RemoteFeed
 
     @POST("updateReview")
     suspend fun updateReview(@Body reviewBody: RemoteReview): Call<RemoteReview>
@@ -132,27 +118,24 @@ fun ApiReviewTest(apiReview: ApiReview) {
         HorizontalDivider(color = Color.LightGray)
         Text(text = "ApiReviewTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Button(onClick = {
-            try {
-                coroutine.launch {
-                    try {
-                        message = apiReview.addReview1(
-                            review_id = 10,
-                            contents = "contents1".toRequestBody(),
-                            rating = 3.0f,
-                            torang_id = 1,
-                            user_id = 1,
-                            file = file,
-                            uploadedImage = arrayOf(1, 2, 3).toList()
-                        ).toString()
-                    } catch (e: HttpException) {
-                        message = e.toString()
-                    }
+            coroutine.launch {
+                try {
+                    val result = apiReview.addReview(
+                        review_id = 118,
+                        contents = "contents1".toRequestBody(),
+                        rating = 3.0f,
+                        torang_id = 1,
+                        user_id = 1,
+                        file = file,
+                        uploadedImage = arrayOf(252).toList()
+                    )
+                    message = GsonBuilder().setPrettyPrinting().create().toJson(result)
+                } catch (e: Exception) {
+                    message = e.toString()
                 }
-            } catch (e: Exception) {
-                message = e.handle()
             }
         }) {
-            Text(text = "리뷰 등록 테스트")
+            Text(text = "Review Regist Test")
         }
 
         Button(onClick = {

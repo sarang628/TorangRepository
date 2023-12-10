@@ -78,7 +78,10 @@ interface FeedDao {
     suspend fun deleteAll()
 
     @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
-    fun getFeed(reviewId: Int): Flow<ReviewAndImageEntity>
+    fun getFeedFlow(reviewId: Int): Flow<ReviewAndImageEntity>
+
+    @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
+    suspend fun getFeed(reviewId: Int): ReviewAndImageEntity
 
     @Transaction
     suspend fun deleteAllAndInsertAll(

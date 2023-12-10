@@ -66,7 +66,7 @@ interface ApiFeed {
 }
 
 @Composable
-fun LikeTest(apiFeed: ApiFeed) {
+fun ApiFeedLikeTest(apiFeed: ApiFeed) {
     val scope = rememberCoroutineScope()
 
     var error: String by remember { mutableStateOf("") }
@@ -193,7 +193,7 @@ fun ApiFeedTest(remoteFeedServices: ApiFeed) {
 }
 
 @Composable
-fun FavoriteTest(apiFeed: ApiFeed) {
+fun ApiFeedFavoriteTest(apiFeed: ApiFeed) {
     val scope = rememberCoroutineScope()
 
     var error: String by remember { mutableStateOf("") }
