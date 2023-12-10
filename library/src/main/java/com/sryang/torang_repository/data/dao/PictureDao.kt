@@ -19,4 +19,7 @@ interface PictureDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPictures(reviewImages: List<ReviewImageEntity>)
+
+    @Query("delete from ReviewImageEntity Where reviewId = :reviewId")
+    suspend fun removePicture(reviewId: Int)
 }
