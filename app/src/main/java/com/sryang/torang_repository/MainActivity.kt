@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                FeedRepositoryTest(feedRepository = feedRepository)
+                //FeedRepositoryTest(feedRepository = feedRepository)
                 //FavoriteDaoTest(feedDao = favoriteDao)
                 //FavoriteTest(apiFeed = apiFeed)
                 //LikeTest(apiFeed = apiFeed)

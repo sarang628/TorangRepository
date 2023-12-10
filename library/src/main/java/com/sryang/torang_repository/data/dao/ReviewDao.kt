@@ -13,6 +13,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
+import com.google.gson.GsonBuilder
 import com.sryang.torang_repository.data.entity.FeedEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -42,6 +44,9 @@ interface ReviewDao {
         """
     )
     suspend fun getFeedbyReviewId(reviewId: Int): FeedEntity
+
+    @Update
+    suspend fun updateById(feedEntity: FeedEntity)
 }
 
 @Composable
@@ -53,13 +58,24 @@ fun ReviewDaoTest(reviewDao: ReviewDao) {
             coroutine.launch {
                 try {
                     val feed = reviewDao.getFeedbyReviewId(110)
-                    text = feed.toString()
+                    text = GsonBuilder().setPrettyPrinting().create().toJson(feed)
                 } catch (e: Exception) {
                     text = e.message.toString()
                 }
             }
         }) {
             Text(text = "getFeedbyReviewId : 110")
+        }
+        Button(onClick = {
+            coroutine.launch {
+                reviewDao.updateById(
+                    reviewDao.getFeedbyReviewId(110).copy(
+                        contents = "abcde"
+                    )
+                )
+            }
+        }) {
+            Text(text = "updateReview")
         }
         Text(text = text)
     }
