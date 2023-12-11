@@ -1,6 +1,7 @@
 package com.sryang.torang_repository.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -22,4 +23,7 @@ interface PictureDao {
 
     @Query("delete from ReviewImageEntity Where reviewId = :reviewId")
     suspend fun removePicture(reviewId: Int)
+
+    @Query("DELETE FROM ReviewImageEntity")
+    suspend fun deleteAll()
 }
