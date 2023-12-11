@@ -39,8 +39,9 @@ interface ApiFeed {
     @POST("getFeeds")
     suspend fun getFeeds(@Header("authorization") auth: String?): List<RemoteFeed>
 
+    @FormUrlEncoded
     @POST("deleteReview")
-    suspend fun deleteReview(@Body review: ReviewDeleteRequestVO): RemoteReview
+    suspend fun deleteReview(@Field("reviewId") reviewId: Int)
 
     @FormUrlEncoded
     @POST("addLike")

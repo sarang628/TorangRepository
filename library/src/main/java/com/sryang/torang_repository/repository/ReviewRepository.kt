@@ -58,14 +58,10 @@ fun ReviewRepositoryTest(
     ) -> Unit)? = null
 ) {
     Column {
-        AddReviewTest(reviewRepository = reviewRepository, gallery = gallery)
-        UpdateReviewTest(reviewRepository = reviewRepository, gallery = gallery)
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "getReview")
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "deleteReview")
-        }
+        //AddReviewTest(reviewRepository = reviewRepository, gallery = gallery)
+        //UpdateReviewTest(reviewRepository = reviewRepository, gallery = gallery)
+        //GetReviewTest()
+        DeleteReviewTest(reviewRepository = reviewRepository)
     }
 }
 
@@ -265,5 +261,33 @@ fun UpdateReviewTest(
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.height(8.dp))
+    }
+}
+
+@Composable
+fun GetReviewTest() {
+    Button(onClick = { /*TODO*/ }) {
+        Text(text = "getReview")
+    }
+}
+
+@Composable
+fun DeleteReviewTest(reviewRepository: ReviewRepository) {
+    var reviewId by remember { mutableStateOf("10") }
+    val coroutine = rememberCoroutineScope()
+    Column {
+        OutlinedTextField(
+            value = reviewId,
+            onValueChange = { reviewId = it },
+            label = {
+                Text(text = "reviewId")
+            })
+        Button(onClick = {
+            coroutine.launch {
+
+            }
+        }) {
+            Text(text = "deleteReview")
+        }
     }
 }

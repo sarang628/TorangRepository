@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,8 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
-interface FeedRepository
-{
+interface FeedRepository {
     // 내 리뷰 삭제
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
@@ -47,8 +47,7 @@ interface FeedRepository
 }
 
 @Composable
-fun FeedRepositoryTest(feedRepository: FeedRepository)
-{
+fun FeedRepositoryTest(feedRepository: FeedRepository) {
     val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
     val gson = Gson().newBuilder().setPrettyPrinting().create()
     var result by remember { mutableStateOf("") }
@@ -72,12 +71,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository)
                 }
                 Button(onClick = {
                     coroutine.launch {
-                        try
-                        {
+                        try {
                             feedRepository.addLike(82)
-                        }
-                        catch (e: Exception)
-                        {
+                        } catch (e: Exception) {
                             error = e.handle()
                         }
                     }
@@ -91,12 +87,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository)
             Row {
                 Button(onClick = {
                     coroutine.launch {
-                        try
-                        {
+                        try {
                             feedRepository.addFavorite(82)
-                        }
-                        catch (e: Exception)
-                        {
+                        } catch (e: Exception) {
                             error = e.handle()
                         }
                     }
@@ -121,6 +114,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository)
                     )
                 }
             }
+            Row {
+                DeleteFeedTest(feedRepository)
+            }
         }
         LazyColumn(content = {
             items(feeds.size) {
@@ -128,5 +124,26 @@ fun FeedRepositoryTest(feedRepository: FeedRepository)
             }
         })
         Text(text = result)
+    }
+}
+
+@Composable
+fun DeleteFeedTest(feedRepository: FeedRepository) {
+    var reviewId by remember { mutableStateOf("10") }
+    val coroutine = rememberCoroutineScope()
+    Column {
+        OutlinedTextField(
+            value = reviewId,
+            onValueChange = { reviewId = it },
+            label = {
+                Text(text = "reviewId")
+            })
+        Button(onClick = {
+            coroutine.launch {
+                feedRepository.deleteFeed(reviewId.toInt())
+            }
+        }) {
+            Text(text = "deleteReview")
+        }
     }
 }
