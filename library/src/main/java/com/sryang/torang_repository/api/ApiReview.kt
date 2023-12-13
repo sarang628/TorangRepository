@@ -20,9 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import com.sryang.torang_repository.data.MenuReview
-import com.sryang.torang_repository.data.RemoteReview
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -45,7 +43,7 @@ interface ApiReview {
 
     @FormUrlEncoded
     @POST("getMyReview")
-    suspend fun getMyReview(@FieldMap params: Map<String, String>): RemoteReview
+    suspend fun getMyReview(@FieldMap params: Map<String, String>): RemoteFeed
 
     @Multipart
     @POST("addReview")
@@ -60,31 +58,31 @@ interface ApiReview {
     ): RemoteFeed
 
     @POST("updateReview")
-    suspend fun updateReview(@Body reviewBody: RemoteReview): Call<RemoteReview>
+    suspend fun updateReview(@Body reviewBody: RemoteFeed): Call<RemoteFeed>
 
     @POST("deleteReview")
-    suspend fun deleteReview(@Body review: RemoteReview): RemoteReview
+    suspend fun deleteReview(@Body review: RemoteFeed): RemoteFeed
 
     @Multipart
     @POST("updateReview")
     suspend fun updateReview(
         @PartMap params: HashMap<String, RequestBody>,
         @Part pictures: ArrayList<MultipartBody.Part>
-    ): RemoteReview
+    ): RemoteFeed
 
     @FormUrlEncoded
     @POST("getMyReviews")
-    suspend fun getMyReviews(@FieldMap params: Map<String, String>): ArrayList<RemoteReview>
+    suspend fun getMyReviews(@FieldMap params: Map<String, String>): ArrayList<RemoteFeed>
 
     @POST("addMenuReview")
     suspend fun addMenuReview(@Body menuReview: MenuReview): Call<MenuReview>
 
     @POST("getMyMenuReviews")
-    suspend fun getMyMenuReviews(@Body review: RemoteReview): Call<ArrayList<MenuReview>>
+    suspend fun getMyMenuReviews(@Body review: RemoteFeed): Call<ArrayList<MenuReview>>
 
     @FormUrlEncoded
     @POST("getMyReviewsByUserId")
-    suspend fun getMyReviewsByUserId(@FieldMap params: Map<String, String>): Call<ArrayList<RemoteReview>>
+    suspend fun getMyReviewsByUserId(@Field("userId") userId: Int): List<RemoteFeed>
 
     @FormUrlEncoded
     @POST("getReviewsById")
@@ -131,7 +129,7 @@ fun ApiReviewTest(apiReview: ApiReview) {
                     )
                     message = GsonBuilder().setPrettyPrinting().create().toJson(result)
                 } catch (e: Exception) {
-                    message = e.toString()
+                    message = e.handle()
                 }
             }
         }) {
@@ -156,11 +154,23 @@ fun ApiReviewTest(apiReview: ApiReview) {
                         .toJson(apiReview.getReviewsById(78))
 
                 } catch (e: Exception) {
-                    message = e.toString()
+                    message = e.handle()
                 }
             }
         }) {
             Text(text = "리뷰id로 리뷰 가져오기")
+        }
+        Button(onClick = {
+            coroutine.launch {
+                try {
+                    message = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(apiReview.getMyReviewsByUserId(5))
+                } catch (e: Exception) {
+                    message = e.handle()
+                }
+            }
+        }) {
+            Text(text = "userid로 리뷰 가져오기")
         }
         Column(Modifier.weight(1f)) {}
         Text(modifier = Modifier.verticalScroll(rememberScrollState()), text = message)

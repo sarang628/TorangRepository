@@ -25,7 +25,9 @@ fun ApiTest(
 //        ApiCommentTest(apiComment = apiComment, sessionService = sessionService)
 //        ApiFeedTest(apiFeed)
 //                ApiRestaurantTest(apiRestaurant = apiRestaurant)
-//        ApiReviewTest(apiReview = apiReview)
+        apiReview?.let {
+            ApiReviewTest(apiReview = apiReview)
+        }
         //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
     }
 }

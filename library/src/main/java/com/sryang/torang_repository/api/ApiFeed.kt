@@ -17,12 +17,9 @@ import androidx.compose.ui.Modifier
 import com.google.gson.GsonBuilder
 import com.sryang.torang_repository.data.RemoteFavorite
 import com.sryang.torang_repository.data.RemoteLike
-import com.sryang.torang_repository.data.RemoteReview
-import com.sryang.torang_repository.data.remote.request.ReviewDeleteRequestVO
 import com.sryang.torang_repository.data.remote.response.RemoteFeed
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header

@@ -93,7 +93,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 RepositoryTest(
-                    feedRepository = feedRepository,
+//                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
 //                    loginRepository = loginRepository,
@@ -101,14 +101,14 @@ class MainActivity : ComponentActivity() {
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
-                    reviewRepository = reviewRepository
+//                    reviewRepository = reviewRepository
                     )
                 ApiTest(
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
 //                    sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
-//                    apiReview = apiReview,
+                    apiReview = apiReview,
 //                    apiAlarm = apiAlarm,
                 )
                 DaoTest(
