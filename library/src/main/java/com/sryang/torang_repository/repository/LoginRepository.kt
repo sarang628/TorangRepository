@@ -15,11 +15,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.sarang.torang.util.Encrypt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 interface LoginRepository {
     suspend fun emailLogin(email: String, password: String)
+
+    suspend fun encEmailLogin(email: String, password: String) {
+        emailLogin(email = email, password = Encrypt.encrypt(password))
+    }
+
     suspend fun logout()
     suspend fun sessionCheck(): Boolean
 
@@ -54,7 +60,7 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
             Button(onClick = {
                 coroutine.launch {
                     try {
-                        loginRepository.emailLogin(id, pw).toString()
+                        loginRepository.encEmailLogin(id, pw).toString()
                         error = ""
                         success = "로그인에 성공하였습니다."
                     } catch (e: Exception) {

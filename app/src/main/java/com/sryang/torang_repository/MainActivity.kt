@@ -92,30 +92,31 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Column(Modifier.verticalScroll(rememberScrollState())) {
+
                 RepositoryTest(
 //                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
-//                    loginRepository = loginRepository,
+                    loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
 //                    reviewRepository = reviewRepository
                     )
-                ApiTest(
+//                ApiTest(
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
 //                    sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
-                    apiReview = apiReview,
+//                    apiReview = apiReview,
 //                    apiAlarm = apiAlarm,
-                )
-                DaoTest(
+//                )
+//                DaoTest(
 //                    favoriteDao = favoriteDao,
 //                    loggedInUserDao = loggedInUserDao,
 //                    reviewDao = reviewDao
-                )
+//                )
                 //SessionClientServiceTest(sessionClientService = sessionClientService)
             }
         }
