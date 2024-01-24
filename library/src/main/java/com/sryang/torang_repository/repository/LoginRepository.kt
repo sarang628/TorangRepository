@@ -33,7 +33,28 @@ interface LoginRepository {
 
     fun getUserName(): Flow<String>
 
+    suspend fun encCheckEmail(email: String, password: String): String {
+        return checkEmail(email = email, password = Encrypt.encrypt(password))
+    }
+
     suspend fun checkEmail(email: String, password: String): String
+
+    suspend fun encConfirmCode(
+        token: String,
+        confirmCode: String,
+        name: String,
+        email: String,
+        password: String
+    ): Boolean {
+        return confirmCode(
+            token = token,
+            confirmCode = confirmCode,
+            name = name,
+            email = email,
+            password = Encrypt.encrypt(password)
+        )
+    }
+
     suspend fun confirmCode(
         token: String,
         confirmCode: String,
