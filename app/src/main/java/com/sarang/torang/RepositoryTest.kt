@@ -3,6 +3,7 @@ package com.sarang.torang
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.sarang.instagralleryModule.GalleryNavHost
+import com.sarang.torang.repository.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FeedRepositoryTest
@@ -15,9 +16,11 @@ import com.sarang.torang.repository.ReportRepository
 import com.sarang.torang.repository.ReviewRepository
 import com.sarang.torang.repository.ReviewRepositoryTest
 import com.sarang.torang.repository.SettingsRepository
+import com.sarang.torang.repository.CommentRepositoryTest
 
 @Composable
 fun RepositoryTest(
+    commentRepository : CommentRepository? = null,
     feedRepository: FeedRepository? = null,
     profileRepository: ProfileRepository? = null,
     editProfileRepository: EditProfileRepository? = null,
@@ -29,6 +32,9 @@ fun RepositoryTest(
     reviewRepository: ReviewRepository? = null
 ) {
     Column {
+        commentRepository?.let {
+            CommentRepositoryTest(commentRepository = commentRepository)
+        }
         feedRepository?.let {
             FeedRepositoryTest(feedRepository = it)
         }

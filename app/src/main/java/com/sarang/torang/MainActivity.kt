@@ -15,6 +15,7 @@ import com.sarang.torang.api.ApiReview
 import com.sarang.torang.data.dao.FavoriteDao
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.data.dao.ReviewDao
+import com.sarang.torang.repository.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FollowRepository
@@ -86,7 +87,10 @@ class MainActivity : ComponentActivity() {
     lateinit var reviewDao: ReviewDao
 
     @Inject
-    lateinit var reviewRepository : ReviewRepository
+    lateinit var reviewRepository: ReviewRepository
+
+    @Inject
+    lateinit var commentRepository: CommentRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +98,7 @@ class MainActivity : ComponentActivity() {
             Column(Modifier.verticalScroll(rememberScrollState())) {
 
                 RepositoryTest(
+                    commentRepository = commentRepository,
 //                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
@@ -102,8 +107,8 @@ class MainActivity : ComponentActivity() {
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
-//                    reviewRepository = reviewRepository
-                    )
+//                    reviewRepository = reviewRepository,
+                )
 //                ApiTest(
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
