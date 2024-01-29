@@ -32,6 +32,7 @@ interface CommentRepository {
 fun CommentRepositoryTest(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
     var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
+    var error by remember { mutableStateOf("") }
     Row {
         Column(
             Modifier
@@ -40,7 +41,11 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
         ) {
             Button(onClick = {
                 coroutine.launch {
-                    list = commentRepository.getComment(329).list
+                    try {
+                        list = commentRepository.getComment(329).list
+                    } catch (e: Exception) {
+                        error = e.message.toString()
+                    }
                 }
             }) {
                 Text(text = "getComment()")
@@ -59,6 +64,7 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
                 .height(300.dp)
         ) {
 
+            Text(text = error)
             LazyColumn(content = {
                 items(list.size) {
                     HorizontalDivider()
