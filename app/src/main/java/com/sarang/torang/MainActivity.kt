@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
             Column(Modifier.verticalScroll(rememberScrollState())) {
 
                 RepositoryTest(
-//                    feedRepository = feedRepository,
+                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
                     loginRepository = loginRepository,
