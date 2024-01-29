@@ -42,11 +42,11 @@ object DateConverter {
     fun formattedDate(createDate: String): String {
         val date = transformDate(createDate = createDate)
         return when (date) {
-            is DateDiffType.SECOND -> "${date.second} sec"
-            is DateDiffType.MINUTE -> "${date.minute} min"
-            is DateDiffType.HOUR -> "${date.hour} hour"
-            is DateDiffType.DATE -> "${date.date} date"
-            is DateDiffType.WEEK -> "${date.week} week"
+            is DateDiffType.SECOND -> "${date.second}s"
+            is DateDiffType.MINUTE -> "${date.minute}m"
+            is DateDiffType.HOUR -> "${date.hour}h"
+            is DateDiffType.DATE -> "${date.date}d"
+            is DateDiffType.WEEK -> "${date.week}w"
         }
     }
 }
