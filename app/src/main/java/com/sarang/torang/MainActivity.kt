@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Modifier
 import com.sarang.torang.api.ApiAlarm
 import com.sarang.torang.api.ApiComment
+import com.sarang.torang.api.ApiCommentLike
 import com.sarang.torang.api.ApiFeed
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
@@ -92,31 +93,36 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var commentRepository: CommentRepository
 
+    @Inject
+    lateinit var apiCommentLike: ApiCommentLike
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Column(Modifier.verticalScroll(rememberScrollState())) {
 
                 RepositoryTest(
-                    commentRepository = commentRepository,
+//                    commentRepository = commentRepository,
 //                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
-                    loginRepository = loginRepository,
+//                    loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
 //                    reviewRepository = reviewRepository,
                 )
-//                ApiTest(
+                ApiTest(
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
 //                    sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
 //                    apiAlarm = apiAlarm,
-//                )
+                    apiCommentLike = apiCommentLike,
+                    sessionClientService = sessionClientService
+                )
 //                DaoTest(
 //                    favoriteDao = favoriteDao,
 //                    loggedInUserDao = loggedInUserDao,
