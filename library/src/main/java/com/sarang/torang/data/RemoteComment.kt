@@ -8,7 +8,8 @@ data class RemoteComment(
     val comment: String,
     val user: RemoteCommentUser,
     val create_date: String,
-    val comment_like_id: Int?
+    val comment_like_id: Int?,
+    val comment_like_count: Int
 )
 
 data class RemoteCommentUser(

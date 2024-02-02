@@ -73,6 +73,7 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
                         Text(text = "comment = ${list[it].comment}")
                         Text(text = "create_date = ${list[it].create_date}")
                         Text(text = "comment_like_id = ${list[it].comment_like_id}")
+                        Text(text = "comment_like_count = ${list[it].comment_like_count}")
                     }
                     HorizontalDivider(Modifier.height(10.dp))
                 }
