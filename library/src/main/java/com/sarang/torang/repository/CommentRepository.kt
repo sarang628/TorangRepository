@@ -68,7 +68,12 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
             LazyColumn(content = {
                 items(list.size) {
                     HorizontalDivider()
-                    Text(text = list[it].toString())
+                    Column {
+                        Text(text = "comment_id = ${list[it].comment_id}")
+                        Text(text = "comment = ${list[it].comment}")
+                        Text(text = "create_date = ${list[it].create_date}")
+                        Text(text = "comment_like_id = ${list[it].comment_like_id}")
+                    }
                     HorizontalDivider(Modifier.height(10.dp))
                 }
             })
