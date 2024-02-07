@@ -115,13 +115,13 @@ class MainActivity : ComponentActivity() {
                 )
                 ApiTest(
 //                    apiFeed = apiFeed,
-//                    apiComment = apiComment,
-//                    sessionService = sessionService,
+                    apiComment = apiComment,
+                    sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
 //                    apiAlarm = apiAlarm,
-                    apiCommentLike = apiCommentLike,
-                    sessionClientService = sessionClientService
+//                    apiCommentLike = apiCommentLike,
+//                    sessionClientService = sessionClientService
                 )
 //                DaoTest(
 //                    favoriteDao = favoriteDao,

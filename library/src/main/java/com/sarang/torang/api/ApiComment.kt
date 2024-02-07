@@ -6,6 +6,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.sarang.torang.data.RemoteComment
 import com.sarang.torang.data.RemoteCommentList
 import com.sarang.torang.session.SessionService
@@ -26,7 +28,9 @@ interface ApiComment {
     suspend fun addComment(
         @Header("authorization") auth: String,
         @Field("review_id") review_id: Int,
-        @Field("comment") comment: String
+        @Field("comment") comment: String,
+        @Field("parentCommentId") parentCommentId: Int? = null,
+        @Field("tagUserId") tagUserId: Int? = null,
     ): RemoteComment
 
     @POST("modifyComment")
@@ -42,19 +46,33 @@ interface ApiComment {
         @Header("authorization") auth: String,
         @Field("review_id") reviewId: Int
     ): RemoteCommentList
+
+    @FormUrlEncoded
+    @POST("getSubComments")
+    suspend fun getSubComments(
+        @Header("authorization") auth: String,
+        @Field("parentCommentId") parentCommentId: Int
+    ): List<RemoteComment>
 }
 
 @Composable
-fun ApiCommentTest(apiComment: ApiComment, sessionService: SessionService) {
+fun ApiCommentTest(apiComment: ApiComment, sessionService: SessionService?) {
     val coroutine = rememberCoroutineScope()
     Column {
+        Text(text = "ApiCommentTest", fontSize = 21.sp, fontWeight = FontWeight.Bold)
         Button(onClick = {
             coroutine.launch {
-                apiComment.addComment(
-                    review_id = 82,
-                    auth = "",
-                    comment = "ㅋㅋㅋㅋㅋㅋ"
-                )
+                try {
+                    apiComment.addComment(
+                        review_id = 329,
+                        auth = sessionService!!.getToken()!!,
+                        comment = "ㅋㅋㅋㅋㅋㅋ",
+                        parentCommentId = 145,
+                        tagUserId = 1
+                    )
+                } catch (e: Exception) {
+                    Log.e("ApiCommentTest", e.message.toString())
+                }
             }
         }) {
             Text(text = "add")
@@ -69,7 +87,7 @@ fun ApiCommentTest(apiComment: ApiComment, sessionService: SessionService) {
         }
 
         Button(onClick = {
-            sessionService.getToken()?.let {
+            sessionService?.getToken()?.let {
                 coroutine.launch {
                     val list = apiComment.getComments(it, 82)
                     Log.d("ApiCommentTest", list.toString())

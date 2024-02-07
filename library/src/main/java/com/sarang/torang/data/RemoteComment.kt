@@ -9,7 +9,10 @@ data class RemoteComment(
     val user: RemoteCommentUser,
     val create_date: String,
     val comment_like_id: Int?,
-    val comment_like_count: Int
+    val comment_like_count: Int,
+    val tagUser: RemoteTagCommentUser? = null,
+    val sub_comment_count: Int,
+    val parentCommentId: Int
 )
 
 data class RemoteCommentUser(
@@ -20,4 +23,11 @@ data class RemoteCommentUser(
     val email: String?,
     @SerializedName("profile_pic_url")
     val profilePicUrl: String
+)
+
+data class RemoteTagCommentUser(
+    @SerializedName("user_id")
+    val userId: Int,
+    @SerializedName("user_name")
+    val userName: String,
 )

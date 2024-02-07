@@ -6,6 +6,7 @@ import com.sarang.torang.api.ApiAlarm
 import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
 import com.sarang.torang.api.ApiCommentLikeTest
+import com.sarang.torang.api.ApiCommentTest
 import com.sarang.torang.api.ApiFeed
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
@@ -27,7 +28,9 @@ fun ApiTest(
     Column {
 //        ApiFeedFavoriteTest(apiFeed = apiFeed)
 //        ApiFeedLikeTest(apiFeed = apiFeed)
-//        ApiCommentTest(apiComment = apiComment, sessionService = sessionService)
+        apiComment?.let {
+            ApiCommentTest(apiComment = it, sessionService = sessionService)
+        }
 //        ApiFeedTest(apiFeed)
 //                ApiRestaurantTest(apiRestaurant = apiRestaurant)
 //        apiReview?.let { ApiReviewTest(apiReview = apiReview) }

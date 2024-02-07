@@ -17,13 +17,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sarang.torang.data.RemoteComment
 import com.sarang.torang.data.RemoteCommentList
 import kotlinx.coroutines.launch
 
 interface CommentRepository {
     suspend fun getComment(reviewId: Int): RemoteCommentList
+    suspend fun getSubComment(parentCommentId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
     suspend fun addComment(reviewId: Int, comment: String): RemoteComment
 }
@@ -39,6 +42,7 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
                 .weight(0.3f)
                 .height(300.dp)
         ) {
+            Text(text = "Comment", fontSize = 22.sp, fontWeight = FontWeight.Bold)
             Button(onClick = {
                 coroutine.launch {
                     try {
@@ -48,13 +52,24 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
                     }
                 }
             }) {
-                Text(text = "getComment()")
+                Text(text = "getComment")
             }
             Button(onClick = { /*TODO*/ }) {
-                Text(text = "deleteComment()")
+                Text(text = "deleteComment")
             }
             Button(onClick = { /*TODO*/ }) {
                 Text(text = "addComment()")
+            }
+            Button(onClick = {
+                coroutine.launch {
+                    try {
+                        list = commentRepository.getSubComment(145)
+                    } catch (e: Exception) {
+                        error = e.message.toString()
+                    }
+                }
+            }) {
+                Text(text = "getSubComment")
             }
         }
         Column(
@@ -74,6 +89,9 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
                         Text(text = "create_date = ${list[it].create_date}")
                         Text(text = "comment_like_id = ${list[it].comment_like_id}")
                         Text(text = "comment_like_count = ${list[it].comment_like_count}")
+                        Text(text = "parentCommentId = ${list[it].parentCommentId}")
+                        Text(text = "sub_comment_count = ${list[it].sub_comment_count}")
+                        Text(text = "tagUser = ${list[it].tagUser}")
                     }
                     HorizontalDivider(Modifier.height(10.dp))
                 }
