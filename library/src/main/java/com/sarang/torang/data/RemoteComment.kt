@@ -12,7 +12,8 @@ data class RemoteComment(
     val comment_like_count: Int,
     val tagUser: RemoteTagCommentUser? = null,
     val sub_comment_count: Int,
-    val parentCommentId: Int
+    val parentCommentId: Int,
+    val childComment: RemoteCommentList? = null
 )
 
 data class RemoteCommentUser(

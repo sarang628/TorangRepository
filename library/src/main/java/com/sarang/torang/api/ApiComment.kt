@@ -5,7 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.data.RemoteComment
@@ -48,6 +52,13 @@ interface ApiComment {
     ): RemoteCommentList
 
     @FormUrlEncoded
+    @POST("getCommentsWithOneReply")
+    suspend fun getCommentsWithOneReply(
+        @Header("authorization") auth: String,
+        @Field("review_id") reviewId: Int
+    ): RemoteCommentList
+
+    @FormUrlEncoded
     @POST("getSubComments")
     suspend fun getSubComments(
         @Header("authorization") auth: String,
@@ -60,42 +71,77 @@ fun ApiCommentTest(apiComment: ApiComment, sessionService: SessionService?) {
     val coroutine = rememberCoroutineScope()
     Column {
         Text(text = "ApiCommentTest", fontSize = 21.sp, fontWeight = FontWeight.Bold)
-        Button(onClick = {
-            coroutine.launch {
-                try {
-                    apiComment.addComment(
-                        review_id = 329,
-                        auth = sessionService!!.getToken()!!,
-                        comment = "ㅋㅋㅋㅋㅋㅋ",
-                        parentCommentId = 145,
-                        tagUserId = 1
-                    )
-                } catch (e: Exception) {
-                    Log.e("ApiCommentTest", e.message.toString())
-                }
-            }
-        }) {
-            Text(text = "add")
-        }
-
-        Button(onClick = {
-            coroutine.launch {
-                apiComment.deleteComment(1)
-            }
-        }) {
-            Text(text = "delete")
-        }
-
-        Button(onClick = {
-            sessionService?.getToken()?.let {
-                coroutine.launch {
-                    val list = apiComment.getComments(it, 82)
-                    Log.d("ApiCommentTest", list.toString())
-                }
-            }
-        }) {
-            Text(text = "get")
+        sessionService?.let {
+            AddComment(apiComment, sessionService)
+            DeleteComment(apiComment, sessionService)
+            GetComment(apiComment, sessionService)
+            getCommentsWithOneReply(apiComment, sessionService)
         }
     }
+}
 
+@Composable
+internal fun AddComment(apiComment: ApiComment, sessionService: SessionService) {
+    val coroutine = rememberCoroutineScope()
+    Button(onClick = {
+        coroutine.launch {
+            try {
+                apiComment.addComment(
+                    review_id = 329,
+                    auth = sessionService.getToken()!!,
+                    comment = "ㅋㅋㅋㅋㅋㅋ",
+                    parentCommentId = 145,
+                    tagUserId = 1
+                )
+            } catch (e: Exception) {
+                Log.e("ApiCommentTest", e.message.toString())
+            }
+        }
+    }) {
+        Text(text = "add")
+    }
+}
+
+@Composable
+internal fun DeleteComment(apiComment: ApiComment, sessionService: SessionService) {
+    val coroutine = rememberCoroutineScope()
+    Button(onClick = {
+        coroutine.launch {
+            apiComment.deleteComment(1)
+        }
+    }) {
+        Text(text = "delete")
+    }
+}
+
+@Composable
+internal fun GetComment(apiComment: ApiComment, sessionService: SessionService) {
+    val coroutine = rememberCoroutineScope()
+    Button(onClick = {
+        sessionService.getToken()?.let {
+            coroutine.launch {
+                val list = apiComment.getComments(it, 82)
+                Log.d("ApiCommentTest", list.toString())
+            }
+        }
+    }) {
+        Text(text = "get")
+    }
+}
+
+@Composable
+internal fun getCommentsWithOneReply(apiComment: ApiComment, sessionService: SessionService) {
+    val coroutine = rememberCoroutineScope()
+    var list by remember { mutableStateOf(RemoteCommentList("", list = listOf())) }
+    Button(onClick = {
+        sessionService.getToken()?.let {
+            coroutine.launch {
+                list = apiComment.getCommentsWithOneReply(it, 329)
+                Log.d("ApiCommentTest", list.toString())
+            }
+        }
+    }) {
+        Text(text = "GetCommentWithReply")
+    }
+    Text(text = list.toString())
 }
