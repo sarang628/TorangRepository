@@ -1,13 +1,9 @@
 package com.sarang.torang.data
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.google.gson.annotations.SerializedName
 
 data class RemoteComment(
@@ -20,7 +16,7 @@ data class RemoteComment(
     val comment_like_count: Int,
     val tagUser: RemoteTagCommentUser? = null,
     val sub_comment_count: Int,
-    val parentCommentId: Int,
+    val parent_comment_id: Int,
     val childComments: RemoteCommentList? = null,
     val childComment: RemoteComment? = null
 )
@@ -38,7 +34,7 @@ fun RemoteComment.ToComposable() {
         HorizontalDivider()
         Text(text = "tagUser: ${tagUser}")
         HorizontalDivider()
-        Text(text = "parentCommentId: ${parentCommentId}")
+        Text(text = "parentCommentId: ${parent_comment_id}")
         HorizontalDivider()
         Text(text = "childComments: ${childComments}")
         HorizontalDivider()

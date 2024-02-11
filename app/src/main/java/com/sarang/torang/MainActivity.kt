@@ -106,7 +106,7 @@ class MainActivity : ComponentActivity() {
 //                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
-//                    loginRepository = loginRepository,
+                    loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
