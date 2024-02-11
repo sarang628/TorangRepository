@@ -2,6 +2,8 @@ package com.sarang.torang.api
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,10 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.data.RemoteComment
 import com.sarang.torang.data.RemoteCommentList
+import com.sarang.torang.data.ToComposable
 import com.sarang.torang.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.http.Body
@@ -75,7 +80,8 @@ fun ApiCommentTest(apiComment: ApiComment, sessionService: SessionService?) {
             AddComment(apiComment, sessionService)
             DeleteComment(apiComment, sessionService)
             GetComment(apiComment, sessionService)
-            getCommentsWithOneReply(apiComment, sessionService)
+            GetCommentsWithOneReply(apiComment, sessionService)
+            LoadMore(apiComment, sessionService)
         }
     }
 }
@@ -130,18 +136,57 @@ internal fun GetComment(apiComment: ApiComment, sessionService: SessionService) 
 }
 
 @Composable
-internal fun getCommentsWithOneReply(apiComment: ApiComment, sessionService: SessionService) {
+internal fun GetCommentsWithOneReply(apiComment: ApiComment, sessionService: SessionService) {
     val coroutine = rememberCoroutineScope()
     var list by remember { mutableStateOf(RemoteCommentList("", list = listOf())) }
+    var error by remember { mutableStateOf("") }
     Button(onClick = {
-        sessionService.getToken()?.let {
-            coroutine.launch {
-                list = apiComment.getCommentsWithOneReply(it, 329)
-                Log.d("ApiCommentTest", list.toString())
+        sessionService.getToken().let {
+            if (it == null) {
+                error = "로그인을 해주세요."
+            } else {
+                coroutine.launch {
+                    list = apiComment.getCommentsWithOneReply(it, 329)
+                    Log.d("ApiCommentTest", list.toString())
+                }
             }
         }
     }) {
         Text(text = "GetCommentWithReply")
     }
-    Text(text = list.toString())
+    Column {
+        for (item in list.list) {
+            item.ToComposable()
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+    Text(text = error)
+}
+
+@Composable
+internal fun LoadMore(apiComment: ApiComment, sessionService: SessionService) {
+    val coroutine = rememberCoroutineScope()
+    var list: List<RemoteComment> by remember { mutableStateOf(ArrayList()) }
+    var error by remember { mutableStateOf("") }
+    Button(onClick = {
+        sessionService.getToken().let {
+            if (it == null) {
+                error = "로그인을 해주세요."
+            } else {
+                coroutine.launch {
+                    list = apiComment.getSubComments(it, 249)
+                    Log.d("ApiCommentTest", list.toString())
+                }
+            }
+        }
+    }) {
+        Text(text = "LoadMore")
+    }
+    Column {
+        for (item in list) {
+            item.ToComposable()
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+    Text(text = error)
 }
