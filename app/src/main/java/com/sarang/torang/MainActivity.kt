@@ -102,11 +102,11 @@ class MainActivity : ComponentActivity() {
             Column(Modifier.verticalScroll(rememberScrollState())) {
 
                 RepositoryTest(
-//                    commentRepository = commentRepository,
+                    commentRepository = commentRepository,
 //                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
-                    loginRepository = loginRepository,
+//                    loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
@@ -115,7 +115,7 @@ class MainActivity : ComponentActivity() {
                 )
                 ApiTest(
 //                    apiFeed = apiFeed,
-                    apiComment = apiComment,
+//                    apiComment = apiComment,
                     sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
