@@ -1,20 +1,31 @@
 package com.sarang.torang.repository
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.data.RemoteComment
@@ -48,11 +59,37 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
         Button(onClick = { /*TODO*/ }) {
             Text(text = "deleteComment")
         }
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "addComment()")
-        }
+        AddComment(commentRepository = commentRepository)
         GetSubComment(commentRepository = commentRepository)
         GetCommentsWithOneReply(commentRepository)
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun AddComment(commentRepository: CommentRepository) {
+    var input: TextFieldValue by remember { mutableStateOf(TextFieldValue("test comment")) }
+    var commentId: Int by remember { mutableStateOf(329) }
+    var parentCommentId: Int by remember { mutableStateOf(145) }
+    Button(onClick = { /*TODO*/ }) {
+        Text(text = "addComment")
+    }
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(text = "comment:")
+        OutlinedTextField(value = input, onValueChange = { input = it })
+    }
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(text = "reviewId:")
+        OutlinedTextField(
+            value = TextFieldValue(commentId.toString()),
+            onValueChange = { }
+        )
+    }
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(text = "parentCommentId:")
+        OutlinedTextField(
+            value = TextFieldValue(parentCommentId.toString()),
+            onValueChange = { })
     }
 }
 
