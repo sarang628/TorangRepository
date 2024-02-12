@@ -1,19 +1,16 @@
 package com.sarang.torang.repository
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text2.BasicTextField2
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +35,7 @@ interface CommentRepository {
     suspend fun getSubComment(parentCommentId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
     suspend fun addComment(reviewId: Int, comment: String): RemoteComment
+    suspend fun addReply(reviewId: Int, comment: String, parentCommentId: Int): RemoteComment
     suspend fun getCommentsWithOneReply(reviewId: Int): RemoteCommentList
     suspend fun getSubComments(commentId: Int): List<RemoteComment>
 }
@@ -56,22 +54,35 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
     ) {
         Text(text = "CommentRepositoryTest", fontSize = 22.sp, fontWeight = FontWeight.Bold)
         GetComment(commentRepository)
+        GetCommentsWithOneReply(commentRepository)
         Button(onClick = { /*TODO*/ }) {
             Text(text = "deleteComment")
         }
         AddComment(commentRepository = commentRepository)
         GetSubComment(commentRepository = commentRepository)
-        GetCommentsWithOneReply(commentRepository)
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AddComment(commentRepository: CommentRepository) {
     var input: TextFieldValue by remember { mutableStateOf(TextFieldValue("test comment")) }
-    var commentId: Int by remember { mutableStateOf(329) }
-    var parentCommentId: Int by remember { mutableStateOf(145) }
-    Button(onClick = { /*TODO*/ }) {
+    var reviewId: TextFieldValue by remember { mutableStateOf(TextFieldValue("329")) }
+    var parentCommentId: TextFieldValue by remember { mutableStateOf(TextFieldValue("145")) }
+    var result: RemoteComment? by remember { mutableStateOf(null) }
+    val coroutine = rememberCoroutineScope()
+    Button(onClick = {
+        coroutine.launch {
+            if (parentCommentId.text.isEmpty()) {
+                result = commentRepository.addComment(reviewId.text.toInt(), comment = input.text)
+            } else {
+                result = commentRepository.addReply(
+                    reviewId = reviewId.text.toInt(),
+                    comment = input.text,
+                    parentCommentId = parentCommentId.text.toInt()
+                )
+            }
+        }
+    }) {
         Text(text = "addComment")
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -81,27 +92,35 @@ fun AddComment(commentRepository: CommentRepository) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = "reviewId:")
         OutlinedTextField(
-            value = TextFieldValue(commentId.toString()),
-            onValueChange = { }
+            value = reviewId,
+            singleLine = true,
+            onValueChange = { reviewId = it },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = "parentCommentId:")
         OutlinedTextField(
-            value = TextFieldValue(parentCommentId.toString()),
-            onValueChange = { })
+            value = parentCommentId,
+            singleLine = true,
+            onValueChange = { parentCommentId = it },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
     }
+    Text(text = "result :  ${result}")
+    HorizontalDivider()
 }
 
 @Composable
 fun GetComment(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
     var error by remember { mutableStateOf("") }
+    var reviewId by remember { mutableStateOf(TextFieldValue("329")) }
     var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
     Button(onClick = {
         coroutine.launch {
             try {
-                list = commentRepository.getComment(329).list
+                list = commentRepository.getComment(reviewId.text.toInt()).list
             } catch (e: Exception) {
                 error = e.message.toString()
             }
@@ -109,10 +128,16 @@ fun GetComment(commentRepository: CommentRepository) {
     }) {
         Text(text = "getComment")
     }
+    OutlinedTextField(
+        value = reviewId, onValueChange = { reviewId = it },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
     Text(text = error)
     for (item in list) {
         item.ToComposable()
+        Spacer(modifier = Modifier.height(10.dp))
     }
+    HorizontalDivider()
 }
 
 @Composable
@@ -141,22 +166,27 @@ fun GetSubComment(commentRepository: CommentRepository) {
 fun GetCommentsWithOneReply(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
     var error by remember { mutableStateOf("") }
-    var list: RemoteCommentList by remember {
-        mutableStateOf(RemoteCommentList(profilePicUrl = "", list = listOf()))
-    }
+    var reviewId by remember { mutableStateOf(TextFieldValue("329")) }
+    var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
     Button(onClick = {
         coroutine.launch {
             try {
-                list = commentRepository.getCommentsWithOneReply(329)
+                list = commentRepository.getCommentsWithOneReply(reviewId.text.toInt()).list
             } catch (e: Exception) {
                 error = e.message.toString()
             }
         }
     }) {
-        Text(text = "GetCommentsWithOneReply")
+        Text(text = "getCommentsWithOneReply")
     }
+    OutlinedTextField(
+        value = reviewId, onValueChange = { reviewId = it },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
     Text(text = error)
-    for (item in list.list) {
+    for (item in list) {
         item.ToComposable()
+        Spacer(modifier = Modifier.height(10.dp))
     }
+    HorizontalDivider()
 }
