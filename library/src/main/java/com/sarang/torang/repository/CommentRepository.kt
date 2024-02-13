@@ -150,7 +150,7 @@ fun ClearComment(commentRepository: CommentRepository) {
 fun AddComment(commentRepository: CommentRepository) {
     var input: TextFieldValue by remember { mutableStateOf(TextFieldValue("test comment")) }
     var reviewId: TextFieldValue by remember { mutableStateOf(TextFieldValue("329")) }
-    var parentCommentId: TextFieldValue by remember { mutableStateOf(TextFieldValue("145")) }
+    var parentCommentId: TextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var result: RemoteComment? by remember { mutableStateOf(null) }
     val coroutine = rememberCoroutineScope()
     Button(onClick = {
@@ -158,11 +158,11 @@ fun AddComment(commentRepository: CommentRepository) {
             if (parentCommentId.text.isEmpty()) {
                 commentRepository.addComment(reviewId.text.toInt(), comment = input.text)
             } else {
-                commentRepository.addReply(
+                /*commentRepository.addReply(
                     reviewId = reviewId.text.toInt(),
                     comment = input.text,
                     parentCommentId = parentCommentId.text.toInt()
-                )
+                )*/
             }
         }
     }) {
