@@ -37,8 +37,8 @@ interface CommentRepository {
     suspend fun getComment(reviewId: Int): RemoteCommentList
     suspend fun getSubComment(parentCommentId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
-    suspend fun addComment(reviewId: Int, comment: String): RemoteComment
-    suspend fun addReply(reviewId: Int, comment: String, parentCommentId: Int): RemoteComment
+    suspend fun addComment(reviewId: Int, comment: String)
+    suspend fun addReply(reviewId: Int, comment: String, parentCommentId: Int)
     suspend fun getCommentsWithOneReply(reviewId: Int): RemoteCommentList
     suspend fun getSubComments(commentId: Int): List<RemoteComment>
     fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>>
@@ -60,12 +60,12 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
     ) {
         Text(text = "CommentRepositoryTest", fontSize = 22.sp, fontWeight = FontWeight.Bold)
         GetCommentFlow(commentRepository = commentRepository)
+        AddComment(commentRepository = commentRepository)
         loadMoreReply(commentRepository = commentRepository)
         GetComment(commentRepository)
         GetCommentsWithOneReply(commentRepository)
         DeleteComment()
         ClearComment(commentRepository = commentRepository)
-        AddComment(commentRepository = commentRepository)
         GetSubComment(commentRepository = commentRepository)
     }
 }
@@ -156,9 +156,9 @@ fun AddComment(commentRepository: CommentRepository) {
     Button(onClick = {
         coroutine.launch {
             if (parentCommentId.text.isEmpty()) {
-                result = commentRepository.addComment(reviewId.text.toInt(), comment = input.text)
+                commentRepository.addComment(reviewId.text.toInt(), comment = input.text)
             } else {
-                result = commentRepository.addReply(
+                commentRepository.addReply(
                     reviewId = reviewId.text.toInt(),
                     comment = input.text,
                     parentCommentId = parentCommentId.text.toInt()
