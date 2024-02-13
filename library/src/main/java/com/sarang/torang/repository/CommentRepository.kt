@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -30,7 +31,6 @@ import com.sarang.torang.data.RemoteCommentList
 import com.sarang.torang.data.ToComposable
 import com.sarang.torang.data.entity.CommentEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 interface CommentRepository {
@@ -43,6 +43,7 @@ interface CommentRepository {
     suspend fun getSubComments(commentId: Int): List<RemoteComment>
     fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>>
     suspend fun clear()
+    suspend fun loadMoreReply(commentId: Int)
 }
 
 @Composable
@@ -59,6 +60,7 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
     ) {
         Text(text = "CommentRepositoryTest", fontSize = 22.sp, fontWeight = FontWeight.Bold)
         GetCommentFlow(commentRepository = commentRepository)
+        loadMoreReply(commentRepository = commentRepository)
         GetComment(commentRepository)
         GetCommentsWithOneReply(commentRepository)
         DeleteComment()
@@ -69,13 +71,39 @@ fun CommentRepositoryTest(commentRepository: CommentRepository) {
 }
 
 @Composable
+fun loadMoreReply(commentRepository: CommentRepository) {
+    var commentId by remember { mutableStateOf(TextFieldValue("329")) }
+    val coroutine = rememberCoroutineScope()
+    Row {
+        Button(onClick = {
+            coroutine.launch {
+                commentRepository.loadMoreReply(commentId.text.toInt())
+            }
+        }) {
+            Text(text = "LoadMore")
+        }
+        OutlinedTextField(
+            value = commentId,
+            label = { Text(text = "commentId") },
+            onValueChange = { commentId = it },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+    }
+
+}
+
+@Composable
 fun GetCommentFlow(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
     var reviewId by remember { mutableStateOf(TextFieldValue("329")) }
     var list: List<CommentEntity> by remember { mutableStateOf(mutableListOf()) }
 
     for (commentEntity in list) {
-        Text(text = "${commentEntity.commentId}")
+        Column(if (commentEntity.parentCommentId == 0) Modifier else Modifier.padding(start = 20.dp)) {
+            Text(text = "${commentEntity.commentId}")
+            Text(text = commentEntity.comment)
+        }
+
     }
 
     Row {

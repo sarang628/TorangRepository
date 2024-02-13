@@ -45,3 +45,17 @@ fun RemoteComment.toCommentEntity(): CommentEntity {
         userId = this.user.userId
     )
 }
+
+fun testCommentEntity(): CommentEntity {
+    return CommentEntity(
+        commentId = 0,
+        comment = "",
+        commentLikeCount = 0,
+        commentLikeId = 0,
+        createDate = "",
+        profilePicUrl = "",
+        reviewId = 0,
+        userId = 0,
+        userName = ""
+    )
+}

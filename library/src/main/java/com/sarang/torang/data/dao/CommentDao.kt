@@ -1,7 +1,6 @@
 package com.sarang.torang.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,11 +13,24 @@ interface CommentDao {
         """
         SELECT *
         FROM CommentEntity
-        WHERE reviewId = (:reviewId)
+        WHERE 1=1
+        and reviewId = (:reviewId)
+        and (parentCommentId == null or parentCommentId == 0)
         ORDER BY createDate DESC
         """
     )
     fun getComments(reviewId: Int): Flow<List<CommentEntity>>
+
+    @Query(
+        """
+        SELECT *
+        FROM CommentEntity
+        WHERE 1=1
+        and parentCommentId = (:commentId)
+        ORDER BY createDate DESC
+        """
+    )
+    suspend fun getReply(commentId: Int): List<CommentEntity>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
