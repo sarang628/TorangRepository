@@ -1,13 +1,9 @@
 package com.sarang.torang
 
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import com.sarang.instagralleryModule.GalleryNavHost
-import com.sarang.torang.repository.CommentRepository
+import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FeedRepositoryTest
@@ -20,7 +16,7 @@ import com.sarang.torang.repository.ReportRepository
 import com.sarang.torang.repository.ReviewRepository
 import com.sarang.torang.repository.ReviewRepositoryTest
 import com.sarang.torang.repository.SettingsRepository
-import com.sarang.torang.repository.CommentRepositoryTest
+import com.sarang.torang.repository.comment.compose.CommentRepositoryTest
 
 @Composable
 fun RepositoryTest(

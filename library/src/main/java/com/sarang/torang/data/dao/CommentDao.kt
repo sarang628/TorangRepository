@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.sarang.torang.data.entity.CommentEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -46,22 +45,23 @@ interface CommentDao {
     @Query(
         """
         UPDATE commententity SET commentId = (:commentId) 
-                            and userId = (:userId)
-                            and profilePicUrl = (:profilePicUrl)
-                            and userName = (:userName)
-                            and comment = (:comment)
-                            and reviewId = (:reviewId)
-                            and createDate = (:createDate)
-                            and commentLikeId = (:commentLikeId)
-                            and commentLikeCount = (:commentLikeCount)
-                            and tagUserId = (:tagUserId)
-                            and subCommentCount = (:subCommentCount)
-                            and parentCommentId = (:parentCommentId)
+                            , userId = (:userId)
+                            , profilePicUrl = (:profilePicUrl)
+                            , userName = (:userName)
+                            , comment = (:comment)
+                            , reviewId = (:reviewId)
+                            , createDate = (:createDate)
+                            , commentLikeId = (:commentLikeId)
+                            , commentLikeCount = (:commentLikeCount)
+                            , tagUserId = (:tagUserId)
+                            , subCommentCount = (:subCommentCount)
+                            , parentCommentId = (:parentCommentId)
+                            , isUploading = false
                             WHERE commentId = (:updateId)
     """
     )
-    fun update(
-        updateId: Int = Integer.MAX_VALUE,
+    suspend fun update(
+        updateId: Int,
         commentId: Int,
         userId: Int,
         profilePicUrl: String,

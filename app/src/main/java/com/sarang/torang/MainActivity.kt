@@ -16,7 +16,7 @@ import com.sarang.torang.api.ApiReview
 import com.sarang.torang.data.dao.FavoriteDao
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.data.dao.ReviewDao
-import com.sarang.torang.repository.CommentRepository
+import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FollowRepository

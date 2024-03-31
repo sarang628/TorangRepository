@@ -6,7 +6,8 @@ import com.sarang.torang.data.RemoteComment
 
 @Entity
 data class CommentEntity(
-    @PrimaryKey val commentId: Int,
+    @PrimaryKey
+    val commentId: Int,
     val userId: Int,
     val profilePicUrl: String,
     val userName: String,
@@ -18,6 +19,7 @@ data class CommentEntity(
     val tagUserId: Int? = null,
     val subCommentCount: Int? = null,
     val parentCommentId: Int? = null,
+    val isUploading: Boolean = false,
 )
 
 fun List<RemoteComment>.toCommentEntityList(): List<CommentEntity> {
