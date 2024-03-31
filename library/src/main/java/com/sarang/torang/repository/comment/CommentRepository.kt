@@ -39,7 +39,11 @@ interface CommentRepository {
     suspend fun getComment(reviewId: Int): RemoteCommentList
     suspend fun getSubComment(parentCommentId: Int): List<RemoteComment>
     suspend fun deleteComment(commentId: Int)
-    suspend fun addComment(reviewId: Int, comment: String)
+
+    /**
+     * @param onLocalUpdated 로컬 DB에 우선 insert하고 callback. 화면을 최상단으로 올리기전에 DB에 insert가 먼저 되어야 해서
+     */
+    suspend fun addComment(reviewId: Int, comment: String, onLocalUpdated: () -> Unit)
     suspend fun addReply(reviewId: Int, comment: String, parentCommentId: Int)
     suspend fun getCommentsWithOneReply(reviewId: Int): RemoteCommentList
     suspend fun getSubComments(commentId: Int): List<RemoteComment>
