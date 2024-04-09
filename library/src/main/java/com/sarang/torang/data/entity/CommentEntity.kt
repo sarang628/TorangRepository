@@ -3,17 +3,19 @@ package com.sarang.torang.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.sarang.torang.data.RemoteComment
+import java.text.SimpleDateFormat
+import kotlin.random.Random
 
 @Entity
 data class CommentEntity(
     @PrimaryKey
-    val commentId: Int,
+    val commentId: Int = Random.nextInt(0,Integer.MAX_VALUE),
     val userId: Int,
     val profilePicUrl: String,
     val userName: String,
     val comment: String,
     val reviewId: Int,
-    val createDate: String,
+    val createDate: String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()),
     val commentLikeId: Int? = null,
     val commentLikeCount: Int = 0,
     val tagUserId: Int? = null,

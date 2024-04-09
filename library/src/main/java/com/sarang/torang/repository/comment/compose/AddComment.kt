@@ -30,12 +30,15 @@ fun AddComment(commentRepository: CommentRepository) {
     Button(onClick = {
         coroutine.launch {
             if (parentCommentId.text.isEmpty()) {
-                commentRepository.addComment(reviewId.text.toInt(), comment = input.text, onLocalUpdated = {})
+                commentRepository.addComment(
+                    reviewId.text.toInt(),
+                    comment = input.text,
+                    onLocalUpdated = {})
             } else {
                 commentRepository.addReply(
                     reviewId = reviewId.text.toInt(),
                     comment = input.text,
-                    parentCommentId = parentCommentId.text.toInt()
+                    parentCommentId = parentCommentId.text.toInt(), onLocalUpdated = {}
                 )
             }
         }

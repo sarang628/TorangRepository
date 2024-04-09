@@ -73,6 +73,25 @@ interface CommentDao {
         commentLikeCount: Int = 0,
         tagUserId: Int? = null,
         subCommentCount: Int? = null,
-        parentCommentId: Int? = null,
+        parentCommentId: Int? = null
     )
+
+    suspend fun update(updateId: Int, commentEntity: CommentEntity) {
+        update(
+            updateId = updateId,
+            commentId = commentEntity.commentId,
+            userId = commentEntity.userId,
+            profilePicUrl = commentEntity.profilePicUrl,
+            userName = commentEntity.userName,
+            comment = commentEntity.comment,
+            reviewId = commentEntity.reviewId,
+            createDate = commentEntity.createDate,
+            commentLikeId = commentEntity.commentLikeId,
+            commentLikeCount = commentEntity.commentLikeCount,
+            tagUserId = commentEntity.tagUserId,
+            subCommentCount = commentEntity.subCommentCount,
+            parentCommentId = commentEntity.parentCommentId
+        )
+    }
+
 }

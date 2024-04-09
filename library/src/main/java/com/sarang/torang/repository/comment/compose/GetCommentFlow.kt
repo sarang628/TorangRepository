@@ -58,7 +58,13 @@ fun GetCommentFlow(commentRepository: CommentRepository) {
         items(list.size) {
             Row(if (list[it].parentCommentId == 0) Modifier else Modifier.padding(start = 20.dp)) {
                 list[it].let {
-                    Comment(name = it.userName, date = it.createDate, comment = it.comment, isUploading = it.isUploading)
+                    Comment(
+                        commentId = it.commentId,
+                        name = it.userName,
+                        date = it.createDate,
+                        comment = it.comment,
+                        isUploading = it.isUploading
+                    )
                 }
             }
         }
@@ -68,6 +74,7 @@ fun GetCommentFlow(commentRepository: CommentRepository) {
 
 @Composable
 fun Comment(
+    commentId: Int,
     name: String,
     date: String,
     comment: String,
@@ -75,6 +82,7 @@ fun Comment(
 ) {
     Column(Modifier.padding(bottom = 3.dp, start = 3.dp)) {
         Row {
+            Text(modifier = Modifier.padding(end = 3.dp), text = commentId.toString())
             Text(modifier = Modifier.padding(end = 3.dp), text = name)
             Text(modifier = Modifier.padding(end = 3.dp), text = date)
             if (isUploading)
@@ -90,7 +98,7 @@ fun Comment(
 @Composable
 fun previewComment() {
     Column {
-        Comment(name = "name", date = "date", comment = "comment", isUploading = true)
-        Comment(name = "name1", date = "date1", comment = "comment1")
+        Comment(commentId = 0, name = "name", date = "date", comment = "comment", isUploading = true)
+        Comment(commentId = 1, name = "name1", date = "date1", comment = "comment1")
     }
 }
