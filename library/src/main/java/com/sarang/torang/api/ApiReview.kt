@@ -51,7 +51,7 @@ interface ApiReview {
         @Part("review_id") review_id: Int? = null,
         @Part("contents") contents: RequestBody,
         @Part("rating") rating: Float,
-        @Part("torang_id") torang_id: Int,
+        @Part("torang_id") torang_id: Int?,
         @Part("user_id") user_id: Int,
         @Part("uploadedImage") uploadedImage: List<Int>? = null,
         @Part file: ArrayList<MultipartBody.Part>? = null

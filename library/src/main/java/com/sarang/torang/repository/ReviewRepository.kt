@@ -32,7 +32,7 @@ interface ReviewRepository {
 
     suspend fun addReview(
         contents: String,
-        restaurantId: Int,
+        restaurantId: Int?,
         rating: Float,
         files: List<String>
     ): RemoteFeed
