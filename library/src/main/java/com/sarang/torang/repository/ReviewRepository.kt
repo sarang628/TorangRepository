@@ -40,7 +40,7 @@ interface ReviewRepository {
     suspend fun updateReview(
         reviewId: Int,
         contents: String,
-        restaurantId: Int,
+        restaurantId: Int?,
         rating: Float,
         files: List<String>,
         uploadedImage: List<Int>
@@ -56,7 +56,7 @@ fun ReviewRepositoryTest(
     ) -> Unit)? = null
 ) {
     Column {
-        //AddReviewTest(reviewRepository = reviewRepository, gallery = gallery)
+        AddReviewTest(reviewRepository = reviewRepository, gallery = gallery)
         //UpdateReviewTest(reviewRepository = reviewRepository, gallery = gallery)
         //GetReviewTest()
         DeleteReviewTest(reviewRepository = reviewRepository)
@@ -64,10 +64,9 @@ fun ReviewRepositoryTest(
 }
 
 @Composable
-fun AddReviewTest(
-    reviewRepository: ReviewRepository, gallery: (@Composable (
-        onNext: (List<String>) -> Unit
-    ) -> Unit)? = null
+fun UpdateReviewTest(
+    reviewRepository: ReviewRepository,
+    gallery: (@Composable (onNext: (List<String>) -> Unit) -> Unit)? = null
 ) {
     val coroutine = rememberCoroutineScope()
     var contents by remember { mutableStateOf("good!") }
@@ -97,9 +96,7 @@ fun AddReviewTest(
                         OutlinedTextField(
                             value = reviewId,
                             onValueChange = { reviewId = it },
-                            label = {
-                                Text(text = "reviewId")
-                            })
+                            label = { Text(text = "reviewId") })
                         Button(onClick = {
                             coroutine.launch {
                                 try {
@@ -154,7 +151,7 @@ fun AddReviewTest(
                                     contents = contents,
                                     rating = 3.0f,
                                     files = files,
-                                    restaurantId = 10,
+                                    restaurantId = null,
                                     uploadedImage = uploadedImage
                                 )
                                 result = GsonBuilder().setPrettyPrinting().create().toJson(review)
@@ -163,7 +160,7 @@ fun AddReviewTest(
                             }
                         }
                     }) {
-                        Text(text = "modReview")
+                        Text(text = "addReview")
                     }
                 }
             }
@@ -185,7 +182,7 @@ fun AddReviewTest(
 }
 
 @Composable
-fun UpdateReviewTest(
+fun AddReviewTest(
     reviewRepository: ReviewRepository, gallery: (@Composable (
         onNext: (List<String>) -> Unit
     ) -> Unit)? = null
