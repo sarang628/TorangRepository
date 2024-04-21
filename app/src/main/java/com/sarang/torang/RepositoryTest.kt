@@ -13,10 +13,10 @@ import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.ReportRepository
-import com.sarang.torang.repository.ReviewRepository
-import com.sarang.torang.repository.ReviewRepositoryTest
+import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.repository.comment.compose.CommentRepositoryTest
+import com.sarang.torang.repository.review.compose.ReviewRepositoryTest
 
 @Composable
 fun RepositoryTest(

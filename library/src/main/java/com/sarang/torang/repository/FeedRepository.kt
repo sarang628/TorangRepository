@@ -59,7 +59,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
         Column {
             Text(text = error, color = Color.Red, fontWeight = FontWeight.Bold)
             Row {
-                Button(onClick = { coroutine.launch { feedRepository.loadFeed() } }) { Text(text = "getFeed") }
+                Button(onClick = { coroutine.launch {
+                    try { feedRepository.loadFeed() }catch (e : Exception){ error = e.toString() }
+                } }) { Text(text = "getFeed") }
                 Button(onClick = { coroutine.launch { feedRepository.deleteFeedAll() } }) {
                     Text(
                         text = "delFeed"

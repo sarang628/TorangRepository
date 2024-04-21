@@ -1,4 +1,4 @@
-package com.sarang.torang.repository
+package com.sarang.torang.repository.review.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,45 +23,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.gson.GsonBuilder
-import com.sarang.torang.data.entity.ReviewAndImageEntity
-import com.sarang.torang.data.remote.response.RemoteFeed
+import com.sarang.torang.repository.review.ReviewRepository
 import kotlinx.coroutines.launch
-
-interface ReviewRepository {
-    suspend fun getReviews(restaurantId: Int): List<RemoteFeed>
-
-    suspend fun addReview(
-        contents: String,
-        restaurantId: Int?,
-        rating: Float,
-        files: List<String>
-    ): RemoteFeed
-
-    suspend fun updateReview(
-        reviewId: Int,
-        contents: String,
-        restaurantId: Int?,
-        rating: Float,
-        files: List<String>,
-        uploadedImage: List<Int>
-    )
-
-    suspend fun getReview(reviewId: Int): ReviewAndImageEntity
-}
-
-@Composable
-fun ReviewRepositoryTest(
-    reviewRepository: ReviewRepository, gallery: (@Composable (
-        onNext: (List<String>) -> Unit
-    ) -> Unit)? = null
-) {
-    Column {
-        AddReviewTest(reviewRepository = reviewRepository, gallery = gallery)
-        //UpdateReviewTest(reviewRepository = reviewRepository, gallery = gallery)
-        //GetReviewTest()
-        DeleteReviewTest(reviewRepository = reviewRepository)
-    }
-}
 
 @Composable
 fun UpdateReviewTest(
@@ -178,111 +141,5 @@ fun UpdateReviewTest(
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.height(8.dp))
-    }
-}
-
-@Composable
-fun AddReviewTest(
-    reviewRepository: ReviewRepository, gallery: (@Composable (
-        onNext: (List<String>) -> Unit
-    ) -> Unit)? = null
-) {
-    val coroutine = rememberCoroutineScope()
-    var contents by remember { mutableStateOf("good!") }
-    var rating by remember { mutableStateOf("3.5") }
-    var files: List<String> by remember { mutableStateOf(ArrayList()) }
-    var restaurantId by remember { mutableStateOf("10") }
-    var result by remember { mutableStateOf("") }
-    val navHostController = rememberNavController()
-    Column {
-        Spacer(modifier = Modifier.height(8.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "UpdateReviewTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        NavHost(navController = navHostController, startDestination = "a") {
-            composable("a") {
-                Column {
-                    Text(text = result)
-                    OutlinedTextField(value = contents, onValueChange = { contents = it }, label = {
-                        Text(
-                            text = "contents"
-                        )
-                    })
-                    OutlinedTextField(
-                        value = restaurantId,
-                        onValueChange = { restaurantId = it },
-                        label = {
-                            Text(text = "restaurantId")
-                        })
-                    OutlinedTextField(value = rating, onValueChange = { rating = it }, label = {
-                        Text(text = "rating")
-                    })
-                    Text(text = "files : $files")
-                    Button(onClick = {
-                        navHostController.navigate("b")
-                    }) {
-                        Text(text = "select picture")
-                    }
-                    Button(onClick = {
-                        coroutine.launch {
-                            try {
-                                val review = reviewRepository.addReview(
-                                    contents = contents,
-                                    rating = 3.0f,
-                                    files = files,
-                                    restaurantId = 10
-                                )
-                                result = GsonBuilder().setPrettyPrinting().create().toJson(review)
-                            } catch (e: Exception) {
-                                result = e.message.toString()
-                            }
-                        }
-                    }) {
-                        Text(text = "addReview")
-                    }
-                }
-            }
-
-            composable("b") {
-                Box(modifier = Modifier.height(500.dp))
-                {
-                    gallery?.invoke(onNext = {
-                        files = it
-                        navHostController.popBackStack()
-                    })
-                }
-            }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(8.dp))
-    }
-}
-
-@Composable
-fun GetReviewTest() {
-    Button(onClick = { /*TODO*/ }) {
-        Text(text = "getReview")
-    }
-}
-
-@Composable
-fun DeleteReviewTest(reviewRepository: ReviewRepository) {
-    var reviewId by remember { mutableStateOf("10") }
-    val coroutine = rememberCoroutineScope()
-    Column {
-        OutlinedTextField(
-            value = reviewId,
-            onValueChange = { reviewId = it },
-            label = {
-                Text(text = "reviewId")
-            })
-        Button(onClick = {
-            coroutine.launch {
-
-            }
-        }) {
-            Text(text = "deleteReview")
-        }
     }
 }

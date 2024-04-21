@@ -24,7 +24,7 @@ import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.ReportRepository
-import com.sarang.torang.repository.ReviewRepository
+import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity() {
 
                 RepositoryTest(
 //                    commentRepository = commentRepository,
-                    feedRepository = feedRepository,
+//                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
                     loginRepository = loginRepository,
@@ -111,7 +111,7 @@ class MainActivity : ComponentActivity() {
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
-//                    reviewRepository = reviewRepository,
+                    reviewRepository = reviewRepository,
                 )
                 ApiTest(
 //                    apiFeed = apiFeed,
