@@ -11,6 +11,7 @@ import com.sarang.torang.api.ApiFeed
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
 import com.sarang.torang.api.ApiReviewTest
+import com.sarang.torang.di.repository.api.ApiRestaurantTest
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
 
@@ -32,7 +33,9 @@ fun ApiTest(
             ApiCommentTest(apiComment = it, sessionService = sessionService)
         }
 //        ApiFeedTest(apiFeed)
-//                ApiRestaurantTest(apiRestaurant = apiRestaurant)
+        apiRestaurant?.let {
+            ApiRestaurantTest(apiRestaurant = it)
+        }
 //        apiReview?.let { ApiReviewTest(apiReview = apiReview) }
         //ApiAlarmTest(apiAlarm = apiAlarm, sessionService)
         apiCommentLike?.let {

@@ -40,5 +40,8 @@ data class RemoteRestaurant(
     @SerializedName("img_url5")
     val imgUrl5: String,
     @SerializedName("img_url6")
-    val imgUrl6: String
+    val imgUrl6: String,
+    @SerializedName("restaurant_type_cd")
+    val restaurantTypeCd: String
+
 )
