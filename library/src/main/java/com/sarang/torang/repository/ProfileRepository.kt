@@ -40,6 +40,7 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
     var profile by remember { mutableStateOf("b") }
     var isProgress by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
+    var error by remember { mutableStateOf("") }
 
     Column {
         Box {
@@ -73,15 +74,22 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                     }) {
                         Text(text = "loadProfileByToken")
                     }
-                    Button(onClick = { coroutine.launch {
-                        profileRepository.loadMyFeed(32)
-                    } }) {
+                    Button(onClick = {
+                        coroutine.launch {
+                            try {
+                                profileRepository.loadMyFeed(32)
+                            } catch (e: Exception) {
+                                error = e.message ?: ""
+                            }
+                        }
+                    }) {
                         Text(text = "getMyFeed")
                     }
                 }
                 Text(
                     text = profile
                 )
+                Text(text = error)
             }
             if (isProgress)
                 CircularProgressIndicator()

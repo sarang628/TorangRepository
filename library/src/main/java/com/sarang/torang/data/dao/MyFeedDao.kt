@@ -161,5 +161,5 @@ interface MyFeedDao {
         ORDER BY MyFeedEntity.createDate DESC
         """
     )
-    suspend fun getMyFeedByReviewId(reviewId: Int): List<ReviewAndImageEntity>
+    fun getMyFeedByReviewId(reviewId: Int): Flow<List<ReviewAndImageEntity>>
 }

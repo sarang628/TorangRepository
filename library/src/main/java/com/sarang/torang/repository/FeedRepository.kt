@@ -46,7 +46,7 @@ interface FeedRepository {
      * 리뷰 ID 기준으로 이전 피드는 위로 다음 피드는 아래로 줄 수 있도록
      * @param reviewId 리뷰 id
      */
-    suspend fun getMyFeed(reviewId: Int) : List<ReviewAndImageEntity>
+    fun getMyFeed(reviewId: Int): Flow<List<ReviewAndImageEntity>>
 }
 
 @Composable
@@ -56,6 +56,8 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
     var result by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
     val coroutine = rememberCoroutineScope()
+    var reviewId by remember { mutableStateOf(0) }
+    val list by feedRepository.getMyFeed(reviewId).collectAsState(initial = ArrayList())
     Column(
         Modifier
             .fillMaxWidth()
@@ -119,9 +121,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                         text = "deleteLike"
                     )
                 }
-                Button(onClick = { coroutine.launch {
-                    result = gson.toJson(feedRepository.getMyFeed(370))
-                } }) {
+                Button(onClick = {
+                    reviewId = 370
+                }) {
                     Text(text = "GetMyFeed")
                 }
             }
@@ -135,6 +137,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
             }
         })
         Text(text = result)
+        Text(text = gson.toJson(list))
     }
 }
 
