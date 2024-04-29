@@ -1,5 +1,6 @@
 package com.sarang.torang.repository
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,6 +41,12 @@ interface FeedRepository {
     suspend fun addFavorite(reviewId: Int)
     suspend fun deleteFavorite(reviewId: Int)
     val feeds: Flow<List<ReviewAndImageEntity>>
+
+    /**
+     * 리뷰 ID 기준으로 이전 피드는 위로 다음 피드는 아래로 줄 수 있도록
+     * @param reviewId 리뷰 id
+     */
+    suspend fun getMyFeed(reviewId: Int) : List<ReviewAndImageEntity>
 }
 
 @Composable
@@ -59,9 +66,15 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
         Column {
             Text(text = error, color = Color.Red, fontWeight = FontWeight.Bold)
             Row {
-                Button(onClick = { coroutine.launch {
-                    try { feedRepository.loadFeed() }catch (e : Exception){ error = e.toString() }
-                } }) { Text(text = "getFeed") }
+                Button(onClick = {
+                    coroutine.launch {
+                        try {
+                            feedRepository.loadFeed()
+                        } catch (e: Exception) {
+                            error = e.toString()
+                        }
+                    }
+                }) { Text(text = "getFeed") }
                 Button(onClick = { coroutine.launch { feedRepository.deleteFeedAll() } }) {
                     Text(
                         text = "delFeed"
@@ -105,6 +118,11 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                     Text(
                         text = "deleteLike"
                     )
+                }
+                Button(onClick = { coroutine.launch {
+                    result = gson.toJson(feedRepository.getMyFeed(370))
+                } }) {
+                    Text(text = "GetMyFeed")
                 }
             }
             Row {

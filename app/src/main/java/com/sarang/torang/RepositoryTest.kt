@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import com.sarang.instagralleryModule.GalleryNavHost
 import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
+import com.sarang.torang.repository.EditProfileRepositoryTest
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FeedRepositoryTest
 import com.sarang.torang.repository.FollowRepository
@@ -12,6 +13,7 @@ import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.ProfileRepository
+import com.sarang.torang.repository.ProfileRepositoryTest
 import com.sarang.torang.repository.ReportRepository
 import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.SettingsRepository
@@ -33,15 +35,19 @@ fun RepositoryTest(
 ) {
     Column {
         commentRepository?.let {
-            CommentRepositoryTest(commentRepository = commentRepository)
+            CommentRepositoryTest(commentRepository = it)
         }
         feedRepository?.let {
             FeedRepositoryTest(feedRepository = it)
         }
-        //ProfileRepositoryTest(profileRepository = profileRepository)
-        //EditProfileRepositoryTest(editProfileRepository = editProfileRepository)
+        profileRepository?.let {
+            ProfileRepositoryTest(profileRepository = it)
+        }
+        editProfileRepository?.let {
+            EditProfileRepositoryTest(editProfileRepository = it)
+        }
         loginRepository?.let {
-            LoginRepositoryTest(loginRepository = loginRepository)
+            LoginRepositoryTest(loginRepository = it)
         }
         //SettingRepositoryTest(settingRepository)
         //MapRepositoryTest(mapRepository = mapRepository)

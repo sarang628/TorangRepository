@@ -15,6 +15,7 @@ import com.sarang.torang.data.dao.FeedDao
 import com.sarang.torang.data.dao.LikeDao
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.data.dao.MenuDao
+import com.sarang.torang.data.dao.MyFeedDao
 import com.sarang.torang.data.dao.MyReviewDao
 import com.sarang.torang.data.dao.PictureDao
 import com.sarang.torang.data.dao.RestaurantDao
@@ -28,6 +29,7 @@ import com.sarang.torang.data.entity.FeedEntity
 import com.sarang.torang.data.entity.LikeEntity
 import com.sarang.torang.data.entity.LoggedInUserEntity
 import com.sarang.torang.data.entity.MenuEntity
+import com.sarang.torang.data.entity.MyFeedEntity
 import com.sarang.torang.data.entity.RestaurantEntity
 import com.sarang.torang.data.entity.ReviewImageEntity
 import com.sarang.torang.data.entity.SearchEntity
@@ -44,7 +46,8 @@ import com.sarang.torang.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
     entities = [
         UserEntity::class, FeedEntity::class, ReviewImageEntity::class, LikeEntity::class,
         RestaurantEntity::class, MenuEntity::class, AlarmEntity::class,
-        LoggedInUserEntity::class, SearchEntity::class, FavoriteEntity::class, CommentEntity::class
+        LoggedInUserEntity::class, SearchEntity::class, FavoriteEntity::class, CommentEntity::class,
+        MyFeedEntity::class
     ], version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -59,8 +62,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun pictureDao(): PictureDao
     abstract fun feedDao(): FeedDao
     abstract fun commentDao(): CommentDao
-    abstract fun likeDao() : LikeDao
-    abstract fun favoriteDao() : FavoriteDao
+    abstract fun likeDao(): LikeDao
+    abstract fun favoriteDao(): FavoriteDao
+    abstract fun myFeedDao(): MyFeedDao
 
     companion object {
         // For Singleton instantiation

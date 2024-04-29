@@ -103,20 +103,20 @@ class MainActivity : ComponentActivity() {
 
                 RepositoryTest(
 //                    commentRepository = commentRepository,
-//                    feedRepository = feedRepository,
-//                    profileRepository = profileRepository,
+                    feedRepository = feedRepository,
+                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
                     loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
-                    reviewRepository = reviewRepository,
+//                    reviewRepository = reviewRepository,
                 )
                 ApiTest(
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
-                    sessionService = sessionService,
+//                    sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
 //                    apiAlarm = apiAlarm,
