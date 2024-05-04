@@ -33,41 +33,53 @@ interface ApiProfile {
         @Header("authorization") auth: String
     ): RemoteUser
 
-    @POST("follower")
-    suspend fun getFollower(
+    @POST("myFollower")
+    suspend fun getMyFollower(
         @Header("authorization") auth: String
     ): List<RemoteFollower>
 
+    @POST("myFollowing")
+    suspend fun getMyFollowing(
+        @Header("authorization") auth: String
+    ): List<RemoteFollower>
+
+    @FormUrlEncoded
+    @POST("follower")
+    suspend fun getFollower(
+        @Field("user_id") userId: Int
+    ): List<RemoteFollower>
+
+    @FormUrlEncoded
     @POST("following")
     suspend fun getFollowing(
-        @Header("authorization") auth: String
+        @Field("user_id") userId: Int
     ): List<RemoteFollower>
 
     @FormUrlEncoded
     @POST("follow")
     suspend fun follow(
         @Header("authorization") auth: String,
-        @Field("user_id") user_id: Int
+        @Field("user_id") userId: Int
     ): Boolean
 
     @FormUrlEncoded
     @POST("unfollow")
     suspend fun unfollow(
         @Header("authorization") auth: String,
-        @Field("user_id") user_id: Int
+        @Field("user_id") userId: Int
     ): Boolean
 
     @FormUrlEncoded
     @POST("delete")
     suspend fun delete(
         @Header("authorization") auth: String,
-        @Field("user_id") user_id: Int
+        @Field("user_id") userId: Int
     ): Boolean
 
     @FormUrlEncoded
     @POST("getProfileWithFollow")
     suspend fun getProfileWithFollow(
         @Header("authorization") auth: String,
-        @Field("user_id") user_id: Int
+        @Field("user_id") userId: Int
     ): RemoteUser
 }

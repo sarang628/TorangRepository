@@ -1,9 +1,13 @@
 package com.sarang.torang.repository
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text2.BasicTextField2
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,68 +17,109 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.google.gson.GsonBuilder
 import com.sarang.torang.data.remote.response.RemoteFollower
 import kotlinx.coroutines.launch
 
 interface FollowRepository {
-    suspend fun getFollower(): List<RemoteFollower>
-    suspend fun getFollowing(): List<RemoteFollower>
+    suspend fun getMyFollower(): List<RemoteFollower>
+    suspend fun getFollower(userId: Int): List<RemoteFollower>
+    suspend fun getMyFollowing(): List<RemoteFollower>
+    suspend fun getFollowing(userId: Int): List<RemoteFollower>
     suspend fun follow(userId: Int): Boolean
     suspend fun unFollow(userId: Int): Boolean
     suspend fun delete(userId: Int): Boolean
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TestFollowRepository(followRepository: FollowRepository) {
     val coroutine = rememberCoroutineScope()
     var result by remember { mutableStateOf("") }
+    var followerUserId by remember { mutableStateOf("32") }
+    var followingUserId by remember { mutableStateOf("32") }
+    var followUserId by remember { mutableStateOf("32") }
+    var unFollowUserId by remember { mutableStateOf("32") }
     Column {
         HorizontalDivider(color = Color.LightGray)
         Text(text = "FollowRepositoryTest", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-        Button(onClick = {
+        AssistChip(label = {
+            Text(text = "myFollower")
+        }, onClick = {
             coroutine.launch {
                 try {
-                    result = followRepository.getFollower().toString()
+                    result = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(followRepository.getMyFollower())
                 } catch (e: Exception) {
                     result = e.toString()
                 }
             }
-        }) {
-            Text(text = "Follower")
-        }
-        Button(onClick = {
+        })
+        AssistChip(label = {
+            Text(text = "myFollowing")
+        }, onClick = {
             coroutine.launch {
                 try {
-                    result = followRepository.getFollowing().toString()
+                    result = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(followRepository.getMyFollowing())
                 } catch (e: Exception) {
                     result = e.toString()
                 }
             }
-        }) {
-            Text(text = "Following")
-        }
-        Button(onClick = {
+        })
+        AssistChip(label = {
+            Text(text = "Follow userId: ")
+            BasicTextField2(value = followUserId, onValueChange = { followUserId = it })
+        }, onClick = {
             coroutine.launch {
                 try {
-                    result = followRepository.follow(1).toString()
+                    result = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(followRepository.follow(followUserId.toInt()))
                 } catch (e: Exception) {
                     result = e.toString()
                 }
             }
-        }) {
-            Text(text = "Follow")
-        }
-        Button(onClick = {
+        })
+        AssistChip(label = {
+            Text(text = "UnFollow userId: ")
+            BasicTextField2(value = unFollowUserId, onValueChange = { unFollowUserId = it })
+        }, onClick = {
             coroutine.launch {
                 try {
-                    result = followRepository.unFollow(1).toString()
+                    result = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(followRepository.unFollow(unFollowUserId.toInt()))
                 } catch (e: Exception) {
                     result = e.toString()
                 }
             }
-        }) {
-            Text(text = "UnFollow")
-        }
+        })
+
+        AssistChip(label = {
+            Text(text = "Follower userId: ")
+            BasicTextField2(value = followerUserId, onValueChange = { followerUserId = it })
+        }, onClick = {
+            coroutine.launch {
+                try {
+                    result = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(followRepository.getFollower(followerUserId.toInt()))
+                } catch (e: Exception) {
+                    result = e.toString()
+                }
+            }
+        })
+        AssistChip(label = {
+            Text(text = "Following userId: ")
+            BasicTextField2(value = followingUserId, onValueChange = { followingUserId = it })
+        }, onClick = {
+            coroutine.launch {
+                try {
+                    result = GsonBuilder().setPrettyPrinting().create()
+                        .toJson(followRepository.getFollowing(followingUserId.toInt()))
+                } catch (e: Exception) {
+                    result = e.toString()
+                }
+            }
+        })
         Text(text = result)
     }
 }

@@ -3,7 +3,6 @@ package com.sarang.torang
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.sarang.instagralleryModule.GalleryNavHost
-import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.EditProfileRepositoryTest
 import com.sarang.torang.repository.FeedRepository
@@ -15,9 +14,11 @@ import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.ProfileRepositoryTest
 import com.sarang.torang.repository.ReportRepository
-import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.SettingsRepository
+import com.sarang.torang.repository.TestFollowRepository
+import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.comment.compose.CommentRepositoryTest
+import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.review.compose.ReviewRepositoryTest
 
 @Composable
@@ -51,7 +52,9 @@ fun RepositoryTest(
         }
         //SettingRepositoryTest(settingRepository)
         //MapRepositoryTest(mapRepository = mapRepository)
-        //TestFollowRepository(followRepository = followRepository)
+        followRepository?.let {
+            TestFollowRepository(followRepository = it)
+        }
         //LoginRepositoryTest(loginRepository = loginRepository)
         //TestReportRepository(reportRepository = reportRepository)
         reviewRepository?.let {
