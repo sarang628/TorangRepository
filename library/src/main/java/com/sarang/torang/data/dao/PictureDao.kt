@@ -11,7 +11,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PictureDao {
     @Query("select * from ReviewImageEntity Where reviewId = :reviewId")
-    fun getFeedImage(reviewId: Int): Flow<List<ReviewImageEntity>>
+    fun getFeedImageFlow(reviewId: Int): Flow<List<ReviewImageEntity>>
+
+    @Query("select * from ReviewImageEntity Where reviewId = :reviewId")
+    suspend fun getFeedImage(reviewId: Int): List<ReviewImageEntity>
+
+    @Query("select * from ReviewImageEntity Where restaurantId = :restaurantId")
+    suspend fun getFeedImageByRestaurantId(restaurantId: Int): List<ReviewImageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction

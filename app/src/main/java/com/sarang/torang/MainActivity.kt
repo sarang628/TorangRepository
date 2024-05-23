@@ -22,8 +22,10 @@ import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.MapRepository
+import com.sarang.torang.repository.PicturesRepository
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.ReportRepository
+import com.sarang.torang.repository.RestaurantRepository
 import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.session.SessionClientService
@@ -96,6 +98,12 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var apiCommentLike: ApiCommentLike
 
+    @Inject
+    lateinit var picturesRepository: PicturesRepository
+
+    @Inject
+    lateinit var restaurantRepository: RestaurantRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -103,15 +111,17 @@ class MainActivity : ComponentActivity() {
 
                 RepositoryTest(
 //                    commentRepository = commentRepository,
-//                    feedRepository = feedRepository,
+                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
                     loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
-                    followRepository = followRepository,
+//                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
 //                    reviewRepository = reviewRepository,
+                    picturesRepository = picturesRepository,
+                    restaurantRepository = restaurantRepository
                 )
                 ApiTest(
 //                    apiFeed = apiFeed,

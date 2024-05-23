@@ -11,9 +11,13 @@ import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.MapRepository
+import com.sarang.torang.repository.PicturesRepository
+import com.sarang.torang.repository.PicturesRepositoryTest
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.ProfileRepositoryTest
 import com.sarang.torang.repository.ReportRepository
+import com.sarang.torang.repository.RestaurantRepository
+import com.sarang.torang.repository.RestaurantRepositoryTest
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.repository.TestFollowRepository
 import com.sarang.torang.repository.comment.CommentRepository
@@ -32,7 +36,9 @@ fun RepositoryTest(
     mapRepository: MapRepository? = null,
     followRepository: FollowRepository? = null,
     reportRepository: ReportRepository? = null,
-    reviewRepository: ReviewRepository? = null
+    reviewRepository: ReviewRepository? = null,
+    picturesRepository: PicturesRepository? = null,
+    restaurantRepository: RestaurantRepository? = null,
 ) {
     Column {
         commentRepository?.let {
@@ -62,6 +68,12 @@ fun RepositoryTest(
                 GalleryNavHost(onNext = { onNext.invoke(it) }) {
                 }
             })
+        }
+        picturesRepository?.let {
+            PicturesRepositoryTest(repository = it)
+        }
+        restaurantRepository?.let {
+            RestaurantRepositoryTest(restaurantRepository = it)
         }
     }
 }

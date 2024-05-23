@@ -15,9 +15,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.sarang.torang.api.handle
 import com.sarang.torang.util.Encrypt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import retrofit2.HttpException
 
 interface LoginRepository {
     suspend fun emailLogin(email: String, password: String)
@@ -44,7 +47,7 @@ interface LoginRepository {
         confirmCode: String,
         name: String,
         email: String,
-        password: String
+        password: String,
     ): Boolean {
         return confirmCode(
             token = token,
@@ -60,7 +63,7 @@ interface LoginRepository {
         confirmCode: String,
         name: String,
         email: String,
-        password: String
+        password: String,
     ): Boolean
 }
 
@@ -103,8 +106,13 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
         }
 
         Button(onClick = {
+
             coroutine.launch {
-                success = loginRepository.sessionCheck().toString()
+                try {
+                    success = loginRepository.sessionCheck().toString()
+                } catch (e: HttpException) {
+                    error = "$e : ${e.handle()}"
+                }
             }
         }) {
             Text(text = "sessionCheck")
