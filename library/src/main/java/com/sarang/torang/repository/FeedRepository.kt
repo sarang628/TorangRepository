@@ -47,6 +47,7 @@ interface FeedRepository {
      * @param reviewId 리뷰 id
      */
     fun getMyFeed(reviewId: Int): Flow<List<ReviewAndImageEntity>>
+    suspend fun getFeedByReviewId(reviewId: Int): ReviewAndImageEntity
 }
 
 @Composable
