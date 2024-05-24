@@ -30,6 +30,7 @@ interface PicturesRepository {
     fun getFeedPictureFlow(reviewId: Int): Flow<List<ReviewImageEntity>>
     suspend fun getFeedPicture(reviewId: Int): List<ReviewImageEntity>
     suspend fun getImagesByRestaurantId(restaurantId: Int): List<ReviewImageEntity>
+    suspend fun getImagesByImageId(imageId: Int): List<ReviewImageEntity>
 }
 
 @Composable
@@ -37,15 +38,12 @@ fun PicturesRepositoryTest(repository: PicturesRepository) {
     val coroutine = rememberCoroutineScope()
     var result by remember { mutableStateOf("") }
     var list: List<ReviewImageEntity>? by remember { mutableStateOf(ArrayList()) }
-    var list1: List<ReviewImageEntity>? by remember { mutableStateOf(ArrayList()) }
     PicturesRepositoryTest(
         onRestaurant = {
             coroutine.launch {
                 try {
                     list = repository.getImagesByRestaurantId(it.toInt())
-                    list1 = null
-                    result =
-                        GsonBuilder().setPrettyPrinting().create().toJson(list)
+                    result = GsonBuilder().setPrettyPrinting().create().toJson(list)
                 } catch (e: Exception) {
                     result = e.toString()
                 }
@@ -55,11 +53,19 @@ fun PicturesRepositoryTest(repository: PicturesRepository) {
             coroutine.launch {
                 try {
                     repository.getFeedPictureFlow(reviewId = it.toInt()).collect {
-                        list = null
-                        list1 = it
-                        result =
-                            GsonBuilder().setPrettyPrinting().create().toJson(list1)
+                        list = it
+                        result = GsonBuilder().setPrettyPrinting().create().toJson(list)
                     }
+                } catch (e: Exception) {
+                    result = e.toString()
+                }
+            }
+        },
+        onImageId = {
+            coroutine.launch {
+                try {
+                    list = repository.getImagesByImageId(imageId = it.toInt())
+                    result = GsonBuilder().setPrettyPrinting().create().toJson(list)
                 } catch (e: Exception) {
                     result = e.toString()
                 }
@@ -67,7 +73,6 @@ fun PicturesRepositoryTest(repository: PicturesRepository) {
         },
         result = result,
         list = list,
-        list1 = list1
     )
 }
 
@@ -76,13 +81,14 @@ fun PicturesRepositoryTest(repository: PicturesRepository) {
 private fun PicturesRepositoryTest(
     onRestaurant: (String) -> Unit,
     onReview: (String) -> Unit,
+    onImageId: (String) -> Unit,
     result: String,
     list: List<ReviewImageEntity>? = null,
-    list1: List<ReviewImageEntity>? = null,
 ) {
     val REVIEW_IMAGE_SERVER_URL = "http://sarang628.iptime.org:89/review_images/"
     var restaurantId by remember { mutableStateOf("1") }
     var reviewId by remember { mutableStateOf("1") }
+    var imageId by remember { mutableStateOf("1") }
     Column(modifier = Modifier.fillMaxSize()) {
         InputChip(selected = true, onClick = { onRestaurant.invoke(restaurantId) }, label = {
             Text(text = "getPictures restaurantId:")
@@ -92,6 +98,11 @@ private fun PicturesRepositoryTest(
         InputChip(selected = true, onClick = { onReview.invoke(reviewId) }, label = {
             Text(text = "getPictures reviewId:")
             BasicTextField2(value = "$reviewId", onValueChange = { reviewId = it })
+        })
+
+        InputChip(selected = true, onClick = { onImageId.invoke(imageId) }, label = {
+            Text(text = "getPictures imageId:")
+            BasicTextField2(value = "$imageId", onValueChange = { imageId = it })
         })
 
         list?.let {
@@ -105,17 +116,6 @@ private fun PicturesRepositoryTest(
             }
         }
 
-        list1?.let {
-            LazyColumn(modifier = Modifier.size(300.dp)) {
-                items(it.size) {
-                    AsyncImage(
-                        model = REVIEW_IMAGE_SERVER_URL + list1[it].pictureUrl,
-                        contentDescription = null,
-                    )
-                }
-            }
-        }
-
         Text(text = result)
     }
 }
@@ -123,5 +123,10 @@ private fun PicturesRepositoryTest(
 @Preview
 @Composable
 fun PreviewPicturesRepositoryTest() {
-    PicturesRepositoryTest(onRestaurant = {}, result = "", list = null, list1 = null, onReview = {})
+    PicturesRepositoryTest(
+        onRestaurant = {},
+        result = "",
+        list = null,
+        onReview = {},
+        onImageId = {})
 }

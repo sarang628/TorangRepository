@@ -19,6 +19,11 @@ interface PictureDao {
     @Query("select * from ReviewImageEntity Where restaurantId = :restaurantId")
     suspend fun getFeedImageByRestaurantId(restaurantId: Int): List<ReviewImageEntity>
 
+    @Query("""select * 
+              from ReviewImageEntity 
+              Where restaurantId = (select restaurantId from ReviewImageEntity where pictureId = :pictureId)""")
+    suspend fun getFeedImageByImageId(pictureId: Int): List<ReviewImageEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
     suspend fun insertAll(plantList: List<ReviewImageEntity>)
