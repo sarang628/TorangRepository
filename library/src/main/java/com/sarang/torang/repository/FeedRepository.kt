@@ -48,6 +48,7 @@ interface FeedRepository {
      */
     fun getMyFeed(reviewId: Int): Flow<List<ReviewAndImageEntity>>
     suspend fun getFeedByReviewId(reviewId: Int): ReviewAndImageEntity
+    fun getFeedByRestaurantId(restaurantId: Int): Flow<List<ReviewAndImageEntity>>
 }
 
 @Composable

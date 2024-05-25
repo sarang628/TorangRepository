@@ -43,36 +43,18 @@ interface FeedDao {
     )
     fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
 
-    @Query("select * from FeedEntity order by FeedEntity.createDate desc")
+    @Query("""
+        SELECT *
+        FROM FeedEntity
+        ORDER BY FeedEntity.createDate DESC"""
+    )
     fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>
 
-    @Query("DELETE FROM FeedEntity where reviewId = (:reviewId)")
+    @Query("""
+        DELETE 
+        FROM FeedEntity 
+        where reviewId = (:reviewId)""")
     suspend fun deleteFeed(reviewId: Int): Int
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction
-    suspend fun insertAll(plantList: List<FeedEntity>)
-
-    @Transaction
-    suspend fun insertAllFeed(
-        feedList: List<FeedEntity>,
-        pictureDao: PictureDao,
-        reviewImages: List<ReviewImageEntity>,
-        userDao: UserDao,
-        userList: List<UserEntity>,
-        likeDao: LikeDao,
-        likeList: List<LikeEntity>,
-        favoriteDao: FavoriteDao,
-        favorites: List<FavoriteEntity>
-    ) {
-        pictureDao.insertAll(reviewImages)
-        userDao.insertAll(userList)
-        likeDao.deleteAll()
-        likeDao.insertLikes(likeList)
-        favoriteDao.insertAll(favorites)
-        //마지막에 안넣어주면 앱 강제종료
-        insertAll(feedList)
-    }
 
     @Query("DELETE FROM FeedEntity")
     suspend fun deleteAll()
@@ -82,6 +64,37 @@ interface FeedDao {
 
     @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
     suspend fun getFeed(reviewId: Int): ReviewAndImageEntity
+
+    @Query("DELETE FROM ReviewImageEntity where reviewId = (:reviewId)")
+    suspend fun deletePicturesByReviewId(reviewId: Int)
+
+    @Query(
+        """
+        select * 
+        from ReviewImageEntity 
+        where reviewId = (:reviewId)"""
+    )
+    fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
+
+
+    /*incoude like*/
+    @Query(
+        """
+            Select * 
+            From FeedEntity
+        """
+    )
+    fun feedIncludeLike() {
+
+    }
+
+    @Query(
+        """
+        select * 
+        from FeedEntity 
+        where restaurantId = (:restaurantId) order by FeedEntity.createDate desc"""
+    )
+    fun getFeedByRestaurantId(restaurantId: Int): Flow<List<ReviewAndImageEntity>>
 
     @Transaction
     suspend fun deleteAllAndInsertAll(
@@ -118,21 +131,28 @@ interface FeedDao {
         favorites: List<FavoriteEntity>,
     )
 
-    @Query("DELETE FROM ReviewImageEntity where reviewId = (:reviewId)")
-    suspend fun deletePicturesByReviewId(reviewId: Int)
-
-    @Query("select * from ReviewImageEntity where reviewId = (:reviewId)")
-    fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
-
-
-    /*incoude like*/
-    @Query(
-        """
-            Select * 
-            From FeedEntity
-        """
-    )
-    fun feedIncludeLike() {
-
+    @Transaction
+    suspend fun insertAllFeed(
+        feedList: List<FeedEntity>,
+        pictureDao: PictureDao,
+        reviewImages: List<ReviewImageEntity>,
+        userDao: UserDao,
+        userList: List<UserEntity>,
+        likeDao: LikeDao,
+        likeList: List<LikeEntity>,
+        favoriteDao: FavoriteDao,
+        favorites: List<FavoriteEntity>,
+    ) {
+        pictureDao.insertAll(reviewImages)
+        userDao.insertAll(userList)
+        likeDao.deleteAll()
+        likeDao.insertLikes(likeList)
+        favoriteDao.insertAll(favorites)
+        //마지막에 안넣어주면 앱 강제종료
+        insertAll(feedList)
     }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Transaction
+    suspend fun insertAll(plantList: List<FeedEntity>)
 }
