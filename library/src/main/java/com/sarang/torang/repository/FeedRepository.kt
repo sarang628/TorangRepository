@@ -1,6 +1,5 @@
 package com.sarang.torang.repository
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.sarang.torang.api.handle
-import com.sarang.torang.data.RemoteComment
-import com.sarang.torang.data.RemoteCommentList
 import com.sarang.torang.data.entity.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

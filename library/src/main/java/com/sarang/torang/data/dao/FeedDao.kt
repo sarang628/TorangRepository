@@ -1,5 +1,6 @@
 package com.sarang.torang.data.dao
 
+import android.util.Log
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -43,17 +44,20 @@ interface FeedDao {
     )
     fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
 
-    @Query("""
+    @Query(
+        """
         SELECT *
         FROM FeedEntity
         ORDER BY FeedEntity.createDate DESC"""
     )
     fun getAllFeedWithUser(): Flow<List<ReviewAndImageEntity>>
 
-    @Query("""
+    @Query(
+        """
         DELETE 
         FROM FeedEntity 
-        where reviewId = (:reviewId)""")
+        where reviewId = (:reviewId)"""
+    )
     suspend fun deleteFeed(reviewId: Int): Int
 
     @Query("DELETE FROM FeedEntity")
@@ -146,6 +150,10 @@ interface FeedDao {
         pictureDao.insertAll(reviewImages)
         userDao.insertAll(userList)
         likeDao.deleteAll()
+        Log.d(
+            "__FeedDao",
+            "insert like amount = ${feedList.map { "reviewId : ${it.reviewId}, likeAmount : ${it.likeAmount}" }}"
+        )
         likeDao.insertLikes(likeList)
         favoriteDao.insertAll(favorites)
         //마지막에 안넣어주면 앱 강제종료
