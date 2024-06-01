@@ -11,6 +11,7 @@ import com.sarang.torang.api.ApiAlarm
 import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
 import com.sarang.torang.api.ApiFeed
+import com.sarang.torang.api.ApiLike
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
 import com.sarang.torang.data.dao.FavoriteDao
@@ -104,6 +105,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var restaurantRepository: RestaurantRepository
 
+    @Inject
+    lateinit var apiLike: ApiLike
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -111,7 +115,7 @@ class MainActivity : ComponentActivity() {
 
                 RepositoryTest(
 //                    commentRepository = commentRepository,
-                    feedRepository = feedRepository,
+//                    feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
                     loginRepository = loginRepository,
@@ -120,13 +124,14 @@ class MainActivity : ComponentActivity() {
 //                    followRepository = followRepository,
 //                    reportRepository = reportRepository,
 //                    reviewRepository = reviewRepository,
-                    picturesRepository = picturesRepository,
-                    restaurantRepository = restaurantRepository
+//                    picturesRepository = picturesRepository,
+//                    restaurantRepository = restaurantRepository
                 )
                 ApiTest(
+                    apiLike = apiLike,
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
-//                    sessionService = sessionService,
+                    sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
 //                    apiAlarm = apiAlarm,
