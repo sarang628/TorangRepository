@@ -3,6 +3,7 @@ package com.sarang.torang
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.sarang.torang.api.ApiAlarm
+import com.sarang.torang.api.ApiAlarmTest
 import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
 import com.sarang.torang.api.ApiCommentLikeTest
@@ -28,7 +29,7 @@ fun ApiTest(
     apiAlarm: ApiAlarm? = null,
     apiCommentLike: ApiCommentLike? = null,
     apiLike: ApiLike? = null,
-    sessionClientService: SessionClientService? = null
+    sessionClientService: SessionClientService? = null,
 ) {
     Column {
 //        ApiFeedFavoriteTest(apiFeed = apiFeed)
@@ -47,6 +48,12 @@ fun ApiTest(
                 apiCommentLike = apiCommentLike,
                 sessionClientService = sessionClientService
             )
+        }
+
+        apiAlarm?.let { apiAlarm ->
+            sessionService?.let {
+                ApiAlarmTest(apiAlarm = apiAlarm, sessionService = it)
+            }
         }
 
         apiLike?.let {

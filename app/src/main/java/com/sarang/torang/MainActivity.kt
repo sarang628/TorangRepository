@@ -128,13 +128,13 @@ class MainActivity : ComponentActivity() {
 //                    restaurantRepository = restaurantRepository
                 )
                 ApiTest(
-                    apiLike = apiLike,
+//                    apiLike = apiLike,
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
                     sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
-//                    apiAlarm = apiAlarm,
+                    apiAlarm = apiAlarm,
 //                    apiCommentLike = apiCommentLike,
 //                    sessionClientService = sessionClientService
                 )
