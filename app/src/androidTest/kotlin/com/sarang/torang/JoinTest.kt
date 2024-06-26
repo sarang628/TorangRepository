@@ -20,13 +20,13 @@ import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class LoginTest {
+class JoinTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var apiLogin: ApiLogin
+    lateinit var apiJoin: ApiJoin
 
     @Before
     fun setUp() {
@@ -34,17 +34,22 @@ class LoginTest {
     }
 
     @Test
-    fun loginTest() = runTest {
-        apiLogin.emailLogin("sarang628@naver.com", Encrypt.encrypt("aaaaa"))
+    fun testSignUp() = runTest {
+        try {
+            apiJoin.checkEmail("sry_ang@naver.com", "didtkfkd")
+        } catch (e: retrofit2.HttpException) {
+            Assert.assertEquals(500, e.code())
+            Assert.assertEquals("등록된 이메일 입니다.", e.handle())
+        }
     }
 
     @Test
-    fun loginFailedTest() = runTest {
+    fun testConfirmCode() = runTest {
         try {
-            apiLogin.emailLogin("sarang628@naver.com", Encrypt.encrypt("aaaaaa"))
+            apiJoin.confirmCode("token", "123456", "didtkfkd", "sry_ang@naver.com", "didtkfkd")
         } catch (e: retrofit2.HttpException) {
             Assert.assertEquals(500, e.code())
-            Assert.assertEquals("로그인에 실패하였습니다.", e.handle())
+            Assert.assertEquals("등록된 이메일 입니다.", e.handle())
         }
     }
 }
