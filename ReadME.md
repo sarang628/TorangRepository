@@ -10,6 +10,9 @@
 원격 서버와 통신하여 데이터 동기화 및 UI에서 필요로하는 API 제공
 자주 변경되는 API는 UI에서 직접 구현 할 수 있는 API 호출 가이드 제공
 
+## API 자동화 테스트 필요
+- [테스트 환경 구성하기](./Documents/Test%20Enviroment.md)
+
 ## 의존성 추가
 ```
 implementation 'com.github.sarang628:TorangRepository:928fce8039'
