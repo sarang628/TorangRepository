@@ -20,14 +20,14 @@ import com.sarang.torang.api.handle
 import com.sarang.torang.data.entity.FavoriteEntity
 import com.sarang.torang.data.entity.ReviewAndImageEntity
 import com.sarang.torang.data.entity.ReviewImageEntity
-import com.sarang.torang.data.remote.response.RemoteUser
+import com.sarang.torang.data.remote.response.UserApiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 interface ProfileRepository {
-    suspend fun loadProfile(userId: Int): RemoteUser
-    suspend fun loadProfileByToken(): RemoteUser
+    suspend fun loadProfile(userId: Int): UserApiModel
+    suspend fun loadProfileByToken(): UserApiModel
     fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
     fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
     suspend fun loadMyFeed(userId: Int)

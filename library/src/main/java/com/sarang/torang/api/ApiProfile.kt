@@ -1,8 +1,8 @@
 package com.sarang.torang.api
 
 import com.sarang.torang.data.User
-import com.sarang.torang.data.remote.response.RemoteFollower
-import com.sarang.torang.data.remote.response.RemoteUser
+import com.sarang.torang.data.remote.response.FollowerApiModel
+import com.sarang.torang.data.remote.response.UserApiModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
@@ -26,34 +26,34 @@ interface ApiProfile {
     @POST("getProfile")
     suspend fun getProfile(
         @Field("user_id") user_id: String
-    ): RemoteUser
+    ): UserApiModel
 
     @POST("getProfileByToken")
     suspend fun getProfileByToken(
         @Header("authorization") auth: String
-    ): RemoteUser
+    ): UserApiModel
 
     @POST("myFollower")
     suspend fun getMyFollower(
         @Header("authorization") auth: String
-    ): List<RemoteFollower>
+    ): List<FollowerApiModel>
 
     @POST("myFollowing")
     suspend fun getMyFollowing(
         @Header("authorization") auth: String
-    ): List<RemoteFollower>
+    ): List<FollowerApiModel>
 
     @FormUrlEncoded
     @POST("follower")
     suspend fun getFollower(
         @Field("user_id") userId: Int
-    ): List<RemoteFollower>
+    ): List<FollowerApiModel>
 
     @FormUrlEncoded
     @POST("following")
     suspend fun getFollowing(
         @Field("user_id") userId: Int
-    ): List<RemoteFollower>
+    ): List<FollowerApiModel>
 
     @FormUrlEncoded
     @POST("follow")
@@ -81,5 +81,5 @@ interface ApiProfile {
     suspend fun getProfileWithFollow(
         @Header("authorization") auth: String,
         @Field("user_id") userId: Int
-    ): RemoteUser
+    ): UserApiModel
 }

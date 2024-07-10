@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.gson.GsonBuilder
 import com.sarang.torang.data.MenuReview
-import com.sarang.torang.data.remote.response.RemoteFeed
+import com.sarang.torang.data.remote.response.FeedApiModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -39,11 +39,11 @@ import retrofit2.http.PartMap
 interface ApiReview {
     @FormUrlEncoded
     @POST("getReviews")
-    suspend fun getReviews(@Field("restaurant_id") id: Int): List<RemoteFeed>
+    suspend fun getReviews(@Field("restaurant_id") id: Int): List<FeedApiModel>
 
     @FormUrlEncoded
     @POST("getMyReview")
-    suspend fun getMyReview(@FieldMap params: Map<String, String>): RemoteFeed
+    suspend fun getMyReview(@FieldMap params: Map<String, String>): FeedApiModel
 
     @Multipart
     @POST("addReview")
@@ -55,38 +55,38 @@ interface ApiReview {
         @Part("user_id") user_id: Int,
         @Part("uploadedImage") uploadedImage: List<Int>? = null,
         @Part file: ArrayList<MultipartBody.Part>? = null
-    ): RemoteFeed
+    ): FeedApiModel
 
     @POST("updateReview")
-    suspend fun updateReview(@Body reviewBody: RemoteFeed): Call<RemoteFeed>
+    suspend fun updateReview(@Body reviewBody: FeedApiModel): Call<FeedApiModel>
 
     @POST("deleteReview")
-    suspend fun deleteReview(@Body review: RemoteFeed): RemoteFeed
+    suspend fun deleteReview(@Body review: FeedApiModel): FeedApiModel
 
     @Multipart
     @POST("updateReview")
     suspend fun updateReview(
         @PartMap params: HashMap<String, RequestBody>,
         @Part pictures: ArrayList<MultipartBody.Part>
-    ): RemoteFeed
+    ): FeedApiModel
 
     @FormUrlEncoded
     @POST("getMyReviews")
-    suspend fun getMyReviews(@FieldMap params: Map<String, String>): ArrayList<RemoteFeed>
+    suspend fun getMyReviews(@FieldMap params: Map<String, String>): ArrayList<FeedApiModel>
 
     @POST("addMenuReview")
     suspend fun addMenuReview(@Body menuReview: MenuReview): Call<MenuReview>
 
     @POST("getMyMenuReviews")
-    suspend fun getMyMenuReviews(@Body review: RemoteFeed): Call<ArrayList<MenuReview>>
+    suspend fun getMyMenuReviews(@Body review: FeedApiModel): Call<ArrayList<MenuReview>>
 
     @FormUrlEncoded
     @POST("getMyReviewsByUserId")
-    suspend fun getMyReviewsByUserId(@Field("userId") userId: Int): List<RemoteFeed>
+    suspend fun getMyReviewsByUserId(@Field("userId") userId: Int): List<FeedApiModel>
 
     @FormUrlEncoded
     @POST("getReviewsById")
-    suspend fun getReviewsById(@Field("reviewId") reviewId: Int): RemoteFeed
+    suspend fun getReviewsById(@Field("reviewId") reviewId: Int): FeedApiModel
 
 
 }

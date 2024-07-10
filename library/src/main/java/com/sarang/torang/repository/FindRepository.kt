@@ -3,7 +3,7 @@ package com.sarang.torang.repository
 import com.sarang.torang.data.Distances
 import com.sarang.torang.data.Prices
 import com.sarang.torang.data.SearchType
-import com.sarang.torang.data.remote.response.RemoteRestaurant
+import com.sarang.torang.data.remote.response.RestaurantApiModel
 import kotlinx.coroutines.flow.Flow
 
 interface FindRepository {
@@ -24,7 +24,7 @@ interface FindRepository {
     /** */
     suspend fun searchIfRestaurantEmpty()
     /** 검색 된 맛집 */
-    fun getSearchedRestaurant(): List<RemoteRestaurant>
+    fun getSearchedRestaurant(): List<RestaurantApiModel>
     /** 최초위치요청 상태 가져오기 */
     fun getIsFirstRequestLocation(): Flow<Boolean>
     /** 현재 위치를 요청중인지 */

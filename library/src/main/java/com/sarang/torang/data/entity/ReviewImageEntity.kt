@@ -2,7 +2,7 @@ package com.sarang.torang.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sarang.torang.data.remote.response.RemoteFeed
+import com.sarang.torang.data.remote.response.FeedApiModel
 import com.sarang.torang.data.remote.response.RemotePicture
 
 
@@ -32,7 +32,7 @@ data class ReviewImageEntity(
         }
     }
 
-    fun RemoteFeed.toPictureEntityList(): List<ReviewImageEntity> {
+    fun FeedApiModel.toPictureEntityList(): List<ReviewImageEntity> {
         return pictures.stream().map {
             it.toPictureEntity()
         }.toList()

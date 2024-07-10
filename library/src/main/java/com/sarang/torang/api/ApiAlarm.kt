@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.sarang.torang.data.RemoteAlarm
+import com.sarang.torang.data.remote.response.AlarmAlarmModel
 import com.sarang.torang.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.http.Header
@@ -18,7 +18,7 @@ import retrofit2.http.POST
 
 interface ApiAlarm {
     @POST("getAlarms")
-    suspend fun getAlarms(@Header("authorization") auth: String): ArrayList<RemoteAlarm>
+    suspend fun getAlarms(@Header("authorization") auth: String): ArrayList<AlarmAlarmModel>
 }
 
 @Composable

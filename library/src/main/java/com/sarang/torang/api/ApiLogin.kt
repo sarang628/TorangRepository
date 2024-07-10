@@ -1,7 +1,7 @@
 package com.sarang.torang.api
 
 import com.sarang.torang.data.User
-import com.sarang.torang.data.remote.response.LoginResponse
+import com.sarang.torang.data.remote.response.LoginApiModel
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -14,7 +14,7 @@ interface ApiLogin {
     suspend fun emailLogin(
         @Field("email") email: String,
         @Field("password") password: String,
-    ): LoginResponse
+    ): LoginApiModel
 
     @FormUrlEncoded
     @POST("facebook_login")

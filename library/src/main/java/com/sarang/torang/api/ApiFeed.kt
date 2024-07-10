@@ -15,9 +15,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.google.gson.GsonBuilder
-import com.sarang.torang.data.RemoteFavorite
-import com.sarang.torang.data.RemoteLike
-import com.sarang.torang.data.remote.response.RemoteFeed
+import com.sarang.torang.data.remote.response.FavoriteApiModel
+import com.sarang.torang.data.remote.response.FeedApiModel
+import com.sarang.torang.data.remote.response.LikeApiModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import retrofit2.http.Field
@@ -34,7 +34,7 @@ import javax.net.ssl.SSLException
  */
 interface ApiFeed {
     @POST("getFeeds")
-    suspend fun getFeeds(@Header("authorization") auth: String?): List<RemoteFeed>
+    suspend fun getFeeds(@Header("authorization") auth: String?): List<FeedApiModel>
 
     @FormUrlEncoded
     @POST("deleteReview")
@@ -45,22 +45,22 @@ interface ApiFeed {
     suspend fun addLike(
         @Header("authorization") auth: String,
         @Field("reviewId") reviewId: Int
-    ): RemoteLike
+    ): LikeApiModel
 
     @FormUrlEncoded
     @POST("deleteLike")
-    suspend fun deleteLike(@Field("likeId") likeId: Int): RemoteLike
+    suspend fun deleteLike(@Field("likeId") likeId: Int): LikeApiModel
 
     @FormUrlEncoded
     @POST("deleteFavorite")
-    suspend fun deleteFavorite(@Field("favoriteId") likeId: Int): RemoteFavorite
+    suspend fun deleteFavorite(@Field("favoriteId") likeId: Int): FavoriteApiModel
 
     @FormUrlEncoded
     @POST("addFavorite")
     suspend fun addFavorite(
         @Header("authorization") auth: String,
         @Field("reviewId") reviewId: Int
-    ): RemoteFavorite
+    ): FavoriteApiModel
 }
 
 @Composable

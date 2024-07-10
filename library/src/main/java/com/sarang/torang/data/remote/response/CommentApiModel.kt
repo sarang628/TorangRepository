@@ -1,4 +1,4 @@
-package com.sarang.torang.data
+package com.sarang.torang.data.remote.response
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.HorizontalDivider
@@ -17,7 +17,7 @@ data class RemoteComment(
     val tagUser: RemoteTagCommentUser? = null,
     val sub_comment_count: Int,
     val parent_comment_id: Int,
-    val childComments: RemoteCommentList? = null,
+    val childComments: CommentListApiModel? = null,
     val childComment: RemoteComment? = null
 )
 

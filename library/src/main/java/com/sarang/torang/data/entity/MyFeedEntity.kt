@@ -2,7 +2,7 @@ package com.sarang.torang.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sarang.torang.data.remote.response.RemoteFeed
+import com.sarang.torang.data.remote.response.FeedApiModel
 
 @Entity
 data class MyFeedEntity(
@@ -20,7 +20,7 @@ data class MyFeedEntity(
     val createDate: String/* 11 */
 )
 
-fun RemoteFeed.toMyFeedEntity(): MyFeedEntity {
+fun FeedApiModel.toMyFeedEntity(): MyFeedEntity {
     return MyFeedEntity(
         reviewId = reviewId,
         userId = user.userId,

@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.data.RemoteComment
-import com.sarang.torang.data.RemoteCommentList
-import com.sarang.torang.data.ToComposable
+import com.sarang.torang.data.remote.response.RemoteComment
+import com.sarang.torang.data.remote.response.CommentListApiModel
+import com.sarang.torang.data.remote.response.ToComposable
 import com.sarang.torang.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.http.Body
@@ -54,14 +54,14 @@ interface ApiComment {
     suspend fun getComments(
         @Header("authorization") auth: String,
         @Field("review_id") reviewId: Int
-    ): RemoteCommentList
+    ): CommentListApiModel
 
     @FormUrlEncoded
     @POST("getCommentsWithOneReply")
     suspend fun getCommentsWithOneReply(
         @Header("authorization") auth: String,
         @Field("review_id") reviewId: Int
-    ): RemoteCommentList
+    ): CommentListApiModel
 
     @FormUrlEncoded
     @POST("getSubComments")
@@ -138,7 +138,7 @@ internal fun GetComment(apiComment: ApiComment, sessionService: SessionService) 
 @Composable
 internal fun GetCommentsWithOneReply(apiComment: ApiComment, sessionService: SessionService) {
     val coroutine = rememberCoroutineScope()
-    var list by remember { mutableStateOf(RemoteCommentList("", list = listOf())) }
+    var list by remember { mutableStateOf(CommentListApiModel("", list = listOf())) }
     var error by remember { mutableStateOf("") }
     Button(onClick = {
         sessionService.getToken().let {

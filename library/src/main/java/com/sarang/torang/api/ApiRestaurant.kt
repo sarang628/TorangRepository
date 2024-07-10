@@ -5,8 +5,8 @@ import com.sarang.torang.Picture
 import com.sarang.torang.data.Filter
 import com.sarang.torang.data.HoursOfOperation
 import com.sarang.torang.data.RestaurantDetail
-import com.sarang.torang.data.remote.response.RemoteFeed
-import com.sarang.torang.data.remote.response.RemoteRestaurant
+import com.sarang.torang.data.remote.response.FeedApiModel
+import com.sarang.torang.data.remote.response.RestaurantApiModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -22,14 +22,14 @@ import retrofit2.http.PartMap
 interface ApiRestaurant {
     @FormUrlEncoded
     @POST("getAllRestaurant")
-    suspend fun getAllRestaurant(): ArrayList<RemoteRestaurant>
+    suspend fun getAllRestaurant(): ArrayList<RestaurantApiModel>
 
     @POST("getFilterRestaurant")
-    suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<RemoteRestaurant>
+    suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<RestaurantApiModel>
 
     @FormUrlEncoded
     @POST("getRestaurantById")
-    suspend fun getRestaurantById(@Field("restaurant_id") restaurantId: Int): RemoteRestaurant
+    suspend fun getRestaurantById(@Field("restaurant_id") restaurantId: Int): RestaurantApiModel
 
     @FormUrlEncoded
     @POST("getRestaurantDetail")
@@ -52,7 +52,7 @@ interface ApiRestaurant {
     suspend fun fileUpload(
         @PartMap params: HashMap<String, RequestBody>,
         @Part pictures: ArrayList<MultipartBody.Part>
-    ): RemoteFeed
+    ): FeedApiModel
 
     @FormUrlEncoded
     @POST("deletePicture")

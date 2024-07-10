@@ -2,7 +2,7 @@ package com.sarang.torang.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sarang.torang.data.RemoteComment
+import com.sarang.torang.data.remote.response.RemoteComment
 import java.text.SimpleDateFormat
 import kotlin.random.Random
 

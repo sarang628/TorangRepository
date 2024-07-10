@@ -1,6 +1,6 @@
 package com.sarang.torang.data.remote.response
 
-data class RemoteCity(
+data class CityApiModel(
     val latitude: Double,
     val longitude: Double,
     val zoom: Float = 0f,

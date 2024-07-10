@@ -1,7 +1,7 @@
 package com.sarang.torang.repository
 
 import com.sarang.torang.data.Restaurant
-import com.sarang.torang.data.RemoteComment
+import com.sarang.torang.data.remote.response.RemoteComment
 import com.sarang.torang.data.entity.CommentEntity
 import com.sarang.torang.data.entity.FeedEntity
 import kotlinx.coroutines.flow.Flow

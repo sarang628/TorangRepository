@@ -2,7 +2,7 @@ package com.sarang.torang.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RemoteUser(
+data class UserApiModel(
     @SerializedName("user_id")
     val userId: Int,
     @SerializedName("user_name")

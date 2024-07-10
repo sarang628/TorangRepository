@@ -1,9 +1,8 @@
-package com.sarang.torang.data
+package com.sarang.torang.data.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.sarang.torang.data.remote.response.RemoteUser
 
-data class RemoteAlarm(
+data class AlarmAlarmModel(
     @SerializedName("alarm_id")
     val alarmId: Int,
     @SerializedName("user_id")
@@ -17,8 +16,8 @@ data class RemoteAlarm(
     val reviewId: Int,
     @SerializedName("create_date")
     val createDate: String,
-    val user: RemoteUser,
-    val otherUser: RemoteUser,
+    val user: UserApiModel,
+    val otherUser: UserApiModel,
     @SerializedName("picture_url")
     val pictureUrl: String,
 )

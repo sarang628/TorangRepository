@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.sarang.torang.data.RemoteComment
-import com.sarang.torang.data.ToComposable
+import com.sarang.torang.data.remote.response.RemoteComment
+import com.sarang.torang.data.remote.response.ToComposable
 import com.sarang.torang.repository.comment.CommentRepository
 import kotlinx.coroutines.launch
 

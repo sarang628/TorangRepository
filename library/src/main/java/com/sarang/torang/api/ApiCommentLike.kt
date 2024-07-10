@@ -1,6 +1,5 @@
 package com.sarang.torang.api
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,12 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,30 +21,25 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.data.RemoteComment
-import com.sarang.torang.data.RemoteCommentLike
-import com.sarang.torang.data.remote.response.RemoteCity
+import com.sarang.torang.data.remote.response.CommentLikeApiModel
 import com.sarang.torang.session.SessionClientService
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import org.w3c.dom.Comment
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
 
 interface ApiCommentLike {
     @POST("getAllCommentLike")
-    suspend fun getAllCommentLike(@Header("authorization") auth: String): List<RemoteCommentLike>
+    suspend fun getAllCommentLike(@Header("authorization") auth: String): List<CommentLikeApiModel>
 
     @FormUrlEncoded
     @POST("addCommentLike")
     suspend fun addCommentLike(
         @Header("authorization") auth: String,
         @Field("commentId") commentId: Int
-    ): RemoteCommentLike
+    ): CommentLikeApiModel
 
     @FormUrlEncoded
     @POST("deleteCommentLike")
@@ -64,7 +56,7 @@ fun ApiCommentLikeTest(
     sessionClientService: SessionClientService? = null
 ) {
     var result by remember { mutableStateOf("") }
-    var comments: List<RemoteCommentLike> by remember { mutableStateOf(ArrayList()) }
+    var comments: List<CommentLikeApiModel> by remember { mutableStateOf(ArrayList()) }
     val coroutine = rememberCoroutineScope()
     val height = LocalConfiguration.current.screenHeightDp
     val auth = sessionClientService?.getToken() ?: ""

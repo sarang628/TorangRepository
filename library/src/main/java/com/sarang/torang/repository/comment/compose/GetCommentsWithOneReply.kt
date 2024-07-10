@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.sarang.torang.data.RemoteComment
-import com.sarang.torang.data.ToComposable
+import com.sarang.torang.data.remote.response.RemoteComment
+import com.sarang.torang.data.remote.response.ToComposable
 import com.sarang.torang.repository.comment.CommentRepository
 import kotlinx.coroutines.launch
 

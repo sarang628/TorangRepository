@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.google.gson.GsonBuilder
-import com.sarang.torang.data.remote.response.RemoteFollower
+import com.sarang.torang.data.remote.response.FollowerApiModel
 import com.sarang.torang.session.SessionService
 import kotlinx.coroutines.launch
 import retrofit2.http.Field
@@ -25,7 +25,7 @@ interface ApiLike {
     suspend fun getLikeUserByReviewId(
         @Header("authorization") auth: String,
         @Field("reviewId") Int: String,
-    ): List<RemoteFollower>
+    ): List<FollowerApiModel>
 
 }
 

@@ -2,7 +2,7 @@ package com.sarang.torang.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RemoteRestaurant(
+data class RestaurantApiModel(
     @SerializedName("restaurant_id")
     val restaurantId: Int,
     @SerializedName("restaurant_name")

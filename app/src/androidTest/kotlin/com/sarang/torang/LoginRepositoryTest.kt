@@ -1,9 +1,7 @@
 package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.api.ApiLogin
-import com.sarang.torang.api.handle
-import com.sarang.torang.util.Encrypt
+import com.sarang.torang.repository.LoginRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -14,16 +12,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
-
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class LoginTest {
-
+class LoginRepositoryTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var apiLogin: ApiLogin
+    lateinit var loginRepository: LoginRepository
 
     @Before
     fun setUp() {
@@ -31,17 +27,13 @@ class LoginTest {
     }
 
     @Test
-    fun loginTest() = runTest {
-        apiLogin.emailLogin("sarang628@naver.com", Encrypt.encrypt("aaaaa"))
-    }
-
-    @Test
-    fun loginFailedTest() = runTest {
+    fun checkEmailAlreadyRegisteredTest() = runTest {
         try {
-            apiLogin.emailLogin("sarang628@naver.com", Encrypt.encrypt("aaaaaa"))
-        } catch (e: retrofit2.HttpException) {
-            Assert.assertEquals(500, e.code())
-            Assert.assertEquals("로그인에 실패하였습니다.", e.handle())
+            loginRepository.checkEmail("sry_ang@naver.com", "didtkfkd")
+        } catch (e: Exception) {
+            Assert.assertEquals(e.message, "등록된 이메일 입니다.")
         }
     }
+
+
 }

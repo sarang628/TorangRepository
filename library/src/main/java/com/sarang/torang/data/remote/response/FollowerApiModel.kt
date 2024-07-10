@@ -2,7 +2,7 @@ package com.sarang.torang.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RemoteFollower(
+data class FollowerApiModel(
     @SerializedName("follower_id")
     var followerId: Int,
     @SerializedName("user_name")
