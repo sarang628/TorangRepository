@@ -6,7 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.torang.api.ApiAlarm
 import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
@@ -111,14 +114,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
+            TorangTheme {
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    Column(Modifier.verticalScroll(rememberScrollState())) {
 
-                RepositoryTest(
+                        RepositoryTest(
 //                    commentRepository = commentRepository,
-//                    feedRepository = feedRepository,
+                            feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
-                    loginRepository = loginRepository,
+                            loginRepository = loginRepository,
 //                    settingRepository = settingRepository,
 //                    mapRepository = mapRepository,
 //                    followRepository = followRepository,
@@ -126,24 +131,26 @@ class MainActivity : ComponentActivity() {
 //                    reviewRepository = reviewRepository,
 //                    picturesRepository = picturesRepository,
 //                    restaurantRepository = restaurantRepository
-                )
-                ApiTest(
+                        )
+                        ApiTest(
 //                    apiLike = apiLike,
 //                    apiFeed = apiFeed,
 //                    apiComment = apiComment,
-                    sessionService = sessionService,
+                            sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
-                    apiAlarm = apiAlarm,
+                            apiAlarm = apiAlarm,
 //                    apiCommentLike = apiCommentLike,
 //                    sessionClientService = sessionClientService
-                )
+                        )
 //                DaoTest(
 //                    favoriteDao = favoriteDao,
 //                    loggedInUserDao = loggedInUserDao,
 //                    reviewDao = reviewDao
 //                )
-                //SessionClientServiceTest(sessionClientService = sessionClientService)
+                        //SessionClientServiceTest(sessionClientService = sessionClientService)
+                    }
+                }
             }
         }
     }

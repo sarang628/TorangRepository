@@ -100,4 +100,5 @@ dependencies {
     implementation project(path: ':library')
     implementation 'com.github.sarang628:InstagramGallery:4742515032'
     implementation 'com.github.sarang628:MediaContentResolver:54ff69ee3a'
+    implementation 'com.github.sarang628:Theme:05d5af61da'
 }

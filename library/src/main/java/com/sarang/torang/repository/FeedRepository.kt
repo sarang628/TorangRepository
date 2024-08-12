@@ -1,6 +1,8 @@
 package com.sarang.torang.repository
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -33,7 +36,7 @@ interface FeedRepository {
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
     suspend fun loadFeed()
-    suspend fun loadFeedWithPage(page : Int)
+    suspend fun loadFeedWithPage(page: Int)
     suspend fun addLike(reviewId: Int)
     suspend fun deleteLike(reviewId: Int)
     suspend fun addFavorite(reviewId: Int)
@@ -49,6 +52,7 @@ interface FeedRepository {
     fun getFeedByRestaurantId(restaurantId: Int): Flow<List<ReviewAndImageEntity>>
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FeedRepositoryTest(feedRepository: FeedRepository) {
     val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
@@ -67,7 +71,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
         Text(text = "FeedRepositoryTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Column {
             Text(text = error, color = Color.Red, fontWeight = FontWeight.Bold)
-            Row {
+            FlowRow {
                 Button(onClick = {
                     coroutine.launch {
                         try {
@@ -96,8 +100,6 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                         text = "delLike"
                     )
                 }
-            }
-            Row {
                 Button(onClick = {
                     coroutine.launch {
                         try {
@@ -127,9 +129,8 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                     Text(text = "GetMyFeed")
                 }
             }
-            Row {
-                DeleteFeedTest(feedRepository)
-            }
+            DeleteFeedTest(feedRepository)
+            PageFeed(feedRepository)
         }
         LazyColumn(content = {
             items(feeds.size) {
@@ -145,7 +146,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
 fun DeleteFeedTest(feedRepository: FeedRepository) {
     var reviewId by remember { mutableStateOf("10") }
     val coroutine = rememberCoroutineScope()
-    Column {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         OutlinedTextField(
             value = reviewId,
             onValueChange = { reviewId = it },
@@ -157,7 +158,28 @@ fun DeleteFeedTest(feedRepository: FeedRepository) {
                 feedRepository.deleteFeed(reviewId.toInt())
             }
         }) {
-            Text(text = "deleteReview")
+            Text(text = "delete")
+        }
+    }
+}
+
+@Composable
+fun PageFeed(feedRepository: FeedRepository) {
+    var reviewId by remember { mutableStateOf("1") }
+    val coroutine = rememberCoroutineScope()
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        OutlinedTextField(
+            value = reviewId,
+            onValueChange = { reviewId = it },
+            label = {
+                Text(text = "page")
+            })
+        Button(onClick = {
+            coroutine.launch {
+                feedRepository.loadFeedWithPage(reviewId.toInt())
+            }
+        }) {
+            Text(text = "getFeed")
         }
     }
 }
