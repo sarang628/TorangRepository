@@ -33,6 +33,7 @@ interface FeedRepository {
     suspend fun deleteFeed(reviewId: Int)
     suspend fun deleteFeedAll()
     suspend fun loadFeed()
+    suspend fun loadFeedWithPage(page : Int)
     suspend fun addLike(reviewId: Int)
     suspend fun deleteLike(reviewId: Int)
     suspend fun addFavorite(reviewId: Int)
