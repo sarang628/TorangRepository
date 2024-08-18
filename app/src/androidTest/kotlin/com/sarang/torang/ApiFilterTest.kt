@@ -33,4 +33,11 @@ class ApiFilterTest {
         val result = apiFilter.getNations()
         Assert.assertEquals(result.isNotEmpty(), true)
     }
+
+
+    @Test
+    fun getCitiesByNationIdTest() = runTest {
+        val result = apiFilter.getCitiesByNationId(1)
+        Assert.assertEquals(result.isNotEmpty(), true)
+    }
 }
