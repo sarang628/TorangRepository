@@ -7,5 +7,6 @@ import retrofit2.http.GET
 interface ApiFilter {
     @GET("getCities")
     suspend fun getCities(): List<CityApiModel>
-
+    @GET("getNations")
+    suspend fun getNations(): List<CityApiModel>
 }
