@@ -42,6 +42,7 @@ interface FeedRepository {
     suspend fun addFavorite(reviewId: Int)
     suspend fun deleteFavorite(reviewId: Int)
     suspend fun loadUserAllFeedsByReviewId(reviewId: Int)
+    suspend fun loadMyAllFeedsByReviewId(reviewId: Int)
     val feeds: Flow<List<ReviewAndImageEntity>>
 
     /**
