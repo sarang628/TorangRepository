@@ -5,5 +5,6 @@ data class CityApiModel(
     val longitude: Double,
     val zoom: Float = 0f,
     val name: String,
-    val url: String
+    val url: String,
+    val nation: Int,
 )
