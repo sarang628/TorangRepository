@@ -48,4 +48,11 @@ class FeedRepositoryTest {
     fun loadFeedWithPageTest() = runTest {
         feedRepository.loadFeedWithPage(1)
     }
+
+    @Test
+    fun loadUserAllFeedsByReviewIdTest() = runTest {
+        feedRepository.loadUserAllFeedsByReviewId(425)
+    }
+
+
 }
