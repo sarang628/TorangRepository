@@ -67,7 +67,7 @@ interface FeedDao {
     fun getFeedFlow(reviewId: Int): Flow<ReviewAndImageEntity>
 
     @Query("select * from FeedEntity where reviewId = (:reviewId) order by FeedEntity.createDate desc")
-    suspend fun getFeed(reviewId: Int): ReviewAndImageEntity
+    suspend fun getFeed(reviewId: Int): ReviewAndImageEntity?
 
     @Query("DELETE FROM ReviewImageEntity where reviewId = (:reviewId)")
     suspend fun deletePicturesByReviewId(reviewId: Int)
