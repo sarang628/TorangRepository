@@ -44,6 +44,13 @@ class FeedRepositoryTest {
         Assert.assertEquals(result.isNotEmpty(), true)
     }
 
+
+    @Test
+    fun getFeedByReviewId() = runTest {
+        val result = apiFeed.getFeedByReviewId(null, 425)
+        Assert.assertEquals(result != null, true)
+    }
+
     @Test
     fun loadFeedWithPageTest() = runTest {
         feedRepository.loadFeedWithPage(1)

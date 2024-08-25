@@ -45,6 +45,10 @@ interface ApiFeed {
     suspend fun loadUserAllFeedsByReviewId(@Header("authorization") auth: String?, @Field("reviewId") reviewId: Int): List<FeedApiModel>
 
     @FormUrlEncoded
+    @POST("getFeedByReviewId")
+    suspend fun getFeedByReviewId(@Header("authorization") auth: String?, @Field("reviewId") reviewId: Int): FeedApiModel
+
+    @FormUrlEncoded
     @POST("deleteReview")
     suspend fun deleteReview(@Field("reviewId") reviewId: Int)
 
