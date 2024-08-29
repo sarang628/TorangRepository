@@ -74,7 +74,7 @@ fun LoginRepositoryTest(loginRepository: LoginRepository) {
     var success by remember { mutableStateOf("") }
     val isLogin by loginRepository.isLogin.collectAsState(false)
     var id by remember { mutableStateOf("sry_ang@naver.com") }
-    var pw by remember { mutableStateOf("didtkfkd") }
+    var pw by remember { mutableStateOf("Torang!234") }
     Column {
         HorizontalDivider(color = Color.LightGray)
         Text(text = "LoginRepositoryTest", fontWeight = FontWeight.Bold, fontSize = 20.sp)
