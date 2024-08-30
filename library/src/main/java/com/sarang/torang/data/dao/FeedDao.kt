@@ -149,11 +149,6 @@ interface FeedDao {
     ) {
         pictureDao.insertAll(reviewImages)
         userDao.insertAll(userList)
-        likeDao.deleteAll()
-        Log.d(
-            "__FeedDao",
-            "insert like amount = ${feedList.map { "reviewId : ${it.reviewId}, likeAmount : ${it.likeAmount}" }}"
-        )
         likeDao.insertLikes(likeList)
         favoriteDao.insertAll(favorites)
         //마지막에 안넣어주면 앱 강제종료
