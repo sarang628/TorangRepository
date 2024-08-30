@@ -61,5 +61,10 @@ class FeedRepositoryTest {
         feedRepository.loadUserAllFeedsByReviewId(425)
     }
 
+    @Test
+    fun addLikeTest() = runTest {
+        feedRepository.addLike(425)
+    }
+
 
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -91,20 +92,6 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                 Button(onClick = {
                     coroutine.launch {
                         try {
-                            feedRepository.addLike(82)
-                        } catch (e: Exception) {
-                            error = e.handle()
-                        }
-                    }
-                }) { Text(text = "addLike") }
-                Button(onClick = { coroutine.launch { feedRepository.deleteLike(82) } }) {
-                    Text(
-                        text = "delLike"
-                    )
-                }
-                Button(onClick = {
-                    coroutine.launch {
-                        try {
                             feedRepository.addFavorite(82)
                         } catch (e: Exception) {
                             error = e.handle()
@@ -131,6 +118,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
                     Text(text = "GetMyFeed")
                 }
             }
+            AddLike(feedRepository) { error = it }
             DeleteFeedTest(feedRepository)
             PageFeed(feedRepository)
         }
@@ -141,6 +129,45 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
         })
         Text(text = result)
         Text(text = gson.toJson(list))
+    }
+}
+
+@Composable
+fun AddLike(feedRepository: FeedRepository, onError: (String) -> Unit = {}) {
+    val coroutine = rememberCoroutineScope()
+    var reviewId by remember { mutableStateOf("467") }
+    Row {
+        OutlinedTextField(
+            modifier = Modifier.width(200.dp),
+            value = reviewId,
+            onValueChange = {
+                try {
+                    reviewId = it.toInt().toString()
+                } catch (e: Exception) {
+
+                }
+            },
+            label = {
+                Text(text = "reviewId")
+            })
+        Button(onClick = {
+            coroutine.launch {
+                try {
+                    feedRepository.addLike(reviewId.toInt())
+                } catch (e: Exception) {
+                    onError.invoke(e.handle())
+                }
+            }
+        }) { Text(text = "addLike") }
+        Button(onClick = {
+            coroutine.launch {
+                try {
+                    feedRepository.deleteLike(reviewId.toInt())
+                } catch (e: Exception) {
+                    onError.invoke(e.handle())
+                }
+            }
+        }) { Text(text = "delLike") }
     }
 }
 

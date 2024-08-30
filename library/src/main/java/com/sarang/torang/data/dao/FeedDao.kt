@@ -158,4 +158,10 @@ interface FeedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
     suspend fun insertAll(plantList: List<FeedEntity>)
+
+    @Query("update FeedEntity set likeAmount = likeAmount + 1 where reviewId = (:reviewId)")
+    suspend fun addLikeCount(reviewId: Int)
+
+    @Query("update FeedEntity set likeAmount = likeAmount - 1 where reviewId = (:reviewId)")
+    suspend fun subTractLikeCount(reviewId: Int)
 }
