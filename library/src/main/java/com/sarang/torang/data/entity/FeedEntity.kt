@@ -7,16 +7,16 @@ import com.sarang.torang.data.remote.response.FeedApiModel
 @Entity
 data class FeedEntity(
     @PrimaryKey
-    val reviewId: Int = -1,/* 1 */
-    val userId: Int,/* 2 */
-    val restaurantId: Int?,/* 3 */
-    val userName: String,/* 4 */
-    val restaurantName: String?,/* 5 */
-    val profilePicUrl: String,/* 6 */
-    val contents: String,/* 7 */
-    val rating: Float,/* 8 */
-    val likeAmount: Int,/* 9 */
-    val commentAmount: Int,/* 10 */
+    val reviewId: Int = -1,
+    val userId: Int,
+    val restaurantId: Int?,
+    val userName: String,
+    val restaurantName: String?,
+    val profilePicUrl: String,
+    val contents: String,
+    val rating: Float,
+    val likeAmount: Int,
+    val commentAmount: Int,
     val createDate: String/* 11 */
 )
 

@@ -24,6 +24,8 @@ fun RemotePicture.toReviewImage(): ReviewImageEntity {
         pictureUrl = this.picture_url,
         createDate = this.create_date ?: "",
         menuId = this.menu_id,
-        menu = 1
+        menu = 1,
+        width = this.width,
+        height = this.height
     )
 }

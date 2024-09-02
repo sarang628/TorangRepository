@@ -12,4 +12,6 @@ public class Picture {
     public String create_date;
     public int menu_id;
     public Menu menu;
+    public int width;
+    public int height;
 }

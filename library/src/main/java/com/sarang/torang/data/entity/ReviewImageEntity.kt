@@ -15,7 +15,9 @@ data class ReviewImageEntity(
     val pictureUrl: String,
     val createDate: String,
     val menuId: Int,
-    val menu: Int
+    val menu: Int,
+    val width: Int,
+    val height: Int,
 ) {
     companion object {
         fun uploadParam(path: String): ReviewImageEntity {
@@ -27,15 +29,15 @@ data class ReviewImageEntity(
                 createDate = "",
                 menuId = -1,
                 menu = 0,
-                userId = -1
+                userId = -1,
+                width = 0,
+                height = 0
             )
         }
     }
 
     fun FeedApiModel.toPictureEntityList(): List<ReviewImageEntity> {
-        return pictures.stream().map {
-            it.toPictureEntity()
-        }.toList()
+        return pictures.map { it.toPictureEntity() }.toList()
     }
 
     fun RemotePicture.toPictureEntity(): ReviewImageEntity {
@@ -47,7 +49,9 @@ data class ReviewImageEntity(
             pictureUrl = picture_url,
             createDate = create_date ?: "",
             menuId = menu_id,
-            menu = menu.toInt()
+            menu = menu.toInt(),
+            width = width,
+            height = height
         )
     }
 }
