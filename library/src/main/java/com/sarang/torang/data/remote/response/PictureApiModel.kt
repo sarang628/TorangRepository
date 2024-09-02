@@ -10,7 +10,9 @@ data class RemotePicture(
     val picture_url: String,
     val create_date: String?,
     val menu_id: Int,
-    val menu: String
+    val menu: String,
+    val width: Int,
+    val height: Int,
 )
 
 fun RemotePicture.toReviewImage(): ReviewImageEntity {

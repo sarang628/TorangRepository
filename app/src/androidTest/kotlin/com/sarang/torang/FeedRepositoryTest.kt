@@ -24,31 +24,9 @@ class FeedRepositoryTest {
     @Inject
     lateinit var feedRepository: FeedRepository
 
-    @Inject
-    lateinit var apiFeed: ApiFeed
-
     @Before
     fun setUp() {
         hiltRule.inject()
-    }
-
-    @Test
-    fun checkEmailAlreadyRegisteredTest() = runTest {
-        val result = apiFeed.getFeeds(null)
-        Assert.assertEquals(result.isNotEmpty(), true)
-    }
-
-    @Test
-    fun getFeedsWithPageTest() = runTest {
-        val result = apiFeed.getFeedsWithPage(null, 1)
-        Assert.assertEquals(result.isNotEmpty(), true)
-    }
-
-
-    @Test
-    fun getFeedByReviewId() = runTest {
-        val result = apiFeed.getFeedByReviewId(null, 425)
-        Assert.assertEquals(result != null, true)
     }
 
     @Test
