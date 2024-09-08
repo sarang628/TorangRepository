@@ -28,8 +28,10 @@ import kotlinx.coroutines.launch
 
 interface ChatRepository {
     // 내 리뷰 삭제
-    suspend fun getChatRoom(): Flow<List<ChatRoomEntity>>
-    suspend fun getContents(roomId: Int): Flow<List<ChatEntity>>
+    suspend fun loadChatRoom()
+    suspend fun loadContents(roomId: Int)
+    fun getChatRoom(): Flow<List<ChatRoomEntity>>
+    fun getContents(roomId: Int): Flow<List<ChatEntity>>
 }
 
 @Composable
