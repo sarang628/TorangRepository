@@ -38,6 +38,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     var list: List<ChatRoomEntity> by remember { mutableStateOf(listOf()) }
     var list1: List<ChatEntity> by remember { mutableStateOf(listOf()) }
     var selectedRoomId by remember { mutableIntStateOf(-1) }
+    var count by remember { mutableIntStateOf(-1) }
 
     LaunchedEffect(key1 = "") {
         coruntine.launch {
@@ -47,7 +48,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
         }
     }
 
-    LaunchedEffect(key1 = selectedRoomId) {
+    LaunchedEffect(key1 = count) {
         if (selectedRoomId != -1) {
             chatRepository.getContents(selectedRoomId).collect {
                 list1 = it
@@ -63,6 +64,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
         LazyColumn {
             items(list.size) {
                 Column(Modifier.clickable {
+                    count++
                     selectedRoomId = list[it].roomId
                 }) {
                     Text(text = "${list[it].roomId}")
