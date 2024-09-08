@@ -3,6 +3,8 @@ package com.sarang.torang
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.sarang.instagralleryModule.GalleryNavHost
+import com.sarang.torang.repository.ChatRepository
+import com.sarang.torang.repository.ChatRepositoryTest
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.EditProfileRepositoryTest
 import com.sarang.torang.repository.FeedRepository
@@ -39,6 +41,7 @@ fun RepositoryTest(
     reviewRepository: ReviewRepository? = null,
     picturesRepository: PicturesRepository? = null,
     restaurantRepository: RestaurantRepository? = null,
+    chatRepository: ChatRepository? = null,
 ) {
     Column {
         commentRepository?.let {
@@ -74,6 +77,9 @@ fun RepositoryTest(
         }
         restaurantRepository?.let {
             RestaurantRepositoryTest(restaurantRepository = it)
+        }
+        chatRepository?.let {
+            ChatRepositoryTest(it)
         }
     }
 }

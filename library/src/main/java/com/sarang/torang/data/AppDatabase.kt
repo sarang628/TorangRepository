@@ -9,6 +9,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.sarang.torang.data.dao.AlarmDao
+import com.sarang.torang.data.dao.ChatDao
 import com.sarang.torang.data.dao.CommentDao
 import com.sarang.torang.data.dao.FavoriteDao
 import com.sarang.torang.data.dao.FeedDao
@@ -23,6 +24,8 @@ import com.sarang.torang.data.dao.ReviewDao
 import com.sarang.torang.data.dao.SearchDao
 import com.sarang.torang.data.dao.UserDao
 import com.sarang.torang.data.entity.AlarmEntity
+import com.sarang.torang.data.entity.ChatEntity
+import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.CommentEntity
 import com.sarang.torang.data.entity.FavoriteEntity
 import com.sarang.torang.data.entity.FeedEntity
@@ -47,7 +50,7 @@ import com.sarang.torang.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
         UserEntity::class, FeedEntity::class, ReviewImageEntity::class, LikeEntity::class,
         RestaurantEntity::class, MenuEntity::class, AlarmEntity::class,
         LoggedInUserEntity::class, SearchEntity::class, FavoriteEntity::class, CommentEntity::class,
-        MyFeedEntity::class
+        MyFeedEntity::class, ChatEntity::class, ChatRoomEntity::class
     ], version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -65,6 +68,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun likeDao(): LikeDao
     abstract fun favoriteDao(): FavoriteDao
     abstract fun myFeedDao(): MyFeedDao
+    abstract fun chatDao(): ChatDao
 
     companion object {
         // For Singleton instantiation

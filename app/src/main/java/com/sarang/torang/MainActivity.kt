@@ -20,6 +20,7 @@ import com.sarang.torang.api.ApiReview
 import com.sarang.torang.data.dao.FavoriteDao
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.data.dao.ReviewDao
+import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
@@ -109,6 +110,9 @@ class MainActivity : ComponentActivity() {
     lateinit var restaurantRepository: RestaurantRepository
 
     @Inject
+    lateinit var chatRepository: ChatRepository
+
+    @Inject
     lateinit var apiLike: ApiLike
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,7 +134,8 @@ class MainActivity : ComponentActivity() {
 //                    reportRepository = reportRepository,
 //                    reviewRepository = reviewRepository,
 //                    picturesRepository = picturesRepository,
-//                    restaurantRepository = restaurantRepository
+//                    restaurantRepository = restaurantRepository,
+                            chatRepository = chatRepository
                         )
                         ApiTest(
 //                    apiLike = apiLike,
