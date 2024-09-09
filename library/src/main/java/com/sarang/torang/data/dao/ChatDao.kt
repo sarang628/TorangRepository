@@ -6,14 +6,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.sarang.torang.data.entity.ChatEntity
+import com.sarang.torang.data.entity.ChatParticipantsEntity
 import com.sarang.torang.data.entity.ChatRoomEntity
-import com.sarang.torang.data.entity.FavoriteEntity
-import com.sarang.torang.data.entity.LikeEntity
-import com.sarang.torang.data.entity.MyFeedEntity
-import com.sarang.torang.data.entity.RestaurantEntity
-import com.sarang.torang.data.entity.ReviewAndImageEntity
-import com.sarang.torang.data.entity.ReviewImageEntity
-import com.sarang.torang.data.entity.UserEntity
+import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
+import com.sarang.torang.data.entity.ParticipantsWithUserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,7 +21,14 @@ interface ChatDao {
         ORDER BY createDate DESC
         """
     )
-    fun getChatRoom(): Flow<List<ChatRoomEntity>>
+    fun getChatRoom(): Flow<List<ChatRoomWithParticipantsEntity>>
+
+    @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
+    fun getParticipantsWithUsers(roomId: Int): Flow<List<ParticipantsWithUserEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertParticipats(list: List<ChatParticipantsEntity>)
+
 
     @Query(
         """

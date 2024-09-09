@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.data.entity.ChatEntity
 import com.sarang.torang.data.entity.ChatRoomEntity
+import com.sarang.torang.data.entity.ChatRoomWithParticipantsAndUsers
+import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -30,21 +32,23 @@ interface ChatRepository {
     // 내 리뷰 삭제
     suspend fun loadChatRoom()
     suspend fun loadContents(roomId: Int)
-    fun getChatRoom(): Flow<List<ChatRoomEntity>>
+    fun getChatRoom(): Flow<List<ChatRoomWithParticipantsEntity>>
     fun getContents(roomId: Int): Flow<List<ChatEntity>>
+    fun getChatRoomsWithParticipantsAndUsers(): Flow<List<ChatRoomWithParticipantsAndUsers>>
 }
 
 @Composable
 fun ChatRepositoryTest(chatRepository: ChatRepository) {
     val coruntine = rememberCoroutineScope()
-    var list: List<ChatRoomEntity> by remember { mutableStateOf(listOf()) }
+    var list: List<ChatRoomWithParticipantsAndUsers> by remember { mutableStateOf(listOf()) }
     var list1: List<ChatEntity> by remember { mutableStateOf(listOf()) }
     var selectedRoomId by remember { mutableIntStateOf(-1) }
     var count by remember { mutableIntStateOf(-1) }
 
     LaunchedEffect(key1 = "") {
         coruntine.launch {
-            chatRepository.getChatRoom().collect {
+            chatRepository.loadChatRoom()
+            chatRepository.getChatRoomsWithParticipantsAndUsers().collect {
                 list = it
             }
         }
@@ -52,6 +56,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
 
     LaunchedEffect(key1 = count) {
         if (selectedRoomId != -1) {
+            chatRepository.loadContents(selectedRoomId)
             chatRepository.getContents(selectedRoomId).collect {
                 list1 = it
             }
@@ -67,10 +72,11 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
             items(list.size) {
                 Column(Modifier.clickable {
                     count++
-                    selectedRoomId = list[it].roomId
+                    selectedRoomId = list[it].chatRoomEntity.roomId
                 }) {
-                    Text(text = "${list[it].roomId}")
-                    Text(text = "${list[it].createDate}")
+                    Text(text = "roomId : ${list[it].chatRoomEntity.roomId}")
+                    Text(text = "createDate : ${list[it].chatRoomEntity.createDate}")
+                    Text(text = list[it].participantsWithUsers.toString())
                 }
             }
         }
@@ -83,8 +89,8 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
                 Column {
                     Text(text = "${list1[it].roomId}")
                     Text(text = "${list1[it].userId}")
-                    Text(text = "${list1[it].message}")
-                    Text(text = "${list1[it].createDate}")
+                    Text(text = list1[it].message)
+                    Text(text = list1[it].createDate)
                 }
             }
         }

@@ -41,6 +41,7 @@ class ApiChatTest {
     fun getChatRoomTest() = runTest {
         val result = apiChat.getChatRoom(sessionService.getToken()!!)
         Assert.assertEquals(result.isNotEmpty(), true)
+        Assert.assertEquals(result[0].users[0].userName.isNotEmpty(), true)
     }
 
     @Test

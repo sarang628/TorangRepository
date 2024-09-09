@@ -25,6 +25,7 @@ import com.sarang.torang.data.dao.SearchDao
 import com.sarang.torang.data.dao.UserDao
 import com.sarang.torang.data.entity.AlarmEntity
 import com.sarang.torang.data.entity.ChatEntity
+import com.sarang.torang.data.entity.ChatParticipantsEntity
 import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.CommentEntity
 import com.sarang.torang.data.entity.FavoriteEntity
@@ -50,7 +51,7 @@ import com.sarang.torang.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
         UserEntity::class, FeedEntity::class, ReviewImageEntity::class, LikeEntity::class,
         RestaurantEntity::class, MenuEntity::class, AlarmEntity::class,
         LoggedInUserEntity::class, SearchEntity::class, FavoriteEntity::class, CommentEntity::class,
-        MyFeedEntity::class, ChatEntity::class, ChatRoomEntity::class
+        MyFeedEntity::class, ChatEntity::class, ChatRoomEntity::class, ChatParticipantsEntity::class
     ], version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

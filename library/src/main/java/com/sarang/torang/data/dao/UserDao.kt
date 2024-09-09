@@ -27,4 +27,10 @@ interface UserDao {
 
     @Query("update UserEntity set userName = :userName ,profilePicUrl = :profilePicUrl  where userId = :userId")
     suspend fun updateUser(userId: Int, userName: String, profilePicUrl: String)
+
+    @Query("SELECT COUNT(*) FROM UserEntity WHERE userId = :userId")
+    suspend fun exists(userId: Int): Int
+
+    @Query("update UserEntity set userName = :userName ,profilePicUrl = :profilePicUrl  where userId = :userId")
+    suspend fun updateByChatRoom(userId: Int, userName: String, profilePicUrl: String)
 }
