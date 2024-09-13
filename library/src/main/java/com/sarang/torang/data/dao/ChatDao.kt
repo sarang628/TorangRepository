@@ -45,4 +45,17 @@ interface ChatDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAllChat(chatRoomEntity: List<ChatEntity>)
+
+    @Query(
+        """
+        SELECT c.*, (select count(*) from ChatParticipantsEntity where roomId = c.roomId) count
+        FROM ChatRoomEntity c, ChatParticipantsEntity p
+        Where 1=1
+        and c.roomId = p.roomId
+        and p.userId = :userId
+        and count = 2
+        ORDER BY createDate DESC
+        """
+    )
+    fun getChatRoomByUserId(userId: Int): ChatRoomWithParticipantsEntity?
 }
