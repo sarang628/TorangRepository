@@ -3,6 +3,7 @@ package com.sarang.torang
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.api.ApiChat
 import com.sarang.torang.api.ApiFeed
+import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.session.SessionService
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -28,6 +29,9 @@ class ApiChatTest {
     lateinit var loginRepository: LoginRepository
 
     @Inject
+    lateinit var chatRepository: ChatRepository
+
+    @Inject
     lateinit var sessionService: SessionService
 
     @Before
@@ -47,5 +51,11 @@ class ApiChatTest {
     @Test
     fun getContentsTest() = runTest {
         apiChat.getContents(sessionService.getToken()!!, 1)
+    }
+
+    @Test
+    fun createChatRoomTest() = runTest {
+        val result = chatRepository.getUserOrCreateRoomByUserId(2)
+        Assert.assertEquals(result, "")
     }
 }

@@ -18,4 +18,11 @@ interface ApiChat {
         @Header("authorization") auth: String,
         @Field("roomId") roomId: Int,
     ): List<ChatApiModel>
+
+    @FormUrlEncoded
+        @POST("createChatRoom")
+    suspend fun createChatRoom(
+        @Header("authorization") auth: String,
+        @Field("userId") userId: Int,
+    ): ChatRoomApiModel
 }

@@ -33,6 +33,7 @@ interface ChatRepository {
     suspend fun loadChatRoom()
     suspend fun loadContents(roomId: Int)
     fun getChatRoom(): Flow<List<ChatRoomWithParticipantsEntity>>
+    suspend fun getUserOrCreateRoomByUserId(userId: Int): ChatRoomWithParticipantsAndUsers
     fun getContents(roomId: Int): Flow<List<ChatEntity>>
     fun getChatRoomsWithParticipantsAndUsers(): Flow<List<ChatRoomWithParticipantsAndUsers>>
 }
@@ -48,7 +49,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     LaunchedEffect(key1 = "") {
         coruntine.launch {
             chatRepository.loadChatRoom()
-            chatRepository.getChatRoomsWithParticipantsAndUsers().collect {
+            chatRepository. getChatRoomsWithParticipantsAndUsers().collect {
                 list = it
             }
         }
