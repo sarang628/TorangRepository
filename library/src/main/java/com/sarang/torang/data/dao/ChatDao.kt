@@ -59,5 +59,5 @@ interface ChatDao {
         ORDER BY createDate DESC
         """
     )
-    fun getChatRoomByUserId(userId: Int): ChatRoomWithParticipantsEntity?
+    suspend fun getChatRoomByUserId(userId: Int): ChatRoomWithParticipantsEntity?
 }
