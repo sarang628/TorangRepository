@@ -58,4 +58,9 @@ class ApiChatTest {
         val result = chatRepository.getUserOrCreateRoomByUserId(2)
         Assert.assertEquals(result, "")
     }
+
+    @Test
+    fun addChatTest() = runTest {
+        chatRepository.addChat(26, "hi")
+    }
 }

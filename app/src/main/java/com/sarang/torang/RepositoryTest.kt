@@ -44,6 +44,9 @@ fun RepositoryTest(
     chatRepository: ChatRepository? = null,
 ) {
     Column {
+        chatRepository?.let {
+            ChatRepositoryTest(it)
+        }
         commentRepository?.let {
             CommentRepositoryTest(commentRepository = it)
         }
@@ -77,9 +80,6 @@ fun RepositoryTest(
         }
         restaurantRepository?.let {
             RestaurantRepositoryTest(restaurantRepository = it)
-        }
-        chatRepository?.let {
-            ChatRepositoryTest(it)
         }
     }
 }

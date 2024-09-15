@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sarang.torang.data.entity.ChatEntity
+import com.sarang.torang.data.entity.ChatEntityWithUser
 import com.sarang.torang.data.entity.ChatParticipantsEntity
 import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
@@ -41,7 +42,7 @@ interface ChatDao {
         ORDER BY createDate DESC
         """
     )
-    fun getContents(roomId: Int): Flow<List<ChatEntity>>
+    fun getContents(roomId: Int): Flow<List<ChatEntityWithUser>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAll(chatRoomEntity: List<ChatRoomEntity>)
@@ -75,4 +76,15 @@ interface ChatDao {
         """
     )
     suspend fun getChatRoomByUserId(userId: Int): ChatRoomWithParticipantsEntity?
+
+    @Insert
+    suspend fun addChat(chatEntity: ChatEntity)
+
+    @Query(
+        """
+        delete from chatentity where uuid = :uuid
+    """
+    )
+    suspend fun delete(uuid: String)
+
 }
