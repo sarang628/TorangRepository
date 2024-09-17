@@ -5,6 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
+ * @param sending 전송중
  */
 @Entity(
     indices = [Index(value = ["uuid"], unique = true)]
@@ -16,4 +17,5 @@ data class ChatEntity(
     val userId: Int,
     val message: String,
     val createDate: String,
+    val sending: Boolean,
 )
