@@ -2,6 +2,7 @@ package com.sarang.torang.data.dao
 
 import androidx.room.*
 import com.sarang.torang.data.entity.*
+import com.sarang.torang.data.remote.response.ChatUserApiModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -33,4 +34,33 @@ interface UserDao {
 
     @Query("update UserEntity set userName = :userName ,profilePicUrl = :profilePicUrl  where userId = :userId")
     suspend fun updateByChatRoom(userId: Int, userName: String, profilePicUrl: String)
+
+    @Transaction
+    suspend fun insertOrUpdateUser(users: List<ChatUserApiModel>) {
+        users.forEach { user ->
+            if (exists(user.userId) > 0) {
+                updateByChatRoom(
+                    user.userId,
+                    user.userName,
+                    user.profilePicUrl
+                )
+            } else {
+                insertUser(
+                    UserEntity(
+                        userId = user.userId,
+                        userName = user.userName,
+                        email = "",
+                        loginPlatform = "",
+                        createDate = "",
+                        accessToken = "",
+                        profilePicUrl = user.profilePicUrl,
+                        point = 0,
+                        reviewCount = "",
+                        followers = "",
+                        following = ""
+                    )
+                )
+            }
+        }
+    }
 }

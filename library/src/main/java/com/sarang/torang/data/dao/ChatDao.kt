@@ -4,12 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.sarang.torang.data.entity.ChatEntity
 import com.sarang.torang.data.entity.ChatEntityWithUser
 import com.sarang.torang.data.entity.ChatParticipantsEntity
 import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
 import com.sarang.torang.data.entity.ParticipantsWithUserEntity
+import com.sarang.torang.data.remote.response.ChatRoomApiModel
+import com.sarang.torang.data.remote.response.toChatRoomEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,6 +25,16 @@ interface ChatDao {
         """
     )
     fun getChatRoom(): Flow<List<ChatRoomWithParticipantsEntity>>
+
+
+    @Query(
+        """
+        SELECT *
+        FROM ChatRoomEntity
+        ORDER BY createDate DESC
+        """
+    )
+    fun getChatRoom1(): Flow<List<ChatRoomEntity>>
 
     @Query("SELECT * FROM ChatParticipantsEntity WHERE roomId = :roomId")
     fun getParticipantsWithUsersFlow(roomId: Int): Flow<List<ParticipantsWithUserEntity>?>
@@ -76,5 +89,30 @@ interface ChatDao {
 
     @Query("delete from chatentity where uuid = :uuid")
     suspend fun delete(uuid: String)
+
+    @Transaction
+    suspend fun insertParticipants(
+        result: List<ChatRoomApiModel>,
+    ) {
+        result.forEach { chatRoom ->
+            insertParticipats(
+                chatRoom.users.map { user ->
+                    ChatParticipantsEntity(
+                        roomId = chatRoom.roomId,
+                        userId = user.userId
+                    )
+                }
+            )
+        }
+    }
+
+    @Transaction
+    suspend fun loadChatRoom(userDao: UserDao, result: List<ChatRoomApiModel>) {
+        deleteAllChatRoom()
+        deleteAllParticipants()
+        addAll(result.map { it.toChatRoomEntity() })
+        userDao.insertOrUpdateUser(result.flatMap { it.users })
+        insertParticipants(result)
+    }
 
 }

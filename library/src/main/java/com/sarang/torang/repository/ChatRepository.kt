@@ -1,15 +1,19 @@
 package com.sarang.torang.repository
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,11 +32,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.data.entity.ChatEntity
+import com.google.gson.GsonBuilder
 import com.sarang.torang.data.entity.ChatEntityWithUser
 import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsAndUsers
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
+import com.sarang.torang.data.remote.response.ChatRoomApiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -42,6 +47,7 @@ interface ChatRepository {
     suspend fun loadChatRoom()
     suspend fun loadContents(roomId: Int)
     fun getChatRoom(): Flow<List<ChatRoomWithParticipantsEntity>>
+    fun getChatRoom1(): Flow<List<ChatRoomEntity>>
     suspend fun getUserOrCreateRoomByUserId(userId: Int): ChatRoomWithParticipantsAndUsers
     fun getContents(roomId: Int): Flow<List<ChatEntityWithUser>>
     fun getChatRoomsWithParticipantsAndUsers(): Flow<List<ChatRoomWithParticipantsAndUsers>>
@@ -64,15 +70,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     var count by remember { mutableIntStateOf(-1) }
     val height = LocalConfiguration.current.screenHeightDp.dp - 100.dp
     var text by remember { mutableStateOf("") }
-
-    LaunchedEffect(key1 = "") {
-        coruntine.launch {
-            chatRepository.loadChatRoom()
-            chatRepository.getChatRoomsWithParticipantsAndUsers().collect {
-                list = it
-            }
-        }
-    }
+    var isChatRoomLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = count) {
         if (selectedRoomId != -1) {
@@ -83,11 +81,44 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
         }
     }
 
+    LaunchedEffect(key1 = "") {
+        coruntine.launch {
+            chatRepository.getChatRoomsWithParticipantsAndUsers().collect {
+                Log.d(
+                    "__ChatRepositoryTest", "received chat room list : ${
+                        //GsonBuilder().setPrettyPrinting().create().toJson(it)
+                        it
+                    }"
+                )
+                list = it
+            }
+        }
+    }
+
     HorizontalDivider(color = Color.LightGray)
     Text(text = "ChatRepositoryTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-    Column(modifier = Modifier.height(height))
-    {
+    Column(modifier = Modifier.height(height)) {
+        Button(onClick = {
+            coruntine.launch {
+                isChatRoomLoading = true
+                chatRepository.loadChatRoom()
+                isChatRoomLoading = false
+            }
+        }
+
+        ) {
+            Row {
+                Text(text = "Load ChatRoom")
+                Spacer(modifier = Modifier.width(8.dp))
+                if (isChatRoomLoading) CircularProgressIndicator(
+                    color = Color.White,
+                    modifier = Modifier.size(20.dp),
+                    strokeWidth = 2.dp
+                )
+            }
+        }
+
         Text(text = "ChatRoomList")
         LazyColumn(Modifier.weight(1f)) {
             items(list.size) {
@@ -96,7 +127,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
                     selectedRoomId = list[it].chatRoomEntity.roomId
                 }) {
                     Text(text = "roomId : ${list[it].chatRoomEntity.roomId}")
-                    Text(text = "participants : " + list[it].participantsWithUsers.map { it.userEntity.userName }
+                    Text(text = "participants : " + list[it].participantsWithUsers.map { it.userName }
                         .toString())
                     Text(text = "createDate : ${list[it].chatRoomEntity.createDate}")
                     HorizontalDivider()
@@ -104,8 +135,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
             }
         }
         Text(text = "Chat (roomId : ${selectedRoomId})")
-        Box(modifier = Modifier.weight(1f))
-        {
+        Box(modifier = Modifier.weight(1f)) {
             LazyColumn(Modifier.padding(bottom = 50.dp)) {
                 items(list1.size) {
                     Column {
@@ -125,15 +155,13 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
                 Button(
                     onClick = {
                         coruntine.launch {
-                            if (selectedRoomId != -1)
-                                chatRepository.addChat(selectedRoomId, text)
+                            if (selectedRoomId != -1) chatRepository.addChat(selectedRoomId, text)
                             text = ""
                         }
                     },
                     Modifier
                         .weight(0.2f)
-                        .height(55.dp),
-                    shape = RoundedCornerShape(8.dp)
+                        .height(55.dp), shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(text = "send")
                 }

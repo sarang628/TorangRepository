@@ -13,3 +13,10 @@ data class ParticipantsWithUserEntity(
     @Relation(parentColumn = "userId", entityColumn = "userId")
     val userEntity: UserEntity
 )
+
+fun ParticipantsWithUserEntity.toParticipantsWithUser(): ParticipantsWithUser = ParticipantsWithUser(
+    roomId = this.participantsEntity.roomId,
+    userId = this.userEntity.userId,
+    userName = this.userEntity.userName,
+    profilePicUrl = this.userEntity.profilePicUrl,
+)

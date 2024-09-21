@@ -124,7 +124,7 @@ class MainActivity : ComponentActivity() {
 
                         RepositoryTest(
 //                    commentRepository = commentRepository,
-                            feedRepository = feedRepository,
+//                            feedRepository = feedRepository,
 //                    profileRepository = profileRepository,
 //                    editProfileRepository = editProfileRepository,
                             loginRepository = loginRepository,
@@ -144,7 +144,7 @@ class MainActivity : ComponentActivity() {
                             sessionService = sessionService,
 //                    apiRestaurant = apiRestaurant,
 //                    apiReview = apiReview,
-                            apiAlarm = apiAlarm,
+//                            apiAlarm = apiAlarm,
 //                    apiCommentLike = apiCommentLike,
 //                    sessionClientService = sessionClientService
                         )
