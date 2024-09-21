@@ -1,7 +1,6 @@
 package com.sarang.torang.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -50,19 +49,14 @@ interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAllChat(chatRoomEntity: List<ChatEntity>)
 
-    @Query(
-        """
-        Delete from ChatRoomEntity
-    """
-    )
-    suspend fun delAllChatRoom()
+    @Query("Delete from ChatRoomEntity")
+    suspend fun deleteAllChatRoom()
 
-    @Query(
-        """
-        Delete from ChatParticipantsEntity
-    """
-    )
-    suspend fun delAllParticipants()
+    @Query("Delete from ChatParticipantsEntity")
+    suspend fun deleteAllParticipants()
+
+    @Query("Delete from ChatEntity")
+    suspend fun deleteAllChat()
 
     @Query(
         """
@@ -80,11 +74,7 @@ interface ChatDao {
     @Insert
     suspend fun addChat(chatEntity: ChatEntity)
 
-    @Query(
-        """
-        delete from chatentity where uuid = :uuid
-    """
-    )
+    @Query("delete from chatentity where uuid = :uuid")
     suspend fun delete(uuid: String)
 
 }

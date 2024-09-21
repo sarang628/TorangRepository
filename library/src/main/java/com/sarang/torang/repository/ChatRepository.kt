@@ -46,6 +46,13 @@ interface ChatRepository {
     fun getContents(roomId: Int): Flow<List<ChatEntityWithUser>>
     fun getChatRoomsWithParticipantsAndUsers(): Flow<List<ChatRoomWithParticipantsAndUsers>>
     suspend fun addChat(roomId: Int, message: String)
+
+    /**
+     * 채팅방 목록, 참여자 목록 , 채팅 모두 삭제
+     *
+     * 로그아웃 시 필요한 기능으로 추가 됨.
+     */
+    suspend fun removeAll()
 }
 
 @Composable
