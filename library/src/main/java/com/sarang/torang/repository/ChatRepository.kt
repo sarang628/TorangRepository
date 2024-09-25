@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -32,14 +34,19 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.gson.GsonBuilder
+import com.gmail.bishoybasily.stomp.lib.Event
 import com.sarang.torang.data.entity.ChatEntityWithUser
 import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsAndUsers
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
-import com.sarang.torang.data.remote.response.ChatRoomApiModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import okhttp3.Response
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
 
 
 interface ChatRepository {
@@ -59,6 +66,11 @@ interface ChatRepository {
      * 로그아웃 시 필요한 기능으로 추가 됨.
      */
     suspend fun removeAll()
+    suspend fun openChatRoom(roomId: Int, coroutineScope: CoroutineScope)
+
+    fun connectSocket()
+    fun setListener(listener: WebSocketListener)
+    fun closeConnection()
 }
 
 @Composable
@@ -71,13 +83,39 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     val height = LocalConfiguration.current.screenHeightDp.dp - 100.dp
     var text by remember { mutableStateOf("") }
     var isChatRoomLoading by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf("") }
+    var topic: Job? by remember { mutableStateOf(null) }
+    var isConnectSocket by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = count) {
         if (selectedRoomId != -1) {
-            chatRepository.loadContents(selectedRoomId)
-            chatRepository.getContents(selectedRoomId).collect {
-                list1 = it
+            try {
+                chatRepository.openChatRoom(selectedRoomId, coruntine)
+            } catch (e: Exception) {
+                error = "openChatRoom error: ${e.message.toString()}"
+                delay(1000)
+                error = ""
             }
+
+            //chatRepository.loadContents(selectedRoomId)
+//                chatRepository.getContents(selectedRoomId).collect {
+//                    list1 = it
+//                }
+        }
+    }
+
+    LaunchedEffect(key1 = "1") {
+        coruntine.launch {
+            chatRepository.setListener(object : WebSocketListener() {
+                override fun onOpen(webSocket: WebSocket, response: Response) {
+                    super.onOpen(webSocket, response)
+                    isConnectSocket = true
+                }
+
+                override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                    isConnectSocket = false
+                }
+            })
         }
     }
 
@@ -98,7 +136,37 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     HorizontalDivider(color = Color.LightGray)
     Text(text = "ChatRepositoryTest", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
+    if (error.isNotEmpty())
+        Text(text = "error: ${error}", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+
     Column(modifier = Modifier.height(height)) {
+        Button(
+            onClick = {
+                try {
+                    if (!isConnectSocket)
+                        chatRepository.connectSocket()
+                    else
+                        chatRepository.closeConnection()
+                } catch (e: Exception) {
+                    coruntine.launch {
+                        error = e.message.toString()
+                        delay(1000)
+                        error = ""
+                    }
+                }
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = if (!isConnectSocket) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary)
+        ) {
+            Text(text = if (!isConnectSocket) "DisConnectedSocket" else "ConnectedSocket")
+        }
+
+        Button(onClick = {
+            topic?.cancel()
+            topic = null
+        }) {
+            Text(text = "채팅종료")
+        }
+
         Button(onClick = {
             coruntine.launch {
                 isChatRoomLoading = true
@@ -155,7 +223,13 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
                 Button(
                     onClick = {
                         coruntine.launch {
-                            if (selectedRoomId != -1) chatRepository.addChat(selectedRoomId, text)
+                            if (selectedRoomId != -1) {
+                                chatRepository.addChat(selectedRoomId, text)
+                            } else {
+                                error = "채팅방을 선택해 주세요."
+                                delay(1000)
+                                error = ""
+                            }
                             text = ""
                         }
                     },
