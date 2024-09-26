@@ -43,6 +43,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -66,7 +67,7 @@ interface ChatRepository {
      * 로그아웃 시 필요한 기능으로 추가 됨.
      */
     suspend fun removeAll()
-    suspend fun openChatRoom(roomId: Int, coroutineScope: CoroutineScope)
+    suspend fun openChatRoom(roomId: Int) : Flow<String>
 
     fun connectSocket()
     fun setListener(listener: WebSocketListener)
@@ -90,7 +91,9 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     LaunchedEffect(key1 = count) {
         if (selectedRoomId != -1) {
             try {
-                chatRepository.openChatRoom(selectedRoomId, coruntine)
+                chatRepository.openChatRoom(selectedRoomId).collect{
+                    Log.d("__ChatRepositoryTest", "received message: $it")
+                }
             } catch (e: Exception) {
                 error = "openChatRoom error: ${e.message.toString()}"
                 delay(1000)
