@@ -34,20 +34,16 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gmail.bishoybasily.stomp.lib.Event
+import com.gmail.bishoybasily.stomp.lib.Message
+import com.google.gson.GsonBuilder
 import com.sarang.torang.data.entity.ChatEntityWithUser
 import com.sarang.torang.data.entity.ChatRoomEntity
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsAndUsers
 import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okhttp3.Response
-import okhttp3.WebSocket
-import okhttp3.WebSocketListener
 
 
 interface ChatRepository {
@@ -67,16 +63,19 @@ interface ChatRepository {
      * 로그아웃 시 필요한 기능으로 추가 됨.
      */
     suspend fun removeAll()
-    suspend fun openChatRoom(roomId: Int) : Flow<String>
+    suspend fun openChatRoom(roomId: Int)
 
     fun connectSocket()
-    fun setListener(listener: WebSocketListener)
+    fun setListener()
     fun closeConnection()
+    fun event(): Flow<Message>
+    fun subScribeEvent(coroutineScope: CoroutineScope)
+    fun unSubscribe(topic: Int)
 }
 
 @Composable
 fun ChatRepositoryTest(chatRepository: ChatRepository) {
-    val coruntine = rememberCoroutineScope()
+    val coroutine = rememberCoroutineScope()
     var list: List<ChatRoomWithParticipantsAndUsers> by remember { mutableStateOf(listOf()) }
     var list1: List<ChatEntityWithUser> by remember { mutableStateOf(listOf()) }
     var selectedRoomId by remember { mutableIntStateOf(-1) }
@@ -85,15 +84,12 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     var text by remember { mutableStateOf("") }
     var isChatRoomLoading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf("") }
-    var topic: Job? by remember { mutableStateOf(null) }
     var isConnectSocket by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = count) {
         if (selectedRoomId != -1) {
             try {
-                chatRepository.openChatRoom(selectedRoomId).collect{
-                    Log.d("__ChatRepositoryTest", "received message: $it")
-                }
+                chatRepository.openChatRoom(selectedRoomId)
             } catch (e: Exception) {
                 error = "openChatRoom error: ${e.message.toString()}"
                 delay(1000)
@@ -104,26 +100,24 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
 //                chatRepository.getContents(selectedRoomId).collect {
 //                    list1 = it
 //                }
+
         }
     }
 
-    LaunchedEffect(key1 = "1") {
-        coruntine.launch {
-            chatRepository.setListener(object : WebSocketListener() {
-                override fun onOpen(webSocket: WebSocket, response: Response) {
-                    super.onOpen(webSocket, response)
-                    isConnectSocket = true
-                }
-
-                override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                    isConnectSocket = false
-                }
-            })
+    LaunchedEffect(key1 = "AAA") {
+        chatRepository.subScribeEvent(coroutineScope = coroutine)
+        coroutine.launch {
+            chatRepository.event().collect {
+                Log.d(
+                    "__ChatRepositoryTest",
+                    "event: ${GsonBuilder().setPrettyPrinting().create().toJson(it)}"
+                )
+            }
         }
     }
 
     LaunchedEffect(key1 = "") {
-        coruntine.launch {
+        coroutine.launch {
             chatRepository.getChatRoomsWithParticipantsAndUsers().collect {
                 Log.d(
                     "__ChatRepositoryTest", "received chat room list : ${
@@ -151,7 +145,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
                     else
                         chatRepository.closeConnection()
                 } catch (e: Exception) {
-                    coruntine.launch {
+                    coroutine.launch {
                         error = e.message.toString()
                         delay(1000)
                         error = ""
@@ -164,14 +158,21 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
         }
 
         Button(onClick = {
-            topic?.cancel()
-            topic = null
+            coroutine.launch {
+                try {
+                    chatRepository.unSubscribe(selectedRoomId)
+                } catch (e: Exception) {
+                    error = e.message.toString()
+                    delay(1000)
+                    error = ""
+                }
+            }
         }) {
             Text(text = "채팅종료")
         }
 
         Button(onClick = {
-            coruntine.launch {
+            coroutine.launch {
                 isChatRoomLoading = true
                 chatRepository.loadChatRoom()
                 isChatRoomLoading = false
@@ -225,7 +226,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
                 TextField(value = text, onValueChange = { text = it }, Modifier.weight(0.8f))
                 Button(
                     onClick = {
-                        coruntine.launch {
+                        coroutine.launch {
                             if (selectedRoomId != -1) {
                                 chatRepository.addChat(selectedRoomId, text)
                             } else {

@@ -19,8 +19,13 @@ class Event {
     }
 
     enum class Type {
+        CONNECTED,
         OPENED,
         CLOSED,
-        ERROR
+        ERROR,
+        SUBSCRIBED,
+        UNSUBSCRIBED,
+        SEND,
+        MESSAGE,
     }
 }

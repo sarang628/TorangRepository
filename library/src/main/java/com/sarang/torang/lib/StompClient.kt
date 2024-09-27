@@ -6,8 +6,10 @@ import com.gmail.bishoybasily.stomp.lib.Message
 import com.sarang.torang.lib.constants.Codes
 import com.sarang.torang.lib.constants.Commands
 import com.sarang.torang.lib.constants.Headers
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okio.ByteString
 import java.io.StringReader
@@ -15,14 +17,12 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Level
 import java.util.logging.Logger
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import kotlin.collections.HashMap
 
 class StompClient(
     private val url: String,
-    private val okHttpClient: OkHttpClient,
-    private val reconnectAfter: Long,
-    private val webSocketListener: WebSocketListener,
+    private val okHttpClient: OkHttpClient = OkHttpClient(),
+    private val reconnectAfter: Long = 1000L,
 ) : WebSocketListener() {
 
     private val logger = Logger.getLogger(javaClass.name)
@@ -31,13 +31,12 @@ class StompClient(
     private val SUPPORTED_VERSIONS = "1.1,1.2"
 
     private val topics = HashMap<String, String>()
-    private val emitters = ConcurrentHashMap<String, MutableSharedFlow<String>>()
 
     private var shouldBeConnected: Boolean = false
     private var connected = false
 
     private lateinit var webSocket: WebSocket
-    var connectionEvents: MutableSharedFlow<Event> = MutableSharedFlow()
+    var connectionEvents: MutableSharedFlow<Message> = MutableSharedFlow()
 
     fun connect() {
         if (!connected) {
@@ -57,62 +56,82 @@ class StompClient(
         }
     }
 
-    fun join(topic: String): Flow<String> {
-        return callbackFlow {
 
-            Log.d("__StompClient1", "join topic: ${topic}")
-            val topicId = UUID.randomUUID().toString()
-            val headers = HashMap<String, String>().apply {
-                put(Headers.ID, topicId)
-                put(Headers.DESTINATION, topic)
-                put(Headers.ACK, DEFAULT_ACK)
-            }
+    fun join(topic: String) {
 
-            webSocket.send(compileMessage(Message(Commands.SUBSCRIBE, headers)))
-            emitters[topic] = MutableSharedFlow(replay = 1)
-            topics[topic] = topicId
+        if (topics.containsKey(topic)) {
+            throw Exception("이미 채팅방에 접속중 입니다.")
+        }
 
-            try {
-                val flow = emitters[topic]
-                flow?.collect { msg ->
-                    trySend(msg)
-                }
-            } finally {
-                val topicId = topics[topic]
-                val headers = HashMap<String, String>().apply {
-                    put(Headers.ID, topicId!!)
-                }
+        val topicId = UUID.randomUUID().toString()
+        val headers = HashMap<String, String>().apply {
+            put(Headers.ID, topicId)
+            put(Headers.DESTINATION, topic)
+            put(Headers.ACK, DEFAULT_ACK)
+        }
+        topics[topic] = topicId
 
-                webSocket.send(compileMessage(Message(Commands.UNSUBSCRIBE, headers)))
-                emitters.remove(topic)
-                topics.remove(topicId)
-                Log.d("__StompClient1", "1Unsubscribed from: $topic id: $topicId")
-            }
-            awaitClose()
+        if (webSocket.send(compileMessage(Message(Commands.SUBSCRIBE, headers)))) {
+            onMessage(
+                webSocket,
+                compileMessage(Message(Commands.SUBSCRIBE, HashMap<String, String>().apply {
+                    put("topic", topic)
+                }))
+            )
         }
     }
 
-    suspend fun send(token: String, uuid: String, topic: String, msg: String): Boolean {
-        return suspendCoroutine { continuation ->
-            val headers = HashMap<String, String>().apply {
-                put(Headers.DESTINATION, topic)
-                put("TOKEN", token)
-                put("UUID", uuid)
-            }
-            val result = webSocket.send(compileMessage(Message(Commands.SEND, headers, msg)))
-            continuation.resume(result)
+    fun unSubScribe(topic: String) {
+        val topicId = topics[topic]
+        val headers = HashMap<String, String>().apply {
+            put(Headers.ID, topicId!!)
         }
+
+        if (webSocket.send(compileMessage(Message(Commands.UNSUBSCRIBE, headers)))) {
+            onMessage(
+                webSocket,
+                compileMessage(
+                    Message(
+                        Commands.UNSUBSCRIBE,
+                        HashMap<String, String>().apply {
+                            put("topic", topic)
+                            put("topicId", topicId.toString())
+                        })
+                )
+            )
+        }
+        topics.remove(topic)
     }
 
-    suspend fun send(topic: String, msg: String): Boolean {
-        return suspendCoroutine { continuation ->
-            val headers = HashMap<String, String>().apply {
-                put(Headers.DESTINATION, topic)
-            }
-            val result = webSocket.send(compileMessage(Message(Commands.SEND, headers, msg)))
-            continuation.resume(result)
+    fun send(token: String, uuid: String, topic: String, msg: String): Boolean {
+        val headers = HashMap<String, String>().apply {
+            put(Headers.DESTINATION, topic)
+            put("TOKEN", token)
+            put("UUID", uuid)
         }
+
+        val result = webSocket.send(compileMessage(Message(Commands.SEND, headers, msg)))
+
+        if (result) {
+            onMessage(webSocket, compileMessage(Message(Commands.SEND, headers, msg)))
+        }
+
+        return result
     }
+
+    fun send(topic: String, msg: String): Boolean {
+        val headers = HashMap<String, String>().apply {
+            put(Headers.DESTINATION, topic)
+        }
+        return webSocket.send(compileMessage(Message(Commands.SEND, headers, msg)))
+    }
+
+    private var coroutineScope: CoroutineScope? = null
+
+    fun subScribeEvent(coroutineScope: CoroutineScope) {
+        this.coroutineScope = coroutineScope
+    }
+
 
     private fun open() {
         if (!connected) {
@@ -187,7 +206,7 @@ class StompClient(
         return builder.toString()
     }
 
-    // WebSocketListener override methods
+// WebSocketListener override methods
 
     override fun onOpen(socket: WebSocket, response: Response) {
         val headers = HashMap<String, String>().apply {
@@ -195,12 +214,10 @@ class StompClient(
         }
         webSocket.send(compileMessage(Message(Commands.CONNECT, headers)))
         logger.log(Level.INFO, "onOpen")
-        webSocketListener.onOpen(webSocket, response)
     }
 
     override fun onClosed(socket: WebSocket, code: Int, reason: String) {
         logger.log(Level.INFO, "onClosed reason: $reason, code: $code")
-        webSocketListener.onClosed(webSocket, code, reason)
         reconnect()
     }
 
@@ -213,32 +230,24 @@ class StompClient(
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-        webSocket.close(code, reason)
+        if (webSocket.close(code, reason)) {
+            onMessage(webSocket, compileMessage(Message(Commands.CLOSED)))
+        }
         logger.log(Level.INFO, "onClosing reason: $reason, code: $code")
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         logger.log(Level.INFO, "onFailure", t)
-        connectionEvents.tryEmit(Event(Event.Type.ERROR, t))
+        //connectionEvents.tryEmit(Event(Event.Type.ERROR, t))
         reconnect()
     }
 
     private fun handleMessage(message: Message) {
-        when (message.command) {
-            Commands.CONNECTED -> {
-                connectionEvents.tryEmit(Event(Event.Type.OPENED))
-            }
-
-            Commands.MESSAGE -> {
-                val dest = message.headers[Headers.DESTINATION]
-                if (dest != null) {
-                    emitters[dest]?.tryEmit(message.payload!!)
-                }
+        Log.d("__StompClient1", "handleMessage: ${message.command}, ${message.headers}")
+        coroutineScope?.let {
+            it.launch {
+                connectionEvents.emit(message)
             }
         }
-        logger.log(
-            Level.INFO,
-            "onMessage payload: ${message.payload}, headers:${message.headers}, command: ${message.command}"
-        )
     }
 }

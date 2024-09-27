@@ -1,57 +1,45 @@
 package com.sarang.torang.util
 
-import android.util.Log
-import com.gmail.bishoybasily.stomp.lib.Event
+import com.gmail.bishoybasily.stomp.lib.Message
 import com.sarang.torang.lib.StompClient
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import okhttp3.OkHttpClient
-import okhttp3.WebSocketListener
 
-class WebSocketClient(webSocketListener: WebSocketListener) {
+class WebSocketClient {
     /**
-     * //        val url = "ws://sarang628.iptime.org:8081/chat/websocket"
-     *         val url = ""
-     * //        val url = "ws://110.0.148.193:8081/chat/websocket"
-     * val intervalMillis = 1000L
-     *         val client = OkHttpClient()
+     * val url = "ws://sarang628.iptime.org:8081/chat/websocket"
+     * val url = "ws://110.0.148.193:8081/chat/websocket"
      */
-    private var stomp: StompClient =
-        StompClient(
-            //"ws://192.168.0.14:8081/chat/websocket",
-            "ws://sarang628.iptime.org:8081/chat/websocket",
-            OkHttpClient(),
-            1000L,
-            webSocketListener
-        )
+    val url = "ws://sarang628.iptime.org:8081/chat/websocket"
+    private var stomp: StompClient = StompClient(url)
 
-
-    suspend fun sendMessage(token: String, uuid: String, roomId: Int, message: String) {
-        Log.d(
-            "__WebSocketClient",
-            "message sent ${stomp.send(token, uuid, "/app/$roomId", message)}"
-        )
-    }
-
-    fun subScribe(roomId: Int): Flow<String> {
-        // 새로운 구독 시작
-        try {
-            return stomp.join("/topic/$roomId")
-        } catch (e: Exception) {
-            Log.e("__WebSocketClient", "Error collecting messages", e)
-            throw Exception("채팅방 접속에 실패 하였습니다.")
-        }
+    fun getFlow(): Flow<Message> {
+        return stomp.connectionEvents
     }
 
 
-    fun closeConnection() {
-        // disconnect
+    fun sendMessage(token: String, uuid: String, roomId: Int, message: String) {
+        stomp.send(token, uuid, "/app/$roomId", message)
+    }
+
+    fun subScribe(roomId: Int) {
+        stomp.join("/topic/$roomId")
+    }
+
+    fun disconnect() {
         stomp.disconnect()
     }
 
-    fun connectToWebSocket() {
-        // connect
+    fun connect() {
         stomp.connect()
+    }
+
+    fun subScribeEvent(coroutineScope: CoroutineScope) {
+        stomp.subScribeEvent(coroutineScope)
+    }
+
+    fun unSubscribe(roomId: Int) {
+        stomp.unSubScribe("/topic/$roomId")
     }
 
 }

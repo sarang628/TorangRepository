@@ -13,6 +13,7 @@ public interface Commands {
             MESSAGE = "MESSAGE",
             SUBSCRIBE = "SUBSCRIBE",
             UNSUBSCRIBE = "UNSUBSCRIBE",
-            UNKNOWN = "UNKNOWN";
+            UNKNOWN = "UNKNOWN",
+            CLOSED = "CLOSED";
 
 }
