@@ -65,11 +65,7 @@ interface ChatRepository {
     suspend fun removeAll()
     suspend fun openChatRoom(roomId: Int)
 
-    fun connectSocket()
-    fun setListener()
-    fun closeConnection()
-    fun event(): Flow<Message>
-    fun subScribeEvent(coroutineScope: CoroutineScope)
+    fun event(coroutineScope: CoroutineScope): Flow<Message>
     fun unSubscribe(topic: Int)
 }
 
@@ -105,13 +101,17 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
     }
 
     LaunchedEffect(key1 = "AAA") {
-        chatRepository.subScribeEvent(coroutineScope = coroutine)
         coroutine.launch {
-            chatRepository.event().collect {
+            chatRepository.event(coroutine).collect {
                 Log.d(
                     "__ChatRepositoryTest",
                     "event: ${GsonBuilder().setPrettyPrinting().create().toJson(it)}"
                 )
+                if (it.command == "CONNECTED") {
+                    isConnectSocket = true
+                } else if (it.command == "DISCONNECTED") {
+                    isConnectSocket = false
+                }
             }
         }
     }
@@ -140,10 +140,7 @@ fun ChatRepositoryTest(chatRepository: ChatRepository) {
         Button(
             onClick = {
                 try {
-                    if (!isConnectSocket)
-                        chatRepository.connectSocket()
-                    else
-                        chatRepository.closeConnection()
+
                 } catch (e: Exception) {
                     coroutine.launch {
                         error = e.message.toString()
