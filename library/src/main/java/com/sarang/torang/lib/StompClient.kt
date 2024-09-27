@@ -199,7 +199,8 @@ class StompClient(
         builder.append('\n')
 
         message.payload?.let {
-            builder.append(it).append("\n\n")
+            builder.append(it)
+                //.append("\n\n")
         }
 
         builder.append(Message.TERMINATE_MESSAGE_SYMBOL)
