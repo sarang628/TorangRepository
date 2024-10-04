@@ -1,10 +1,10 @@
 package com.sarang.torang
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import com.sarang.instagralleryModule.GalleryNavHost
-import com.sarang.torang.repository.ChatRepository
-import com.sarang.torang.repository.ChatRepositoryTest
+import com.sarang.instagralleryModule.compose.GalleryNavHost
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.EditProfileRepositoryTest
 import com.sarang.torang.repository.FeedRepository
@@ -27,6 +27,7 @@ import com.sarang.torang.repository.comment.compose.CommentRepositoryTest
 import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.review.compose.ReviewRepositoryTest
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun RepositoryTest(
     commentRepository: CommentRepository? = null,
@@ -41,12 +42,10 @@ fun RepositoryTest(
     reviewRepository: ReviewRepository? = null,
     picturesRepository: PicturesRepository? = null,
     restaurantRepository: RestaurantRepository? = null,
-    chatRepository: ChatRepository? = null,
+    content: @Composable () -> Unit = {},
 ) {
     Column {
-        chatRepository?.let {
-            ChatRepositoryTest(it)
-        }
+        content.invoke()
         commentRepository?.let {
             CommentRepositoryTest(commentRepository = it)
         }
@@ -71,7 +70,7 @@ fun RepositoryTest(
         //TestReportRepository(reportRepository = reportRepository)
         reviewRepository?.let {
             ReviewRepositoryTest(reviewRepository = it, gallery = { onNext ->
-                GalleryNavHost(onNext = { onNext.invoke(it) }) {
+                GalleryNavHost(onNext = { onNext.invoke(it) }, onBack = {}, onClose = {}) {
                 }
             })
         }

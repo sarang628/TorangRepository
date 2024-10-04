@@ -12,4 +12,6 @@ data class ChatEntityWithUser(
     val chatEntity: ChatEntity,
     @Relation(parentColumn = "userId", entityColumn = "userId")
     val userEntity: UserEntity,
+    @Relation(parentColumn = "uuid", entityColumn = "parentUuid")
+    val images: List<ChatImageEntity>,
 )

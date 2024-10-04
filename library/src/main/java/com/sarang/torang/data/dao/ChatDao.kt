@@ -14,6 +14,7 @@ import com.sarang.torang.data.entity.ParticipantsWithUserEntity
 import com.sarang.torang.data.remote.response.ChatRoomApiModel
 import com.sarang.torang.data.remote.response.toChatRoomEntity
 import kotlinx.coroutines.flow.Flow
+import java.util.UUID
 
 @Dao
 interface ChatDao {
@@ -113,6 +114,58 @@ interface ChatDao {
         addAll(result.map { it.toChatRoomEntity() })
         userDao.insertOrUpdateUser(result.flatMap { it.users })
         insertParticipants(result)
+    }
+
+    @Query(
+        """
+            Insert into ChatImageEntity (
+                                        'parentUuid', 
+                                        'uuid', 
+                                        'roomId', 
+                                        'userId', 
+                                        'localUri', 
+                                        'url', 
+                                        'createDate', 
+                                        'uploadedDate', 
+                                        'sending') 
+            values (:parentUuid, :uuid, :roomId, :userId, :localUri, :url, :createDate, :uploadedDate, :sending)
+        """
+    )
+    suspend fun addImage(
+        parentUuid: String,
+        uuid: String,
+        roomId: Int,
+        userId: Int,
+        localUri: String,
+        url: String,
+        createDate: String,
+        uploadedDate: String,
+        sending: Boolean,
+    )
+
+    @Transaction
+    suspend fun addImage1(
+        parentUuid: String,
+        roomId: Int,
+        userId: Int,
+        createDate: String,
+        uploadedDate: String,
+        sending: Boolean,
+        message: List<String>,
+    ) {
+        message.forEach {
+            addImage(
+                parentUuid,
+                UUID.randomUUID().toString(),
+                roomId,
+                userId,
+                it,
+                "",
+                createDate,
+                uploadedDate,
+                sending
+            )
+        }
     }
 
 }

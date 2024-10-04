@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text2.BasicTextField2
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.Text
@@ -92,17 +92,17 @@ private fun PicturesRepositoryTest(
     Column(modifier = Modifier.fillMaxSize()) {
         InputChip(selected = true, onClick = { onRestaurant.invoke(restaurantId) }, label = {
             Text(text = "getPictures restaurantId:")
-            BasicTextField2(value = "$restaurantId", onValueChange = { restaurantId = it })
+            BasicTextField(value = "$restaurantId", onValueChange = { restaurantId = it })
         })
 
         InputChip(selected = true, onClick = { onReview.invoke(reviewId) }, label = {
             Text(text = "getPictures reviewId:")
-            BasicTextField2(value = "$reviewId", onValueChange = { reviewId = it })
+            BasicTextField(value = "$reviewId", onValueChange = { reviewId = it })
         })
 
         InputChip(selected = true, onClick = { onImageId.invoke(imageId) }, label = {
             Text(text = "getPictures imageId:")
-            BasicTextField2(value = "$imageId", onValueChange = { imageId = it })
+            BasicTextField(value = "$imageId", onValueChange = { imageId = it })
         })
 
         list?.let {

@@ -2,7 +2,7 @@ package com.sarang.torang.repository
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.text2.BasicTextField2
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -67,7 +67,7 @@ fun TestFollowRepository(followRepository: FollowRepository) {
         })
         AssistChip(label = {
             Text(text = "Follow userId: ")
-            BasicTextField2(value = followUserId, onValueChange = { followUserId = it })
+            BasicTextField(value = followUserId, onValueChange = { followUserId = it })
         }, onClick = {
             coroutine.launch {
                 try {
@@ -80,7 +80,7 @@ fun TestFollowRepository(followRepository: FollowRepository) {
         })
         AssistChip(label = {
             Text(text = "UnFollow userId: ")
-            BasicTextField2(value = unFollowUserId, onValueChange = { unFollowUserId = it })
+            BasicTextField(value = unFollowUserId, onValueChange = { unFollowUserId = it })
         }, onClick = {
             coroutine.launch {
                 try {
@@ -94,7 +94,7 @@ fun TestFollowRepository(followRepository: FollowRepository) {
 
         AssistChip(label = {
             Text(text = "Follower userId: ")
-            BasicTextField2(value = followerUserId, onValueChange = { followerUserId = it })
+            BasicTextField(value = followerUserId, onValueChange = { followerUserId = it })
         }, onClick = {
             coroutine.launch {
                 try {
@@ -107,7 +107,7 @@ fun TestFollowRepository(followRepository: FollowRepository) {
         })
         AssistChip(label = {
             Text(text = "Following userId: ")
-            BasicTextField2(value = followingUserId, onValueChange = { followingUserId = it })
+            BasicTextField(value = followingUserId, onValueChange = { followingUserId = it })
         }, onClick = {
             coroutine.launch {
                 try {

@@ -13,8 +13,8 @@ interface SearchDao {
     fun getHistoryKeywords(): Flow<List<SearchEntity>>
 
     @Insert
-    suspend fun insertAll(vararg searches: SearchEntity?)
+    suspend fun insertAll(vararg searches: SearchEntity)
 
     @Delete
-    suspend fun delete(search: SearchEntity?)
+    suspend fun delete(search: SearchEntity)
 }

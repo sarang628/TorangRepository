@@ -61,6 +61,6 @@ class ApiChatTest {
 
     @Test
     fun addChatTest() = runTest {
-        chatRepository.addChat(26, "hi")
+        chatRepository.addChat(roomId = 26, message = "hi")
     }
 }

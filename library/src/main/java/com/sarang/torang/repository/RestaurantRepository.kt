@@ -3,7 +3,7 @@ package com.sarang.torang.repository
 import android.view.Menu
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.text2.BasicTextField2
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.Text
@@ -87,19 +87,19 @@ private fun RestaurantRepositoryTest(
     Column {
         InputChip(selected = true, onClick = { onLoadRestaurant.invoke(restuarntId) }, label = {
             Text(text = "loadRestaurant:")
-            BasicTextField2(value = restuarntId, onValueChange = { restuarntId = it })
+            BasicTextField(value = restuarntId, onValueChange = { restuarntId = it })
         })
         InputChip(selected = true, onClick = { onLoadMenus.invoke(restuarntId) }, label = {
             Text(text = "loadMenus:")
-            BasicTextField2(value = restuarntId, onValueChange = { restuarntId = it })
+            BasicTextField(value = restuarntId, onValueChange = { restuarntId = it })
         })
         InputChip(selected = true, onClick = { onLoadHours.invoke(restuarntId) }, label = {
             Text(text = "loadHours:")
-            BasicTextField2(value = restuarntId, onValueChange = { restuarntId = it })
+            BasicTextField(value = restuarntId, onValueChange = { restuarntId = it })
         })
         InputChip(selected = true, onClick = { onLoadRestaurantDetail.invoke(restuarntId) }, label = {
             Text(text = "loadRestaurantDetail:")
-            BasicTextField2(value = restuarntId, onValueChange = { restuarntId = it })
+            BasicTextField(value = restuarntId, onValueChange = { restuarntId = it })
         })
         Text(text = result)
     }
