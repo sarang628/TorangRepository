@@ -127,8 +127,9 @@ interface ChatDao {
                                         'url', 
                                         'createDate', 
                                         'uploadedDate', 
-                                        'sending') 
-            values (:parentUuid, :uuid, :roomId, :userId, :localUri, :url, :createDate, :uploadedDate, :sending)
+                                        'sending',
+                                        'failed') 
+            values (:parentUuid, :uuid, :roomId, :userId, :localUri, :url, :createDate, :uploadedDate, :sending, 0)
         """
     )
     suspend fun addImage(
@@ -167,5 +168,16 @@ interface ChatDao {
             )
         }
     }
+
+    @Query(
+        """ Update ChatImageEntity
+                set failed = 1 
+                where 1=1
+                and sending = 1
+                and roomId = :roomId
+                and localUri Not In (:list)
+    """
+    )
+    suspend fun updateFailedSendImages(list: List<String>, roomId: Int)
 
 }

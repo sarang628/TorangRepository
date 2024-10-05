@@ -30,4 +30,5 @@ data class ChatImageEntity(
     val createDate: String,
     val uploadedDate: String,
     val sending: Boolean,
+    val failed: Boolean,
 )
