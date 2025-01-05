@@ -164,3 +164,4 @@ fun FeedServiceTest(feedServices: FeedServices) {
 }
 ```
 
+### 2025.01 피드(리뷰)를 이미지만 추출, 그리드 형식으로 보여주는 화면을 위한 데이터 제공 기능 구현

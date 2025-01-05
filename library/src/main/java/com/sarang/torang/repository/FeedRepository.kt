@@ -33,26 +33,67 @@ import kotlinx.coroutines.launch
 
 
 interface FeedRepository {
-    // 내 리뷰 삭제
-    suspend fun deleteFeed(reviewId: Int)
-    suspend fun deleteFeedAll()
-    suspend fun loadFeed()
-    suspend fun loadFeedWithPage(page: Int)
-    suspend fun addLike(reviewId: Int)
-    suspend fun deleteLike(reviewId: Int)
-    suspend fun addFavorite(reviewId: Int)
-    suspend fun deleteFavorite(reviewId: Int)
-    suspend fun loadUserAllFeedsByReviewId(reviewId: Int)
-    suspend fun loadMyAllFeedsByReviewId(reviewId: Int)
-    val feeds: Flow<List<ReviewAndImageEntity>>
+
+    // GET
 
     /**
      * 리뷰 ID 기준으로 이전 피드는 위로 다음 피드는 아래로 줄 수 있도록
      * @param reviewId 리뷰 id
      */
     fun getMyFeed(reviewId: Int): Flow<List<ReviewAndImageEntity>>
+
+    /**
+     * 리뷰 ID로 피드 가져오기
+     */
     suspend fun getFeedByReviewId(reviewId: Int): ReviewAndImageEntity
+
+    /**
+     * 음식점 ID로 피드 가져오기
+     */
     fun getFeedByRestaurantId(restaurantId: Int): Flow<List<ReviewAndImageEntity>>
+
+    // DELETE
+
+    /**
+     * 내 리뷰 삭제
+     */
+    suspend fun deleteFeed(reviewId: Int)
+
+    /**
+     * 모든 피드 삭제
+     */
+    suspend fun deleteFeedAll()
+
+    /**
+     * 좋아요 삭제
+     */
+    suspend fun deleteLike(reviewId: Int)
+
+    /**
+     * 즐겨찾기 삭제
+     */
+    suspend fun deleteFavorite(reviewId: Int)
+
+    // LOAD
+
+    suspend fun loadFeed()
+    suspend fun loadFeedWithPage(page: Int)
+    suspend fun loadUserAllFeedsByReviewId(reviewId: Int)
+    suspend fun loadMyAllFeedsByReviewId(reviewId: Int)
+
+    /**
+     * 리뷰 ID 다음 피드 가져오기
+     * @param reviewId 리스트의 마지막 피드 ID
+     * @param count 가져올 다음 피드 갯수
+     */
+    suspend fun loadNextFeedByReivewId(reviewId: Int, count: Int = 20)
+
+    // ADD
+
+    suspend fun addLike(reviewId: Int)
+    suspend fun addFavorite(reviewId: Int)
+    val feeds: Flow<List<ReviewAndImageEntity>>
+
 }
 
 @OptIn(ExperimentalLayoutApi::class)
