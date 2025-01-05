@@ -1,6 +1,6 @@
 package com.sarang.torang.datasource.impl
 
-import com.sarang.torang.api.ApiFeed
+import com.sarang.torang.api.feed.ApiFeed
 import com.sarang.torang.data.remote.response.FeedApiModel
 import com.sarang.torang.datasource.FeedRemoteDataSource
 import javax.inject.Inject
