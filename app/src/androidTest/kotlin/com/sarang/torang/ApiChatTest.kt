@@ -2,7 +2,6 @@ package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.sarang.torang.api.ApiChat
-import com.sarang.torang.api.ApiFeed
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.session.SessionService

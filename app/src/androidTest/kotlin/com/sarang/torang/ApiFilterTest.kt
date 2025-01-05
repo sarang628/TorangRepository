@@ -1,9 +1,7 @@
 package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.api.ApiFeed
 import com.sarang.torang.api.ApiFilter
-import com.sarang.torang.repository.FeedRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest

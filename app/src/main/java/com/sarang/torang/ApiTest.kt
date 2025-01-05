@@ -8,14 +8,12 @@ import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
 import com.sarang.torang.api.ApiCommentLikeTest
 import com.sarang.torang.api.ApiCommentTest
-import com.sarang.torang.api.ApiFeed
+import com.sarang.torang.api.feed.ApiFeed
 import com.sarang.torang.api.ApiLike
 import com.sarang.torang.api.ApiLikeTest
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
-import com.sarang.torang.api.ApiReviewTest
 import com.sarang.torang.di.repository.api.ApiRestaurantTest
-import com.sarang.torang.di.repository.api.ProductApiLike
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
 
