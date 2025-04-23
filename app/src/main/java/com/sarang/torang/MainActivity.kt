@@ -11,23 +11,22 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.google.samples.apps.sunflower.ui.TorangTheme
 import com.sarang.instagralleryModule.compose.GalleryBottomSheet
 import com.sarang.torang.api.ApiAlarm
 import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
-import com.sarang.torang.api.feed.ApiFeed
 import com.sarang.torang.api.ApiLike
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
-import com.sarang.torang.compose.bottomsheet.ImageSelectBottomSheetScaffold
+import com.sarang.torang.api.feed.ApiFeed
+import com.sarang.torang.compose.bottomsheet.PickHeight70PercentBottomSheetScaffold
+import com.sarang.torang.compose.bottomsheet.PreviewImageSelectBottomSheetDialog
 import com.sarang.torang.data.dao.FavoriteDao
 import com.sarang.torang.data.dao.LoggedInUserDao
 import com.sarang.torang.data.dao.ReviewDao
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.ChatRepositoryTest
-import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FollowRepository
@@ -37,10 +36,12 @@ import com.sarang.torang.repository.PicturesRepository
 import com.sarang.torang.repository.ProfileRepository
 import com.sarang.torang.repository.ReportRepository
 import com.sarang.torang.repository.RestaurantRepository
-import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.SettingsRepository
+import com.sarang.torang.repository.comment.CommentRepository
+import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
+import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -151,7 +152,7 @@ class MainActivity : ComponentActivity() {
                                     onHidden = onHidden,
                                     content = {},
                                     imageSelectBottomSheetScaffold = { show, onhidden, imageSelectCompose, content ->
-                                        ImageSelectBottomSheetScaffold(
+                                        PickHeight70PercentBottomSheetScaffold(
                                             show = show,
                                             onHidden = onhidden,
                                             imageSelectCompose = imageSelectCompose,

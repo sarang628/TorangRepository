@@ -24,7 +24,7 @@ interface ApiLike {
     @POST("getLikeUserByReviewId")
     suspend fun getLikeUserByReviewId(
         @Header("authorization") auth: String,
-        @Field("reviewId") Int: String,
+        @Field("reviewId") reviewId: String,
     ): List<FollowerApiModel>
 
 }
