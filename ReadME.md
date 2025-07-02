@@ -1,19 +1,23 @@
 # 토랑 저장소
 
 ## 역할
+
 앱에서 필요로하는 데이터를 저장하는 역할<br>
 앱에서 제공하는 서비스를 전반적으로 이해하여 필요로하는 데이터를 제공<br>
 변경과 유지보수가 유연하게 설계하기
 
 ## 서비스
+
 내부 DB 데이터 UDF가 적용된 FLOW 데이터 타입으로 제공
 원격 서버와 통신하여 데이터 동기화 및 UI에서 필요로하는 API 제공
 자주 변경되는 API는 UI에서 직접 구현 할 수 있는 API 호출 가이드 제공
 
 ## API 자동화 테스트 필요
+
 - [테스트 환경 구성하기](./Documents/Test%20Enviroment.md)
 
 ## 의존성 추가
+
 ```
 implementation 'com.github.sarang628:TorangRepository:928fce8039'
 ```
@@ -44,8 +48,6 @@ implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 ```
-
-
 
 ## 안드로이드 저장소 테스트 환경 설정하기
 
@@ -164,8 +166,8 @@ fun FeedServiceTest(feedServices: FeedServices) {
 }
 ```
 
-
 # 모듈 추가하기
+
 ```
 // 모듈에 주입해야하는 구현채
 git submodule add (or git clone) https://github.com/sarang628/repository.git
@@ -180,6 +182,34 @@ implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 implementation("androidx.room:room-runtime:2.5.1")
 annotationProcessor("androidx.room:room-compiler:2.5.1")
 implementation("androidx.room:room-paging:2.5.1")
+```
+
+```
+android.buildFeatures.buildConfig = true
+
+    buildTypes {
+        getByName("debug") {
+            buildConfigField("String", "SERVER_URL", "\"http://sarang628.iptime.org\"")
+            buildConfigField("String", "IMAGE_PORT", "\"89\"")
+            buildConfigField("String", "PROFILE_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/profile_images/\"")
+            buildConfigField("String", "REVIEW_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/review_images/\"")
+            buildConfigField("String", "RESTAURANT_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/restaurant_images/\"")
+            buildConfigField("String", "MENU_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/menu_images/\"")
+        }
+
+        getByName("release") {
+            buildConfigField("String", "SERVER_URL", "\"http://sarang628.iptime.org\"")
+            buildConfigField("String", "IMAGE_PORT", "\"89\"")
+            buildConfigField("String", "PROFILE_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/profile_images/\"")
+            buildConfigField("String", "REVIEW_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/review_images/\"")
+            buildConfigField("String", "RESTAURANT_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/restaurant_images/\"")
+            buildConfigField("String", "MENU_IMAGE_SERVER_URL", "\"http://sarang628.iptime.org:89/menu_images/\"")
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
 ```
 
 ### 2025.01 피드(리뷰)를 이미지만 추출, 그리드 형식으로 보여주는 화면을 위한 데이터 제공 기능 구현
