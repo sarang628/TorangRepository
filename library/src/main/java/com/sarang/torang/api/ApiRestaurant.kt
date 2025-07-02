@@ -20,7 +20,6 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 
 interface ApiRestaurant {
-    @FormUrlEncoded
     @POST("getAllRestaurant")
     suspend fun getAllRestaurant(): ArrayList<RestaurantApiModel>
 

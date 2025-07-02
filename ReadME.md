@@ -164,4 +164,22 @@ fun FeedServiceTest(feedServices: FeedServices) {
 }
 ```
 
+
+# 모듈 추가하기
+```
+// 모듈에 주입해야하는 구현채
+git submodule add (or git clone) https://github.com/sarang628/repository.git
+
+// 모듈 추가
+implementation("com.github.sarang628:TorangRepository:e0d12661da")
+
+implementation("com.squareup.retrofit2:retrofit:2.9.0")
+implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+implementation("androidx.room:room-runtime:2.5.1")
+annotationProcessor("androidx.room:room-compiler:2.5.1")
+implementation("androidx.room:room-paging:2.5.1")
+```
+
 ### 2025.01 피드(리뷰)를 이미지만 추출, 그리드 형식으로 보여주는 화면을 위한 데이터 제공 기능 구현
