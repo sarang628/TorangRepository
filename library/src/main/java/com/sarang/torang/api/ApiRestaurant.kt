@@ -21,10 +21,10 @@ import retrofit2.http.PartMap
 
 interface ApiRestaurant {
     @POST("getAllRestaurant")
-    suspend fun getAllRestaurant(): ArrayList<RestaurantApiModel>
+    suspend fun getAllRestaurant(): List<RestaurantApiModel>
 
     @POST("getFilterRestaurant")
-    suspend fun getFilterRestaurant(@Body filter: Filter): ArrayList<RestaurantApiModel>
+    suspend fun getFilterRestaurant(@Body filter: Filter): List<RestaurantApiModel>
 
     @FormUrlEncoded
     @POST("getRestaurantById")
@@ -36,22 +36,19 @@ interface ApiRestaurant {
 
     @FormUrlEncoded
     @POST("getOpenHours")
-    suspend fun getHoursOfOperation(@FieldMap params: Map<String, String>): ArrayList<HoursOfOperation>
+    suspend fun getHoursOfOperation(@FieldMap params: Map<String, String>): List<HoursOfOperation>
 
     @FormUrlEncoded
     @POST("getMenus")
-    suspend fun getMenus(@FieldMap params: Map<String, String>): ArrayList<Menu>
+    suspend fun getMenus(@FieldMap params: Map<String, String>): List<Menu>
 
     @FormUrlEncoded
     @POST("getPictures")
-    suspend fun getPictures(@FieldMap params: Map<String, String>): ArrayList<Picture>
+    suspend fun getPictures(@FieldMap params: Map<String, String>): List<Picture>
 
     @Multipart
     @POST("fileUpload")
-    suspend fun fileUpload(
-        @PartMap params: HashMap<String, RequestBody>,
-        @Part pictures: ArrayList<MultipartBody.Part>
-    ): FeedApiModel
+    suspend fun fileUpload(@PartMap params: HashMap<String, RequestBody>, @Part pictures: List<MultipartBody.Part>): FeedApiModel
 
     @FormUrlEncoded
     @POST("deletePicture")

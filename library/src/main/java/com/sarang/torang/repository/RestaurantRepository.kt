@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 
 interface RestaurantRepository {
     suspend fun loadRestaurant(restaurantId: Int): RestaurantApiModel
-    suspend fun loadMenus(restaurantId: Int): ArrayList<Menu>
-    suspend fun loadHours(restaurantId: Int): ArrayList<HoursOfOperation>
+    suspend fun loadMenus(restaurantId: Int): List<Menu>
+    suspend fun loadHours(restaurantId: Int): List<HoursOfOperation>
     suspend fun loadRestaurantDetail(restaurantId: Int): RestaurantDetail
 }
 

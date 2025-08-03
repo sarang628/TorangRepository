@@ -22,6 +22,7 @@ import com.sarang.torang.data.dao.PictureDao
 import com.sarang.torang.data.dao.RestaurantDao
 import com.sarang.torang.data.dao.ReviewDao
 import com.sarang.torang.data.dao.SearchDao
+import com.sarang.torang.data.dao.SearchedRestaurantDao
 import com.sarang.torang.data.dao.UserDao
 import com.sarang.torang.data.entity.AlarmEntity
 import com.sarang.torang.data.entity.ChatEntity
@@ -38,6 +39,7 @@ import com.sarang.torang.data.entity.MyFeedEntity
 import com.sarang.torang.data.entity.RestaurantEntity
 import com.sarang.torang.data.entity.ReviewImageEntity
 import com.sarang.torang.data.entity.SearchEntity
+import com.sarang.torang.data.entity.SearchedRestaurantEntity
 import com.sarang.torang.data.entity.UserEntity
 import com.sarang.torang.workers.PLANT_DATA_FILENAME
 import com.sarang.torang.workers.SeedDatabaseWorker
@@ -64,7 +66,8 @@ import com.sarang.torang.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
         ChatEntity::class,
         ChatRoomEntity::class,
         ChatParticipantsEntity::class,
-        ChatImageEntity::class
+        ChatImageEntity::class,
+        SearchedRestaurantEntity::class
     ], version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -83,6 +86,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
     abstract fun myFeedDao(): MyFeedDao
     abstract fun chatDao(): ChatDao
+    abstract fun searchedRestaurantDao(): SearchedRestaurantDao
 
     companion object {
         // For Singleton instantiation
