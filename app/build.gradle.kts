@@ -136,8 +136,8 @@ dependencies {
     implementation(project(":library"))
 
     implementation(libs.theme)
-    implementation(libs.instagramGallery)
-    implementation(libs.mediaContentResolver)
-    implementation(libs.torangBottomSheet)
+//    implementation(libs.instagramGallery)
+//    implementation(libs.mediaContentResolver)
+//    implementation(libs.torangBottomSheet)
     implementation(libs.commonImageLoader)
 }
