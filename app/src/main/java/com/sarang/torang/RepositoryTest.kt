@@ -4,11 +4,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import com.sarang.instagralleryModule.compose.GalleryNavHost
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.EditProfileRepositoryTest
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FeedRepositoryTest
+import com.sarang.torang.repository.FindRepository
+import com.sarang.torang.repository.FindRepositoryTest
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
@@ -42,43 +43,24 @@ fun RepositoryTest(
     reviewRepository: ReviewRepository? = null,
     picturesRepository: PicturesRepository? = null,
     restaurantRepository: RestaurantRepository? = null,
+    findRepository: FindRepository? = null,
     content: @Composable () -> Unit = {},
 ) {
     Column {
         content.invoke()
-        commentRepository?.let {
-            CommentRepositoryTest(commentRepository = it)
-        }
-        feedRepository?.let {
-            FeedRepositoryTest(feedRepository = it)
-        }
-        profileRepository?.let {
-            ProfileRepositoryTest(profileRepository = it)
-        }
-        editProfileRepository?.let {
-            EditProfileRepositoryTest(editProfileRepository = it)
-        }
-        loginRepository?.let {
-            LoginRepositoryTest(loginRepository = it)
-        }
+        commentRepository?.let { CommentRepositoryTest(commentRepository = it) }
+        feedRepository?.let { FeedRepositoryTest(feedRepository = it) }
+        profileRepository?.let { ProfileRepositoryTest(profileRepository = it) }
+        editProfileRepository?.let { EditProfileRepositoryTest(editProfileRepository = it) }
+        loginRepository?.let { LoginRepositoryTest(loginRepository = it) }
         //SettingRepositoryTest(settingRepository)
         //MapRepositoryTest(mapRepository = mapRepository)
-        followRepository?.let {
-            TestFollowRepository(followRepository = it)
-        }
+        followRepository?.let { TestFollowRepository(followRepository = it) }
         //LoginRepositoryTest(loginRepository = loginRepository)
         //TestReportRepository(reportRepository = reportRepository)
-        reviewRepository?.let {
-            ReviewRepositoryTest(reviewRepository = it, gallery = { onNext ->
-                GalleryNavHost(onNext = { onNext.invoke(it) }, onBack = {}, onClose = {}) {
-                }
-            })
-        }
-        picturesRepository?.let {
-            PicturesRepositoryTest(repository = it)
-        }
-        restaurantRepository?.let {
-            RestaurantRepositoryTest(restaurantRepository = it)
-        }
+        reviewRepository?.let { ReviewRepositoryTest(reviewRepository = it, gallery = { onNext -> }) }
+        picturesRepository?.let { PicturesRepositoryTest(repository = it) }
+        restaurantRepository?.let { RestaurantRepositoryTest(restaurantRepository = it) }
+        findRepository?.let { FindRepositoryTest(it) }
     }
 }
