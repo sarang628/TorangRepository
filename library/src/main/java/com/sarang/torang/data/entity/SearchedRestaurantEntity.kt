@@ -39,7 +39,7 @@ fun SearchedRestaurantEntity.Companion.fromRestaurantApiModel(restaurantEntity: 
     val gson = Gson()
     val json = gson.toJson(restaurantEntity)
     val result = gson.fromJson(json, SearchedRestaurantEntity::class.java)
-    return result.copy(restaurantName = restaurantEntity.restaurantName, restaurantId = restaurantEntity.restaurantId, imgUrl1 = restaurantEntity.imgUrl1, regionCode = restaurantEntity.regionCode.toString(), restaurantType = restaurantEntity.restaurantType, reviewCount = restaurantEntity.reviewCount.toString(), website = restaurantEntity.website)
+    return result.copy(restaurantName = restaurantEntity.restaurantName ?: "null", restaurantId = restaurantEntity.restaurantId ?: -1, imgUrl1 = restaurantEntity.imgUrl1 ?: "null", regionCode = restaurantEntity.regionCode.toString(), restaurantType = restaurantEntity.restaurantType ?: "null", reviewCount = restaurantEntity.reviewCount.toString(), website = restaurantEntity.website ?: "null")
 }
 
 fun SearchedRestaurantEntity.Companion.fromRestaurantApiModel(models: List<RestaurantResponseDto>): List<SearchedRestaurantEntity> {
