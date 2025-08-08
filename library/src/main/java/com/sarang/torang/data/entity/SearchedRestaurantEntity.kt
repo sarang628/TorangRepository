@@ -3,7 +3,7 @@ package com.sarang.torang.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.Gson
-import com.sarang.torang.data.remote.response.RestaurantApiModel
+import com.sarang.torang.data.remote.response.RestaurantResponseDto
 
 @Entity
 data class SearchedRestaurantEntity(
@@ -35,14 +35,14 @@ fun SearchedRestaurantEntity.Companion.fromRestaurantEntity(models: List<Restaur
     }
 }
 
-fun SearchedRestaurantEntity.Companion.fromRestaurantApiModel(restaurantEntity: RestaurantApiModel): SearchedRestaurantEntity {
+fun SearchedRestaurantEntity.Companion.fromRestaurantApiModel(restaurantEntity: RestaurantResponseDto): SearchedRestaurantEntity {
     val gson = Gson()
     val json = gson.toJson(restaurantEntity)
     val result = gson.fromJson(json, SearchedRestaurantEntity::class.java)
     return result.copy(restaurantName = restaurantEntity.restaurantName, restaurantId = restaurantEntity.restaurantId, imgUrl1 = restaurantEntity.imgUrl1, regionCode = restaurantEntity.regionCode.toString(), restaurantType = restaurantEntity.restaurantType, reviewCount = restaurantEntity.reviewCount.toString(), website = restaurantEntity.website)
 }
 
-fun SearchedRestaurantEntity.Companion.fromRestaurantApiModel(models: List<RestaurantApiModel>): List<SearchedRestaurantEntity> {
+fun SearchedRestaurantEntity.Companion.fromRestaurantApiModel(models: List<RestaurantResponseDto>): List<SearchedRestaurantEntity> {
     return models
         .map { it ->
             SearchedRestaurantEntity.fromRestaurantApiModel(it)
