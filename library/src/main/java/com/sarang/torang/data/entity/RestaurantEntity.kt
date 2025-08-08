@@ -2,6 +2,7 @@ package com.sarang.torang.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sarang.torang.data.Restaurant
 
 @Entity
 data class RestaurantEntity(
@@ -13,14 +14,14 @@ data class RestaurantEntity(
     val tel: String,
     val prices: String,
     val restaurantType: String,
-    val regionCode: String,
-    val reviewCount: String,
+    val address: String,
+    val regionCode: Int,
+    val reviewCount: Int,
     val site: String,
     val website: String,
-    val imgUrl1: String,
-    val imgUrl2: String? = null,
-    val imgUrl3: String? = null,
-    val imgUrl4: String? = null,
-    val imgUrl5: String? = null,
-    val imgUrl6: String? = null
+    val imgUrl1: String
 )
+
+fun RestaurantEntity.toEntity() : Restaurant{
+    return Restaurant(restaurantId = restaurantId, restaurantName = restaurantName, address = address, lat = lat, lon = lon, rating = rating, tel = tel, prices = prices, restaurantType = restaurantType, regionCode = regionCode, reviewCount = reviewCount, site = site, website = website, imgUrl1 = imgUrl1)
+}

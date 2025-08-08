@@ -3,10 +3,10 @@ package com.sarang.torang.data
 import com.google.gson.Gson
 import com.sarang.torang.Menu
 import com.sarang.torang.Picture
-import com.sarang.torang.data.remote.response.RestaurantApiModel
+import com.sarang.torang.data.remote.response.RestaurantResponseDto
 
 data class RestaurantDetail(
-    val restaurant: RestaurantApiModel,
+    val restaurant: RestaurantResponseDto,
     val pictures: ArrayList<Picture>,
     val comments: ArrayList<RestaurantComment>,
     val menus: ArrayList<Menu>,

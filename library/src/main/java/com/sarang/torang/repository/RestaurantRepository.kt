@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.gson.GsonBuilder
 import com.sarang.torang.data.HoursOfOperation
 import com.sarang.torang.data.RestaurantDetail
-import com.sarang.torang.data.remote.response.RestaurantApiModel
+import com.sarang.torang.data.remote.response.RestaurantResponseDto
 import kotlinx.coroutines.launch
 
 interface RestaurantRepository {
-    suspend fun loadRestaurant(restaurantId: Int): RestaurantApiModel
+    suspend fun loadRestaurant(restaurantId: Int): RestaurantResponseDto
     suspend fun loadMenus(restaurantId: Int): List<Menu>
     suspend fun loadHours(restaurantId: Int): List<HoursOfOperation>
     suspend fun loadRestaurantDetail(restaurantId: Int): RestaurantDetail

@@ -6,7 +6,7 @@ import com.sarang.torang.data.Filter
 import com.sarang.torang.data.HoursOfOperation
 import com.sarang.torang.data.RestaurantDetail
 import com.sarang.torang.data.remote.response.FeedApiModel
-import com.sarang.torang.data.remote.response.RestaurantApiModel
+import com.sarang.torang.data.remote.response.RestaurantResponseDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -21,14 +21,14 @@ import retrofit2.http.PartMap
 
 interface ApiRestaurant {
     @POST("getAllRestaurant")
-    suspend fun getAllRestaurant(): List<RestaurantApiModel>
+    suspend fun getAllRestaurant(): List<RestaurantResponseDto>
 
     @POST("getFilterRestaurant")
-    suspend fun getFilterRestaurant(@Body filter: Filter): List<RestaurantApiModel>
+    suspend fun getFilterRestaurant(@Body filter: Filter): List<RestaurantResponseDto>
 
     @FormUrlEncoded
     @POST("getRestaurantById")
-    suspend fun getRestaurantById(@Field("restaurant_id") restaurantId: Int): RestaurantApiModel
+    suspend fun getRestaurantById(@Field("restaurant_id") restaurantId: Int): RestaurantResponseDto
 
     @FormUrlEncoded
     @POST("getRestaurantDetail")

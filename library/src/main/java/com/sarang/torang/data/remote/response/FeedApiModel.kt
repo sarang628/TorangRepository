@@ -7,7 +7,7 @@ data class FeedApiModel(
     val reviewId: Int,
     val pictures: List<RemotePicture>,
     var medias: ArrayList<AdMediaApiModel>?,
-    var restaurant: RestaurantApiModel,
+    var restaurant: RestaurantResponseDto,
     val user: UserApiModel,
     var contents: String,
     var create_date: String,

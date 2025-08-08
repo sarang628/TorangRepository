@@ -7,13 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import com.sarang.torang.data.Filter
-import com.sarang.torang.data.remote.response.RestaurantApiModel
+import com.sarang.torang.data.remote.response.RestaurantResponseDto
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 interface FindRepository {
-    val restaurants: StateFlow<List<RestaurantApiModel>>
+    val restaurants: StateFlow<List<RestaurantResponseDto>>
     suspend fun search(filter: Filter = Filter())
+    suspend fun findFilter()
+    suspend fun findThisArea()
 }
 
 @Composable
