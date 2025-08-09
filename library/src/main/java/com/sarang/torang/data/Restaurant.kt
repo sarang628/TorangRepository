@@ -15,4 +15,5 @@ data class Restaurant(
     val site: String = "",
     val website: String = "",
     val imgUrl1: String = "",
+    val restaurantTypeCd : String = ""
 )
