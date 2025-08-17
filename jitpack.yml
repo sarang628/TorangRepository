@@ -5,4 +5,4 @@ jdk:
 #  - ./scripts/prepareJitpackEnvironment.sh
 
 install:
-  - ./gradlew :library:build
+  - git submodule update --init --recursive
