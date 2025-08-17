@@ -1,6 +1,5 @@
 package com.sarang.torang.repository
 
-import android.view.Menu
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.BasicTextField
@@ -17,12 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.gson.GsonBuilder
 import com.sarang.torang.data.HoursOfOperation
 import com.sarang.torang.data.RestaurantDetail
+import com.sarang.torang.data.remote.response.MenuApiModel
 import com.sarang.torang.data.remote.response.RestaurantResponseDto
 import kotlinx.coroutines.launch
 
 interface RestaurantRepository {
     suspend fun loadRestaurant(restaurantId: Int): RestaurantResponseDto
-    suspend fun loadMenus(restaurantId: Int): List<Menu>
+    suspend fun loadMenus(restaurantId: Int): List<MenuApiModel>
     suspend fun loadHours(restaurantId: Int): List<HoursOfOperation>
     suspend fun loadRestaurantDetail(restaurantId: Int): RestaurantDetail
 }
