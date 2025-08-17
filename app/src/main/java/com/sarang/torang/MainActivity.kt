@@ -96,8 +96,9 @@ class MainActivity : ComponentActivity() {
                     //reportRepository = reportRepository,
                     //reviewRepository = reviewRepository,
                     //picturesRepository = picturesRepository,
-                    //restaurantRepository = restaurantRepository,
-                    findRepository = findRepository) {
+                    restaurantRepository = restaurantRepository,
+                    //findRepository = findRepository
+                        ) {
                             //ChatRepositoryTest(chatRepository = chatRepository, image = provideTorangAsyncImage()) { show, onHidden, onSend -> }
                         }
 

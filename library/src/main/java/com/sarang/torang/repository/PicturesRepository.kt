@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.gson.GsonBuilder
 import com.sarang.torang.Picture
-import com.sarang.torang.data.entity.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import com.sarang.torang.data.entity.ReviewImageEntity
 
 interface PicturesRepository {
     suspend fun getPictures(restaurantId: Int): List<Picture>

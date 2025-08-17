@@ -114,6 +114,8 @@ dependencies {
     kapt("org.xerial:sqlite-jdbc:3.36.0")
 
     implementation ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0")
+
+    implementation(libs.torangdatabase)
 }
 
 afterEvaluate {

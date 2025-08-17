@@ -140,4 +140,5 @@ dependencies {
 //    implementation(libs.mediaContentResolver)
 //    implementation(libs.torangBottomSheet)
     implementation(libs.commonImageLoader)
+    implementation(libs.torangdatabase)
 }

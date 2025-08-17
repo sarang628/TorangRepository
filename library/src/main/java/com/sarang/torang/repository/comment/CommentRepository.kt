@@ -1,8 +1,8 @@
 package com.sarang.torang.repository.comment
 
+import com.sarang.torang.data.entity.CommentEntity
 import com.sarang.torang.data.remote.response.RemoteComment
 import com.sarang.torang.data.remote.response.CommentListApiModel
-import com.sarang.torang.data.entity.CommentEntity
 import kotlinx.coroutines.flow.Flow
 
 interface CommentRepository {
