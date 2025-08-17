@@ -9,7 +9,7 @@ import com.sarang.torang.api.feed.ApiFeed
 import com.sarang.torang.api.ApiLike
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
-import com.sarang.torang.di.repository.api.ApiRestaurantTest
+import com.sarang.torang.di.torang_network_di.ApiRestaurantTest
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
 
