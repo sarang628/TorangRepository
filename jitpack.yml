@@ -4,5 +4,5 @@ jdk:
 #before_install:
 #  - ./scripts/prepareJitpackEnvironment.sh
 
-install:
-  - git submodule update --init --recursive
+#install:
+#  - git submodule update --init --recursive
