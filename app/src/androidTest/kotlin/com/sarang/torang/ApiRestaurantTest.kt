@@ -6,7 +6,8 @@ import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.data.Filter
 import com.sarang.torang.data.dao.SearchedRestaurantDao
 import com.sarang.torang.data.entity.SearchedRestaurantEntity
-import com.sarang.torang.data.fromRestaurantApiModel
+import com.sarang.torang.data.remote.response.FilterApiModel
+import com.sarang.torang.di.repository.fromRestaurantApiModel
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.session.SessionService
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -51,13 +52,13 @@ class ApiRestaurantTest {
 
     @Test
     fun getFilterRestaurantTest() = runTest {
-        val result = apiRestaurant.getFilterRestaurant(Filter())
+        val result = apiRestaurant.getFilterRestaurant(FilterApiModel())
         println(GsonBuilder().setPrettyPrinting().create().toJson(result))
     }
 
     @Test
     fun test() = runTest {
-        val result = apiRestaurant.getFilterRestaurant(Filter())
+        val result = apiRestaurant.getFilterRestaurant(FilterApiModel())
         searchedRestaurantDao.insertAllRestaurant(SearchedRestaurantEntity.fromRestaurantApiModel(result));
         println(GsonBuilder().setPrettyPrinting().create().toJson(searchedRestaurantDao.getAll()))
         searchedRestaurantDao.deleteAll()

@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.gson.GsonBuilder
-import com.sarang.torang.Picture
+import com.sarang.torang.data.Picture
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import com.sarang.torang.data.entity.ReviewImageEntity

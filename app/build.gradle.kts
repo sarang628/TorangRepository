@@ -141,4 +141,5 @@ dependencies {
 //    implementation(libs.torangBottomSheet)
     implementation(libs.commonImageLoader)
     implementation(libs.torangdatabase)
+    implementation(libs.torangnetwork)
 }
