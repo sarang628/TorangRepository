@@ -46,14 +46,6 @@ import javax.inject.Inject
 // @formatter:off
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    //apis
-    @Inject lateinit var apiFeed        : ApiFeed
-    @Inject lateinit var apiComment     : ApiComment
-    @Inject lateinit var apiReview      : ApiReview
-    @Inject lateinit var apiAlarm       : ApiAlarm
-    @Inject lateinit var apiLike        : ApiLike
-    @Inject lateinit var apiRestaurant  : ApiRestaurant
-    @Inject lateinit var apiCommentLike : ApiCommentLike
     //daos
     @Inject lateinit var favoriteDao        : FavoriteDao
     @Inject lateinit var loggedInUserDao    : LoggedInUserDao
@@ -101,18 +93,6 @@ class MainActivity : ComponentActivity() {
                         ) {
                             //ChatRepositoryTest(chatRepository = chatRepository, image = provideTorangAsyncImage()) { show, onHidden, onSend -> }
                         }
-
-                        ApiTest(
-                    //apiLike = apiLike,
-                    //apiFeed = apiFeed,
-                    //apiComment = apiComment,
-                    //sessionService = sessionService,
-                    //apiRestaurant = apiRestaurant,
-                    //apiReview = apiReview,
-                    //apiAlarm = apiAlarm,
-                    //apiCommentLike = apiCommentLike,
-                    //sessionClientService = sessionClientService
-                        )
                 //DaoTest(
                     //favoriteDao = favoriteDao,
                     //loggedInUserDao = loggedInUserDao,
