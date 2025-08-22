@@ -24,121 +24,65 @@ class StompClient(
     private val okHttpClient: OkHttpClient = OkHttpClient(),
     private val reconnectAfter: Long = 1000L,
 ) : WebSocketListener() {
-
     private val logger = Logger.getLogger(javaClass.name)
-
     private val DEFAULT_ACK = "auto"
     private val SUPPORTED_VERSIONS = "1.1,1.2"
-
     private val topics = HashMap<String, String>()
-
     private var shouldBeConnected: Boolean = false
     private var connected = false
-
     private lateinit var webSocket: WebSocket
+    private var coroutineScope: CoroutineScope? = null
     var connectionEvents: MutableSharedFlow<Message> = MutableSharedFlow()
 
     fun connect() {
-        if (!connected) {
-            shouldBeConnected = true
-            open()
-        } else {
-            throw Exception("Already connected")
-        }
+        if (!connected) { shouldBeConnected = true; open() }
+        else { throw Exception("Already connected") }
     }
 
     fun disconnect() {
-        if (connected) {
-            shouldBeConnected = false
-            close()
-        } else {
-            throw Exception("Already disconnected")
-        }
+        if (connected) { shouldBeConnected = false; close() }
+        else { throw Exception("Already disconnected") }
     }
 
-
     fun join(topic: String) {
-
-        if (topics.containsKey(topic)) {
-            throw Exception("이미 채팅방에 접속중 입니다.")
-        }
+        if (topics.containsKey(topic)) { throw Exception("이미 채팅방에 접속중 입니다.") }
 
         val topicId = UUID.randomUUID().toString()
-        val headers = HashMap<String, String>().apply {
-            put(Headers.ID, topicId)
-            put(Headers.DESTINATION, topic)
-            put(Headers.ACK, DEFAULT_ACK)
-        }
+        val headers = HashMap<String, String>().apply { put(Headers.ID, topicId); put(Headers.DESTINATION, topic); put(Headers.ACK, DEFAULT_ACK) }
         topics[topic] = topicId
 
         if (webSocket.send(compileMessage(Message(Commands.SUBSCRIBE, headers)))) {
-            onMessage(
-                webSocket,
-                compileMessage(Message(Commands.SUBSCRIBE, HashMap<String, String>().apply {
-                    put("topic", topic)
-                }))
-            )
+            onMessage(webSocket, compileMessage(Message(Commands.SUBSCRIBE, HashMap<String, String>().apply { put("topic", topic) })))
         }
     }
 
     fun unSubScribe(topic: String) {
         val topicId = topics[topic]
-        val headers = HashMap<String, String>().apply {
-            put(Headers.ID, topicId!!)
-        }
+        val headers = HashMap<String, String>().apply { put(Headers.ID, topicId!!) }
 
         if (webSocket.send(compileMessage(Message(Commands.UNSUBSCRIBE, headers)))) {
-            onMessage(
-                webSocket,
-                compileMessage(
-                    Message(
-                        Commands.UNSUBSCRIBE,
-                        HashMap<String, String>().apply {
-                            put("topic", topic)
-                            put("topicId", topicId.toString())
-                        })
-                )
-            )
-        }
+            onMessage(webSocket, compileMessage(Message(Commands.UNSUBSCRIBE, HashMap<String, String>().apply { put("topic", topic); put("topicId", topicId.toString()) }))) }
         topics.remove(topic)
     }
 
     fun send(token: String, uuid: String, topic: String, msg: String): Boolean {
-        val headers = HashMap<String, String>().apply {
-            put(Headers.DESTINATION, topic)
-            put("TOKEN", token)
-            put("UUID", uuid)
-        }
-
+        val headers = HashMap<String, String>().apply { put(Headers.DESTINATION, topic);put("TOKEN", token);put("UUID", uuid); }
         val result = webSocket.send(compileMessage(Message(Commands.SEND, headers, msg)))
-
-        if (result) {
-            onMessage(webSocket, compileMessage(Message(Commands.SEND, headers, msg)))
-        }
-
+        if (result) { onMessage(webSocket, compileMessage(Message(Commands.SEND, headers, msg))) }
         return result
     }
 
     fun send(topic: String, msg: String): Boolean {
-        val headers = HashMap<String, String>().apply {
-            put(Headers.DESTINATION, topic)
-        }
+        val headers = HashMap<String, String>().apply { put(Headers.DESTINATION, topic) }
         return webSocket.send(compileMessage(Message(Commands.SEND, headers, msg)))
     }
 
-    private var coroutineScope: CoroutineScope? = null
-
-    fun subScribeEvent(coroutineScope: CoroutineScope) {
-        this.coroutineScope = coroutineScope
-    }
-
+    fun subScribeEvent(coroutineScope: CoroutineScope) { this.coroutineScope = coroutineScope }
 
     private fun open() {
         if (!connected) {
             logger.log(Level.INFO, "Connecting...")
-            val request = Request.Builder()
-                .url(url)
-                .build()
+            val request = Request.Builder().url(url).build()
             webSocket = okHttpClient.newWebSocket(request, this)
             connected = true
         } else {
@@ -147,11 +91,7 @@ class StompClient(
     }
 
     private fun reconnect() {
-        if (shouldBeConnected) {
-            close()
-            Thread.sleep(reconnectAfter)
-            open()
-        }
+        if (shouldBeConnected) { close(); Thread.sleep(reconnectAfter); open() }
     }
 
     private fun close() {
@@ -165,8 +105,7 @@ class StompClient(
     }
 
     private fun parseMessage(data: String?): Message {
-        if (data.isNullOrBlank())
-            return Message(Commands.UNKNOWN)
+        if (data.isNullOrBlank()) return Message(Commands.UNKNOWN)
 
         val reader = Scanner(StringReader(data))
         reader.useDelimiter("\\n")
@@ -188,31 +127,18 @@ class StompClient(
 
     private fun compileMessage(message: Message): String {
         val builder = StringBuilder()
-
-        message.command?.let {
-            builder.append(it).append('\n')
-        }
-
-        message.headers.forEach { (key, value) ->
-            builder.append(key).append(':').append(value).append('\n')
-        }
+        message.command?.let { builder.append(it).append('\n') }
+        message.headers.forEach { (key, value) -> builder.append(key).append(':').append(value).append('\n') }
         builder.append('\n')
-
-        message.payload?.let {
-            builder.append(it)
-                //.append("\n\n")
-        }
-
+        message.payload?.let { builder.append(it) }
         builder.append(Message.TERMINATE_MESSAGE_SYMBOL)
         return builder.toString()
     }
 
-// WebSocketListener override methods
+    // WebSocketListener override methods
 
     override fun onOpen(socket: WebSocket, response: Response) {
-        val headers = HashMap<String, String>().apply {
-            put(Headers.VERSION, SUPPORTED_VERSIONS)
-        }
+        val headers = HashMap<String, String>().apply { put(Headers.VERSION, SUPPORTED_VERSIONS) }
         webSocket.send(compileMessage(Message(Commands.CONNECT, headers)))
         logger.log(Level.INFO, "onOpen")
     }
@@ -245,10 +171,6 @@ class StompClient(
 
     private fun handleMessage(message: Message) {
         Log.d("__StompClient", "handleMessage: ${message.command}, ${message.headers}")
-        coroutineScope?.let {
-            it.launch {
-                connectionEvents.emit(message)
-            }
-        }
+        coroutineScope?.let { it.launch { connectionEvents.emit(message) } }
     }
 }
