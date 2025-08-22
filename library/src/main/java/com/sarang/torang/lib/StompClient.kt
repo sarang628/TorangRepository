@@ -24,6 +24,7 @@ class StompClient(
     private val okHttpClient: OkHttpClient = OkHttpClient(),
     private val reconnectAfter: Long = 1000L,
 ) : WebSocketListener() {
+    private val tag = "__StompClient"
     private val logger = Logger.getLogger(javaClass.name)
     private val DEFAULT_ACK = "auto"
     private val SUPPORTED_VERSIONS = "1.1,1.2"
@@ -33,6 +34,7 @@ class StompClient(
     private lateinit var webSocket: WebSocket
     private var coroutineScope: CoroutineScope? = null
     var connectionEvents: MutableSharedFlow<Message> = MutableSharedFlow()
+    var failedCount = 0;
 
     fun connect() {
         if (!connected) { shouldBeConnected = true; open() }
@@ -165,8 +167,9 @@ class StompClient(
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         logger.log(Level.INFO, "onFailure", t)
-        //connectionEvents.tryEmit(Event(Event.Type.ERROR, t))
-        reconnect()
+        failedCount++;
+        if (failedCount < 5) { reconnect() }
+        else{ Log.e(tag, "failed socket connection") }
     }
 
     private fun handleMessage(message: Message) {
