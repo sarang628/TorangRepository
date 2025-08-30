@@ -23,7 +23,7 @@ import com.google.gson.GsonBuilder
 import com.sarang.torang.data.Picture
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import com.sarang.torang.data.entity.ReviewImageEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
 
 interface PicturesRepository {
     suspend fun getPictures(restaurantId: Int): List<Picture>

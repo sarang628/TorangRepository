@@ -17,9 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.google.gson.GsonBuilder
 import com.sarang.torang.api.handle
-import com.sarang.torang.data.entity.FavoriteEntity
-import com.sarang.torang.data.entity.ReviewAndImageEntity
-import com.sarang.torang.data.entity.ReviewImageEntity
+import com.sarang.torang.core.database.model.favorite.FavoriteEntity
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
 import com.sarang.torang.data.remote.response.UserApiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

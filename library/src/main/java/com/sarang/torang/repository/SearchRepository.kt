@@ -1,6 +1,6 @@
 package com.sarang.torang.repository
 
-import com.sarang.torang.data.entity.SearchEntity
+import com.sarang.torang.core.database.model.search.SearchEntity
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
