@@ -16,4 +16,6 @@ data class Restaurant(
     val website: String = "",
     val imgUrl1: String = "",
     val restaurantTypeCd : String = ""
-)
+){
+    companion object
+}
