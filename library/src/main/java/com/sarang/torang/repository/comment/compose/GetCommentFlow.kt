@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sarang.torang.data.entity.CommentEntity
+import com.sarang.torang.core.database.model.comment.CommentEntity
 import com.sarang.torang.repository.comment.CommentRepository
 import kotlinx.coroutines.launch
 

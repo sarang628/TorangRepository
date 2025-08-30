@@ -1,8 +1,8 @@
 package com.sarang.torang.repository
 
 import com.sarang.torang.data.MyReview
-import com.sarang.torang.data.entity.FeedEntity
-import com.sarang.torang.data.entity.ReviewAndImageEntity
+import com.sarang.torang.core.database.model.feed.FeedEntity
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MyReviewsRepository {

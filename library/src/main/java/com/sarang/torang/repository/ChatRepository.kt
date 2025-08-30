@@ -1,16 +1,13 @@
 package com.sarang.torang.repository
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,7 +21,6 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -33,7 +29,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -56,10 +51,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gmail.bishoybasily.stomp.lib.Message
 import com.google.gson.GsonBuilder
-import com.sarang.torang.data.entity.ChatEntityWithUser
-import com.sarang.torang.data.entity.ChatRoomEntity
-import com.sarang.torang.data.entity.ChatRoomWithParticipantsAndUsers
-import com.sarang.torang.data.entity.ChatRoomWithParticipantsEntity
+import com.sarang.torang.core.database.model.chat.ChatEntityWithUser
+import com.sarang.torang.core.database.model.chat.ChatRoomEntity
+import com.sarang.torang.core.database.model.chat.ChatRoomWithParticipantsAndUsers
+import com.sarang.torang.core.database.model.chat.ChatRoomWithParticipantsEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

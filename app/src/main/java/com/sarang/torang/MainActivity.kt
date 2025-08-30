@@ -18,9 +18,9 @@ import com.sarang.torang.api.ApiLike
 import com.sarang.torang.api.ApiRestaurant
 import com.sarang.torang.api.ApiReview
 import com.sarang.torang.api.feed.ApiFeed
-import com.sarang.torang.data.dao.FavoriteDao
-import com.sarang.torang.data.dao.LoggedInUserDao
-import com.sarang.torang.data.dao.ReviewDao
+import com.sarang.torang.core.database.dao.FavoriteDao
+import com.sarang.torang.core.database.dao.LoggedInUserDao
+import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.ChatRepositoryTest

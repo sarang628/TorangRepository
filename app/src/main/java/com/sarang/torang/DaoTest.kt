@@ -1,8 +1,8 @@
 package com.sarang.torang
 
-import com.sarang.torang.data.dao.FavoriteDao
-import com.sarang.torang.data.dao.LoggedInUserDao
-import com.sarang.torang.data.dao.ReviewDao
+import com.sarang.torang.core.database.dao.FavoriteDao
+import com.sarang.torang.core.database.dao.LoggedInUserDao
+import com.sarang.torang.core.database.dao.ReviewDao
 
 class DaoTest(
     favoriteDao: FavoriteDao? = null,

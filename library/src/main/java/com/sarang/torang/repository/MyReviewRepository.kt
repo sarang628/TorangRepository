@@ -1,10 +1,10 @@
 package com.sarang.torang.repository
 
 import com.sarang.torang.data.ModifyFeedData
-import com.sarang.torang.data.entity.FeedEntity
-import com.sarang.torang.data.entity.RestaurantEntity
-import com.sarang.torang.data.entity.ReviewAndImageEntity
-import com.sarang.torang.data.entity.ReviewImageEntity
+import com.sarang.torang.core.database.model.feed.FeedEntity
+import com.sarang.torang.core.database.model.restaurant.RestaurantEntity
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MyReviewRepository {

@@ -1,8 +1,8 @@
 package com.sarang.torang.repository
 
-import com.sarang.torang.data.entity.FavoriteEntity
-import com.sarang.torang.data.entity.LikeEntity
-import com.sarang.torang.data.entity.ReviewImageEntity
+import com.sarang.torang.core.database.model.favorite.FavoriteEntity
+import com.sarang.torang.core.database.model.image.ReviewImageEntity
+import com.sarang.torang.core.database.model.like.LikeEntity
 import kotlinx.coroutines.flow.Flow
 
 interface FeedListRepository {

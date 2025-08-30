@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.sarang.torang.api.handle
-import com.sarang.torang.data.entity.ReviewAndImageEntity
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
