@@ -9,7 +9,6 @@ import com.sarang.torang.repository.EditProfileRepositoryTest
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FeedRepositoryTest
 import com.sarang.torang.repository.FindRepository
-import com.sarang.torang.repository.FindRepositoryTest
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.LoginRepositoryTest
@@ -27,6 +26,7 @@ import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.comment.compose.CommentRepositoryTest
 import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.review.compose.ReviewRepositoryTest
+import com.sarang.torang.repository.test.FindRepositoryTest
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
