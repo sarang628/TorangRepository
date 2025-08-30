@@ -17,15 +17,3 @@ interface FindRepository {
     suspend fun findFilter()
     suspend fun findThisArea()
 }
-
-@Composable
-fun FindRepositoryTest(findRepository: FindRepository) {
-    val coroutine = rememberCoroutineScope()
-    val restaurants = findRepository.restaurants.collectAsState().value
-    Column {
-        Button({
-            coroutine.launch { findRepository.search() }
-        }) {}
-        Text(restaurants.toString())
-    }
-}
