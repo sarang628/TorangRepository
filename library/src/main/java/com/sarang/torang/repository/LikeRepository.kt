@@ -14,4 +14,10 @@ interface LikeRepository {
      * @return 좋아요한 사용자 리스트
      */
     suspend fun getLikeUserFromReview(reviewId: Int): List<FollowerApiModel>
+
+    suspend fun addLike(reviewId: Int)
+
+    /** 좋아요 삭제 */
+    suspend fun deleteLike(reviewId: Int)
+
 }

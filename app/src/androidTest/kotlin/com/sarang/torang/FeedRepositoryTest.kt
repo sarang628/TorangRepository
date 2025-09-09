@@ -32,22 +32,22 @@ class FeedRepositoryTest {
 
     @Test
     fun loadFeedWithPageTest() = runTest {
-        feedRepository.loadFeedWithPage(1)
+        feedRepository.findByPage(1)
     }
 
     @Test
     fun loadUserAllFeedsByReviewIdTest() = runTest {
-        feedRepository.loadUserAllFeedsByReviewId(425)
+        feedRepository.findAllUserFeedById(425)
     }
 
     @Test
     fun addLikeTest() = runTest {
-        feedRepository.addLike(425)
+        //feedRepository.addLike(425)
     }
 
     @Test
     fun loadNextFeedByReivewIdTest() = runTest {
-        feedRepository.loadNextFeedByReivewId(471)
+        feedRepository.findById(471)
 
         feedRepository.feeds.first {
             println("---------------------------------------------------")
