@@ -1,7 +1,7 @@
 package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.repository.LikeRepository
+import com.sarang.torang.repository.FavoriteRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -16,14 +16,13 @@ import javax.inject.Inject
  */
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class LikeRepositoryTest {
+class FavoriteRepositoryTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
-    @Inject lateinit var likeRepository: LikeRepository
+    @Inject lateinit var favoriteRepository: FavoriteRepository
     @Before fun setUp() { hiltRule.inject() }
 
     @Test
     fun loadFeedWithPageTest() = runTest {
-        val result = likeRepository.getLikeUserFromReview(10)
-        assert(result.isNotEmpty())
+        favoriteRepository.addFavorite(1)
     }
 }
