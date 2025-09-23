@@ -113,8 +113,10 @@ fun FeedRepositoryTest(feedRepository: FeedRepository) {
             PageFeed(feedRepository)
         }
         LazyColumn(content = {
-            items(feeds.size) {
-                Text(text = gson.toJson(feeds[it]))
+            feeds?.let { feeds ->
+                items(feeds.size) {
+                    Text(text = gson.toJson(feeds[it]))
+                }
             }
         })
         Text(text = result)
