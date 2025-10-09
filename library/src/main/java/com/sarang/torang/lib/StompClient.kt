@@ -173,7 +173,6 @@ class StompClient(
     }
 
     private fun handleMessage(message: Message) {
-        Log.d("__StompClient", "handleMessage: ${message.command}, ${message.headers}")
         coroutineScope?.let { it.launch { connectionEvents.emit(message) } }
     }
 }
