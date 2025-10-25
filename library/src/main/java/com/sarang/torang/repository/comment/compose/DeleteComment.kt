@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun DeleteComment() {
-    Button(onClick = { /*TODO*/ }) {
+    Button(onClick = { }) {
         Text(text = "deleteComment")
     }
     HorizontalDivider()

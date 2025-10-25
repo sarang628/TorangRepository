@@ -350,7 +350,7 @@ fun ChatRepositoryTest(
                                                 )
                                                 if (it.failed) {
                                                     IconButton(
-                                                        onClick = { /*TODO*/ },
+                                                        onClick = { },
                                                         modifier = Modifier.align(
                                                             Alignment.Center
                                                         )

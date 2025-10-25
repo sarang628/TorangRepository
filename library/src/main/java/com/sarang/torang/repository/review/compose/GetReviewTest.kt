@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun GetReviewTest() {
-    Button(onClick = { /*TODO*/ }) {
+    Button(onClick = {  }) {
         Text(text = "getReview")
     }
 }
