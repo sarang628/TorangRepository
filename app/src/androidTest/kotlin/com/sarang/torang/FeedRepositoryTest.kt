@@ -1,5 +1,6 @@
 package com.sarang.torang
 
+import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.GsonBuilder
 import com.sarang.torang.repository.FeedRepository
@@ -19,6 +20,9 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 class FeedRepositoryTest {
+
+    private val tag = "__FeedRepositoryTest"
+
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
@@ -26,8 +30,9 @@ class FeedRepositoryTest {
     lateinit var feedRepository: FeedRepository
 
     @Before
-    fun setUp() {
+    fun setUp() = runTest {
         hiltRule.inject()
+        feedRepository.findAll()
     }
 
     @Test
@@ -55,6 +60,14 @@ class FeedRepositoryTest {
             println("---------------------------------------------------")
             true
         }
+    }
+
+    @Test
+    fun findByPictureIdTest() = runTest {
+        val result = feedRepository.findByPictureIdFlow(1005)
+            .first()
+
+        Log.d(tag, result.toString())
     }
 
 }
