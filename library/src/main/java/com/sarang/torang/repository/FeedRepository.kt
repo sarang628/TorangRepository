@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface FeedRepository {
     val feeds                                                           : Flow<List<ReviewAndImageEntity>?>
             fun restaurantFeedsFlow (restaurantId : Int)                : Flow<List<ReviewAndImageEntity>>
-            fun findByPictureIdFlow (pictureId : Int)                   : Flow<ReviewAndImageEntity>
+            fun findByPictureIdFlow (pictureId : Int)                   : Flow<ReviewAndImageEntity?>
     suspend fun findAll             ()
     suspend fun findById            (reviewId: Int)                     : ReviewAndImageEntity
     suspend fun findById            (reviewId: Int, count: Int = 20)
