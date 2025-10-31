@@ -19,7 +19,7 @@ class CommentRepositoryTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
     @Inject lateinit var commentRepository: CommentRepository
     @Inject lateinit var loginRepository: LoginRepository
-    @Before fun setUp() = runTest { hiltRule.inject(); loginRepository.encEmailLogin("sry_ang@naver.com", "Torang!234") }
+    @Before fun setUp() = runTest { hiltRule.inject(); loginRepository.emailLogin("sry_ang@naver.com", "Torang!234") }
 
     @Test
     fun loadRestaurantTest() = runTest {
