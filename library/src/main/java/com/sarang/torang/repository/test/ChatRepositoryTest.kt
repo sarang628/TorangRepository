@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -139,206 +140,32 @@ fun ChatRepositoryTest(
         Column(
             modifier = Modifier.height(height)
         ) {
-            FlowRow {
-                AssistChip(
-                    onClick = {
-                        try {
-
-                        } catch (e: Exception) {
-                            coroutine.launch {
-                                error = e.message.toString()
-                                delay(1000)
-                                error = ""
-                            }
-                        }
-                    },
-                    colors = AssistChipDefaults.assistChipColors(containerColor = if (!isConnectSocket) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
-                    label = {
-                        Text(text = if (!isConnectSocket) "DisConnectedSocket" else "ConnectedSocket")
-                    })
-
-                AssistChip(onClick = {
-                    coroutine.launch {
-                        try {
-                            chatRepository.unSubscribe(selectedRoomId)
-                        } catch (e: Exception) {
-                            error = e.message.toString()
-                            delay(1000)
-                            error = ""
-                        }
-                    }
-                }, label = { Text(text = "채팅종료") })
-
-                AssistChip(onClick = {
-                    coroutine.launch {
-                        isChatRoomLoading = true
-                        try {
-                            chatRepository.refreshAllChatRooms()
-                        } catch (e: Exception) {
-                            error = e.toString()
-                            delay(1000)
-                            error = ""
-                        }
-                        isChatRoomLoading = false
-                    }
-                }, label = {
-                    Row {
-                        Text(text = "Load ChatRoom")
-                        Spacer(modifier = Modifier.width(8.dp))
-                        if (isChatRoomLoading) CircularProgressIndicator(
-                            color = Color.White, modifier = Modifier.size(20.dp), strokeWidth = 2.dp
-                        )
-                    }
-                })
-            }
-
-            PrimaryTabRow(selectedTabIndex = pagerState.currentPage) {
-                Tab(selected = pagerState.currentPage == 0, onClick = {
-                    coroutine.launch {
-                        pagerState.animateScrollToPage(0)
-                    }
-                }) {
-                    TextButton(onClick = {
-                        coroutine.launch {
-                            pagerState.animateScrollToPage(0)
-                        }
-                    }) {
-                        Text(text = "ChatRoom")
-                    }
-
-                }
-                Tab(selected = pagerState.currentPage == 1, onClick = {
-                    coroutine.launch {
-                        pagerState.animateScrollToPage(1)
-                    }
-                }) {
-                    TextButton(onClick = {
-                        coroutine.launch {
-                            pagerState.animateScrollToPage(1)
-                        }
-                    }) {
-                        Text(text = "Chat")
-                    }
-                }
-            }
-            HorizontalPager(state = pagerState) {
-                if (it == 0) {
-                    Column {
-                        Text(text = "ChatRoomList")
-                        LazyColumn(Modifier.weight(1f)) {
-                            items(list.size) {
-                                Column(Modifier.clickable {
-                                    count++
-                                    selectedRoomId = list[it].chatRoomEntity.roomId
-                                    coroutine.launch {
-                                        pagerState.animateScrollToPage(1)
-                                    }
-                                }) {
-                                    Text(text = "roomId : ${list[it].chatRoomEntity.roomId}")
-                                    Text(text = "participants : " + list[it].participantsWithUsers.map { it.userName }
-                                        .toString())
-                                    Text(text = "createDate : ${list[it].chatRoomEntity.createDate}")
-                                    HorizontalDivider()
-                                }
-                            }
-                        }
-                    }
-                } else if (it == 1) {
-                    //채팅방
-                    Column {
-                        Text(text = "Chat (roomId : ${selectedRoomId})")
-                        Box(modifier = Modifier.weight(1f)) {
-                            LazyColumn(Modifier.padding(bottom = 50.dp)) {
-                                items(list1.size) {
-                                    Column {
-                                        Text(text = list1[it].userEntity.userName)
-                                        Text(text = list1[it].chatEntity.message)
-                                        Text(text = "${list1[it].chatEntity.createDate} ${if (list1[it].chatEntity.sending) "isSending.." else ""}")
-                                        //이미지
-                                        list1[it].images.forEach {
-                                            Box() {
-                                                image.invoke(
-                                                    Modifier.size(50.dp),
-                                                    it.localUri,
-                                                    20.dp,
-                                                    20.dp,
-                                                    ContentScale.Crop
-                                                )
-                                                if (it.failed) {
-                                                    IconButton(
-                                                        onClick = { },
-                                                        modifier = Modifier.align(
-                                                            Alignment.Center
-                                                        )
-                                                    ) {
-                                                        Icon(
-                                                            imageVector = Icons.Default.Clear,
-                                                            contentDescription = ""
-                                                        )
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            Row(
-                                Modifier
-                                    .align(Alignment.BottomCenter)
-                                    .height(60.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                TextField(
-                                    value = text,
-                                    onValueChange = { text = it },
-                                    Modifier.weight(0.6f)
-                                )
-                                Button(
-                                    onClick = {
-                                        coroutine.launch {
-                                            if (selectedRoomId != -1) {
-                                                chatRepository.addChat(
-                                                    roomId = selectedRoomId,
-                                                    message = text
-                                                )
-                                            } else {
-                                                error = "채팅방을 선택해 주세요."
-                                                delay(1000)
-                                                error = ""
-                                            }
-                                            text = ""
-                                        }
-                                    },
-                                    Modifier
-                                        .weight(0.2f)
-                                        .height(55.dp), shape = RoundedCornerShape(8.dp)
-                                ) {
-                                    Text(text = "send")
-                                }
-                                Button(
-                                    onClick = {
-                                        coroutine.launch {
-                                            if (selectedRoomId != -1) {
-                                                show = true
-                                            } else {
-                                                error = "채팅방을 선택해 주세요."
-                                                delay(1000)
-                                                error = ""
-                                            }
-                                        }
-                                    },
-                                    Modifier
-                                        .weight(0.2f)
-                                        .height(55.dp), shape = RoundedCornerShape(8.dp)
-                                ) {
-                                    Text(text = "Image")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
+            ChatFlow(
+                isChatRoomLoading = isChatRoomLoading,
+                isConnectSocket = isConnectSocket,
+                selectedRoomId = selectedRoomId,
+                chatRepository = chatRepository,
+                onChatRoomLoading = { isChatRoomLoading = it },
+                onError = { error = it }
+            )
+            ChatTab(pagerState = pagerState)
+            ChatPager(
+                pagerState = pagerState,
+                onSelectRoom = {
+                    count++
+                    selectedRoomId = it
+                },
+                list = list,
+                list1 = list1,
+                selectedRoomId = selectedRoomId,
+                chatRepository = chatRepository,
+                image = image,
+                onText = { text = it },
+                text = text,
+                onError = { error = it },
+                show = show,
+                onShow = { show = it }
+            )
         }
         galleryBottomSheetCompose.invoke(show, { show = false }, {
             coroutine.launch {
@@ -346,5 +173,238 @@ fun ChatRepositoryTest(
                 show = false
             }
         })
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ChatFlow(isConnectSocket : Boolean,
+                     chatRepository: ChatRepository,
+                     selectedRoomId : Int,
+                     isChatRoomLoading : Boolean,
+                     onChatRoomLoading : (Boolean) -> Unit,
+                     onError : (String) -> Unit
+){
+    val coroutine = rememberCoroutineScope()
+    FlowRow {
+        AssistChip(
+            onClick = {
+                try {
+
+                } catch (e: Exception) {
+                    coroutine.launch {
+                        onError(e.message.toString())
+                        delay(1000)
+                        onError("")
+                    }
+                }
+            },
+            colors = AssistChipDefaults.assistChipColors(containerColor = if (!isConnectSocket) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary),
+            label = {
+                Text(text = if (!isConnectSocket) "DisConnectedSocket" else "ConnectedSocket")
+            })
+
+        AssistChip(onClick = {
+            coroutine.launch {
+                try {
+                    chatRepository.unSubscribe(selectedRoomId)
+                } catch (e: Exception) {
+                    onError(e.message.toString())
+                    delay(1000)
+                    onError("")
+                }
+            }
+        }, label = { Text(text = "채팅종료") })
+
+        AssistChip(onClick = {
+            coroutine.launch {
+                onChatRoomLoading(true)
+                try {
+                    chatRepository.refreshAllChatRooms()
+                } catch (e: Exception) {
+                    onError(e.toString())
+                    delay(1000)
+                    onError("")
+                }
+                onChatRoomLoading(false)
+            }
+        }, label = {
+            Row {
+                Text(text = "Load ChatRoom")
+                Spacer(modifier = Modifier.width(8.dp))
+                if (isChatRoomLoading) CircularProgressIndicator(
+                    color = Color.White, modifier = Modifier.size(20.dp), strokeWidth = 2.dp
+                )
+            }
+        })
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ChatTab(pagerState : PagerState){
+    val coroutine = rememberCoroutineScope()
+    PrimaryTabRow(selectedTabIndex = pagerState.currentPage) {
+        Tab(selected = pagerState.currentPage == 0, onClick = {
+            coroutine.launch {
+                pagerState.animateScrollToPage(0)
+            }
+        }) {
+            TextButton(onClick = {
+                coroutine.launch {
+                    pagerState.animateScrollToPage(0)
+                }
+            }) {
+                Text(text = "ChatRoom")
+            }
+
+        }
+        Tab(selected = pagerState.currentPage == 1, onClick = {
+            coroutine.launch {
+                pagerState.animateScrollToPage(1)
+            }
+        }) {
+            TextButton(onClick = {
+                coroutine.launch {
+                    pagerState.animateScrollToPage(1)
+                }
+            }) {
+                Text(text = "Chat")
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChatPager(
+    pagerState : PagerState,
+    list : List<ChatRoomWithParticipantsAndUsers>,
+    list1 : List<ChatEntityWithUser>,
+    onSelectRoom : (Int) -> Unit,
+    selectedRoomId: Int,
+    chatRepository: ChatRepository,
+    image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit = { _, _, _, _, _ -> },
+    onText : (String)->Unit = {},
+    text : String,
+    onError : (String) -> Unit,
+    show : Boolean,
+    onShow : (Boolean) -> Unit
+){
+    val coroutine = rememberCoroutineScope()
+    HorizontalPager(state = pagerState) {
+        if (it == 0) {
+            Column {
+                Text(text = "ChatRoomList")
+                LazyColumn(Modifier.weight(1f)) {
+                    items(list.size) {
+                        Column(Modifier.clickable {
+                            onSelectRoom(list[it].chatRoomEntity.roomId)
+                            coroutine.launch {
+                                pagerState.animateScrollToPage(1)
+                            }
+                        }) {
+                            Text(text = "roomId : ${list[it].chatRoomEntity.roomId}")
+                            Text(text = "participants : " + list[it].participantsWithUsers.map { it.userName }
+                                .toString())
+                            Text(text = "createDate : ${list[it].chatRoomEntity.createDate}")
+                            HorizontalDivider()
+                        }
+                    }
+                }
+            }
+        } else if (it == 1) {
+            //채팅방
+            Column {
+                Text(text = "Chat (roomId : ${selectedRoomId})")
+                Box(modifier = Modifier.weight(1f)) {
+                    LazyColumn(Modifier.padding(bottom = 50.dp)) {
+                        items(list1.size) {
+                            Column {
+                                Text(text = list1[it].userEntity.userName)
+                                Text(text = list1[it].chatEntity.message)
+                                Text(text = "${list1[it].chatEntity.createDate} ${if (list1[it].chatEntity.sending) "isSending.." else ""}")
+                                //이미지
+                                list1[it].images.forEach {
+                                    Box() {
+                                        image.invoke(
+                                            Modifier.size(50.dp),
+                                            it.localUri,
+                                            20.dp,
+                                            20.dp,
+                                            ContentScale.Crop
+                                        )
+                                        if (it.failed) {
+                                            IconButton(
+                                                onClick = { },
+                                                modifier = Modifier.align(
+                                                    Alignment.Center
+                                                )
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Clear,
+                                                    contentDescription = ""
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Row(
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .height(60.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        TextField(
+                            value = text,
+                            onValueChange = { onText(it) },
+                            Modifier.weight(0.6f)
+                        )
+                        Button(
+                            onClick = {
+                                coroutine.launch {
+                                    if (selectedRoomId != -1) {
+                                        chatRepository.addChat(
+                                            roomId = selectedRoomId,
+                                            message = text
+                                        )
+                                    } else {
+                                        onError("채팅방을 선택해 주세요.")
+                                        delay(1000)
+                                        onError("")
+                                    }
+                                    onText("")
+                                }
+                            },
+                            Modifier
+                                .weight(0.2f)
+                                .height(55.dp), shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(text = "send")
+                        }
+                        Button(
+                            onClick = {
+                                coroutine.launch {
+                                    if (selectedRoomId != -1) {
+                                        onShow(true)
+                                    } else {
+                                        onError("채팅방을 선택해 주세요.")
+                                        delay(1000)
+                                        onError("")
+                                    }
+                                }
+                            },
+                            Modifier
+                                .weight(0.2f)
+                                .height(55.dp), shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(text = "Image")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
