@@ -6,11 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.ApiAlarm
 import com.sarang.torang.api.ApiComment
 import com.sarang.torang.api.ApiCommentLike
@@ -23,12 +31,12 @@ import com.sarang.torang.core.database.dao.LoggedInUserDao
 import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.repository.ChatRepository
-import com.sarang.torang.repository.ChatRepositoryTest
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
+import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.PicturesRepository
 import com.sarang.torang.repository.ProfileRepository
@@ -37,6 +45,7 @@ import com.sarang.torang.repository.RestaurantRepository
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.review.ReviewRepository
+import com.sarang.torang.repository.test.ChatRepositoryTest
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
 import com.sryang.torang.ui.TorangTheme
@@ -75,8 +84,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             TorangTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
-                    Column(Modifier.verticalScroll(rememberScrollState())) {
-                        RepositoryTest(
+                    RepositoryNavigation(
+                        chatRepository = chatRepository,
+                        loginRepository = loginRepository
+                    )
+                    //Column(Modifier.verticalScroll(rememberScrollState())) {
+                        //RepositoryTest(
                     //commentRepository = commentRepository,
                     //feedRepository = feedRepository,
                     //profileRepository = profileRepository,
@@ -88,15 +101,43 @@ class MainActivity : ComponentActivity() {
                     //reportRepository = reportRepository,
                     //reviewRepository = reviewRepository,
                     //picturesRepository = picturesRepository,
-                    restaurantRepository = restaurantRepository,
+                    //restaurantRepository = restaurantRepository,
                     //findRepository = findRepository
-                        ) {
-                            //ChatRepositoryTest(chatRepository = chatRepository, image = provideTorangAsyncImage()) { show, onHidden, onSend -> }
-                        }
+                        //) {
+
+                        //}
                 //DaoTest(
                     //favoriteDao = favoriteDao,
                     //loggedInUserDao = loggedInUserDao,
                     //reviewDao = reviewDao
                 //)
                         //SessionClientServiceTest(sessionClientService = sessionClientService)
-} } } } } }
+} } } }
+
+    @Composable
+    fun RepositoryNavigation(
+        chatRepository : ChatRepository,
+        loginRepository: LoginRepository
+    ){
+        val navController = rememberNavController()
+        NavHost(
+            modifier = Modifier.fillMaxSize(),
+            navController = navController, startDestination = "menu"){
+            composable("menu"){
+                Column() {
+                    Button({ navController.navigate("ChatRepositoryTest") }) { Text("ChatRepositoryTest") }
+                    Button({ navController.navigate("LoginRepositoryTest") }) { Text("LoginRepositoryTest") }
+                }
+
+            }
+            composable("ChatRepositoryTest") {
+                ChatRepositoryTest(chatRepository = chatRepository, image = provideTorangAsyncImage()) { show, onHidden, onSend -> }
+            }
+
+            composable("LoginRepositoryTest") {
+                LoginRepositoryTest(loginRepository = loginRepository)
+            }
+        }
+    }
+
+}
