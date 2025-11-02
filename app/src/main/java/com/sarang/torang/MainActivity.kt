@@ -131,7 +131,10 @@ class MainActivity : ComponentActivity() {
 
             }
             composable("ChatRepositoryTest") {
-                ChatRepositoryTest(chatRepository = chatRepository, image = provideTorangAsyncImage()) { show, onHidden, onSend -> }
+                ChatRepositoryTest(
+                    loginRepository = loginRepository,
+                    chatRepository = chatRepository,
+                    image = provideTorangAsyncImage()) { show, onHidden, onSend -> }
             }
 
             composable("LoginRepositoryTest") {
