@@ -1,7 +1,6 @@
 package com.sarang.torang.repository
 
 import com.gmail.bishoybasily.stomp.lib.Message
-import com.sarang.torang.core.database.model.chat.ChatRoomEntity
 import com.sarang.torang.core.database.model.chat.embedded.ChatMessageUserImages
 import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
 import kotlinx.coroutines.CoroutineScope
@@ -18,17 +17,7 @@ interface ChatRepository {
     /**
      * 채팅 내용 가져오기
      */
-    suspend fun loadContents(roomId: Int)
-
-    /**
-     * 채팅방 목록 가져오기
-     */
-    fun getChatRoom(): Flow<List<ChatRoomParticipants>>
-
-    /**
-     * 채팅방 목록 가져오기
-     */
-    fun getChatRoom1(): Flow<List<ChatRoomEntity>>
+    suspend fun loadChats(roomId: Int)
 
     /**
      * 채팅방 생성
@@ -38,12 +27,12 @@ interface ChatRepository {
     /**
      * 채팅 내용 가져오기
      */
-    fun getContents(roomId: Int): Flow<List<ChatMessageUserImages>>
+    fun getChatsFlow(roomId: Int): Flow<List<ChatMessageUserImages>>
 
     /**
      * 채팅방 목록, 참여자 목록 가져오기
      */
-    fun getAllChatRooms(): Flow<List<ChatRoomParticipants>>
+    fun getAllChatRoomsFlow(): Flow<List<ChatRoomParticipants>>
 
     /**
      * 채팅방에 메시지 추가
@@ -53,7 +42,7 @@ interface ChatRepository {
     /**
      * 채팅방에 이미지 추가
      */
-    suspend fun addImage(
+    suspend fun addImageChat(
         roomId: Int,
         message: List<String>,
         uuid: String = UUID.randomUUID().toString(),
