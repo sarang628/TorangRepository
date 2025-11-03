@@ -26,7 +26,6 @@ import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
-import com.sarang.torang.repository.LoginRepositoryTest
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.PicturesRepository
 import com.sarang.torang.repository.ProfileRepository
@@ -39,6 +38,7 @@ import com.sarang.torang.repository.test.chat.ChatRepositoryTest
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
 import com.sryang.torang.ui.TorangTheme
+import com.sarang.torang.repository.test.LoginRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

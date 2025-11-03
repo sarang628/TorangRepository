@@ -10,7 +10,7 @@ import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
-import com.sarang.torang.repository.LoginRepositoryTest
+import com.sarang.torang.repository.test.LoginRepositoryTest
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.PicturesRepository
 import com.sarang.torang.repository.PicturesRepositoryTest
