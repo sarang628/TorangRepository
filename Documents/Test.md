@@ -1,54 +1,3 @@
-# 토랑 저장소
-
-## 역할
-
-앱에서 필요로하는 데이터를 저장하는 역할<br>
-앱에서 제공하는 서비스를 전반적으로 이해하여 필요로하는 데이터를 제공<br>
-변경과 유지보수가 유연하게 설계하기
-
-## 서비스
-
-내부 DB 데이터 UDF가 적용된 FLOW 데이터 타입으로 제공
-원격 서버와 통신하여 데이터 동기화 및 UI에서 필요로하는 API 제공
-자주 변경되는 API는 UI에서 직접 구현 할 수 있는 API 호출 가이드 제공
-
-## API 자동화 테스트 필요
-
-- [테스트 환경 구성하기](./Documents/Test%20Enviroment.md)
-
-## 의존성 추가
-
-```
-implementation 'com.github.sarang628:TorangRepository:928fce8039'
-```
-
-```
-/** root build.gradle */
-room_version = "2.5.1"
-/** Room */
-implementation "androidx.room:room-runtime:$room_version"
-annotationProcessor "androidx.room:room-compiler:$room_version"
-// To use Kotlin annotation processing tool (kapt)
-kapt "androidx.room:room-compiler:$room_version"
-// optional - RxJava2 support for Room
-implementation "androidx.room:room-rxjava2:$room_version"
-// optional - RxJava3 support for Room
-implementation "androidx.room:room-rxjava3:$room_version"
-// optional - Guava support for Room, including Optional and ListenableFuture
-implementation "androidx.room:room-guava:$room_version"
-// optional - Test helpers
-testImplementation "androidx.room:room-testing:$room_version"
-// optional - Paging 3 Integration
-implementation "androidx.room:room-paging:$room_version"
-```
-
-```
-/** Retrofit */
-implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-```
-
 ## 안드로이드 저장소 테스트 환경 설정하기
 
 ### 환경설정하기
@@ -211,10 +160,3 @@ android.buildFeatures.buildConfig = true
     }
 
 ```
-
-### 2025.01 피드(리뷰)를 이미지만 추출, 그리드 형식으로 보여주는 화면을 위한 데이터 제공 기능 구현
-
-### 2025.08 데이터베이스, 네트워크 모듈 분리
-- 데이터 베이스용 데이터와, 네트워크용 데이터가 있는데 모듈화를 하지 않았으면 분리하는데 시간이 오래 걸렸을 것 같다.
-- 이 모듈을 변경하면 모든 모듈을 다시 빌드하고 점검해야한다.
-- 위험을 최소화 하기위해 모든 모듈에서 사용하는 도메인 데이터를 잘 정의해야 한다.
