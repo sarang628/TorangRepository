@@ -1,8 +1,8 @@
 package com.sarang.torang.repository
 
 import com.gmail.bishoybasily.stomp.lib.Message
-import com.sarang.torang.core.database.model.chat.embedded.ChatMessageUserImages
-import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
+import com.sarang.torang.data.ChatMessage
+import com.sarang.torang.data.ChatRoom
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
@@ -22,17 +22,17 @@ interface ChatRepository {
     /**
      * 채팅방 생성
      */
-    suspend fun getUserOrCreateRoomByUserId(userId: Int): ChatRoomParticipants
+    suspend fun getUserOrCreateRoomByUserId(userId: Int): ChatRoom
 
     /**
      * 채팅 내용 가져오기
      */
-    fun getChatsFlow(roomId: Int): Flow<List<ChatMessageUserImages>>
+    fun getChatsFlow(roomId: Int): Flow<List<ChatMessage>>
 
     /**
      * 채팅방 목록, 참여자 목록 가져오기
      */
-    fun getAllChatRoomsFlow(): Flow<List<ChatRoomParticipants>>
+    fun getAllChatRoomsFlow(): Flow<List<ChatRoom>>
 
     /**
      * 채팅방에 메시지 추가

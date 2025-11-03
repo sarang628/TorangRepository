@@ -23,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.core.database.model.chat.embedded.ChatMessageUserImages
+import com.sarang.torang.data.ChatMessage
 import com.sarang.torang.repository.ChatRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ChatRoom(
     selectedRoomId: Int,
-    chats : List<ChatMessageUserImages>,
+    chats : List<ChatMessage>,
     image: @Composable (Modifier, String, Dp?, Dp?, ContentScale?) -> Unit = { _, _, _, _, _ -> },
     onText : (String)->Unit = {},
     text : String,
@@ -46,8 +47,8 @@ fun ChatRoom(
                 items(chats.size) {
                     Column {
                         Text(text = chats[it].user.userName)
-                        Text(text = chats[it].chatMessage.message)
-                        Text(text = "${chats[it].chatMessage.createDate} ${if (chats[it].chatMessage.sending) "isSending.." else ""}")
+                        Text(text = chats[it].message)
+                        Text(text = "${chats[it].createDate} ${if (chats[it].sending) "isSending.." else ""}")
                         //이미지
                         chats[it].images.forEach {
                             Box() {

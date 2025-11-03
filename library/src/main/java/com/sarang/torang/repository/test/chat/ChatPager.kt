@@ -7,15 +7,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
-import com.sarang.torang.core.database.model.chat.embedded.ChatMessageUserImages
-import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
+import com.sarang.torang.data.ChatMessage
+import com.sarang.torang.data.ChatRoom
+
 import com.sarang.torang.repository.ChatRepository
 
 @Composable
 internal fun ChatPager(
     pagerState : PagerState,
-    chatRooms : List<ChatRoomParticipants>,
-    chats : List<ChatMessageUserImages>,
+    chatRooms : List<ChatRoom>,
+    chats : List<ChatMessage>,
     onSelectRoom : (Int) -> Unit,
     selectedRoomId: Int,
     chatRepository: ChatRepository,

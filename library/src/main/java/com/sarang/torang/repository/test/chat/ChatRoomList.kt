@@ -10,11 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
+import com.sarang.torang.data.ChatRoom
 import kotlinx.coroutines.launch
 
 @Composable
 fun ChatRoomList(
-    chatRooms : List<ChatRoomParticipants>,
+    chatRooms : List<ChatRoom>,
     onSelectRoom : (Int) -> Unit,
     pagerState : PagerState
 ){
@@ -27,15 +28,14 @@ fun ChatRoomList(
             LazyColumn(Modifier.weight(1f)) {
                 items(chatRooms.size) {
                     Column(Modifier.clickable {
-                        onSelectRoom(chatRooms[it].chatRoom.roomId)
+                        onSelectRoom(chatRooms[it].roomId)
                         coroutine.launch {
                             pagerState.animateScrollToPage(1)
                         }
                     }) {
-                        Text(text = "roomId : ${chatRooms[it].chatRoom.roomId}")
-                        Text(text = "participants : " + chatRooms[it].chatParticipants.map { it.userEntity?.userName }
-                            .toString())
-                        Text(text = "createDate : ${chatRooms[it].chatRoom.createDate}")
+                        Text(text = "roomId : ${chatRooms[it].roomId}")
+                        Text(text = "participants : " + chatRooms[it].chatParticipants.map { user -> user.userName }.toString())
+                        Text(text = "createDate : ${chatRooms[it].createDate}")
                         HorizontalDivider()
                     }
                 }

@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gmail.bishoybasily.stomp.lib.Message
-import com.sarang.torang.core.database.model.chat.embedded.ChatMessageUserImages
-import com.sarang.torang.core.database.model.chat.embedded.ChatRoomParticipants
+import com.sarang.torang.data.ChatMessage
+import com.sarang.torang.data.ChatRoom
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.LoginRepository
 import kotlinx.coroutines.CoroutineScope
@@ -46,9 +46,9 @@ fun ChatRepositoryTest(
     galleryBottomSheetCompose: @Composable (Boolean, onHidden: () -> Unit, onSend: (List<String>) -> Unit) -> Unit,
 ) {
     val coroutine           : CoroutineScope                = rememberCoroutineScope()
-    val chatRooms           : List<ChatRoomParticipants>    by chatRepository.getAllChatRoomsFlow().collectAsStateWithLifecycle(initialValue = emptyList())
+    val chatRooms           : List<ChatRoom>    by chatRepository.getAllChatRoomsFlow().collectAsStateWithLifecycle(initialValue = emptyList())
     var selectedRoomId      : Int                           by remember { mutableIntStateOf(-1) }
-    val chats               : List<ChatMessageUserImages>   by chatRepository.getChatsFlow(selectedRoomId).collectAsStateWithLifecycle(emptyList())
+    val chats               : List<ChatMessage>   by chatRepository.getChatsFlow(selectedRoomId).collectAsStateWithLifecycle(emptyList())
     var count               : Int                           by remember { mutableIntStateOf(-1) }
     val height              : Dp                            = LocalConfiguration.current.screenHeightDp.dp - 100.dp
     var text                : String                        by remember { mutableStateOf("") }

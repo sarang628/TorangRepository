@@ -1,3 +1,3 @@
 package com.sarang.torang.data
 
-data class User(val d: Int)
+data class User(val userName: String)
