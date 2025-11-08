@@ -46,9 +46,9 @@ fun ChatRepositoryTest(
     galleryBottomSheetCompose: @Composable (Boolean, onHidden: () -> Unit, onSend: (List<String>) -> Unit) -> Unit,
 ) {
     val coroutine           : CoroutineScope                = rememberCoroutineScope()
-    val chatRooms           : List<ChatRoom>    by chatRepository.getAllChatRoomsFlow().collectAsStateWithLifecycle(initialValue = emptyList())
+    val chatRooms           : List<ChatRoom>                by chatRepository.getAllChatRoomsFlow().collectAsStateWithLifecycle(initialValue = emptyList())
     var selectedRoomId      : Int                           by remember { mutableIntStateOf(-1) }
-    val chats               : List<ChatMessage>   by chatRepository.getChatsFlow(selectedRoomId).collectAsStateWithLifecycle(emptyList())
+    val chats               : List<ChatMessage>             by chatRepository.getChatsFlow(selectedRoomId).collectAsStateWithLifecycle(emptyList())
     var count               : Int                           by remember { mutableIntStateOf(-1) }
     val height              : Dp                            = LocalConfiguration.current.screenHeightDp.dp - 100.dp
     var text                : String                        by remember { mutableStateOf("") }

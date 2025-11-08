@@ -12,7 +12,7 @@ interface ChatRepository {
     /**
      * 채팅방 목록 가져오기
      */
-    suspend fun refreshAllChatRooms()
+    suspend fun refreshAllChatRooms() : Result<Unit>
 
     /**
      * 채팅 내용 가져오기

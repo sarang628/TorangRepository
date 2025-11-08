@@ -64,8 +64,8 @@ internal fun ChatFlow(isConnectSocket : Boolean,
             coroutine.launch {
                 onChatRoomLoading(true)
                 try {
-                    chatRepository.refreshAllChatRooms()
-                } catch (e: Exception) {
+                    chatRepository.refreshAllChatRooms().getOrThrow()
+                } catch (e: Throwable) {
                     onError(e.toString())
                     delay(1000)
                     onError("")
