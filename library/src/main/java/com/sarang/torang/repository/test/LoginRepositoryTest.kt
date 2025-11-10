@@ -96,10 +96,19 @@ fun LoginRepositoryTest(loginRepository: LoginRepository = LoginRepositoryMock()
         contentWindowInsets = WindowInsets(left = 8.dp, right = 8.dp)
     ) {
         Column(Modifier.padding(it)) {
+
+            OutlinedTextField(
+                value = id,
+                onValueChange = { id = it },
+                enabled = !isLogin
+            )
+            Spacer(Modifier.height(8.dp))
+            OutlinedTextField(
+                value = pw,
+                onValueChange = { pw = it },
+                enabled = !isLogin
+            )
             if (!isLogin) {
-                OutlinedTextField(value = id, onValueChange = { id = it })
-                Spacer(Modifier.height(8.dp))
-                OutlinedTextField(value = pw, onValueChange = { pw = it })
                 Button(onClick = {
                     coroutine.launch {
                         try {
