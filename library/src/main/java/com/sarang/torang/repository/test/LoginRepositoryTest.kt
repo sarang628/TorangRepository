@@ -3,7 +3,9 @@ package com.sarang.torang.repository.test
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -83,7 +85,7 @@ fun LoginRepositoryTest(loginRepository: LoginRepository = LoginRepositoryMock()
     var pw          : String         by remember { mutableStateOf("Torang!234") }
     val dispatcher  : OnBackPressedDispatcher? = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     Scaffold(topBar = {
-        TopAppBar(title = {Text("LoginRepositoryTest")},
+        TopAppBar(title = { Text("LoginRepositoryTest", fontSize = 18.sp) },
             navigationIcon = {
                 IconButton({
                     coroutine.launch {
@@ -96,6 +98,7 @@ fun LoginRepositoryTest(loginRepository: LoginRepository = LoginRepositoryMock()
         Column(Modifier.padding(it)) {
             if (!isLogin) {
                 OutlinedTextField(value = id, onValueChange = { id = it })
+                Spacer(Modifier.height(8.dp))
                 OutlinedTextField(value = pw, onValueChange = { pw = it })
                 Button(onClick = {
                     coroutine.launch {

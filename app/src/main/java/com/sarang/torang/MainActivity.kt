@@ -5,14 +5,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -67,7 +74,8 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var sessionService         : SessionService
     @Inject lateinit var sessionClientService   : SessionClientService
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    @OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -82,7 +90,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Composable
+    @OptIn(ExperimentalMaterial3Api::class)
+@Composable
     fun RepositoryNavigation(
         chatRepository : ChatRepository,
         loginRepository: LoginRepository
@@ -92,9 +101,16 @@ class MainActivity : ComponentActivity() {
             modifier = Modifier.fillMaxSize(),
             navController = navController, startDestination = "menu"){
             composable("menu"){
-                Column() {
-                    Button({ navController.navigate("ChatRepositoryTest") }) { Text("ChatRepositoryTest") }
-                    Button({ navController.navigate("LoginRepositoryTest") }) { Text("LoginRepositoryTest") }
+                Scaffold(
+                    topBar = { TopAppBar( title = { Text("Torang Repository") }) },
+                    contentWindowInsets = WindowInsets(left = 8.dp, right = 8.dp)
+                ) {
+                    Box(Modifier.padding(it)){
+                        Column {
+                            Button({ navController.navigate("ChatRepositoryTest") }) { Text("ChatRepositoryTest") }
+                            Button({ navController.navigate("LoginRepositoryTest") }) { Text("LoginRepositoryTest") }
+                        }
+                    }
                 }
                 //Column(Modifier.verticalScroll(rememberScrollState())) {
                 //RepositoryTest(

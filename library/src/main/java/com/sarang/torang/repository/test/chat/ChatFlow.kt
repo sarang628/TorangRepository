@@ -1,5 +1,6 @@
 package com.sarang.torang.repository.test.chat
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -30,7 +31,7 @@ internal fun ChatFlow(isConnectSocket : Boolean,
                      onError : (String) -> Unit
 ){
     val coroutine = rememberCoroutineScope()
-    FlowRow {
+    FlowRow(horizontalArrangement = Arrangement.SpaceAround) {
         AssistChip(
             onClick = {
                 try {
@@ -74,7 +75,7 @@ internal fun ChatFlow(isConnectSocket : Boolean,
             }
         }, label = {
             Row {
-                Text(text = "Load ChatRoom")
+                Text(text = "refreshAllChatRooms")
                 Spacer(modifier = Modifier.width(8.dp))
                 if (isChatRoomLoading) CircularProgressIndicator(
                     color = Color.White, modifier = Modifier.size(20.dp), strokeWidth = 2.dp
