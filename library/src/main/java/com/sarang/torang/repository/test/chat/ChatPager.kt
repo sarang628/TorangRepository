@@ -25,7 +25,8 @@ internal fun ChatPager(
     text : String,
     onError : (String) -> Unit,
     show : Boolean,
-    onShow : (Boolean) -> Unit
+    onShow : (Boolean) -> Unit,
+    onDelete : (Int) -> Unit = {}
 ){
     val coroutine = rememberCoroutineScope()
     HorizontalPager(state = pagerState) {
@@ -33,10 +34,10 @@ internal fun ChatPager(
             ChatRoomList(
                 chatRooms = chatRooms,
                 onSelectRoom = onSelectRoom,
-                pagerState = pagerState
+                pagerState = pagerState,
+                onDelete = onDelete
             )
         } else if (it == 1) {
-            //채팅방
             ChatRoom(
                 selectedRoomId = selectedRoomId,
                 chats = chats,

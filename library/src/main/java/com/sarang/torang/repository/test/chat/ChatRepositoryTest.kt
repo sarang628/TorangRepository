@@ -111,7 +111,10 @@ fun ChatRepositoryTest(
                         text = text,
                         onError = { error = it },
                         show = show,
-                        onShow = { show = it }
+                        onShow = { show = it },
+                        onDelete = {
+
+                        }
                     )
                 }
                 galleryBottomSheetCompose.invoke(show, { show = false }, {

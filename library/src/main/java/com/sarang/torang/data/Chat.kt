@@ -14,9 +14,9 @@ data class ChatMessage(
 )
 
 data class ChatRoom(
-    val roomId: Int,
-    val createDate: String,
-    val chatParticipants: List<User>,
+    val roomId              : Int = 0,
+    val createDate          : String = "",
+    val chatParticipants    : List<User> = listOf(),
 )
 
 data class ChatImage(
