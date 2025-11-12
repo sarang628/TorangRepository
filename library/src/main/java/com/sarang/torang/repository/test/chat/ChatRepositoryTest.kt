@@ -113,7 +113,10 @@ fun ChatRepositoryTest(
                         show = show,
                         onShow = { show = it },
                         onDelete = {
-
+                            coroutine.launch {
+                                chatRepository.deleteChatRoom(it)
+                                chatRepository.deleteParticipantsByChatRoomId(it)
+                            }
                         }
                     )
                 }
