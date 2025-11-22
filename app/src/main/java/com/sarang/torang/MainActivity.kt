@@ -28,6 +28,7 @@ import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.LoggedInUserDao
 import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.di.image.provideTorangAsyncImage
+import com.sarang.torang.di.repository.FeedRepositoryImpl
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
@@ -42,6 +43,7 @@ import com.sarang.torang.repository.RestaurantRepository
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.review.ReviewRepository
+import com.sarang.torang.repository.test.FeedRepositoryTest
 import com.sarang.torang.repository.test.chat.ChatRepositoryTest
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
@@ -111,6 +113,7 @@ class MainActivity : ComponentActivity() {
                         Column {
                             Button({ navController.navigate("ChatRepositoryTest") }) { Text("ChatRepositoryTest") }
                             Button({ navController.navigate("LoginRepositoryTest") }) { Text("LoginRepositoryTest") }
+                            Button({ navController.navigate("FeedRepositoryTest") }) { Text("FeedRepositoryTest") }
                         }
                     }
                 }
@@ -149,6 +152,10 @@ class MainActivity : ComponentActivity() {
 
             composable("LoginRepositoryTest") {
                 LoginRepositoryTest(loginRepository = loginRepository)
+            }
+
+            composable("FeedRepositoryTest"){
+                FeedRepositoryTest(feedRepository = feedRepository)
             }
         }
     }
