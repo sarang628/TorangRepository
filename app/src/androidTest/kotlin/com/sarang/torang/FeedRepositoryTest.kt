@@ -3,6 +3,7 @@ package com.sarang.torang
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.GsonBuilder
+import com.sarang.torang.core.database.dao.LikeDao
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LikeRepository
@@ -38,7 +39,7 @@ class FeedRepositoryTest {
     fun setUp() = runTest {
         hiltRule.inject()
         loginRepository.emailLogin("sry_ang@naver.com","Torang!234")
-        feedRepository.findAll()
+        //feedRepository.findAll()
     }
 
     @Test
@@ -96,6 +97,23 @@ class FeedRepositoryTest {
 
         // 좋아요 추가 확인
         assertEquals(true, review.like != null)
+    }
+
+    @Test
+    fun getByRestaurantIdTest() = runTest {
+
+        // 음식점 리뷰 저장하기
+        feedRepository.findByRestaurantId(299)
+
+        val feedsFlow = feedRepository.restaurantFeedsFlow(299)
+
+        assertEquals(false, feedsFlow.first().isEmpty())
+
+        assertEquals(false, feedsFlow.first().none { it.like != null })
+
+        /*if(feedsFlow.first()[0].like == null)
+            likeRepository.addLike(feedsFlow.first()[0].review.reviewId)*/
+
     }
 
 }
