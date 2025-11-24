@@ -3,9 +3,13 @@ package com.sarang.torang
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.GsonBuilder
+import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.repository.FeedRepository
+import com.sarang.torang.repository.LikeRepository
+import com.sarang.torang.repository.LoginRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -26,12 +30,14 @@ class FeedRepositoryTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @Inject
-    lateinit var feedRepository: FeedRepository
+    @Inject lateinit var feedRepository: FeedRepository
+    @Inject lateinit var likeRepository: LikeRepository
+    @Inject lateinit var loginRepository: LoginRepository
 
     @Before
     fun setUp() = runTest {
         hiltRule.inject()
+        loginRepository.emailLogin("sry_ang@naver.com","Torang!234")
         feedRepository.findAll()
     }
 
@@ -46,20 +52,10 @@ class FeedRepositoryTest {
     }
 
     @Test
-    fun addLikeTest() = runTest {
-        //feedRepository.addLike(425)
-    }
-
-    @Test
     fun loadNextFeedByReivewIdTest() = runTest {
         feedRepository.findById(471)
 
-        feedRepository.feeds.first {
-            println("---------------------------------------------------")
-            println(GsonBuilder().setPrettyPrinting().create().toJson(it))
-            println("---------------------------------------------------")
-            true
-        }
+        assertEquals(true, feedRepository.feeds.first()?.any { it.review.reviewId == 471 })
     }
 
     @Test
@@ -67,7 +63,39 @@ class FeedRepositoryTest {
         val result = feedRepository.findByPictureIdFlow(1005)
             .first()
 
-        Log.d(tag, result.toString())
+        assertEquals(true, result != null)
+    }
+
+    @Test
+    fun likeTest() = runTest {
+        // 피드 첫번째 아이템 '좋아요 테스트' 대상으로 선택
+        val firstReview = feedRepository.feeds.first()?.get(0)?.review ?: run {
+            throw Exception("feeds is null")
+        }
+
+        // 우선 좋아요가 있으면 삭제
+        likeRepository.deleteLike(firstReview.reviewId)
+
+        // 피드 첫번째 아이템 다시 가져오기
+        var review = feedRepository.feeds
+            .first()
+            ?.firstOrNull { it.review.reviewId == firstReview.reviewId }
+            ?: throw Exception("review is null")
+
+        // 좋아요 아님 확인
+        assertEquals(null, review.like)
+
+        // 좋아요 추가
+        likeRepository.addLike(reviewId = review.review.reviewId)
+
+        // 피드 첫번째 아이템 다시 가져오기
+        review = feedRepository.feeds
+            .first()
+            ?.firstOrNull { it.review.reviewId == firstReview.reviewId}
+            ?: throw Exception("review is null")
+
+        // 좋아요 추가 확인
+        assertEquals(true, review.like != null)
     }
 
 }
