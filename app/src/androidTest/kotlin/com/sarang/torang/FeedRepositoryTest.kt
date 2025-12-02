@@ -1,10 +1,6 @@
 package com.sarang.torang
 
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.gson.GsonBuilder
-import com.sarang.torang.core.database.dao.LikeDao
-import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.LikeRepository
 import com.sarang.torang.repository.LoginRepository
@@ -44,7 +40,7 @@ class FeedRepositoryTest {
 
     @Test
     fun loadFeedWithPageTest() = runTest {
-        feedRepository.findByPage(1)
+        feedRepository.loadByPage(1)
     }
 
     @Test
@@ -54,7 +50,7 @@ class FeedRepositoryTest {
 
     @Test
     fun loadNextFeedByReivewIdTest() = runTest {
-        feedRepository.findById(471)
+        feedRepository.loadById(471)
 
         assertEquals(true, feedRepository.feeds.first()?.any { it.review.reviewId == 471 })
     }
@@ -103,7 +99,7 @@ class FeedRepositoryTest {
     fun getByRestaurantIdTest() = runTest {
 
         // 음식점 리뷰 저장하기
-        feedRepository.findByRestaurantId(299)
+        feedRepository.loadByRestaurantId(299)
 
         val feedsFlow = feedRepository.restaurantFeedsFlow(299)
 

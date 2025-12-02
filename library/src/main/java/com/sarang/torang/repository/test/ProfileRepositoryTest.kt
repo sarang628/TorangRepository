@@ -1,4 +1,4 @@
-package com.sarang.torang.repository
+package com.sarang.torang.repository.test
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,27 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.google.gson.GsonBuilder
 import com.sarang.torang.api.handle
-import com.sarang.torang.core.database.model.favorite.FavoriteEntity
-import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
-import com.sarang.torang.core.database.model.image.ReviewImageEntity
-import com.sarang.torang.data.remote.response.UserApiModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.sarang.torang.repository.UserRepository
 import kotlinx.coroutines.launch
 
-interface ProfileRepository {
-    suspend fun loadProfile(userId: Int): UserApiModel
-    suspend fun loadProfileByToken(): UserApiModel
-    fun getMyFeed(userId: Int): Flow<List<ReviewAndImageEntity>>
-    fun getMyFavorite(userId: Int): Flow<List<ReviewAndImageEntity>>
-    suspend fun loadMyFeed(userId: Int)
-    val isLogin: Flow<Boolean> get() = MutableStateFlow(false)
-    fun getFavorite(reviewId: Int): Flow<FavoriteEntity>
-    fun getReviewImages(reviewId: Int): Flow<List<ReviewImageEntity>>
-}
-
 @Composable
-fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
+fun ProfileRepositoryTest(profileRepository: UserRepository) {
     var profile by remember { mutableStateOf("b") }
     var isProgress by remember { mutableStateOf(false) }
     val coroutine = rememberCoroutineScope()
@@ -54,7 +38,7 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                         onClick = {
                             coroutine.launch {
                                 isProgress = true
-                                val result = profileRepository.loadProfile(1)
+                                val result = profileRepository.findById(1)
                                 profile = GsonBuilder().setPrettyPrinting().create().toJson(result)
                                 isProgress = false
                             }
@@ -63,7 +47,7 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                         coroutine.launch {
                             isProgress = true
                             try {
-                                val result = profileRepository.loadProfileByToken()
+                                val result = profileRepository.findByToken()
                                 profile = GsonBuilder().setPrettyPrinting().create().toJson(result)
                             } catch (e: Exception) {
                                 profile = e.handle()
@@ -77,7 +61,7 @@ fun ProfileRepositoryTest(profileRepository: ProfileRepository) {
                         onClick = {
                             coroutine.launch {
                                 try {
-                                    profileRepository.loadMyFeed(32)
+                                    //profileRepository.loadByUserId(32)
                                 } catch (e: Exception) {
                                     error = e.message ?: ""
                                 }

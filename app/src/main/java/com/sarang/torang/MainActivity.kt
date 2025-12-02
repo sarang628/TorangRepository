@@ -28,7 +28,6 @@ import com.sarang.torang.core.database.dao.FavoriteDao
 import com.sarang.torang.core.database.dao.LoggedInUserDao
 import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.di.image.provideTorangAsyncImage
-import com.sarang.torang.di.repository.FeedRepositoryImpl
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.EditProfileRepository
 import com.sarang.torang.repository.FeedRepository
@@ -37,7 +36,7 @@ import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
 import com.sarang.torang.repository.MapRepository
 import com.sarang.torang.repository.PicturesRepository
-import com.sarang.torang.repository.ProfileRepository
+import com.sarang.torang.repository.UserRepository
 import com.sarang.torang.repository.ReportRepository
 import com.sarang.torang.repository.RestaurantRepository
 import com.sarang.torang.repository.SettingsRepository
@@ -49,6 +48,7 @@ import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
 import com.sryang.torang.ui.TorangTheme
 import com.sarang.torang.repository.test.LoginRepositoryTest
+import com.sarang.torang.repository.test.ProfileRepositoryTest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var reviewDao          : ReviewDao
     //repositories
     @Inject lateinit var feedRepository         : FeedRepository
-    @Inject lateinit var profileRepository      : ProfileRepository
+    @Inject lateinit var profileRepository      : UserRepository
     @Inject lateinit var editProfileRepository  : EditProfileRepository
     @Inject lateinit var loginRepository        : LoginRepository
     @Inject lateinit var settingRepository      : SettingsRepository
@@ -114,6 +114,7 @@ class MainActivity : ComponentActivity() {
                             Button({ navController.navigate("ChatRepositoryTest") }) { Text("ChatRepositoryTest") }
                             Button({ navController.navigate("LoginRepositoryTest") }) { Text("LoginRepositoryTest") }
                             Button({ navController.navigate("FeedRepositoryTest") }) { Text("FeedRepositoryTest") }
+                            Button({ navController.navigate("ProfileRepositoryTest") }) { Text("ProfileRepositoryTest") }
                         }
                     }
                 }
@@ -156,6 +157,10 @@ class MainActivity : ComponentActivity() {
 
             composable("FeedRepositoryTest"){
                 FeedRepositoryTest(feedRepository = feedRepository)
+            }
+
+            composable("ProfileRepositoryTest"){
+                ProfileRepositoryTest(profileRepository = profileRepository)
             }
         }
     }

@@ -22,22 +22,3 @@ interface MapRepository {
     fun getSWlat(): Double
     fun getSWlon(): Double
 }
-
-@Composable
-fun MapRepositoryTest(mapRepository: MapRepository) {
-    Column {
-        Button(onClick = { mapRepository.saveLat(10.0) }) {
-            Text(text = "SaveLat")
-        }
-        Button(onClick = { mapRepository.savelon(10.0) }) {
-            Text(text = "SaveLon")
-        }
-        Button(onClick = { mapRepository.saveZoom(10.0f) }) {
-            Text(text = "saveZoom")
-        }
-
-        Text(text = "lat ${mapRepository.loadLat()}")
-        Text(text = "lon ${mapRepository.loadLon()}")
-        Text(text = "lon ${mapRepository.loadZoom()}")
-    }
-}

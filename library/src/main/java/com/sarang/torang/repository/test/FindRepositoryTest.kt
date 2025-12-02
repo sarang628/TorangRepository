@@ -1,11 +1,9 @@
 package com.sarang.torang.repository.test
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -40,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.gson.Gson
 import com.sarang.torang.api.handle
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
@@ -85,7 +82,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
         getFeed = {
             coroutine.launch {
                 try {
-                    feedRepository.findAll()
+                    feedRepository.loadAll()
                 } catch (e: Exception) {
                     error = e.toString()
                 }
@@ -132,12 +129,12 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
         },
         onFindByPage = {
             coroutine.launch {
-                feedRepository.findByPage(reviewId.toInt())
+                feedRepository.loadByPage(reviewId.toInt())
             }
         },
         onFeedByRestaurant = {
             coroutine.launch {
-                feedRepository.findByRestaurantId(it)
+                feedRepository.loadByRestaurantId(it)
                 restaurantId = it
             }
         }
