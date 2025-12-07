@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AssistChip
@@ -38,7 +40,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.gson.Gson
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.google.gson.GsonBuilder
 import com.sarang.torang.api.handle
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.repository.FeedRepository
@@ -65,8 +70,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
     var feedsByRestaurant : List<ReviewAndImageEntity> by remember { mutableStateOf(listOf()) }
     val myFeed by feedRepository.findMyFeedById(reviewId).collectAsState(initial = ArrayList())
     val coroutine = rememberCoroutineScope()
-    var error by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
     var restaurantId by remember { mutableStateOf(-1) }
+
     LaunchedEffect(restaurantId) {
         if(restaurantId > 0){
             feedRepository.restaurantFeedsFlow(restaurantId).collect {
@@ -77,67 +83,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
     
     FeedRepositoryTest1(
         feeds = feeds,
-        myFeed = myFeed,
-        feedsByRestaurant = feedsByRestaurant,
-        getFeed = {
-            coroutine.launch {
-                try {
-                    feedRepository.loadAll()
-                } catch (e: Exception) {
-                    error = e.toString()
-                }
-            }
-        },
-        delFeed = {
-            coroutine.launch { feedRepository.deleteAll() }
-                  },
-        addFav = {
-            coroutine.launch {
-                try {
-                    //feedRepository.addFavorite(82)
-                } catch (e: Exception) {
-                    error = e.handle()
-                }
-            }
-        },
-        delFav = {
-            coroutine.launch {
-                //feedRepository.deleteFavorite(82)
-            }
-        },
-        getMyFeed = {
-            reviewId = 370
-        },
-        deleteLike = {
-            coroutine.launch {
-            //feedRepository.deleteLike(82)
-        }
-                     },
-        addLike = {
-            coroutine.launch {
-                try {
-                    //feedRepository.deleteLike(reviewId.toInt())
-                } catch (e: Exception) {
-                    error = e.message.toString()
-                }
-            }
-        },
-        onDeleteFeed = {
-            coroutine.launch {
-                feedRepository.deleteById(reviewId.toInt())
-            }
-        },
-        onFindByPage = {
-            coroutine.launch {
-                feedRepository.loadByPage(reviewId.toInt())
-            }
-        },
-        onFeedByRestaurant = {
-            coroutine.launch {
-                feedRepository.loadByRestaurantId(it)
-                restaurantId = it
-            }
-        }
+        message = message
     )
 }
 
@@ -146,104 +92,99 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
 @Composable
 fun FeedRepositoryTest1(
     feeds : List<ReviewAndImageEntity>? = listOf(),
-    myFeed : List<ReviewAndImageEntity> = listOf(),
-    feedsByRestaurant : List<ReviewAndImageEntity> = listOf(),
-    getFeed : () -> Unit = {},
-    delFeed : () -> Unit = {},
-    addFav : () -> Unit = {},
-    delFav : () -> Unit = {},
-    getMyFeed : () -> Unit = {},
-    deleteLike : () -> Unit = {},
-    addLike : () -> Unit = {},
-    onDeleteFeed : () -> Unit = {},
-    onFindByPage: () -> Unit = {},
-    onFeedByRestaurant: (Int) -> Unit = {}
+    message : String = "",
 ) {
-
-    val gson = Gson().newBuilder().setPrettyPrinting().create()
-    var result by remember { mutableStateOf("") }
-    var error by remember { mutableStateOf("") }
-    val coroutine = rememberCoroutineScope()
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current
-
-    val content : @Composable () -> Unit = {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(700.dp)
-        ) {
-            HorizontalDivider(color = Color.LightGray)
-            Column {
-                Text(text = error, color = Color.Red, fontWeight = FontWeight.Bold)
-                Column {
-                    Row {
-                        AssistChip(onClick = getFeed, label = { Text(text = "getFeed") })
-                        Spacer(Modifier.width(8.dp))
-                        AssistChip(onClick = delFeed, label = { Text(text = "delFeed") })
-                    }
-                    Row {
-                        AssistChip(onClick = addFav, label = { Text(text = "addFav") })
-                        Spacer(Modifier.width(8.dp))
-                        AssistChip(onClick = delFeed, label = { Text(text = "delFav") })
-                    }
-                    Row {
-                        AssistChip(onClick = deleteLike, label = { Text(text = "deleteLike") })
-                        Spacer(Modifier.width(8.dp))
-                        AssistChip(onClick = getMyFeed, label = { Text(text = "GetMyFeed") })
-                    }
-                }
-                AddLike(onAddLike = addLike) { error = it }
-                DeleteFeedTest(onDeleteFeed = onDeleteFeed)
-                PageFeed(onFindByPage)
-                FeedByRestaurantId(onFeedByRestaurant)
-            }
-            Text(text = "feeds size = ${feeds?.size}")
-            Text(text = "feedsByRestaurant size = ${feedsByRestaurant.size}")
-            Text(text = " size = ${myFeed.size}, ${gson.toJson(myFeed)}")
-            LazyColumn(content = {
-                feeds?.let { feeds ->
-                    items(feeds.size) {
-                        Text(text = gson.toJson(feeds[it]))
-                    }
-                }
-            })
-
-            LazyColumn(content = {
-                feedsByRestaurant.let { feeds ->
-                    items(feeds.size) {
-                        Text(text = gson.toJson(feeds[it]))
-                    }
-                }
-            })
-
-        }
-    }
+    val navigation = rememberNavController()
 
     Scaffold(
         contentWindowInsets = WindowInsets(left = 8.dp, right = 8.dp),
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "FeedRepositoryTest")
-                },
-                navigationIcon = {
-                    IconButton({
-                        backPressedDispatcher?.onBackPressedDispatcher?.onBackPressed()
-                    }) {
-                        Icon(Icons.AutoMirrored.Default.ArrowBack, null)
-                    }
-                }
-            )
-        },
+            TopAppBar(title = { Text(text = "FeedRepositoryTest") },
+                     navigationIcon = {
+                         IconButton( onClick = { backPressedDispatcher?.onBackPressedDispatcher?.onBackPressed() }) {
+                                                 Icon(Icons.AutoMirrored.Default.ArrowBack, null) }})
+                 },
     ) {
         Box(Modifier.padding(it)){
-            content()
+            NavHost(navController = navigation, startDestination = "menu"){
+                composable("menu"){
+                    Menu(
+                        restaurantFeedsFlow = { navigation.navigate("restaurantFeedsFlow") },
+                        message = message
+                    )
+                }
+                composable("restaurantFeedsFlow") {
+                    restaurantFeedsFlow(feeds)
+                }
+            }
         }
     }
-
 }
 
-@Preview
+@Preview(showBackground = true)
+@Composable
+fun restaurantFeedsFlow(feeds : List<ReviewAndImageEntity>? = listOf()){
+    LazyColumn(Modifier.fillMaxSize()) {
+        feeds?.let {
+            items(it){
+                Text("reviewId: ${it.review.reviewId}")
+                Text("userId: ${it.review.userId}")
+                Text("userName: ${it.review.userName}")
+                Text(it.review.contents ?: "")
+                HorizontalDivider()
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Menu(
+    restaurantFeedsFlow: () -> Unit = {},
+    findByPictureIdFlow: () -> Unit = {},
+    findById: () -> Unit = {},
+    findMyFeedById: () -> Unit = {},
+    findByFavoriteFlow: () -> Unit = {},
+    findByLikeFlow: () -> Unit = {},
+    findAllUserFeedById: () -> Unit = {},
+    findByPictureId: () -> Unit = {},
+    loadAll: () -> Unit = {},
+    loadByUserId: () -> Unit = {},
+    loadById: () -> Unit = {},
+    loadByPage: () -> Unit = {},
+    loadByRestaurantId: () -> Unit = {},
+    deleteAll: () -> Unit = {},
+    deleteById: () -> Unit = {},
+    getReviewImages: () -> Unit = {},
+    message : String = "",
+){
+    Column {
+        HorizontalDivider(color = Color.LightGray)
+        Column {
+            Text(text = message, color = Color.Red, fontWeight = FontWeight.Bold)
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                AssistChip(restaurantFeedsFlow  , label = {Text("restaurantFeedsFlow")})
+                AssistChip(findByPictureIdFlow  , label = {Text("findByPictureIdFlow")})
+                AssistChip(findById             , label = {Text("findById")})
+                AssistChip(findMyFeedById       , label = {Text("findMyFeedById")})
+                AssistChip(findByFavoriteFlow   , label = {Text("findByFavoriteFlow")})
+                AssistChip(findByLikeFlow       , label = {Text("findByLikeFlow")})
+                AssistChip(findAllUserFeedById  , label = {Text("findAllUserFeedById")})
+                AssistChip(findByPictureId      , label = {Text("findByPictureId")})
+                AssistChip(loadByUserId         , label = {Text("loadByUserId")})
+                AssistChip(loadById             , label = {Text("loadById")})
+                AssistChip(loadByPage           , label = {Text("loadByPage")})
+                AssistChip(loadByRestaurantId   , label = {Text("loadByRestaurantId")})
+                AssistChip(deleteAll            , label = {Text("deleteAll")})
+                AssistChip(deleteById           , label = {Text("deleteById")})
+                AssistChip(getReviewImages      , label = {Text("getReviewImages")})
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
 @Composable
 fun AddLike(
     onAddLike : () -> Unit = {},
@@ -281,7 +222,7 @@ fun AddLike(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun DeleteFeedTest(onDeleteFeed : () -> Unit = {}) {
     var reviewId by remember { mutableStateOf("10") }
@@ -301,7 +242,7 @@ fun DeleteFeedTest(onDeleteFeed : () -> Unit = {}) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PageFeed(onFindByPage: () -> Unit = {}) {
     var reviewId by remember { mutableStateOf("1") }
@@ -321,7 +262,7 @@ fun PageFeed(onFindByPage: () -> Unit = {}) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun FeedByRestaurantId(onFeedByRestaurant: (Int) -> Unit = {}) {
     var restaurantId by remember { mutableStateOf("289") }

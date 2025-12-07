@@ -65,7 +65,7 @@ fun UpdateReviewTest(
                                 try {
                                     val row = reviewRepository.getReview(reviewId.toInt())
                                     uploadedImage = row.images.map { it.pictureId }
-                                    contents = row.review.contents
+                                    contents = row.review.contents ?: ""
                                     result = ""
                                 } catch (e: Exception) {
                                     result = e.message.toString()

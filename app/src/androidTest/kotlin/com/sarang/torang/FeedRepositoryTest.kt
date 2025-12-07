@@ -112,4 +112,11 @@ class FeedRepositoryTest {
 
     }
 
+    @Test
+    fun favoriteTest() = runTest {
+        val favoriteFlow = feedRepository.findByFavoriteFlow()
+
+        feedRepository.loadByFavorite()
+    }
+
 }
