@@ -117,6 +117,9 @@ class FeedRepositoryTest {
         val favoriteFlow = feedRepository.findByFavoriteFlow()
 
         feedRepository.loadByFavorite()
+
+        val first = favoriteFlow.first()
+        assertEquals(true, first.isNotEmpty())
     }
 
 }

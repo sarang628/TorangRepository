@@ -1,5 +1,6 @@
 package com.sarang.torang.repository.test
 
+import android.util.Log
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,14 +41,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.gson.GsonBuilder
 import com.sarang.torang.api.handle
+import com.sarang.torang.core.database.model.favorite.FavoriteAndImageEntity
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -72,6 +76,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
     val coroutine = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
     var restaurantId by remember { mutableStateOf(-1) }
+    val favoriteFlow : List<FavoriteAndImageEntity> by feedRepository.findByFavoriteFlow().collectAsStateWithLifecycle(listOf())
 
     LaunchedEffect(restaurantId) {
         if(restaurantId > 0){
@@ -83,7 +88,15 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
     
     FeedRepositoryTest1(
         feeds = feeds,
-        message = message
+        favoriteFlow = favoriteFlow,
+        message = message,
+        loadByFavorite = { coroutine.launch {
+            try {
+                feedRepository.loadByFavorite()
+            }catch (e : Exception){
+                message = e.message ?: ""
+            }
+        } }
     )
 }
 
@@ -92,7 +105,9 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
 @Composable
 fun FeedRepositoryTest1(
     feeds : List<ReviewAndImageEntity>? = listOf(),
+    favoriteFlow : List<FavoriteAndImageEntity> = listOf(),
     message : String = "",
+    loadByFavorite: () -> Unit = {},
 ) {
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current
     val navigation = rememberNavController()
@@ -111,13 +126,32 @@ fun FeedRepositoryTest1(
                 composable("menu"){
                     Menu(
                         restaurantFeedsFlow = { navigation.navigate("restaurantFeedsFlow") },
-                        message = message
+                        loadByFavorite = loadByFavorite,
+                        message = message,
+                        findByFavoriteFlow = { navigation.navigate("findByFavoriteFlow") }
                     )
                 }
                 composable("restaurantFeedsFlow") {
                     restaurantFeedsFlow(feeds)
                 }
+
+                composable("findByFavoriteFlow"){
+                    findByFavoriteFlow(favoriteFlow)
+                }
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun findByFavoriteFlow(
+    favoriteFlow : List<FavoriteAndImageEntity> = listOf(),
+){
+    Log.d("__findByFavoriteFlow","${favoriteFlow.size}")
+    LazyColumn {
+        items(favoriteFlow){
+            Text(it.toString())
         }
     }
 }
@@ -145,6 +179,7 @@ private fun Menu(
     findByPictureIdFlow: () -> Unit = {},
     findById: () -> Unit = {},
     findMyFeedById: () -> Unit = {},
+    findByUserIdFlow: () -> Unit = {},
     findByFavoriteFlow: () -> Unit = {},
     findByLikeFlow: () -> Unit = {},
     findAllUserFeedById: () -> Unit = {},
@@ -154,6 +189,8 @@ private fun Menu(
     loadById: () -> Unit = {},
     loadByPage: () -> Unit = {},
     loadByRestaurantId: () -> Unit = {},
+    loadByFavorite: () -> Unit = {},
+    loadByLike: () -> Unit = {},
     deleteAll: () -> Unit = {},
     deleteById: () -> Unit = {},
     getReviewImages: () -> Unit = {},
@@ -168,6 +205,7 @@ private fun Menu(
                 AssistChip(findByPictureIdFlow  , label = {Text("findByPictureIdFlow")})
                 AssistChip(findById             , label = {Text("findById")})
                 AssistChip(findMyFeedById       , label = {Text("findMyFeedById")})
+                AssistChip(findByUserIdFlow     , label = {Text("findByUserIdFlow")})
                 AssistChip(findByFavoriteFlow   , label = {Text("findByFavoriteFlow")})
                 AssistChip(findByLikeFlow       , label = {Text("findByLikeFlow")})
                 AssistChip(findAllUserFeedById  , label = {Text("findAllUserFeedById")})
@@ -176,6 +214,8 @@ private fun Menu(
                 AssistChip(loadById             , label = {Text("loadById")})
                 AssistChip(loadByPage           , label = {Text("loadByPage")})
                 AssistChip(loadByRestaurantId   , label = {Text("loadByRestaurantId")})
+                AssistChip(loadByFavorite       , label = {Text("loadByFavorite")})
+                AssistChip(loadByLike           , label = {Text("loadByLike")})
                 AssistChip(deleteAll            , label = {Text("deleteAll")})
                 AssistChip(deleteById           , label = {Text("deleteById")})
                 AssistChip(getReviewImages      , label = {Text("getReviewImages")})
