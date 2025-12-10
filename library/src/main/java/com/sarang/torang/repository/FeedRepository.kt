@@ -3,6 +3,7 @@ package com.sarang.torang.repository
 import com.sarang.torang.core.database.model.favorite.FavoriteAndImageEntity
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.core.database.model.image.ReviewImageEntity
+import com.sarang.torang.core.database.model.like.LikeAndImageEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -14,7 +15,7 @@ interface FeedRepository {
             fun findMyFeedById      (reviewId: Int)                     : Flow<List<ReviewAndImageEntity>>  /** 리뷰 ID 기준으로 이전 피드는 위로 다음 피드는 아래로 줄 수 있도록 */
             fun findByUserIdFlow    (userId: Int)                       : Flow<List<ReviewAndImageEntity>>
             fun findByFavoriteFlow()                                    : Flow<List<FavoriteAndImageEntity>>
-            fun findByLikeFlow()                                        : Flow<List<ReviewAndImageEntity>>
+            fun findByLikeFlow()                                        : Flow<List<LikeAndImageEntity>>
     suspend fun findAllUserFeedById (reviewId: Int)                                                         /** ID에 해당 사용자의 모든 피드 가져오기 */
     suspend fun findByPictureId     (pictureId: Int)
     suspend fun loadByUserId        (userId: Int)
