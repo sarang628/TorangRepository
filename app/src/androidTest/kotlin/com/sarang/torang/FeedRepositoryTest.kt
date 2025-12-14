@@ -101,7 +101,7 @@ class FeedRepositoryTest {
         // 음식점 리뷰 저장하기
         feedRepository.loadByRestaurantId(299)
 
-        val feedsFlow = feedRepository.restaurantFeedsFlow(299)
+        val feedsFlow = feedRepository.findRestaurantFeedsFlow(299)
 
         assertEquals(false, feedsFlow.first().isEmpty())
 

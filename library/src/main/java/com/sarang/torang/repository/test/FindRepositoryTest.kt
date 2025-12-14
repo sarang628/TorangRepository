@@ -45,13 +45,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.gson.GsonBuilder
 import com.sarang.torang.api.handle
 import com.sarang.torang.core.database.model.favorite.FavoriteAndImageEntity
 import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -80,7 +78,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
 
     LaunchedEffect(restaurantId) {
         if(restaurantId > 0){
-            feedRepository.restaurantFeedsFlow(restaurantId).collect {
+            feedRepository.findRestaurantFeedsFlow(restaurantId).collect {
                 feedsByRestaurant = it
             }
         }
