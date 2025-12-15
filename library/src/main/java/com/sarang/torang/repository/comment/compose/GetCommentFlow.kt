@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sarang.torang.core.database.model.comment.CommentEntity
+import com.sarang.torang.data.Comment
 import com.sarang.torang.repository.comment.CommentRepository
 import kotlinx.coroutines.launch
 
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 fun GetCommentFlow(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
     var reviewId by remember { mutableStateOf(TextFieldValue("329")) }
-    var list: List<CommentEntity> by remember { mutableStateOf(mutableListOf()) }
+    var list: List<Comment> by remember { mutableStateOf(mutableListOf()) }
 
     Row {
         Button(onClick = {

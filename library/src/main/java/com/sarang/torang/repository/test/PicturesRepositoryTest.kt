@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.gson.GsonBuilder
-import com.sarang.torang.core.database.model.image.ReviewImageEntity
+import com.sarang.torang.data.ReviewImage
 import com.sarang.torang.repository.PicturesRepository
 import kotlinx.coroutines.launch
 
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 fun PicturesRepositoryTest(repository: PicturesRepository) {
     val coroutine = rememberCoroutineScope()
     var result by remember { mutableStateOf("") }
-    var list: List<ReviewImageEntity>? by remember { mutableStateOf(ArrayList()) }
+    var list: List<ReviewImage>? by remember { mutableStateOf(ArrayList()) }
     PicturesRepositoryTest(
         onRestaurant = {
             coroutine.launch {
@@ -74,7 +74,7 @@ private fun PicturesRepositoryTest(
     onReview: (String) -> Unit,
     onImageId: (String) -> Unit,
     result: String,
-    list: List<ReviewImageEntity>? = null,
+    list: List<ReviewImage>? = null,
 ) {
     val REVIEW_IMAGE_SERVER_URL = "http://sarang628.iptime.org:89/review_images/"
     var restaurantId by remember { mutableStateOf("1") }

@@ -115,7 +115,7 @@ dependencies {
 
     implementation ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0")
 
-    implementation(libs.torangdatabase) //TODO::의존성 없애기 repository 데이터 등
+    //implementation(libs.torangdatabase) //TODO::의존성 없애기 repository 데이터 등
     implementation(libs.torangnetwork)
 }
 

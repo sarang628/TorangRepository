@@ -46,8 +46,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.handle
-import com.sarang.torang.core.database.model.favorite.FavoriteAndImageEntity
-import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
+import com.sarang.torang.data.FavoriteAndImage
+import com.sarang.torang.data.ReviewAndImage
 import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
 import kotlinx.coroutines.launch
@@ -69,12 +69,12 @@ fun FindRepositoryTest(findRepository: FindRepository) {
 fun FeedRepositoryTest(feedRepository: FeedRepository){
     var reviewId by remember { mutableStateOf(0) }
     val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
-    var feedsByRestaurant : List<ReviewAndImageEntity> by remember { mutableStateOf(listOf()) }
+    var feedsByRestaurant : List<ReviewAndImage> by remember { mutableStateOf(listOf()) }
     val myFeed by feedRepository.findMyFeedById(reviewId).collectAsState(initial = ArrayList())
     val coroutine = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
     var restaurantId by remember { mutableStateOf(-1) }
-    val favoriteFlow : List<FavoriteAndImageEntity> by feedRepository.findByFavoriteFlow().collectAsStateWithLifecycle(listOf())
+    val favoriteFlow : List<FavoriteAndImage> by feedRepository.findByFavoriteFlow().collectAsStateWithLifecycle(listOf())
 
     LaunchedEffect(restaurantId) {
         if(restaurantId > 0){
@@ -102,8 +102,8 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FeedRepositoryTest1(
-    feeds : List<ReviewAndImageEntity>? = listOf(),
-    favoriteFlow : List<FavoriteAndImageEntity> = listOf(),
+    feeds : List<ReviewAndImage>? = listOf(),
+    favoriteFlow : List<FavoriteAndImage> = listOf(),
     message : String = "",
     loadByFavorite: () -> Unit = {},
 ) {
@@ -144,7 +144,7 @@ fun FeedRepositoryTest1(
 @Preview
 @Composable
 fun findByFavoriteFlow(
-    favoriteFlow : List<FavoriteAndImageEntity> = listOf(),
+    favoriteFlow : List<FavoriteAndImage> = listOf(),
 ){
     Log.d("__findByFavoriteFlow","${favoriteFlow.size}")
     LazyColumn {
@@ -156,7 +156,7 @@ fun findByFavoriteFlow(
 
 @Preview(showBackground = true)
 @Composable
-fun restaurantFeedsFlow(feeds : List<ReviewAndImageEntity>? = listOf()){
+fun restaurantFeedsFlow(feeds : List<ReviewAndImage>? = listOf()){
     LazyColumn(Modifier.fillMaxSize()) {
         feeds?.let {
             items(it){

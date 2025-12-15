@@ -1,6 +1,6 @@
 package com.sarang.torang.repository.comment
 
-import com.sarang.torang.core.database.model.comment.CommentEntity
+import com.sarang.torang.data.Comment
 import com.sarang.torang.data.remote.response.CommentListApiModel
 import com.sarang.torang.data.remote.response.RemoteComment
 import kotlinx.coroutines.flow.Flow
@@ -38,7 +38,7 @@ interface CommentRepository {
     suspend fun addReply(reviewId: Int, comment: String, parentCommentId: Int, onLocalUpdated: () -> Unit)
     suspend fun getCommentsWithOneReply(reviewId: Int): CommentListApiModel
     suspend fun getSubComments(commentId: Int): List<RemoteComment>
-    fun getCommentsFlow(reviewId: Int): Flow<List<CommentEntity>>
+    fun getCommentsFlow(reviewId: Int): Flow<List<Comment>>
     suspend fun clear()
     suspend fun loadMoreReply(commentId: Int)
 }

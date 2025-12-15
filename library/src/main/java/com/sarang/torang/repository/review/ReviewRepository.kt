@@ -1,6 +1,6 @@
 package com.sarang.torang.repository.review
 
-import com.sarang.torang.core.database.model.feed.ReviewAndImageEntity
+import com.sarang.torang.data.ReviewAndImage
 import com.sarang.torang.data.remote.response.FeedApiModel
 
 interface ReviewRepository {
@@ -22,5 +22,5 @@ interface ReviewRepository {
         uploadedImage: List<Int>
     )
 
-    suspend fun getReview(reviewId: Int): ReviewAndImageEntity
+    suspend fun getReview(reviewId: Int): ReviewAndImage
 }
