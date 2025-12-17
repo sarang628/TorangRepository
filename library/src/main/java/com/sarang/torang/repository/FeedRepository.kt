@@ -11,6 +11,7 @@ interface FeedRepository {
     val feeds                                                           : Flow<List<ReviewAndImage>?>
     suspend fun loadByUserId        (userId: Int)
     suspend fun loadById            (reviewId: Int, count: Int = 20)
+    suspend fun loadById            (reviewId: Int)
     suspend fun loadByPage          (page: Int)
     suspend fun loadByRestaurantId  (restaurantId: Int)
     suspend fun loadByFavorite      ()
