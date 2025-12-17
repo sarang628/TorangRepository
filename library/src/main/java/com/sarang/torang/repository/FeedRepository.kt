@@ -18,7 +18,7 @@ interface FeedRepository {
             fun findRestaurantFeedsFlow (restaurantId : Int)            : Flow<List<ReviewAndImage>>
             fun findByPictureIdFlow (pictureId : Int)                   : Flow<ReviewAndImage?>
     suspend fun findById            (reviewId: Int)                     : ReviewAndImage
-            fun findByIdFlow        (reviewId: Int)                     : Flow<ReviewAndImage>
+            fun findByIdFlow        (reviewId: Int)                     : Flow<ReviewAndImage?>
             fun findMyFeedById      (reviewId: Int)                     : Flow<List<ReviewAndImage>>  /** 리뷰 ID 기준으로 이전 피드는 위로 다음 피드는 아래로 줄 수 있도록 */
             fun findByUserIdFlow    (userId: Int)                       : Flow<List<ReviewAndImage>>
             fun findByFavoriteFlow()                                    : Flow<List<FavoriteAndImage>>
