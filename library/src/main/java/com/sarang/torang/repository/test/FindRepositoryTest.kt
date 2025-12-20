@@ -48,12 +48,15 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.api.handle
 import com.sarang.torang.data.FavoriteAndImage
 import com.sarang.torang.data.ReviewAndImage
-import com.sarang.torang.repository.FeedRepository
 import com.sarang.torang.repository.FindRepository
+import com.sarang.torang.repository.feed.FeedFlowRepository
+import com.sarang.torang.repository.feed.FeedLoadRepository
+import com.sarang.torang.repository.feed.FeedRepository
 import kotlinx.coroutines.launch
 
 @Composable
-fun FindRepositoryTest(findRepository: FindRepository) {
+fun FindRepositoryTest(findRepository: FindRepository,
+                       feedLoadRepository: FeedRepository) {
     val coroutine = rememberCoroutineScope()
     val restaurants = findRepository.restaurants.collectAsState().value
     Column {
@@ -66,19 +69,21 @@ fun FindRepositoryTest(findRepository: FindRepository) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FeedRepositoryTest(feedRepository: FeedRepository){
+fun FeedRepositoryTest(feedRepository: FeedRepository,
+                       feedLoadRepository: FeedLoadRepository,
+                       feedFlowRepository: FeedFlowRepository){
     var reviewId by remember { mutableStateOf(0) }
-    val feeds by feedRepository.feeds.collectAsState(initial = ArrayList())
+    val feeds by feedLoadRepository.feeds.collectAsState(initial = ArrayList())
     var feedsByRestaurant : List<ReviewAndImage> by remember { mutableStateOf(listOf()) }
-    val myFeed by feedRepository.findMyFeedById(reviewId).collectAsState(initial = ArrayList())
+    val myFeed by feedFlowRepository.findMyFeedById(reviewId).collectAsState(initial = ArrayList())
     val coroutine = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
     var restaurantId by remember { mutableStateOf(-1) }
-    val favoriteFlow : List<FavoriteAndImage> by feedRepository.findByFavoriteFlow().collectAsStateWithLifecycle(listOf())
+    val favoriteFlow : List<FavoriteAndImage> by feedFlowRepository.findByFavoriteFlow().collectAsStateWithLifecycle(listOf())
 
     LaunchedEffect(restaurantId) {
         if(restaurantId > 0){
-            feedRepository.findRestaurantFeedsFlow(restaurantId).collect {
+            feedFlowRepository.findRestaurantFeedsFlow(restaurantId).collect {
                 feedsByRestaurant = it
             }
         }
@@ -90,7 +95,7 @@ fun FeedRepositoryTest(feedRepository: FeedRepository){
         message = message,
         loadByFavorite = { coroutine.launch {
             try {
-                feedRepository.loadByFavorite()
+                feedLoadRepository.loadByFavorite()
             }catch (e : Exception){
                 message = e.message ?: ""
             }

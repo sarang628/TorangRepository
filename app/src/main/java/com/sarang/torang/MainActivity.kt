@@ -30,7 +30,7 @@ import com.sarang.torang.core.database.dao.ReviewDao
 import com.sarang.torang.di.image.provideTorangAsyncImage
 import com.sarang.torang.repository.ChatRepository
 import com.sarang.torang.repository.EditProfileRepository
-import com.sarang.torang.repository.FeedRepository
+import com.sarang.torang.repository.feed.FeedRepository
 import com.sarang.torang.repository.FindRepository
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
@@ -41,6 +41,8 @@ import com.sarang.torang.repository.ReportRepository
 import com.sarang.torang.repository.RestaurantRepository
 import com.sarang.torang.repository.SettingsRepository
 import com.sarang.torang.repository.comment.CommentRepository
+import com.sarang.torang.repository.feed.FeedFlowRepository
+import com.sarang.torang.repository.feed.FeedLoadRepository
 import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.test.FeedRepositoryTest
 import com.sarang.torang.repository.test.chat.ChatRepositoryTest
@@ -61,6 +63,8 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var reviewDao          : ReviewDao
     //repositories
     @Inject lateinit var feedRepository         : FeedRepository
+    @Inject lateinit var feedLoadRepository     : FeedLoadRepository
+    @Inject lateinit var feedFlowRepository     : FeedFlowRepository
     @Inject lateinit var profileRepository      : UserRepository
     @Inject lateinit var editProfileRepository  : EditProfileRepository
     @Inject lateinit var loginRepository        : LoginRepository
@@ -156,7 +160,9 @@ class MainActivity : ComponentActivity() {
             }
 
             composable("FeedRepositoryTest"){
-                FeedRepositoryTest(feedRepository = feedRepository)
+                FeedRepositoryTest(feedRepository = feedRepository,
+                                   feedLoadRepository = feedLoadRepository,
+                                   feedFlowRepository = feedFlowRepository)
             }
 
             composable("ProfileRepositoryTest"){

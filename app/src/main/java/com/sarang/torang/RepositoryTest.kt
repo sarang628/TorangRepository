@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.sarang.torang.repository.EditProfileRepository
-import com.sarang.torang.repository.FeedRepository
+import com.sarang.torang.repository.feed.FeedRepository
 import com.sarang.torang.repository.FindRepository
 import com.sarang.torang.repository.FollowRepository
 import com.sarang.torang.repository.LoginRepository
@@ -49,7 +49,6 @@ fun RepositoryTest(
     Column {
         content.invoke()
         commentRepository?.let { CommentRepositoryTest(commentRepository = it) }
-        feedRepository?.let { FeedRepositoryTest(feedRepository = it) }
         profileRepository?.let { ProfileRepositoryTest(profileRepository = it) }
         editProfileRepository?.let { EditProfileRepositoryTest(editProfileRepository = it) }
         loginRepository?.let { LoginRepositoryTest(loginRepository = it) }
@@ -61,6 +60,5 @@ fun RepositoryTest(
         reviewRepository?.let { ReviewRepositoryTest(reviewRepository = it, gallery = { onNext -> }) }
         picturesRepository?.let { PicturesRepositoryTest(repository = it) }
         restaurantRepository?.let { RestaurantRepositoryTest(restaurantRepository = it) }
-        findRepository?.let { FindRepositoryTest(it) }
     }
 }

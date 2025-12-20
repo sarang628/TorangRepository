@@ -1,9 +1,11 @@
 package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.sarang.torang.repository.FeedRepository
+import com.sarang.torang.repository.feed.FeedRepository
 import com.sarang.torang.repository.LikeRepository
 import com.sarang.torang.repository.LoginRepository
+import com.sarang.torang.repository.feed.FeedFlowRepository
+import com.sarang.torang.repository.feed.FeedLoadRepository
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase.assertEquals
@@ -28,45 +30,36 @@ class FeedRepositoryTest {
     var hiltRule = HiltAndroidRule(this)
 
     @Inject lateinit var feedRepository: FeedRepository
+    @Inject lateinit var feedFlowRepository: FeedFlowRepository
+    @Inject lateinit var feedLoadRepository: FeedLoadRepository
     @Inject lateinit var likeRepository: LikeRepository
     @Inject lateinit var loginRepository: LoginRepository
 
-    @Before
-    fun setUp() = runTest {
+    @Before fun setUp() = runTest {
         hiltRule.inject()
         loginRepository.emailLogin("sry_ang@naver.com","Torang!234")
         //feedRepository.findAll()
     }
-
-    @Test
-    fun loadFeedWithPageTest() = runTest {
-        feedRepository.loadByPage(1)
+    @Test fun loadFeedWithPageTest() = runTest {
+        feedLoadRepository.loadByPage(1)
     }
-
-    @Test
-    fun loadUserAllFeedsByReviewIdTest() = runTest {
+    @Test fun loadUserAllFeedsByReviewIdTest() = runTest {
         feedRepository.findAllUserFeedById(425)
     }
+    @Test fun loadNextFeedByReivewIdTest() = runTest {
+        feedLoadRepository.loadById(471)
 
-    @Test
-    fun loadNextFeedByReivewIdTest() = runTest {
-        feedRepository.loadById(471)
-
-        assertEquals(true, feedRepository.feeds.first()?.any { it.review.reviewId == 471 })
+        assertEquals(true, feedLoadRepository.feeds.first()?.any { it.review.reviewId == 471 })
     }
-
-    @Test
-    fun findByPictureIdTest() = runTest {
-        val result = feedRepository.findByPictureIdFlow(1005)
+    @Test fun findByPictureIdTest() = runTest {
+        val result = feedFlowRepository.findByPictureIdFlow(1005)
             .first()
 
         assertEquals(true, result != null)
     }
-
-    @Test
-    fun likeTest() = runTest {
+    @Test fun likeTest() = runTest {
         // 피드 첫번째 아이템 '좋아요 테스트' 대상으로 선택
-        val firstReview = feedRepository.feeds.first()?.get(0)?.review ?: run {
+        val firstReview = feedLoadRepository.feeds.first()?.get(0)?.review ?: run {
             throw Exception("feeds is null")
         }
 
@@ -74,7 +67,7 @@ class FeedRepositoryTest {
         likeRepository.deleteLike(firstReview.reviewId)
 
         // 피드 첫번째 아이템 다시 가져오기
-        var review = feedRepository.feeds
+        var review = feedLoadRepository.feeds
             .first()
             ?.firstOrNull { it.review.reviewId == firstReview.reviewId }
             ?: throw Exception("review is null")
@@ -86,7 +79,7 @@ class FeedRepositoryTest {
         likeRepository.addLike(reviewId = review.review.reviewId)
 
         // 피드 첫번째 아이템 다시 가져오기
-        review = feedRepository.feeds
+        review = feedLoadRepository.feeds
             .first()
             ?.firstOrNull { it.review.reviewId == firstReview.reviewId}
             ?: throw Exception("review is null")
@@ -94,14 +87,12 @@ class FeedRepositoryTest {
         // 좋아요 추가 확인
         assertEquals(true, review.like != null)
     }
-
-    @Test
-    fun getByRestaurantIdTest() = runTest {
+    @Test fun getByRestaurantIdTest() = runTest {
 
         // 음식점 리뷰 저장하기
-        feedRepository.loadByRestaurantId(299)
+        feedLoadRepository.loadByRestaurantId(299)
 
-        val feedsFlow = feedRepository.findRestaurantFeedsFlow(299)
+        val feedsFlow = feedFlowRepository.findRestaurantFeedsFlow(299)
 
         assertEquals(false, feedsFlow.first().isEmpty())
 
@@ -111,15 +102,21 @@ class FeedRepositoryTest {
             likeRepository.addLike(feedsFlow.first()[0].review.reviewId)*/
 
     }
+    @Test fun favoriteTest() = runTest {
+        val favoriteFlow = feedFlowRepository.findByFavoriteFlow()
 
-    @Test
-    fun favoriteTest() = runTest {
-        val favoriteFlow = feedRepository.findByFavoriteFlow()
-
-        feedRepository.loadByFavorite()
+        feedLoadRepository.loadByFavorite()
 
         val first = favoriteFlow.first()
         assertEquals(true, first.isNotEmpty())
+    }
+    @Test fun feedGridTest() = runTest {
+        feedLoadRepository.loadFeedGird(Int.MAX_VALUE)
+        var result = feedFlowRepository.findFeedGridFlow().first()
+        assertEquals(true, result.size >= 30)
+        feedLoadRepository.loadFeedGird(result.first().reviewId)
+        result = feedFlowRepository.findFeedGridFlow().first()
+        assertEquals(60, result.size)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.sarang.torang.repository
+package com.sarang.torang.repository.feed
 
 import com.sarang.torang.data.Favorite
 import com.sarang.torang.data.Like
