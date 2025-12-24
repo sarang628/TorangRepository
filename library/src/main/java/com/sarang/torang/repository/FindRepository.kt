@@ -1,6 +1,5 @@
 package com.sarang.torang.repository
 
-import com.sarang.torang.data.Restaurant
 import com.sarang.torang.data.RestaurantWithFiveImages
 import com.sarang.torang.data.remote.response.FilterApiModel
 import kotlinx.coroutines.flow.StateFlow

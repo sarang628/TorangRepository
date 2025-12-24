@@ -21,8 +21,6 @@ import com.sarang.torang.repository.comment.compose.CommentRepositoryTest
 import com.sarang.torang.repository.review.ReviewRepository
 import com.sarang.torang.repository.review.compose.ReviewRepositoryTest
 import com.sarang.torang.repository.test.EditProfileRepositoryTest
-import com.sarang.torang.repository.test.FeedRepositoryTest
-import com.sarang.torang.repository.test.FindRepositoryTest
 import com.sarang.torang.repository.test.PicturesRepositoryTest
 import com.sarang.torang.repository.test.ProfileRepositoryTest
 import com.sarang.torang.repository.test.RestaurantRepositoryTest
