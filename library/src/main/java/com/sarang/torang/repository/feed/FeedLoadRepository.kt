@@ -13,4 +13,6 @@ interface FeedLoadRepository {
     suspend fun loadByFavorite      ()
     suspend fun loadByLike          ()
     suspend fun loadFeedGird        (reviewId : Int)
+
+    suspend fun setLoadTrigger      (boolean: Boolean)
 }

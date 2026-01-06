@@ -2,10 +2,10 @@ package com.sarang.torang.repository.test.feed
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,8 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sarang.torang.data.FavoriteAndImage
@@ -89,31 +87,25 @@ fun Menu(
     onSearch: () -> Unit = {},
     message : String = "",
 ){
-    Column {
-        HorizontalDivider(color = Color.LightGray)
-        Column {
-            Text(text = message, color = Color.Red, fontWeight = FontWeight.Bold)
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                AssistChip(restaurantFeedsFlow  , label = {Text("restaurantFeedsFlow")})
-                AssistChip(findByPictureIdFlow  , label = {Text("findByPictureIdFlow")})
-                AssistChip(findById             , label = {Text("findById")})
-                AssistChip(findMyFeedById       , label = {Text("findMyFeedById")})
-                AssistChip(findByUserIdFlow     , label = {Text("findByUserIdFlow")})
-                AssistChip(findByFavoriteFlow   , label = {Text("findByFavoriteFlow")})
-                AssistChip(findByLikeFlow       , label = {Text("findByLikeFlow")})
-                AssistChip(findAllUserFeedById  , label = {Text("findAllUserFeedById")})
-                AssistChip(findByPictureId      , label = {Text("findByPictureId")})
-                AssistChip(loadByUserId         , label = {Text("loadByUserId")})
-                AssistChip(loadById             , label = {Text("loadById")})
-                AssistChip(loadByPage           , label = {Text("loadByPage")})
-                AssistChip(loadByRestaurantId   , label = {Text("loadByRestaurantId")})
-                AssistChip(loadByFavorite       , label = {Text("loadByFavorite")})
-                AssistChip(loadByLike           , label = {Text("loadByLike")})
-                AssistChip(deleteAll            , label = {Text("deleteAll")})
-                AssistChip(deleteById           , label = {Text("deleteById")})
-                AssistChip(getReviewImages      , label = {Text("getReviewImages")})
-                AssistChip(onSearch             , label = {Text("onSearch")})
-            }
-        }
+    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+        AssistChip(restaurantFeedsFlow  , label = {Text("restaurantFeedsFlow")})
+        AssistChip(findByPictureIdFlow  , label = {Text("findByPictureIdFlow")})
+        AssistChip(findById             , label = {Text("findById")})
+        AssistChip(findMyFeedById       , label = {Text("findMyFeedById")})
+        AssistChip(findByUserIdFlow     , label = {Text("findByUserIdFlow")})
+        AssistChip(findByFavoriteFlow   , label = {Text("findByFavoriteFlow")})
+        AssistChip(findByLikeFlow       , label = {Text("findByLikeFlow")})
+        AssistChip(findAllUserFeedById  , label = {Text("findAllUserFeedById")})
+        AssistChip(findByPictureId      , label = {Text("findByPictureId")})
+        AssistChip(loadByUserId         , label = {Text("loadByUserId")})
+        AssistChip(loadById             , label = {Text("loadById")})
+        AssistChip(loadByPage           , label = {Text("loadByPage")})
+        AssistChip(loadByRestaurantId   , label = {Text("loadByRestaurantId")})
+        AssistChip(loadByFavorite       , label = {Text("loadByFavorite")})
+        AssistChip(loadByLike           , label = {Text("loadByLike")})
+        AssistChip(deleteAll            , label = {Text("deleteAll")})
+        AssistChip(deleteById           , label = {Text("deleteById")})
+        AssistChip(getReviewImages      , label = {Text("getReviewImages")})
+        AssistChip(onSearch             , label = {Text("onSearch")})
     }
 }
