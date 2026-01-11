@@ -1,10 +1,9 @@
 package com.sarang.torang.data
 
 import com.google.gson.Gson
-import com.sarang.torang.data.remote.response.RestaurantResponseDto
 
 data class RestaurantDetail(
-    val restaurant: RestaurantResponseDto,
+    val restaurant: Restaurant,
     val pictures: ArrayList<Picture>,
     val comments: ArrayList<RestaurantComment>,
     val menus: ArrayList<Menu>,

@@ -16,13 +16,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.data.remote.response.RemoteComment
 import com.sarang.torang.repository.comment.CommentRepository
 
 @Composable
 fun CommentRepositoryTest(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
-    var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
+    //var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
     var error by remember { mutableStateOf("") }
     Column(
         Modifier

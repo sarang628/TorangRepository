@@ -1,8 +1,7 @@
 package com.sarang.torang.repository.comment
 
 import com.sarang.torang.data.Comment
-import com.sarang.torang.data.remote.response.CommentListApiModel
-import com.sarang.torang.data.remote.response.RemoteComment
+import com.sarang.torang.data.CommentList
 import kotlinx.coroutines.flow.Flow
 
 interface CommentRepository {
@@ -10,13 +9,13 @@ interface CommentRepository {
      * Comment 가져오기
      * @param reviewId
      */
-    suspend fun getComment(reviewId: Int): CommentListApiModel
+    suspend fun getComment(reviewId: Int): CommentList
 
     /**
      * Comment 댓글 가져오기
      * @param parentCommentId
      */
-    suspend fun getSubComment(parentCommentId: Int): List<RemoteComment>
+    suspend fun getSubComment(parentCommentId: Int): List<Comment>
 
     /**
      * Comment 삭제하기
@@ -36,8 +35,8 @@ interface CommentRepository {
      * @param parentCommentId 댓글
      */
     suspend fun addReply(reviewId: Int, comment: String, parentCommentId: Int, onLocalUpdated: () -> Unit)
-    suspend fun getCommentsWithOneReply(reviewId: Int): CommentListApiModel
-    suspend fun getSubComments(commentId: Int): List<RemoteComment>
+    suspend fun getCommentsWithOneReply(reviewId: Int): CommentList
+    suspend fun getSubComments(commentId: Int): List<Comment>
     fun getCommentsFlow(reviewId: Int): Flow<List<Comment>>
     suspend fun clear()
     suspend fun loadMoreReply(commentId: Int)

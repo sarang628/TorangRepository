@@ -1,8 +1,8 @@
 package com.sarang.torang.repository
 
-import com.sarang.torang.data.remote.response.UserApiModel
+import com.sarang.torang.data.User
 
 interface UserRepository {
-    suspend fun findById(userId: Int)    : UserApiModel
-    suspend fun findByToken()            : UserApiModel
+    suspend fun findById(userId: Int)    : User
+    suspend fun findByToken()            : User
 }

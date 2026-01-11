@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sarang.torang.api.handle
 import kotlinx.coroutines.launch
 
 @Preview(showBackground = true)
@@ -47,7 +46,7 @@ fun AddLike(
                 try {
                     //feedRepository.addLike(reviewId.toInt())
                 } catch (e: Exception) {
-                    onError.invoke(e.handle())
+                    //onError.invoke(e.handle())
                 }
             }
         },

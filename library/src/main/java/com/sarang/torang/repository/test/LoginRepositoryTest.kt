@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sarang.torang.api.handle
 import com.sarang.torang.data.User
 import com.sarang.torang.repository.LoginRepository
 import kotlinx.coroutines.CoroutineScope
@@ -138,7 +137,7 @@ fun LoginRepositoryTest(loginRepository: LoginRepository = LoginRepositoryMock()
                     try {
                         success = loginRepository.sessionCheck().toString()
                     } catch (e: HttpException) {
-                        error = "$e : ${e.handle()}"
+                        //error = "$e : ${e.handle()}"
                     }
                 }
             }) {

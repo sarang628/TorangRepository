@@ -1,17 +1,17 @@
 package com.sarang.torang.repository.review
 
+import com.sarang.torang.data.Feed
 import com.sarang.torang.data.ReviewAndImage
-import com.sarang.torang.data.remote.response.FeedApiModel
 
 interface ReviewRepository {
-    suspend fun getReviews(restaurantId: Int): List<FeedApiModel>
+    suspend fun getReviews(restaurantId: Int): List<Feed>
 
     suspend fun addReview(
         contents: String,
         restaurantId: Int?,
         rating: Float,
         files: List<String>
-    ): FeedApiModel
+    ): Feed
 
     suspend fun updateReview(
         reviewId: Int,

@@ -118,10 +118,10 @@ fun AddReviewTest(
             composable("b") {
                 Box(modifier = Modifier.height(500.dp))
                 {
-                    gallery?.invoke(onNext = {
+                    /*gallery?.invoke(onNext = {
                         files = it
                         navHostController.popBackStack()
-                    })
+                    })*/
                 }
             }
         }

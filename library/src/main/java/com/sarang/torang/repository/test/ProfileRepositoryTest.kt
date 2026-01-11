@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.google.gson.GsonBuilder
-import com.sarang.torang.api.handle
 import com.sarang.torang.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -50,7 +49,7 @@ fun ProfileRepositoryTest(profileRepository: UserRepository) {
                                 val result = profileRepository.findByToken()
                                 profile = GsonBuilder().setPrettyPrinting().create().toJson(result)
                             } catch (e: Exception) {
-                                profile = e.handle()
+                                //profile = e.handle()
                             } finally {
                                 isProgress = false
                             }

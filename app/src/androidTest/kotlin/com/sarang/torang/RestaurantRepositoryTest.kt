@@ -32,14 +32,14 @@ class RestaurantRepositoryTest {
     fun loadRestaurantTest() = runTest {
         var result = restaurantRepository.loadRestaurant(234)
 
-        assertTrue(result.restaurantName!!.isNotEmpty())
+        assertTrue(result.restaurantName.isNotEmpty())
     }
 
     @Test
     fun loadRestaurantDetailTest() = runTest {
         var result = restaurantRepository.loadRestaurantDetail(234)
 
-        assertTrue(result.restaurant.restaurantName!!.isNotEmpty())
+        assertTrue(result.restaurant.restaurantName.isNotEmpty())
     }
 
     @Test

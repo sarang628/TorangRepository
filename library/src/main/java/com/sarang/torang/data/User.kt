@@ -7,4 +7,6 @@ data class User(
     val loginPlatform   : String?   = "",
     val createDate      : String?   = "",
     val profilePicUrl   : String?   = ""
-)
+){
+    companion object
+}

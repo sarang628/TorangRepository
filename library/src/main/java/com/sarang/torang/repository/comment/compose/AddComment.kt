@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import com.sarang.torang.data.remote.response.RemoteComment
 import com.sarang.torang.repository.comment.CommentRepository
 import kotlinx.coroutines.launch
 
@@ -25,7 +24,7 @@ fun AddComment(commentRepository: CommentRepository) {
     var input: TextFieldValue by remember { mutableStateOf(TextFieldValue("test comment")) }
     var reviewId: TextFieldValue by remember { mutableStateOf(TextFieldValue("329")) }
     var parentCommentId: TextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
-    var result: RemoteComment? by remember { mutableStateOf(null) }
+    //var result: RemoteComment? by remember { mutableStateOf(null) }
     val coroutine = rememberCoroutineScope()
     Button(onClick = {
         coroutine.launch {
@@ -68,6 +67,6 @@ fun AddComment(commentRepository: CommentRepository) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
-    Text(text = "result :  ${result}")
+    //Text(text = "result :  ${result}")
     HorizontalDivider()
 }

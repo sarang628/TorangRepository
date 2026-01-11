@@ -10,8 +10,10 @@ data class Filter(
     var ratings: List<String>? = null,
     var lat: Double? = null,
     var lon: Double? = null,
-    var north: Double? = null,
-    var east: Double? = null,
-    var south: Double? = null,
-    var west: Double? = null
-)
+    var northEastLat: Double? = null,
+    var northEastLon: Double? = null,
+    var southWestLat: Double? = null,
+    var southWestLon: Double? = null
+){
+    companion object
+}

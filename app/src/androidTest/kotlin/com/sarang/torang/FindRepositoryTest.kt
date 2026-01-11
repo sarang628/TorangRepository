@@ -1,6 +1,7 @@
 package com.sarang.torang
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.sarang.torang.data.Filter
 import com.sarang.torang.data.remote.response.FilterApiModel
 import com.sarang.torang.repository.FindRepository
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -24,6 +25,6 @@ class FindRepositoryTest {
 
     @Test
     fun loadFeedWithPageTest() = runTest {
-        findRepository.search(FilterApiModel())
+        findRepository.search(Filter())
     }
 }

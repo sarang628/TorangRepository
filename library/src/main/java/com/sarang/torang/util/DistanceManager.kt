@@ -1,6 +1,9 @@
 package com.sarang.torang.util
 
-import java.lang.Math.*
+import java.lang.Math.asin
+import java.lang.Math.cos
+import java.lang.Math.sin
+import java.lang.Math.sqrt
 import kotlin.math.pow
 
 object DistanceManager {

@@ -115,7 +115,7 @@ dependencies {
 
     implementation ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0")
 
-    implementation(libs.torangnetwork)
+    //implementation(libs.torangnetwork)
 }
 
 afterEvaluate {

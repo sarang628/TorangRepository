@@ -1,6 +1,6 @@
 package com.sarang.torang.repository
 
-import com.sarang.torang.data.remote.response.FollowerApiModel
+import com.sarang.torang.Follower
 
 /**
  * ## Like Repository
@@ -13,7 +13,7 @@ interface LikeRepository {
      * @param reviewId review 아이디
      * @return 좋아요한 사용자 리스트
      */
-    suspend fun getLikeUserFromReview(reviewId: Int): List<FollowerApiModel>
+    suspend fun getLikeUserFromReview(reviewId: Int): List<Follower>
 
     suspend fun addLike(reviewId: Int)
 

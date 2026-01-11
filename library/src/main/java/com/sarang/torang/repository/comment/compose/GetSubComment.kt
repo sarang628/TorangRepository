@@ -9,8 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.sarang.torang.data.remote.response.RemoteComment
-import com.sarang.torang.data.remote.response.ToComposable
 import com.sarang.torang.repository.comment.CommentRepository
 import kotlinx.coroutines.launch
 
@@ -18,11 +16,11 @@ import kotlinx.coroutines.launch
 fun GetSubComment(commentRepository: CommentRepository) {
     val coroutine = rememberCoroutineScope()
     var error by remember { mutableStateOf("") }
-    var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
+    //var list: List<RemoteComment> by remember { mutableStateOf(arrayListOf()) }
     Button(onClick = {
         coroutine.launch {
             try {
-                list = commentRepository.getSubComment(263)
+                //list = commentRepository.getSubComment(263)
             } catch (e: Exception) {
                 error = e.message.toString()
             }
@@ -31,8 +29,8 @@ fun GetSubComment(commentRepository: CommentRepository) {
         Text(text = "getSubComment")
     }
     Text(text = error)
-    for (item in list) {
+    /*for (item in list) {
         item.ToComposable()
-    }
+    }*/
     HorizontalDivider()
 }
