@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 fun FindRepositoryTest(findRepository: FindRepository,
                        feedLoadRepository: FeedRepository) {
     val coroutine = rememberCoroutineScope()
-    val restaurants = findRepository.restaurants.collectAsState().value
+    val restaurants = findRepository.restaurants.collectAsState(coroutine).value
     Column {
         Button({
             coroutine.launch { findRepository.search() }
