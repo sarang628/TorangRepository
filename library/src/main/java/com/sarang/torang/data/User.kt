@@ -6,7 +6,10 @@ data class User(
     val email           : String?   = "",
     val loginPlatform   : String?   = "",
     val createDate      : String?   = "",
-    val profilePicUrl   : String?   = ""
+    val profilePicUrl   : String?   = "",
+    val post            : Int       = 0,
+    val following       : Int       = 0,
+    val follower        : Int       = 0,
 ){
     companion object
 }
