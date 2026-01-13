@@ -10,6 +10,7 @@ data class User(
     val post            : Int       = 0,
     val following       : Int       = 0,
     val follower        : Int       = 0,
+    val follow          : Int       = 0
 ){
     companion object
 }
