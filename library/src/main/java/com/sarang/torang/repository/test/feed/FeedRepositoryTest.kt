@@ -2,8 +2,10 @@ package com.sarang.torang.repository.test.feed
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Text
@@ -23,29 +25,50 @@ import com.sarang.torang.data.ReviewAndImage
 import com.sarang.torang.repository.feed.FeedFlowRepository
 import com.sarang.torang.repository.feed.FeedLoadRepository
 import com.sarang.torang.repository.feed.FeedRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FeedRepositoryTest(feedRepository: FeedRepository,
-                       feedLoadRepository: FeedLoadRepository,
-                       feedFlowRepository: FeedFlowRepository){
+fun FeedRepositoryTestScreen(feedRepository: FeedRepository,
+                             feedLoadRepository: FeedLoadRepository,
+                             feedFlowRepository: FeedFlowRepository){
     var reviewId by remember { mutableStateOf(0) }
     val feeds by feedLoadRepository.feeds.collectAsState(initial = ArrayList())
     var feedsByRestaurant : List<ReviewAndImage> by remember { mutableStateOf(listOf()) }
     val myFeed by feedFlowRepository.findMyFeedById(reviewId).collectAsState(initial = ArrayList())
     val coroutine = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
-    var restaurantId by remember { mutableStateOf(-1) }
+    var restaurantId by remember { mutableStateOf("") }
     val favoriteFlow : List<FavoriteAndImage> by feedFlowRepository.findByFavoriteFlow().collectAsStateWithLifecycle(listOf())
+    var restaurantFeedsFlow : List<ReviewAndImage> by remember { mutableStateOf(listOf()) }
 
     LaunchedEffect(restaurantId) {
-        if(restaurantId > 0){
-            feedFlowRepository.findRestaurantFeedsFlow(restaurantId).collect {
-                feedsByRestaurant = it
-            }
+        try {
+            feedFlowRepository.findRestaurantFeedsFlow(restaurantId.toInt())
+                              .stateIn(scope = coroutine,
+                                       started = SharingStarted.Eagerly,
+                                       initialValue = listOf()).collect {
+                    restaurantFeedsFlow = it
+                }
+        }catch (e: Exception){
+
         }
+    }
+
+    LaunchedEffect(restaurantId) {
+        try{
+            if(restaurantId.toInt() > 0){
+                feedFlowRepository.findRestaurantFeedsFlow(restaurantId.toInt()).collect {
+                    feedsByRestaurant = it
+                }
+            }
+        }catch (e : Exception){
+
+        }
+
     }
     
     FeedRepositoryTest1(
@@ -59,13 +82,20 @@ fun FeedRepositoryTest(feedRepository: FeedRepository,
                 message = e.message ?: ""
             }
         } },
-        feedLoadRepository = feedLoadRepository
+        feedLoadRepository = feedLoadRepository,
+        feedRepository = feedRepository,
+        feedFlowRepository = feedFlowRepository,
+        restaurantId = restaurantId,
+        onRestaurantId = { restaurantId = it },
+        restaurantFeedsFlow = restaurantFeedsFlow
     )
 }
 @Preview(showBackground = true)
 @Composable
 fun Menu(
     restaurantFeedsFlow: () -> Unit = {},
+    restaurantId       : String     = "",
+    onRestaurantId     : (String) -> Unit  = {},
     findByPictureIdFlow: () -> Unit = {},
     findById: () -> Unit = {},
     findMyFeedById: () -> Unit = {},
@@ -87,9 +117,17 @@ fun Menu(
     onSearch: () -> Unit = {},
     message : String = "",
 ){
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        AssistChip(restaurantFeedsFlow  , label = {Text("restaurantFeedsFlow")})
-        AssistChip(findByPictureIdFlow  , label = {Text("findByPictureIdFlow")})
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
+        Row {
+            AssistChip(restaurantFeedsFlow  , label = {Text("restaurantFeedsFlow: ")
+                                                                BasicTextField(value = restaurantId,
+                                                                               onValueChange = onRestaurantId,
+                                                                               maxLines = 1)})
+            Text(restaurantId)
+        }
+        AssistChip(findByPictureIdFlow  , label = {Text("findByPictureIdFlow") })
         AssistChip(findById             , label = {Text("findById")})
         AssistChip(findMyFeedById       , label = {Text("findMyFeedById")})
         AssistChip(findByUserIdFlow     , label = {Text("findByUserIdFlow")})

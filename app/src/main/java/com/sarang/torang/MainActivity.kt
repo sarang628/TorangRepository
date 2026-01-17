@@ -44,7 +44,7 @@ import com.sarang.torang.repository.comment.CommentRepository
 import com.sarang.torang.repository.feed.FeedFlowRepository
 import com.sarang.torang.repository.feed.FeedLoadRepository
 import com.sarang.torang.repository.review.ReviewRepository
-import com.sarang.torang.repository.test.feed.FeedRepositoryTest
+import com.sarang.torang.repository.test.feed.FeedRepositoryTestScreen
 import com.sarang.torang.repository.test.chat.ChatRepositoryTest
 import com.sarang.torang.session.SessionClientService
 import com.sarang.torang.session.SessionService
@@ -160,7 +160,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable("FeedRepositoryTest"){
-                FeedRepositoryTest(feedRepository = feedRepository,
+                FeedRepositoryTestScreen(feedRepository = feedRepository,
                                    feedLoadRepository = feedLoadRepository,
                                    feedFlowRepository = feedFlowRepository)
             }
