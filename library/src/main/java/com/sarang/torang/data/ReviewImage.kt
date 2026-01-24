@@ -1,7 +1,5 @@
 package com.sarang.torang.data
 
-import androidx.room.PrimaryKey
-
 data class ReviewImage(
     val pictureId       : Int,
     val restaurantId    : Int?      = null,
@@ -13,6 +11,7 @@ data class ReviewImage(
     val menu            : Int?      = null,
     val width           : Int?      = null,
     val height          : Int?      = null,
+    val order           : Int?      = null
 ){
     companion object
 }
