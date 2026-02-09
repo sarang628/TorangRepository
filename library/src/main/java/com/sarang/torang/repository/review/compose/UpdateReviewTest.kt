@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +42,7 @@ fun UpdateReviewTest(
     var result by remember { mutableStateOf("") }
     var uploadedImage: List<Int> by remember { mutableStateOf(ArrayList()) }
     val navHostController = rememberNavController()
+    val context = LocalContext.current
     Column {
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider()
@@ -115,7 +117,8 @@ fun UpdateReviewTest(
                                     rating = 3.0f,
                                     files = files,
                                     restaurantId = null,
-                                    uploadedImage = uploadedImage
+                                    uploadedImage = uploadedImage,
+                                    context = context
                                 )
                                 result = GsonBuilder().setPrettyPrinting().create().toJson(review)
                             } catch (e: Exception) {

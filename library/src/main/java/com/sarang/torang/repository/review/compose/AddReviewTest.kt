@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ fun AddReviewTest(
     val coroutine = rememberCoroutineScope()
     var result by remember { mutableStateOf("") }
     var isProgress by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     AddReviewTest(onAddReview = { contents, files, restaurantId ->
         coroutine.launch {
             try {
@@ -44,7 +46,8 @@ fun AddReviewTest(
                     contents = contents,
                     rating = 3.0f,
                     files = files,
-                    restaurantId = restaurantId?.toInt()
+                    restaurantId = restaurantId?.toInt(),
+                    context = context
                 )
                 result = GsonBuilder().setPrettyPrinting().create().toJson(review)
             } catch (e: Exception) {
